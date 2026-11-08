@@ -17,6 +17,7 @@ import 'screens/call_overlay.dart';
 import 'screens/group_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/join.dart';
+import 'tour/profile.dart';
 import 'tour/service.dart';
 import 'tour/zones.dart';
 import 'ui/night.dart';
@@ -37,6 +38,8 @@ Future<void> main() async {
   };
   FirebaseMessaging.onBackgroundMessage(_onBackgroundMessage);
   await initZones();
+  await initLang();
+  await ProfileStore.init();
   // 不需要帳號：和城市低語一樣用匿名登入；這支 App 的身分和城市低語各自獨立，彼此不相認
   try {
     if (FirebaseAuth.instance.currentUser == null) await FirebaseAuth.instance.signInAnonymously();
@@ -50,8 +53,10 @@ class TourChipApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    // 設定裡換語言：系統元件（日期、按鈕）跟著換；畫面上的 tx() 由 setLang 整個重畫
+    return ValueListenableBuilder<String>(valueListenable: appLang, builder: (context, lang, _) => MaterialApp(
       title: tx('旅行團', 'TourChip'),
+      locale: lang == 'system' ? null : (lang == 'zh' ? const Locale('zh', 'TW') : const Locale('en')),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate, GlobalCupertinoLocalizations.delegate],
       supportedLocales: const [Locale('zh', 'TW'), Locale('en')],
@@ -69,7 +74,7 @@ class TourChipApp extends StatelessWidget {
         ),
       ),
       home: const RootGate(),
-    );
+    ));
   }
 }
 

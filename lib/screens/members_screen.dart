@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../l10n.dart';
 import '../tour/model.dart';
 import '../tour/service.dart';
+import '../ui/avatar.dart';
 import '../ui/night.dart';
 import 'join.dart';
 
@@ -30,7 +31,7 @@ class MembersScreen extends StatelessWidget {
               for (final s in g.staff)
                 ListTile(
                   contentPadding: EdgeInsets.zero,
-                  leading: CircleAvatar(backgroundColor: g.tint.withValues(alpha: 0.3), child: Icon(s.role == 'host' ? Icons.flag : Icons.flag_outlined, color: Night.ink, size: 18)),
+                  leading: s.avatar.isNotEmpty ? Avatar(s.avatar, size: 40, ring: g.tint) : CircleAvatar(backgroundColor: g.tint.withValues(alpha: 0.3), child: Icon(s.role == 'host' ? Icons.flag : Icons.flag_outlined, color: Night.ink, size: 18)),
                   title: Text(s.name.isEmpty ? (s.role == 'host' ? tx('團主', 'Leader') : tx('共同團主', 'Co-leader')) : s.name, style: const TextStyle(color: Night.ink)),
                   subtitle: Text(s.role == 'host' ? tx('團主', 'Leader') : tx('共同團主', 'Co-leader'), style: Night.caption),
                   trailing: g.isHost && s.role == 'cohost'
@@ -44,7 +45,7 @@ class MembersScreen extends StatelessWidget {
               for (final m in g.members)
                 ListTile(
                   contentPadding: EdgeInsets.zero,
-                  leading: CircleAvatar(backgroundColor: Night.night600, child: Text('${m.no}', style: const TextStyle(color: Night.ink, fontWeight: FontWeight.w600))),
+                  leading: _NoAvatar(m.no, m.avatar),
                   title: Text(m.label.isEmpty ? tx('${m.no} 號', 'No. ${m.no}') : m.label, style: const TextStyle(color: Night.ink)),
                   subtitle: Text(m.sub == null ? tx('未分組', 'No sub-group') : g.subName(m.sub), style: Night.caption),
                   trailing: const Icon(Icons.chevron_right, color: Night.inkFaint),
@@ -139,6 +140,26 @@ class MembersScreen extends StatelessWidget {
         if (!ctx.mounted) return;
         if (r['success'] == true) { Navigator.pop(ctx); } else { showGlassToast(ctx, tourError('${r['code']}'), danger: true); }
       }),
+    ]));
+  }
+}
+
+/// 團員：有大頭貼就顯示照片，右下角疊團號；沒有就只顯示團號
+class _NoAvatar extends StatelessWidget {
+  final int no;
+  final String url;
+  const _NoAvatar(this.no, this.url);
+  @override
+  Widget build(BuildContext context) {
+    final badge = Text('$no', style: const TextStyle(color: Night.ink, fontWeight: FontWeight.w600));
+    if (url.isEmpty) return CircleAvatar(backgroundColor: Night.night600, child: badge);
+    return SizedBox(width: 44, height: 44, child: Stack(clipBehavior: Clip.none, children: [
+      Avatar(url, size: 40, ring: Night.night600),
+      Positioned(right: -4, bottom: -4, child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+        decoration: BoxDecoration(color: Night.night600, borderRadius: BorderRadius.circular(99), border: Border.all(color: Night.night900, width: 1.5)),
+        child: Text('$no', style: const TextStyle(color: Night.ink, fontSize: 11, fontWeight: FontWeight.w600)),
+      )),
     ]));
   }
 }

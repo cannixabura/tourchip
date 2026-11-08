@@ -2,3 +2,4 @@
 "CFBundleDisplayName" = "TourChip";
 "NSLocationWhenInUseUsageDescription" = "TourChip uses your location while you use the app to show the distance and direction to the meeting point on your phone. It is never sent to your tour leader unless you tap \"I'm lost\".";
 "NSCameraUsageDescription" = "Scan your tour leader's join QR code or a group pass.";
+"NSPhotoLibraryUsageDescription" = "Choose a photo from your library as your avatar.";

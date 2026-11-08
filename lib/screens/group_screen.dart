@@ -17,6 +17,7 @@ import 'members_screen.dart';
 import 'pass_screen.dart';
 import 'qr_screen.dart';
 import 'roll_call_screen.dart';
+import 'settings_screen.dart';
 
 /// 在團裡的主畫面：3D 夜光地圖＋集合點光柱，下方是操作面板。
 /// 團主、共同團主看到集合、點名、公告、行程；團員看到集合卡片、團旗、我迷路了。設計稿：領隊 3D 地圖
@@ -53,7 +54,14 @@ class _GroupScreenState extends State<GroupScreen> {
           body: Stack(children: [
             Positioned.fill(child: TourMap(key: _map, group: g)),
             Positioned(left: Night.space4, right: Night.space4, top: MediaQuery.of(context).padding.top + Night.space2, child: _TopBar(g: g)),
-            Positioned(left: 0, right: 0, bottom: 0, child: g.isStaff ? _StaffPanel(g: g, map: _map) : _MemberPanel(g: g, map: _map)),
+            Positioned(
+              left: 0, right: 0, bottom: 0,
+              child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.end, children: [
+                // 右下角：設定（大頭貼、暱稱、語言、說明…）
+                const Padding(padding: EdgeInsets.fromLTRB(0, 0, Night.space4, Night.space3), child: SettingsButton()),
+                g.isStaff ? _StaffPanel(g: g, map: _map) : _MemberPanel(g: g, map: _map),
+              ]),
+            ),
           ]),
         );
       },

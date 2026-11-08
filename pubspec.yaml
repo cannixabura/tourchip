@@ -36,6 +36,9 @@ dependencies:
   wakelock_plus: ^1.8.0
   # 新增：App 內掃 QR code（入團、團購券）
   mobile_scanner: ^7.0.1
+  sensors_plus: ^7.1.0
+  image_picker: ^1.2.4
+  firebase_storage: ^13.6.0
 
 dev_dependencies:
   flutter_test:

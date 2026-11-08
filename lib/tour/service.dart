@@ -14,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../l10n.dart';
 import 'model.dart';
+import 'profile.dart';
 
 /// 旅行團的伺服器（geo-service/tourgroup_api.js，Cloud Function tourGroup）。
 /// 與城市低語共用同一個 Firebase 專案與後端；Redis 用 tgroup* 開頭，城市低語的低語團不受影響。
@@ -44,6 +45,7 @@ class TourService {
       final data = jsonDecode(r.body);
       if (data is! Map<String, dynamic>) return _failed(action);
       if (data.containsKey('group')) _apply(data['group']);
+      if (action == 'status' && data.containsKey('profile')) ProfileStore.apply(data['profile']);
       if (action == 'status') loaded.value = true;
       return data;
     } catch (_) {

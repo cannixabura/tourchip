@@ -2,3 +2,4 @@
 "CFBundleDisplayName" = "旅行團";
 "NSLocationWhenInUseUsageDescription" = "旅行團會在你使用 App 時取得位置，用來在你的手機上算出到集合點的距離與方向；不會傳給領隊，除非你按下『我迷路了』。";
 "NSCameraUsageDescription" = "掃描領隊的入團 QR code 或團購券。";
+"NSPhotoLibraryUsageDescription" = "從相簿選一張照片當你的頭像。";

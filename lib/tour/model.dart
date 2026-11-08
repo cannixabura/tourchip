@@ -20,9 +20,11 @@ class TourMember {
   final int? sub;
   /// 集合：ack / seen / none；點名：here / 5min / help / none；名單：''
   final String state;
-  TourMember(this.uid, this.no, this.name, this.note, this.sub, this.state);
+  /// 大頭貼網址（團員自己在設定裡上傳的；沒有就是空字串）
+  final String avatar;
+  TourMember(this.uid, this.no, this.name, this.note, this.sub, this.state, {this.avatar = ''});
   factory TourMember.fromJson(Map j, {String stateKey = ''}) =>
-      TourMember(_str(j['uid']), _int(j['no']) ?? 0, _str(j['name']), _str(j['note']), _int(j['sub']), stateKey.isEmpty ? '' : _str(j[stateKey]));
+      TourMember(_str(j['uid']), _int(j['no']) ?? 0, _str(j['name']), _str(j['note']), _int(j['sub']), stateKey.isEmpty ? '' : _str(j[stateKey]), avatar: _str(j['avatar']));
   /// 名單上顯示的稱呼：備註優先，其次暱稱
   String get label => note.isNotEmpty ? note : (name.isNotEmpty ? name : '');
 }
@@ -30,7 +32,8 @@ class TourMember {
 class TourStaff {
   final String uid, name, role; // host / cohost
   final int no;
-  TourStaff(this.uid, this.no, this.name, this.role);
+  final String avatar;
+  TourStaff(this.uid, this.no, this.name, this.role, {this.avatar = ''});
 }
 
 class TourLost {
@@ -97,7 +100,7 @@ class TourGroup {
         myNo = _int(j['myNo']), mySub = _int(j['mySub']), paid = j['paid'] == true, lostSent = j['lostSent'] == true,
         qr = j['qr'] as String?,
         subs = [for (final s in (j['subs'] as List? ?? const [])) '$s'],
-        staff = [for (final s in (j['staff'] as List? ?? const [])) TourStaff(_str(s['uid']), _int(s['no']) ?? 0, _str(s['name']), _str(s['role']))],
+        staff = [for (final s in (j['staff'] as List? ?? const [])) TourStaff(_str(s['uid']), _int(s['no']) ?? 0, _str(s['name']), _str(s['role']), avatar: _str(s['avatar']))],
         call = j['call'] is Map
             ? TourCall(_str(j['call']['id']), _int(j['call']['at']) ?? 0, _str(j['call']['tz']), _str(j['call']['place']),
                 _dbl(j['call']['lat']) ?? 0, _dbl(j['call']['lng']) ?? 0, _int(j['call']['sub']), j['call']['mine'] as String?)
