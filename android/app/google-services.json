@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "265559188009",
+    "firebase_url": "https://mood-whisper-f7de9-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "mood-whisper-f7de9",
+    "storage_bucket": "mood-whisper-f7de9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:265559188009:android:73490fca8fe9c720ce3238",
+        "android_client_info": {
+          "package_name": "com.softchip.moodwhisper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "265559188009-a6ovga9i0uipo3s7lj4rb3tdvio8hkc9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcltnHFN0CK79MRhSkSzxtLTEU1vQTnOs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "265559188009-a6ovga9i0uipo3s7lj4rb3tdvio8hkc9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "265559188009-rk9jjujb0lk9bl08hh2m161tiq3k5vgr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.softchip.moodwhisper"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:265559188009:android:2aea96372c36cefece3238",
+        "android_client_info": {
+          "package_name": "com.softchip.tourchip"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "265559188009-a6ovga9i0uipo3s7lj4rb3tdvio8hkc9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcltnHFN0CK79MRhSkSzxtLTEU1vQTnOs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "265559188009-a6ovga9i0uipo3s7lj4rb3tdvio8hkc9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "265559188009-rk9jjujb0lk9bl08hh2m161tiq3k5vgr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.softchip.moodwhisper"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

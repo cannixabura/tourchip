@@ -2,17 +2,59 @@
   "hosting": {
     "target": "tourchip",
     "public": "hosting",
-    "ignore": ["firebase.json", "**/.DS_Store"],
+    "ignore": [
+      "firebase.json",
+      "**/.DS_Store"
+    ],
     "cleanUrls": true,
     "rewrites": [
-      { "source": "/g/**", "destination": "/g.html" },
-      { "source": "/v/**", "destination": "/v.html" }
+      {
+        "source": "/g/**",
+        "destination": "/g.html"
+      },
+      {
+        "source": "/v/**",
+        "destination": "/v.html"
+      }
     ],
     "headers": [
       {
         "source": "/.well-known/apple-app-site-association",
-        "headers": [{ "key": "Content-Type", "value": "application/json" }]
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
       }
     ]
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "mood-whisper-f7de9",
+          "appId": "1:265559188009:android:2aea96372c36cefece3238",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "mood-whisper-f7de9",
+          "appId": "1:265559188009:ios:d61053289edb01bdce3238",
+          "uploadDebugSymbols": true,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "mood-whisper-f7de9",
+          "configurations": {
+            "android": "1:265559188009:android:2aea96372c36cefece3238",
+            "ios": "1:265559188009:ios:d61053289edb01bdce3238"
+          }
+        }
+      }
+    }
   }
 }
