@@ -207,7 +207,7 @@ Future<void> showRollOverlay(BuildContext context, String rollId) async {
 /// 光之團旗：整個螢幕變成團色並閃爍，中間是團號（團主、共同團主顯示「領隊」）。
 /// 舉起手機讓彼此在人群裡找到你；不需要定位，也不送任何資料。
 Future<void> showFlag(BuildContext context, TourGroup g) {
-  return Navigator.of(context).push(PageRouteBuilder(opaque: true, pageBuilder: (_, __, ___) => _FlagPage(g: g)));
+  return Navigator.of(context).push(PageRouteBuilder(opaque: true, pageBuilder: (_, _, _) => _FlagPage(g: g)));
 }
 
 class _FlagPage extends StatefulWidget {
@@ -273,10 +273,12 @@ Future<void> askLost(BuildContext context, TourGroup g) async {
   );
   if (ok != true || !context.mounted) return;
   Position? pos;
-  if (await ensureLocation()) try {
-    pos = await Geolocator.getCurrentPosition(locationSettings: const LocationSettings(accuracy: LocationAccuracy.high, timeLimit: Duration(seconds: 10)));
-  } catch (_) {
-    try { pos = await Geolocator.getLastKnownPosition(); } catch (_) {}
+  if (await ensureLocation()) {
+    try {
+      pos = await Geolocator.getCurrentPosition(locationSettings: const LocationSettings(accuracy: LocationAccuracy.high, timeLimit: Duration(seconds: 10)));
+    } catch (_) {
+      try { pos = await Geolocator.getLastKnownPosition(); } catch (_) {}
+    }
   }
   if (!context.mounted) return;
   if (pos == null) {

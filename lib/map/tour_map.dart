@@ -46,10 +46,12 @@ class TourMapState extends State<TourMap> {
     LatLng? p;
     final allowed = await ensureLocation();
     if (mounted && allowed != _myLocation) setState(() => _myLocation = allowed);
-    if (allowed) try {
-      final pos = await Geolocator.getLastKnownPosition() ?? await Geolocator.getCurrentPosition(locationSettings: const LocationSettings(timeLimit: Duration(seconds: 8)));
-      p = LatLng(pos.latitude, pos.longitude);
-    } catch (_) {}
+    if (allowed) {
+      try {
+        final pos = await Geolocator.getLastKnownPosition() ?? await Geolocator.getCurrentPosition(locationSettings: const LocationSettings(timeLimit: Duration(seconds: 8)));
+        p = LatLng(pos.latitude, pos.longitude);
+      } catch (_) {}
+    }
     // 抓不到位置：先看集合點，再看行程表第一個有座標的點，都沒有就看台北
     p ??= g.call != null ? LatLng(g.call!.lat, g.call!.lng) : null;
     p ??= g.stops.where((s) => s.lat != null).map((s) => LatLng(s.lat!, s.lng!)).firstOrNull;
@@ -65,8 +67,8 @@ class TourMapState extends State<TourMap> {
   }
 
   @override
-  void didUpdateWidget(covariant TourMap old) {
-    super.didUpdateWidget(old);
+  void didUpdateWidget(covariant TourMap oldWidget) {
+    super.didUpdateWidget(oldWidget);
     if (_layersReady) _syncLayers();
   }
 

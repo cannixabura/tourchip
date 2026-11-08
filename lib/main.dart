@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:ui' show PlatformDispatcher;
 
 import 'package:app_links/app_links.dart';
 import 'package:firebase_auth/firebase_auth.dart';

@@ -380,7 +380,7 @@ Future<void> showAnnouncements(BuildContext context, TourGroup g) {
         child: ListView.separated(
           shrinkWrap: true,
           itemCount: g.announcements.length,
-          separatorBuilder: (_, __) => const Divider(color: Night.night600),
+          separatorBuilder: (_, _) => const Divider(color: Night.night600),
           itemBuilder: (_, i) {
             final a = g.announcements[i];
             return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

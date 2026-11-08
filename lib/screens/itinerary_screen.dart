@@ -65,7 +65,7 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.symmetric(horizontal: Night.space4, vertical: 8),
                   itemCount: days.length,
-                  separatorBuilder: (_, __) => const SizedBox(width: 8),
+                  separatorBuilder: (_, _) => const SizedBox(width: 8),
                   itemBuilder: (_, i) {
                     final sel = i == day;
                     return InkWell(
