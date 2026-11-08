@@ -41,9 +41,20 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.4
 
 flutter:
   uses-material-design: true
   assets:
     - assets/map/night_style.json
     - assets/audio/group_call.wav
+
+# App 圖示：assets/icon/gen_icon.py 產生（集合光柱＋光之旗＋一圈團員，夜光配色）
+flutter_launcher_icons:
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/icon/app_icon.png"
+  android: "launcher_icon"
+  min_sdk_android: 24
+  adaptive_icon_background: "assets/icon/app_icon_background.png"
+  adaptive_icon_foreground: "assets/icon/app_icon_foreground.png"
