@@ -51,6 +51,8 @@ flutter:
   assets:
     - assets/map/night_style.json
     - assets/audio/group_call.wav
+    - assets/opencc/s2t.txt
+    - assets/opencc/t2s.txt
 
 # App 圖示：assets/icon/gen_icon.py 產生（集合光柱＋光之旗＋一圈團員，夜光配色）
 flutter_launcher_icons:

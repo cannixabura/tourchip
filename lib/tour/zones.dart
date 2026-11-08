@@ -47,9 +47,13 @@ String hm(int ms, String zone) {
 /// 「11/18（三）」
 String md(int ms, String zone) {
   final t = localAt(ms, zone);
-  const zhW = ['一', '二', '三', '四', '五', '六', '日'];
-  const enW = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-  return isZh ? '${t.month}/${t.day}（${zhW[t.weekday - 1]}）' : '${enW[t.weekday - 1]} ${t.month}/${t.day}';
+  final w = weekdayShort(t.weekday);
+  return switch (lang) {
+    'zh-Hant' || 'zh-Hans' || 'ja' => '${t.month}/${t.day}（$w）',
+    'ko' => '${t.month}/${t.day}($w)',
+    'en' => '$w ${t.month}/${t.day}',
+    _ => '$w ${t.day}/${t.month}',
+  };
 }
 
 /// 「UTC+9」
@@ -62,7 +66,7 @@ String utcLabel(int ms, String zone) {
 /// 時區的顯示名稱：常用城市用城市名，其他用 IANA 名稱最後一段
 String zoneName(String zone) {
   for (final z in commonZones) {
-    if (z.$1 == zone) return isZh ? z.$2 : z.$3;
+    if (z.$1 == zone) return tx(z.$2, z.$3);
   }
   final last = zone.split('/').last.replaceAll('_', ' ');
   return last.isEmpty ? zone : last;

@@ -1,0 +1,1314 @@
+[
+{
+"zh": "跟隨手機設定",
+"en": "Same as phone"
+},
+{
+"zh": "旅行團",
+"en": "TourChip"
+},
+{
+"zh": "{p.no} 號",
+"en": "No. {p.no}"
+},
+{
+"zh": "團主 {base}",
+"en": "Leader {base}"
+},
+{
+"zh": "共同團主 {base}",
+"en": "Co-leader {base}"
+},
+{
+"zh": "我",
+"en": "Me"
+},
+{
+"zh": "回到我的位置",
+"en": "Back to me"
+},
+{
+"zh": "{hm(c.at, c.tz)} 集合",
+"en": "Gather at {hm(c.at, c.tz)}"
+},
+{
+"zh": "{zoneName(c.tz).split('・').first}時間",
+"en": "{zoneName(c.tz).split(' / ').first} time"
+},
+{
+"zh": "現在",
+"en": "Now"
+},
+{
+"zh": "集合點的方向",
+"en": "Direction to the meeting point"
+},
+{
+"zh": "步行約 {max(1, (dist / 80).round())} 分鐘",
+"en": "about {max(1, (dist / 80).round())} min walk"
+},
+{
+"zh": "已收到，領隊看得到",
+"en": "Got it. Your leader can see that."
+},
+{
+"zh": "收到",
+"en": "Got it"
+},
+{
+"zh": "距離和方向在你的手機上計算，不會傳給任何人",
+"en": "Distance and direction are worked out on your phone and never sent"
+},
+{
+"zh": "我到了",
+"en": "I'm here"
+},
+{
+"zh": "還要 5 分鐘",
+"en": "5 more min"
+},
+{
+"zh": "需要幫忙",
+"en": "Needs help"
+},
+{
+"zh": "{now.name} · 你是 {now.myNo ?? '-'} 號",
+"en": "{now.name} · No. {now.myNo ?? '-'}"
+},
+{
+"zh": "點名：你到了嗎？",
+"en": "Roll call: are you here?"
+},
+{
+"zh": "領隊",
+"en": "Leaders"
+},
+{
+"zh": "點一下關閉",
+"en": "Tap to close"
+},
+{
+"zh": "已經通知領隊了。找到團了嗎？",
+"en": "Your leader was notified. Found the group?"
+},
+{
+"zh": "找到團了",
+"en": "Found the group"
+},
+{
+"zh": "把你現在的位置傳一次給領隊，領隊會在地圖上看到你在哪裡。只傳這一次，30 分鐘後自動刪除。",
+"en": "Send your current location to your leader once. It is deleted after 30 minutes."
+},
+{
+"zh": "傳送位置給領隊",
+"en": "Send my location"
+},
+{
+"zh": "抓不到你的位置，請打開定位後再試。",
+"en": "Could not get your location. Turn on location and try again."
+},
+{
+"zh": "已通知領隊，請待在原地。",
+"en": "Your leader was notified. Please stay where you are."
+},
+{
+"zh": "{g?.lost.firstOrNull?.no ?? '?'} 號迷路了",
+"en": "No. {g?.lost.firstOrNull?.no ?? '?'} is lost"
+},
+{
+"zh": "{g?.rollRoster.where((m) => m.state == 'help').map((m) => m.no).join('、')} 號需要幫忙",
+"en": "No. {g?.rollRoster.where((m) => m.state == 'help').map((m) => m.no).join(', ')} needs help"
+},
+{
+"zh": "他的位置已經出現在地圖上的紅色圓點。",
+"en": "Their location is the red dot on the map."
+},
+{
+"zh": "打開點名名單看看是誰。",
+"en": "Open the roll call to see who."
+},
+{
+"zh": "知道了",
+"en": "OK"
+},
+{
+"zh": "{_subs.length + 1} 號車",
+"en": "Bus {_subs.length + 1}"
+},
+{
+"zh": "新增分組",
+"en": "Add sub-group"
+},
+{
+"zh": "取消",
+"en": "Cancel"
+},
+{
+"zh": "新增",
+"en": "Add"
+},
+{
+"zh": "開一個團",
+"en": "Start a group"
+},
+{
+"zh": "團名（20 字內）",
+"en": "Group name (up to 20)"
+},
+{
+"zh": "例如：京都秋楓五日",
+"en": "e.g. Kyoto Autumn 5 Days"
+},
+{
+"zh": "團色",
+"en": "Group color"
+},
+{
+"zh": "集合光柱、團旗都用這個顏色。同一個景點有別的團時，選不一樣的顏色比較好認。",
+"en": "The meeting pillar and group flag use this color."
+},
+{
+"zh": "行程天數（最長 7 天）",
+"en": "Trip length (up to 7 days)"
+},
+{
+"zh": "今天 {d(now)}",
+"en": "Today {d(now)}"
+},
+{
+"zh": "結束日 23:59 自動解散，以最後一個集合點的當地時間為準。",
+"en": "Ends at 23:59 on the last day, local time at the last meeting point."
+},
+{
+"zh": "分組（可以不分）",
+"en": "Sub-groups (optional)"
+},
+{
+"zh": "例如 1 號車、2 號車。集合、點名、公告可以只發給其中一組。",
+"en": "e.g. Bus 1, Bus 2. Gather, roll call and notices can go to one sub-group."
+},
+{
+"zh": "20 人以內免費。超過時再買 7 天方案或使用團購券。",
+"en": "Free up to 20. Upgrade later with a 7-day pass or a voucher."
+},
+{
+"zh": "開團，產生 QR code",
+"en": "Create and show QR code"
+},
+{
+"zh": "關閉",
+"en": "Close"
+},
+{
+"zh": "拖曳地圖，把光柱放到集合點",
+"en": "Drag the map to place the pillar"
+},
+{
+"zh": "發出集合",
+"en": "Gather the group"
+},
+{
+"zh": "幾分鐘後集合",
+"en": "Gather in"
+},
+{
+"zh": "{m} 分",
+"en": "{m} min"
+},
+{
+"zh": "{_minutes} 分",
+"en": "{_minutes} min"
+},
+{
+"zh": "{hm(at, _tz)} 集合，{zoneChip(at, _tz)}（點一下換時區）",
+"en": "At {hm(at, _tz)}, {zoneChip(at, _tz)} (tap to change)"
+},
+{
+"zh": "集合點說明（30 字內）",
+"en": "Meeting point (up to 30)"
+},
+{
+"zh": "例如：捷運西門站 6 號出口",
+"en": "e.g. Exit 6, Ximen Station"
+},
+{
+"zh": "團員手機會響專屬提示音，穿透專注模式。沒按「收到」的人每分鐘再提醒一次，最多 3 次。",
+"en": "Members get a distinct alert that breaks through Focus. Reminders every minute, up to 3 times."
+},
+{
+"zh": "發出集合呼叫",
+"en": "Send gather call"
+},
+{
+"zh": "集合點的當地時間",
+"en": "Local time at the meeting point"
+},
+{
+"zh": "這支手機",
+"en": "This phone"
+},
+{
+"zh": "第 {day} 天",
+"en": "Day {day}"
+},
+{
+"zh": "入團 QR code",
+"en": "Join QR code"
+},
+{
+"zh": "訊息",
+"en": "Messages"
+},
+{
+"zh": "更多",
+"en": "More"
+},
+{
+"zh": "你是 {g.myNo} 號",
+"en": "You are No. {g.myNo}"
+},
+{
+"zh": "{g.count} 人",
+"en": "{g.count} people"
+},
+{
+"zh": "團主 {g.hostName.isEmpty ? '' : g.hostName}",
+"en": "Leader {g.hostName}"
+},
+{
+"zh": "團員名單",
+"en": "Members"
+},
+{
+"zh": "7 天方案（已升級）",
+"en": "7-day pass (active)"
+},
+{
+"zh": "升級到 100 人",
+"en": "Upgrade to 100 people"
+},
+{
+"zh": "解散這一團",
+"en": "End this group"
+},
+{
+"zh": "解散後名單、點名紀錄、行程表都會刪除，所有團員都會收到通知。",
+"en": "Ending deletes the list, roll calls and itinerary. Everyone will be notified."
+},
+{
+"zh": "解散",
+"en": "End group"
+},
+{
+"zh": "退出這一團",
+"en": "Leave this group"
+},
+{
+"zh": "退出後就收不到集合與點名了。",
+"en": "You will stop receiving gather calls."
+},
+{
+"zh": "退出",
+"en": "Leave"
+},
+{
+"zh": "集合",
+"en": "Gather"
+},
+{
+"zh": "到了 {g.here}／{g.rollTotal}",
+"en": "Here {g.here}/{g.rollTotal}"
+},
+{
+"zh": "收到 {g.acked}／{g.callTotal}",
+"en": "Got it {g.acked}/{g.callTotal}"
+},
+{
+"zh": "點名中",
+"en": "Roll call"
+},
+{
+"zh": "上限 100 人",
+"en": "up to 100"
+},
+{
+"zh": "20 人以內免費",
+"en": "free up to 20"
+},
+{
+"zh": "目前沒有集合",
+"en": "No gather call right now"
+},
+{
+"zh": "{l.no} 號 {l.note.isNotEmpty ? l.note : l.name} 迷路了 · {_ago(l.at)}",
+"en": "No. {l.no} is lost · {_ago(l.at)}"
+},
+{
+"zh": "找到了",
+"en": "Found"
+},
+{
+"zh": "點名",
+"en": "Roll call"
+},
+{
+"zh": "公告",
+"en": "Notices"
+},
+{
+"zh": "行程",
+"en": "Itinerary"
+},
+{
+"zh": "同意分享的團員會出現在地圖上；長按大頭貼可以傳訊息。按「我迷路了」的人會另外以紅點標出。",
+"en": "Members who share appear on the map. Long-press a photo to message them. Anyone who taps \"I'm lost\" also shows as a red dot."
+},
+{
+"zh": "剛剛",
+"en": "just now"
+},
+{
+"zh": "{m} 分鐘前",
+"en": "{m}m ago"
+},
+{
+"zh": "你是 {g.myNo ?? '-'} 號",
+"en": "You are No. {g.myNo ?? '-'}"
+},
+{
+"zh": "領隊在點名",
+"en": "Roll call"
+},
+{
+"zh": "下一個集合：{md(next.at, next.tz)} {hm(next.at, next.tz)} {next.place}",
+"en": "Next: {md(next.at, next.tz)} {hm(next.at, next.tz)} {next.place}"
+},
+{
+"zh": "舉起團旗",
+"en": "Raise flag"
+},
+{
+"zh": "已通知領隊",
+"en": "Leader notified"
+},
+{
+"zh": "我迷路了",
+"en": "I'm lost"
+},
+{
+"zh": "行程表",
+"en": "Itinerary"
+},
+{
+"zh": "公告（{g.announcements.length}）",
+"en": "Notices ({g.announcements.length})"
+},
+{
+"zh": "發公告",
+"en": "Post a notice"
+},
+{
+"zh": "公告會置頂在團員的畫面，也會用推播送達。團員可以點一下翻譯成自己的語言。",
+"en": "Notices are pinned and pushed to members. Members can tap to translate them."
+},
+{
+"zh": "例如：18:30 在飯店大廳集合，遊覽車 3 號車",
+"en": "e.g. Meet in the hotel lobby at 18:30"
+},
+{
+"zh": "發出公告",
+"en": "Post notice"
+},
+{
+"zh": "看之前的公告",
+"en": "Earlier notices"
+},
+{
+"zh": "還沒有公告",
+"en": "No notices yet"
+},
+{
+"zh": "全團",
+"en": "Everyone"
+},
+{
+"zh": "發一個氣泡",
+"en": "Post a bubble"
+},
+{
+"zh": "旅行團 · 掃一下入團，集合時每個人都收得到",
+"en": "TourChip · Scan to join, everyone hears the call"
+},
+{
+"zh": "掃碼入團",
+"en": "Scan to join"
+},
+{
+"zh": "設定你的暱稱",
+"en": "Set your nickname"
+},
+{
+"zh": "20 人以內免費 · 團員永遠免費",
+"en": "Free up to 20 · Always free for members"
+},
+{
+"zh": "設定",
+"en": "Settings"
+},
+{
+"zh": "新增集合點",
+"en": "Add stop"
+},
+{
+"zh": "第 {i + 1} 天",
+"en": "Day {i + 1}"
+},
+{
+"zh": "這一天跨時區。每個集合時間都是當地時間，團員不用自己換算。",
+"en": "This day crosses time zones. Every time is local to its meeting point."
+},
+{
+"zh": "每個集合時間都是集合點的當地時間。",
+"en": "Every time is local to its meeting point."
+},
+{
+"zh": "這一天還沒有集合點",
+"en": "No stops on this day yet"
+},
+{
+"zh": "這一天沒有安排集合",
+"en": "No meeting points this day"
+},
+{
+"zh": "行程表已更新",
+"en": "Itinerary updated"
+},
+{
+"zh": "發出這次集合",
+"en": "Send this gather call"
+},
+{
+"zh": "修改集合點",
+"en": "Edit stop"
+},
+{
+"zh": "刪除",
+"en": "Remove"
+},
+{
+"zh": "刪除這個集合點？",
+"en": "Delete this stop?"
+},
+{
+"zh": "集合點（30 字內）",
+"en": "Meeting point (up to 30)"
+},
+{
+"zh": "例如：關西機場 第一航廈 南出口",
+"en": "e.g. KIX Terminal 1 South Exit"
+},
+{
+"zh": "日期",
+"en": "Date"
+},
+{
+"zh": "當地時間",
+"en": "Local time"
+},
+{
+"zh": "集合點在哪個時區",
+"en": "Time zone"
+},
+{
+"zh": "在地圖上的位置（可以不選）",
+"en": "Location on map (optional)"
+},
+{
+"zh": "還沒選",
+"en": "Not set"
+},
+{
+"zh": "哪一組",
+"en": "Which sub-group"
+},
+{
+"zh": "儲存",
+"en": "Save"
+},
+{
+"zh": "拖曳地圖選集合點",
+"en": "Drag to place the point"
+},
+{
+"zh": "用這個位置",
+"en": "Use this spot"
+},
+{
+"zh": "已加入「{g?.name ?? ''}」，你是 {g?.myNo ?? 0} 號",
+"en": "Joined \"{g?.name ?? ''}\". You are No. {g?.myNo ?? 0}"
+},
+{
+"zh": "團購券要由團主在開團後掃描使用。",
+"en": "The group leader scans the voucher after creating a group."
+},
+{
+"zh": "用這張團購券升級「{g.name}」？升級後最多 100 人。",
+"en": "Use this voucher to upgrade \"{g.name}\" to 100 people?"
+},
+{
+"zh": "使用團購券",
+"en": "Use voucher"
+},
+{
+"zh": "這一團已升級，最多 100 人。",
+"en": "Upgraded. Up to 100 people."
+},
+{
+"zh": "這不是旅行團的 QR code。",
+"en": "This is not a TourChip QR code."
+},
+{
+"zh": "掃描 QR code",
+"en": "Scan QR code"
+},
+{
+"zh": "對準領隊手機上的 QR code，或旅行社發的團購券",
+"en": "Point at the leader's QR code, or a voucher from your agency"
+},
+{
+"zh": "團員名單 · {g.count} 人",
+"en": "Members · {g.count}"
+},
+{
+"zh": "分組",
+"en": "Sub-groups"
+},
+{
+"zh": "團主",
+"en": "Leader"
+},
+{
+"zh": "共同團主",
+"en": "Co-leader"
+},
+{
+"zh": "改回團員",
+"en": "Make member"
+},
+{
+"zh": "團員",
+"en": "Members"
+},
+{
+"zh": "還沒有人入團。請團員掃描入團 QR code。",
+"en": "No one has joined yet. Ask members to scan the QR code."
+},
+{
+"zh": "{m.no} 號",
+"en": "No. {m.no}"
+},
+{
+"zh": "未分組",
+"en": "None"
+},
+{
+"zh": "{m.no} 號 {m.label}",
+"en": "No. {m.no} {m.label}"
+},
+{
+"zh": "寫備註（例如姓名、房號）",
+"en": "Add a note (name, room)"
+},
+{
+"zh": "換分組",
+"en": "Change sub-group"
+},
+{
+"zh": "設為共同團主（導遊、副領隊）",
+"en": "Make co-leader (guide)"
+},
+{
+"zh": "交棒：讓他當團主",
+"en": "Hand over leadership"
+},
+{
+"zh": "把團主交給 {m.no} 號？你會變成共同團主。",
+"en": "Make No. {m.no} the leader? You become a co-leader."
+},
+{
+"zh": "交棒",
+"en": "Hand over"
+},
+{
+"zh": "移出這一團",
+"en": "Remove from group"
+},
+{
+"zh": "把 {m.no} 號移出這一團？",
+"en": "Remove No. {m.no}?"
+},
+{
+"zh": "移出",
+"en": "Remove"
+},
+{
+"zh": "備註",
+"en": "Note"
+},
+{
+"zh": "只有團主與共同團主看得到",
+"en": "Only leaders can see this"
+},
+{
+"zh": "例如：王小明 302 房",
+"en": "e.g. Wang, room 302"
+},
+{
+"zh": "{m.no} 號的分組",
+"en": "Sub-group for No. {m.no}"
+},
+{
+"zh": "最多 6 組。刪掉一組時，那組的人會變成未分組。",
+"en": "Up to 6. Removing one moves its members to \"none\"."
+},
+{
+"zh": "{ctls.length + 1} 號車",
+"en": "Bus {ctls.length + 1}"
+},
+{
+"zh": "團已滿 20 人",
+"en": "Group is full (20)"
+},
+{
+"zh": "7 天方案與團購券",
+"en": "Passes and vouchers"
+},
+{
+"zh": "「{g.name}」已升級，最多 100 人。",
+"en": "\"{g.name}\" is upgraded. Up to 100 people."
+},
+{
+"zh": "升級這一團後，最多可以有 100 人。",
+"en": "Upgrade this group to allow up to 100 people."
+},
+{
+"zh": "7 天方案",
+"en": "7-day pass"
+},
+{
+"zh": "人數上限提高到 100 人",
+"en": "Up to 100 people"
+},
+{
+"zh": "只用在「{g.name}」這一團，到解散為止",
+"en": "For \"{g.name}\" until it ends"
+},
+{
+"zh": "一次購買，不會自動續費",
+"en": "One-time purchase, no renewal"
+},
+{
+"zh": "團員永遠免費",
+"en": "Always free for members"
+},
+{
+"zh": "購買 7 天方案",
+"en": "Buy 7-day pass"
+},
+{
+"zh": "有旅行社給的團購券",
+"en": "Have a voucher from your agency?"
+},
+{
+"zh": "掃描券上的 QR code，這一團直接升級，不用另外付款。",
+"en": "Scan its QR code to upgrade this group at no cost."
+},
+{
+"zh": "掃描團購券",
+"en": "Scan voucher"
+},
+{
+"zh": "提早解散不退費，退款依 App Store／Google Play 的流程辦理。",
+"en": "No refunds for ending early. Refunds follow App Store / Google Play policies."
+},
+{
+"zh": "旅行社團購券",
+"en": "Agency vouchers"
+},
+{
+"zh": "每張 {price}。買到的券會變成 QR code，發給要帶團的領隊，領隊開團後掃描就能升級。可以看到哪些券已經用掉。",
+"en": "{price} each. Each voucher is a QR code for a leader to scan after starting a group."
+},
+{
+"zh": "購買一張團購券",
+"en": "Buy a voucher"
+},
+{
+"zh": "我買的團購券（{list.where((v) => !v.used).length} 張可用）",
+"en": "My vouchers ({list.where((v) => !v.used).length} unused)"
+},
+{
+"zh": "已使用",
+"en": "Used"
+},
+{
+"zh": "{md(v.createdAt, deviceTz)} 購買",
+"en": "Bought {md(v.createdAt, deviceTz)}"
+},
+{
+"zh": "團購券",
+"en": "Voucher"
+},
+{
+"zh": "請領隊開團後，在「升級」裡掃描",
+"en": "The leader scans this after starting a group"
+},
+{
+"zh": "分享給領隊",
+"en": "Share with a leader"
+},
+{
+"zh": "旅行團團購券：開團後在「升級」掃描或點這個連結 {v.link}",
+"en": "TourChip voucher: {v.link}"
+},
+{
+"zh": "只有領隊看得到入團 QR code",
+"en": "Only leaders can see the join QR code"
+},
+{
+"zh": "團員用旅行團 App 掃描就能入團",
+"en": "Members scan this with TourChip to join"
+},
+{
+"zh": "已入團",
+"en": "joined"
+},
+{
+"zh": "上限",
+"en": "limit"
+},
+{
+"zh": "{daysLeft} 天",
+"en": "{daysLeft} d"
+},
+{
+"zh": "剩餘",
+"en": "left"
+},
+{
+"zh": "換新 QR code",
+"en": "New QR code"
+},
+{
+"zh": "換新後，舊的 QR code 和連結立刻失效。已經入團的人不受影響。",
+"en": "The old QR code and link stop working. Members who joined stay in."
+},
+{
+"zh": "換新",
+"en": "Replace"
+},
+{
+"zh": "分享入團連結",
+"en": "Share link"
+},
+{
+"zh": "加入「{g.name}」：先安裝「旅行團」App，再點這個連結 {g.qr}",
+"en": "Join \"{g.name}\" on TourChip: {g.qr}"
+},
+{
+"zh": "集合狀態",
+"en": "Gather status"
+},
+{
+"zh": "看點名",
+"en": "Roll call"
+},
+{
+"zh": "看集合",
+"en": "Gather"
+},
+{
+"zh": "單獨呼叫",
+"en": "Ping"
+},
+{
+"zh": "收到 {g.acked} · 打開了沒回 {seen} · 沒反應 {none} · 倒數 {countdown(c.at)}",
+"en": "Got it {g.acked} · Seen {seen} · No response {none} · {countdown(c.at)}"
+},
+{
+"zh": "打開了，還沒回",
+"en": "Seen, no reply"
+},
+{
+"zh": "沒反應",
+"en": "No response"
+},
+{
+"zh": "開始點名",
+"en": "Start roll call"
+},
+{
+"zh": "結束集合",
+"en": "End gather"
+},
+{
+"zh": "團員會收到點名提醒，回答「我到了」、「還要 5 分鐘」或「需要幫忙」。",
+"en": "Members answer \"I'm here\", \"5 more min\" or \"Need help\"."
+},
+{
+"zh": "到了",
+"en": "Here"
+},
+{
+"zh": "到了 {g.here} · 還要 5 分鐘 {g.late} · 需要幫忙 {g.help} · 沒回應 {none}",
+"en": "Here {g.here} · 5 min {g.late} · Help {g.help} · No answer {none}"
+},
+{
+"zh": "沒回應",
+"en": "No answer"
+},
+{
+"zh": "人齊了，結束點名",
+"en": "Everyone's here"
+},
+{
+"zh": "編輯個人資料",
+"en": "Edit profile"
+},
+{
+"zh": "大頭貼與暱稱，領隊點名時看得到",
+"en": "Photo and nickname your leader sees"
+},
+{
+"zh": "和團員互相看得到",
+"en": "See each other on the map"
+},
+{
+"zh": "同團的人在地圖上看得到你；關掉後立刻消失",
+"en": "Your group sees you on the map. Turn off to disappear right away."
+},
+{
+"zh": "關著：同團的人看不到你的位置",
+"en": "Off: your group cannot see your location"
+},
+{
+"zh": "語言",
+"en": "Language"
+},
+{
+"zh": "旅行社",
+"en": "Agencies"
+},
+{
+"zh": "購買團購券",
+"en": "Buy group passes"
+},
+{
+"zh": "買來發給領隊，掃碼就能升級到 100 人",
+"en": "Give leaders a QR code to upgrade to 100 people"
+},
+{
+"zh": "關於",
+"en": "About"
+},
+{
+"zh": "操作說明",
+"en": "How to use"
+},
+{
+"zh": "從開團、集合到點名，一次看懂",
+"en": "From starting a group to roll call"
+},
+{
+"zh": "使用條款",
+"en": "Terms of use"
+},
+{
+"zh": "隱私權政策",
+"en": "Privacy policy"
+},
+{
+"zh": "聯絡我們",
+"en": "Contact us"
+},
+{
+"zh": "旅行團意見回饋",
+"en": "TourChip feedback"
+},
+{
+"zh": "旅行團 TourChip · 20 人以內免費 · 團員永遠免費",
+"en": "TourChip · Free up to 20 · Always free for members"
+},
+{
+"zh": "輕觸更換大頭貼",
+"en": "Tap to change your photo"
+},
+{
+"zh": "移除大頭貼",
+"en": "Remove photo"
+},
+{
+"zh": "暱稱",
+"en": "Nickname"
+},
+{
+"zh": "領隊和團員看到的名字",
+"en": "The name your group sees"
+},
+{
+"zh": "儲存中…",
+"en": "Saving…"
+},
+{
+"zh": "照片上傳失敗，請再試一次",
+"en": "Couldn't upload the photo. Please try again."
+},
+{
+"zh": "領隊：開團",
+"en": "Leaders: start a group"
+},
+{
+"zh": "首頁按「開一個團」，填團名、選團色和天數，可以分組（例如 1 號車、2 號車）。",
+"en": "Tap \"Start a group\", set a name, color and number of days. You can add sub-groups such as Bus 1 and Bus 2."
+},
+{
+"zh": "出示 QR code，團員用 App 或手機相機掃一下就入團。",
+"en": "Show the QR code. Members scan it with the app or their camera to join."
+},
+{
+"zh": "20 人以內免費；第 21 人起升級 7 天方案或使用團購券，最多 100 人。",
+"en": "Free up to 20 people. From the 21st, upgrade to the 7-day pass or use a group pass (up to 100)."
+},
+{
+"zh": "發集合",
+"en": "Call a meetup"
+},
+{
+"zh": "拖曳地圖把光柱放在集合點，選時間後送出，全團手機都會響專屬提示音。",
+"en": "Drag the map to place the light pillar, pick a time and send. Every phone plays the meetup sound."
+},
+{
+"zh": "沒按「收到」的人每分鐘再響一次，最多 3 次；也可以只叫某一組或單獨呼叫一個人。",
+"en": "Anyone who has not tapped \"Got it\" is reminded every minute, up to 3 times. You can call one sub-group or one person."
+},
+{
+"zh": "團員可以回「我到了」「還要 5 分鐘」「需要幫忙」，需要幫忙的人排在最上面。",
+"en": "Members answer \"I'm here\", \"5 more minutes\" or \"I need help\". Those who need help are listed first."
+},
+{
+"zh": "團員：找到集合點",
+"en": "Members: find the meetup"
+},
+{
+"zh": "3D 地圖會跟著手機轉，光柱就是集合點；卡片上有當地時間、倒數、距離與方向。",
+"en": "The 3D map turns with your phone. The light pillar is the meetup; the card shows local time, countdown, distance and direction."
+},
+{
+"zh": "兩指縮放地圖；看別的地方後按「回到我的位置」回來。",
+"en": "Pinch to zoom. After looking elsewhere, tap \"Back to me\"."
+},
+{
+"zh": "同意分享後，同一團的人（含領隊）會在 3D 地圖上看到彼此的大頭貼和位置；不在團裡的人看不到任何人。",
+"en": "After you agree to share, everyone in your group, including leaders, sees each other on the 3D map. People outside the group see no one."
+},
+{
+"zh": "位置只在 App 開著時更新；退團或團解散就刪除。隨時可以在設定關掉。",
+"en": "Location updates only while the app is open and is deleted when you leave or the group ends. Turn it off any time in Settings."
+},
+{
+"zh": "未滿 18 歲要先取得家長或監護人同意才能分享。",
+"en": "Under 18? Ask a parent or guardian before sharing."
+},
+{
+"zh": "氣泡與訊息",
+"en": "Bubbles and messages"
+},
+{
+"zh": "在地圖下方「發一個氣泡」，同團的人會在你的大頭貼上方看到（最多 20 字）。",
+"en": "Tap \"Post a bubble\" below the map. Your group sees it above your photo (up to 20 characters)."
+},
+{
+"zh": "長按地圖上的人就能傳訊息，對方會收到通知；右上角的訊息按鈕可以看所有對話。",
+"en": "Long-press someone on the map to message them. They get a notification. The messages button at the top shows all chats."
+},
+{
+"zh": "在對話右上角可以封鎖或檢舉。團解散後訊息全部刪除。",
+"en": "Block or report from the top of a chat. Messages are deleted when the group ends."
+},
+{
+"zh": "按「我迷路了」會把你現在的位置傳給團主與共同團主，地圖上出現紅點與團號，30 分鐘後自動刪除。",
+"en": "Tapping \"I'm lost\" sends your current location to the leaders as a red dot with your number. It is deleted after 30 minutes."
+},
+{
+"zh": "行程表與解散",
+"en": "Itinerary and ending"
+},
+{
+"zh": "行程表的時間都用集合點的當地時區。",
+"en": "Itinerary times use the local time zone of each meetup."
+},
+{
+"zh": "最後一天 23:59 團自動解散，名單、點名紀錄全部刪除。",
+"en": "The group ends at 23:59 on the last day and the list and roll calls are deleted."
+},
+{
+"zh": "同一團的人（含領隊）會在 3D 地圖上看到你的大頭貼和位置，你也看得到他們。",
+"en": "Everyone in your group, including leaders, sees your photo and location on the 3D map, and you see theirs."
+},
+{
+"zh": "只在 App 開著時更新；不在團裡的人看不到。退團或團解散，位置就刪除。",
+"en": "Updated only while the app is open. People outside the group never see it. Deleted when you leave or the group ends."
+},
+{
+"zh": "可以發氣泡、長按地圖上的人傳訊息。",
+"en": "Post a bubble, or long-press someone on the map to message them."
+},
+{
+"zh": "隨時可以在設定關掉分享。",
+"en": "Turn sharing off any time in Settings."
+},
+{
+"zh": "我已滿 18 歲，或已取得家長／監護人同意",
+"en": "I'm 18 or older, or my parent/guardian agrees"
+},
+{
+"zh": "處理中…",
+"en": "One moment…"
+},
+{
+"zh": "開始分享",
+"en": "Start sharing"
+},
+{
+"zh": "先不要",
+"en": "Not now"
+},
+{
+"zh": "同團的人會在地圖上你的大頭貼上方看到。",
+"en": "Your group sees it above your photo on the map."
+},
+{
+"zh": "例如：在找廁所、買到珍奶了",
+"en": "e.g. Looking for a restroom"
+},
+{
+"zh": "收起氣泡",
+"en": "Remove"
+},
+{
+"zh": "發出",
+"en": "Post"
+},
+{
+"zh": "傳訊息",
+"en": "Send a message"
+},
+{
+"zh": "解除封鎖",
+"en": "Unblock"
+},
+{
+"zh": "封鎖",
+"en": "Block"
+},
+{
+"zh": "已解除封鎖",
+"en": "Unblocked"
+},
+{
+"zh": "已封鎖，你不會再收到他的訊息與氣泡",
+"en": "Blocked. You won't see their messages or bubble."
+},
+{
+"zh": "檢舉",
+"en": "Report"
+},
+{
+"zh": "已收到檢舉，我們會盡快處理",
+"en": "Thanks. We'll review it soon."
+},
+{
+"zh": "封鎖或檢舉",
+"en": "Block or report"
+},
+{
+"zh": "還沒有訊息。打個招呼吧！",
+"en": "No messages yet. Say hi!"
+},
+{
+"zh": "這個人已經不在團裡了。",
+"en": "This person is no longer in the group."
+},
+{
+"zh": "傳訊息…",
+"en": "Message…"
+},
+{
+"zh": "你：{m.text}",
+"en": "You: {m.text}"
+},
+{
+"zh": "團裡的其他人",
+"en": "Others in the group"
+},
+{
+"zh": "已離團",
+"en": "Left the group"
+},
+{
+"zh": "{w.no} 號",
+"en": "No. {w.no}"
+},
+{
+"zh": "團主 · {base}",
+"en": "Leader · {base}"
+},
+{
+"zh": "共同團主 · {base}",
+"en": "Co-leader · {base}"
+},
+{
+"zh": "集合與點名",
+"en": "Gather and roll call"
+},
+{
+"zh": "領隊發出集合、點名時的提醒",
+"en": "Alerts when your tour leader calls the group together"
+},
+{
+"zh": "你已經在另一個團裡了，先退出那一團再加入。",
+"en": "You are already in another group. Leave it first."
+},
+{
+"zh": "這個團已滿 20 人。請領隊升級 7 天方案或使用團購券。",
+"en": "This group is full (20). Ask your leader to upgrade."
+},
+{
+"zh": "這個團已滿 100 人。",
+"en": "This group is full (100)."
+},
+{
+"zh": "這個 QR code 已經換新，請向領隊要新的。",
+"en": "This QR code was replaced. Ask your leader for the new one."
+},
+{
+"zh": "這個團已經結束了。",
+"en": "This group has ended."
+},
+{
+"zh": "內容有不適合的字，請換個說法。",
+"en": "Please rephrase that."
+},
+{
+"zh": "團主要先交棒或解散，才能離開。",
+"en": "Hand over or end the group before leaving."
+},
+{
+"zh": "只有團主可以這麼做。",
+"en": "Only the leader can do that."
+},
+{
+"zh": "共同團主最多 2 位。",
+"en": "Up to 2 co-leaders."
+},
+{
+"zh": "請輸入團名。",
+"en": "Please enter a group name."
+},
+{
+"zh": "時間不在行程內。",
+"en": "That time is outside the trip."
+},
+{
+"zh": "請填寫集合點。",
+"en": "Please add a meeting point."
+},
+{
+"zh": "時區不正確。",
+"en": "Invalid time zone."
+},
+{
+"zh": "請輸入內容。",
+"en": "Please write something."
+},
+{
+"zh": "數量已達上限。",
+"en": "Limit reached."
+},
+{
+"zh": "找不到這張團購券。",
+"en": "Voucher not found."
+},
+{
+"zh": "這張團購券已經用過了。",
+"en": "This voucher was already used."
+},
+{
+"zh": "這張團購券已經過期。",
+"en": "This voucher has expired."
+},
+{
+"zh": "這一團已經升級過了。",
+"en": "This group is already upgraded."
+},
+{
+"zh": "這筆購買已經用過了。",
+"en": "This purchase was already used."
+},
+{
+"zh": "你目前沒有分享位置。",
+"en": "Location sharing is off."
+},
+{
+"zh": "要先同意分享，才能發氣泡或傳訊息。",
+"en": "Please agree to sharing first."
+},
+{
+"zh": "傳得太快了，休息一下再傳。",
+"en": "Slow down a little."
+},
+{
+"zh": "連線不穩，請稍後再試。",
+"en": "Connection problem. Please try again."
+},
+{
+"zh": "現在無法購買，請稍後再試。",
+"en": "Purchases are unavailable right now."
+},
+{
+"zh": "購買沒有完成，請稍後再試。",
+"en": "The purchase did not go through."
+},
+{
+"zh": "團購券已經準備好，可以發給領隊了。",
+"en": "Your voucher is ready to share."
+},
+{
+"zh": "下載翻譯語言",
+"en": "Download translation"
+},
+{
+"zh": "第一次翻譯這種語言，需要下載約 30 MB 的語言檔（建議用 Wi-Fi）。之後翻譯都在手機上進行，內容不會上傳。",
+"en": "Translating this language for the first time needs a download of about 30 MB (Wi-Fi recommended). After that, translation happens on your phone and nothing is uploaded."
+},
+{
+"zh": "下載",
+"en": "Download"
+},
+{
+"zh": "目前無法翻譯",
+"en": "Can't translate right now"
+},
+{
+"zh": "翻譯中…",
+"en": "Translating…"
+},
+{
+"zh": "看原文",
+"en": "Show original"
+},
+{
+"zh": "翻譯",
+"en": "Translate"
+}
+]

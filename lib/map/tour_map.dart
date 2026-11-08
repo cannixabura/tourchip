@@ -41,7 +41,9 @@ class TourMap extends StatefulWidget {
   final void Function(MapLibreMapController controller)? onReady;
   /// 長按地圖上的人
   final void Function(TourPerson person)? onPersonLongPress;
-  const TourMap({super.key, this.group, this.picking = false, this.intro = false, this.bottomInset = 0, this.onReady, this.onPersonLongPress});
+  /// 點一下地圖上的人（看氣泡、翻譯、傳訊息）
+  final void Function(TourPerson person)? onPersonTap;
+  const TourMap({super.key, this.group, this.picking = false, this.intro = false, this.bottomInset = 0, this.onReady, this.onPersonLongPress, this.onPersonTap});
 
   @override
   State<TourMap> createState() => TourMapState();
@@ -320,24 +322,39 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
 
   /// 長按：找手指附近（44 點以內）最近的人
   Future<void> _longPress(Offset at) async {
+    final p = await _personAt(at);
+    if (p == null || widget.onPersonLongPress == null) return;
+    HapticFeedback.mediumImpact();
+    widget.onPersonLongPress!(p);
+  }
+
+  Future<void> _tap(Offset at) async {
+    final p = await _personAt(at);
+    if (p == null || widget.onPersonTap == null) return;
+    HapticFeedback.selectionClick();
+    widget.onPersonTap!(p);
+  }
+
+  Future<TourPerson?> _personAt(Offset at) async {
     final c = _c, people = widget.group?.people ?? const <TourPerson>[];
-    if (c == null || people.isEmpty || widget.onPersonLongPress == null) return;
+    if (c == null || people.isEmpty) return null;
     try {
       final pts = await c.toScreenLocationBatch([for (final p in people) LatLng(p.lat, p.lng)]);
-      if (!mounted) return;
+      if (!mounted) return null;
       // Android 回傳實體像素，iOS 回傳點
       final k = Theme.of(context).platform == TargetPlatform.android ? MediaQuery.of(context).devicePixelRatio : 1.0;
       TourPerson? best;
       var bestD = 44.0;
       for (var i = 0; i < people.length && i < pts.length; i++) {
-        final d = (Offset(pts[i].x / k, pts[i].y / k) - at).distance;
+        // 大頭貼與氣泡畫在定位點上方，往上 36 點也算點到
+        final pt = Offset(pts[i].x / k, pts[i].y / k);
+        final d = [(pt - at).distance, (pt.translate(0, -36) - at).distance].reduce((x, y) => x < y ? x : y);
         if (d < bestD) { bestD = d; best = people[i]; }
       }
-      if (best != null) {
-        HapticFeedback.mediumImpact();
-        widget.onPersonLongPress!(best);
-      }
-    } catch (_) {}
+      return best;
+    } catch (_) {
+      return null;
+    }
   }
 
   static String _hex(Color c) => '#${(c.toARGB32() & 0xFFFFFF).toRadixString(16).padLeft(6, '0')}';
@@ -395,6 +412,7 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
             _moveCamera();
           },
           onLongPressStart: (d) => _longPress(d.localPosition),
+          onTapUp: widget.onPersonTap == null ? null : (d) => _tap(d.localPosition),
           child: map,
         )
       else

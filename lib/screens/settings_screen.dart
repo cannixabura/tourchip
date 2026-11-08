@@ -291,7 +291,7 @@ Future<void> editProfile(BuildContext context) {
   });
 }
 
-/// 語言：跟隨手機、繁體中文、English
+/// 語言：跟隨手機或 9 種語言其中之一
 Future<void> pickLanguage(BuildContext context) {
   return showPanel<void>(context, (ctx, setS) {
     Widget option(String value, String label) {
@@ -316,8 +316,7 @@ Future<void> pickLanguage(BuildContext context) {
       Text(tx('語言', 'Language'), style: Night.title, textAlign: TextAlign.center),
       const SizedBox(height: Night.space3),
       option('system', tx('跟隨手機設定', 'Same as phone')),
-      option('zh', '繁體中文'),
-      option('en', 'English'),
+      for (final l in supportedLangs) option(l, langNames[l]!),
     ]);
   });
 }

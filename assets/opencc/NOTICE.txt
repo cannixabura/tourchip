@@ -1,0 +1,8 @@
+Simplified-to-Traditional Chinese tables derived from OpenCC (https://github.com/BYVoid/OpenCC),
+Apache License 2.0. Filtered to entries that differ from character-by-character conversion; 台 is kept as 台 (Taiwan usage).
+
+OpenCC-Python
+Copyright 2016
+
+This product includes dictionary data and configurations developed by
+[OpenCC](https://github.com/BYVoid/OpenCC).

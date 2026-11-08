@@ -58,10 +58,10 @@ class TourChipApp extends StatelessWidget {
     // 設定裡換語言：系統元件（日期、按鈕）跟著換；畫面上的 tx() 由 setLang 整個重畫
     return ValueListenableBuilder<String>(valueListenable: appLang, builder: (context, lang, _) => MaterialApp(
       title: tx('旅行團', 'TourChip'),
-      locale: lang == 'system' ? null : (lang == 'zh' ? const Locale('zh', 'TW') : const Locale('en')),
+      locale: appLocale,
       debugShowCheckedModeBanner: false,
       localizationsDelegates: const [GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate, GlobalCupertinoLocalizations.delegate],
-      supportedLocales: const [Locale('zh', 'TW'), Locale('en')],
+      supportedLocales: appLocales,
       theme: ThemeData(
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Night.night900,

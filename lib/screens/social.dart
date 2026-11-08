@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../l10n.dart';
 import '../tour/model.dart';
 import '../tour/service.dart';
+import '../translate.dart';
 import '../ui/avatar.dart';
 import '../ui/night.dart';
 import 'join.dart';
@@ -127,6 +128,48 @@ Future<void> editBubble(BuildContext context) async {
   });
 }
 
+// ---------- 點地圖上的人 ----------
+
+/// 點一下地圖上的人：大頭貼、團號、氣泡（可以翻譯），下面「傳訊息」
+Future<void> showPerson(BuildContext context, TourPerson p) async {
+  final me = p.uid == FirebaseAuth.instance.currentUser?.uid;
+  final g = TourService.current.value;
+  await showPanel<void>(context, (ctx, _) => Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Center(child: Avatar(p.avatar, size: 64)),
+        const SizedBox(height: Night.space2),
+        Text(g?.whoLabel(p.uid) ?? p.name, style: Night.title, textAlign: TextAlign.center),
+        if (p.bubble.isNotEmpty) ...[
+          const SizedBox(height: Night.space3),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            decoration: BoxDecoration(color: Night.night600, borderRadius: BorderRadius.circular(16)),
+            child: TranslatableText(p.bubble, textAlign: TextAlign.center, style: const TextStyle(color: Night.ink, fontSize: 17, height: 1.4)),
+          ),
+        ],
+        const SizedBox(height: Night.space4),
+        if (me)
+          NightButton(tx('發一個氣泡', 'Post a bubble'), icon: Icons.chat_bubble_outline, onPressed: () { Navigator.pop(ctx); editBubble(context); })
+        else
+          NightButton(tx('傳訊息', 'Send a message'), icon: Icons.send, onPressed: () { Navigator.pop(ctx); openChat(context, p.uid); }),
+      ]));
+}
+
+/// 聊天上方：對方的氣泡
+class _BubbleLine extends StatelessWidget {
+  final String text;
+  const _BubbleLine(this.text);
+
+  @override
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.only(top: Night.space2),
+        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const Padding(padding: EdgeInsets.only(top: 2), child: Icon(Icons.chat_bubble, size: 16, color: Night.auroraViolet)),
+          const SizedBox(width: Night.space2),
+          Expanded(child: TranslatableText(text, compact: true, style: Night.body.copyWith(color: Night.ink))),
+        ]),
+      );
+}
+
 // ---------- 私訊 ----------
 
 /// 和某個人的對話：上面是最近的訊息，下面輸入；底下可以封鎖、檢舉
@@ -205,6 +248,7 @@ class _ChatState extends State<_Chat> {
         final who = g.names[widget.uid];
         final msgs = g.messages.where((m) => m.other == widget.uid).toList();
         final gone = who == null;
+        final bubble = g.people.where((p) => p.uid == widget.uid).firstOrNull?.bubble ?? '';
         return Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           Row(children: [
             Avatar(who?.avatar ?? '', size: 40),
@@ -213,6 +257,7 @@ class _ChatState extends State<_Chat> {
             if (!gone) IconButton(tooltip: tx('封鎖或檢舉', 'Block or report'), icon: const Icon(Icons.more_horiz, color: Night.inkMuted), onPressed: () => _more(g)),
             IconButton(tooltip: tx('關閉', 'Close'), icon: const Icon(Icons.close, color: Night.inkMuted), onPressed: () => Navigator.pop(context)),
           ]),
+          if (bubble.isNotEmpty) _BubbleLine(bubble),
           const SizedBox(height: Night.space2),
           Flexible(
             child: msgs.isEmpty
@@ -236,7 +281,9 @@ class _ChatState extends State<_Chat> {
                               borderRadius: BorderRadius.circular(16),
                             ),
                             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                              Text(m.text, style: const TextStyle(color: Night.ink, fontSize: 15, height: 1.4)),
+                              m.mine
+                                  ? Text(m.text, style: const TextStyle(color: Night.ink, fontSize: 15, height: 1.4))
+                                  : TranslatableText(m.text, compact: true, style: const TextStyle(color: Night.ink, fontSize: 15, height: 1.4)),
                               const SizedBox(height: 2),
                               Text(_hm(m.at), style: const TextStyle(color: Color(0xB3F3F0FF), fontSize: 10)),
                             ]),

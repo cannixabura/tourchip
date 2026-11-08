@@ -8,6 +8,7 @@ import '../map/tour_map.dart';
 import '../tour/model.dart';
 import '../tour/service.dart';
 import '../tour/zones.dart';
+import '../translate.dart';
 import '../ui/night.dart';
 import 'call_overlay.dart';
 import 'gather_screen.dart';
@@ -58,7 +59,7 @@ class _GroupScreenState extends State<GroupScreen> {
         if (g == null) return const SizedBox.shrink();
         return Scaffold(
           body: Stack(children: [
-            Positioned.fill(child: TourMap(key: _map, group: g, onPersonLongPress: (p) => openChat(context, p.uid))),
+            Positioned.fill(child: TourMap(key: _map, group: g, onPersonLongPress: (p) => openChat(context, p.uid), onPersonTap: (p) => showPerson(context, p))),
             Positioned(left: Night.space4, right: Night.space4, top: MediaQuery.of(context).padding.top + Night.space2, child: _TopBar(g: g)),
             Positioned(
               left: 0, right: 0, bottom: 0,
@@ -251,7 +252,7 @@ class _StaffPanel extends StatelessWidget {
       big = tx('到了 ${g.here}／${g.rollTotal}', 'Here ${g.here}/${g.rollTotal}');
       progress = g.rollTotal == 0 ? 0 : g.here / g.rollTotal;
     } else {
-      head = tx('${g.count} 人 · ${g.paid ? '上限 100 人' : '20 人以內免費'}', '${g.count} people · ${g.paid ? 'up to 100' : 'free up to 20'}');
+      head = '${tx('${g.count} 人', '${g.count} people')} · ${g.paid ? tx('上限 100 人', 'up to 100') : tx('20 人以內免費', 'free up to 20')}';
       big = tx('目前沒有集合', 'No gather call');
     }
     return _Panel(children: [
@@ -345,7 +346,7 @@ class _MemberPanel extends StatelessWidget {
             child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Icon(Icons.campaign_outlined, color: g.tint, size: 20),
               const SizedBox(width: 8),
-              Expanded(child: Text(ann.text, style: Night.body.copyWith(color: Night.ink), maxLines: 3, overflow: TextOverflow.ellipsis)),
+              Expanded(child: TranslatableText(ann.text, compact: true, style: Night.body.copyWith(color: Night.ink), maxLines: 3)),
             ]),
           )
         else
@@ -379,7 +380,7 @@ Future<void> showAnnounceSheet(BuildContext context, TourGroup g) {
   return showPanel(context, (ctx, setS) => Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
     Text(tx('發公告', 'Post a notice'), style: Night.title, textAlign: TextAlign.center),
     const SizedBox(height: Night.space2),
-    Text(tx('公告會置頂在團員的畫面，也會用推播送達。團員看到的是自己手機的語言。', 'Notices are pinned and pushed to members.'), style: Night.caption, textAlign: TextAlign.center),
+    Text(tx('公告會置頂在團員的畫面，也會用推播送達。團員可以點一下翻譯成自己的語言。', 'Notices are pinned and pushed to members. Members can tap to translate them.'), style: Night.caption, textAlign: TextAlign.center),
     const SizedBox(height: Night.space3),
     TextField(controller: ctl, maxLength: 200, maxLines: 4, minLines: 2, autofocus: true, style: const TextStyle(color: Night.ink), decoration: InputDecoration(hintText: tx('例如：18:30 在飯店大廳集合，遊覽車 3 號車', 'e.g. Meet in the hotel lobby at 18:30'))),
     if (g.subs.isNotEmpty) SubPicker(g: g, value: sub, onChanged: (v) => setS(() => sub = v)),
@@ -415,7 +416,7 @@ Future<void> showAnnouncements(BuildContext context, TourGroup g) {
             return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text([md(a.at, deviceTz), hm(a.at, deviceTz), if (a.sub != null) g.subName(a.sub)].join(' '), style: Night.caption),
               const SizedBox(height: 4),
-              SelectableText(a.text, style: Night.body.copyWith(color: Night.ink)),
+              TranslatableText(a.text, style: Night.body.copyWith(color: Night.ink)),
             ]);
           },
         ),

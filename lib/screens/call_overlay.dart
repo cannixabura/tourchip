@@ -11,6 +11,7 @@ import '../l10n.dart';
 import '../tour/model.dart';
 import '../tour/service.dart';
 import '../tour/zones.dart';
+import '../translate.dart';
 import '../ui/night.dart';
 import 'join.dart';
 
@@ -64,10 +65,9 @@ class _CallCardState extends State<CallCard> {
     return Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Text(tx('${hm(c.at, c.tz)} 集合', 'Gather at ${hm(c.at, c.tz)}'), style: Night.title.copyWith(fontSize: widget.big ? 22 : 20)),
       const SizedBox(height: 2),
-      Text(
-        [if (c.place.isNotEmpty) tx('到${c.place}', 'at ${c.place}'), tx('${zoneName(c.tz).split('・').first}時間', '${zoneName(c.tz).split(' / ').first} time')].join(' · '),
-        style: Night.body,
-      ),
+      // 集合點名稱是領隊打的字：可以點一下翻譯
+      if (c.place.isNotEmpty) TranslatableText(c.place, compact: true, style: Night.body.copyWith(color: Night.ink)),
+      Text(tx('${zoneName(c.tz).split('・').first}時間', '${zoneName(c.tz).split(' / ').first} time'), style: Night.body),
       const SizedBox(height: Night.space3),
       Row(children: [
         Expanded(
