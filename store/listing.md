@@ -56,7 +56,7 @@
 
 **Subtitle (App Store, 30 chars)**：Meetups, roll calls & notices
 
-**Short description (Play, 80 chars)**：Lead a group trip: everyone's phone rings for meetups, and a 3D light shows where.
+**Short description (Play, 80 chars)**：Lead group trips: every phone rings for meetups, a 3D light shows where.
 
 **Promotional text (App Store)**：
 Never lose anyone on a group trip. TourChip turns the meeting point into a pillar of light on a 3D map, rings every phone for a meetup, and shows the leader who got the call. Free up to 20 people, always free for members.
