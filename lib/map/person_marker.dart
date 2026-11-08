@@ -37,7 +37,7 @@ class PersonMarker {
 
   /// PNG：dpr 是螢幕倍率（地圖會用同一個倍率把圖縮回邏輯大小）
   static Future<Uint8List> render({required String label, required String bubble, required String avatar, required Color ring, required double dpr, bool me = false}) async {
-    const av = 46.0, gap = 6.0;
+    const av = 31.0, gap = 5.0; // 大頭貼直徑（原本 46，縮小 1/3）
     final photo = await _photo(avatar);
     final name = _text(label, 12, me ? Night.auroraBlue : Night.ink, maxWidth: 140);
     final bub = bubble.isEmpty ? null : _text(bubble, 14, Night.ink, maxWidth: 170, lines: 2);
@@ -65,9 +65,9 @@ class PersonMarker {
     }
 
     // 大頭貼：光暈＋光環＋照片（沒有照片就畫人形）
-    c.drawCircle(Offset(cx, cy), av / 2 + 6, Paint()..color = ring.withValues(alpha: 0.35)..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6));
+    c.drawCircle(Offset(cx, cy), av / 2 + 4, Paint()..color = ring.withValues(alpha: 0.35)..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4));
     c.drawCircle(Offset(cx, cy), av / 2, Paint()..color = ring);
-    final inner = Rect.fromCircle(center: Offset(cx, cy), radius: av / 2 - 2.5);
+    final inner = Rect.fromCircle(center: Offset(cx, cy), radius: av / 2 - 2);
     c.save();
     c.clipPath(Path()..addOval(inner));
     c.drawRect(inner, Paint()..color = Night.night800);

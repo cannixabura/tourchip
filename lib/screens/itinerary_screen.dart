@@ -323,17 +323,18 @@ class _PickPointScreenState extends State<PickPointScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(backgroundColor: Night.night900, foregroundColor: Night.ink, title: Text(tx('拖曳地圖選集合點', 'Drag to place the point'), style: Night.title)),
-      body: TourMap(key: _map, group: widget.group, picking: true, onReady: (_) {
-        if (widget.start != null) _map.currentState?.flyTo(widget.start!.latitude, widget.start!.longitude);
-      }),
+      body: TourMap(key: _map, group: widget.group, picking: true, center: widget.start),
+      // 按鈕要包在 mainAxisSize.min 的 Column 裡：直接放進 bottomNavigationBar 會被撐滿整個畫面，把地圖擠成零高度
       bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(Night.space4),
-          child: NightButton(tx('用這個位置', 'Use this spot'), onPressed: () {
-            final c = _map.currentState?.center;
-            if (c != null) Navigator.pop(context, c);
-          }),
-        ),
+        child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          Padding(
+            padding: const EdgeInsets.all(Night.space4),
+            child: NightButton(tx('用這個位置', 'Use this spot'), expand: true, onPressed: () {
+              final c = _map.currentState?.center;
+              if (c != null) Navigator.pop(context, c);
+            }),
+          ),
+        ]),
       ),
     );
   }

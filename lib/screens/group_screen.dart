@@ -66,7 +66,7 @@ class _GroupScreenState extends State<GroupScreen> {
               child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
                 // 左邊：我的氣泡；右下角：設定（大頭貼、暱稱、語言、分享位置、說明…）
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(Night.space4, 0, Night.space4, Night.space3),
+                  padding: const EdgeInsets.fromLTRB(Night.space4, 0, Night.space2, Night.space3),
                   child: Row(children: [
                     Flexible(child: _BubbleChip(g: g)),
                     const Spacer(),

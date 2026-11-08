@@ -43,13 +43,17 @@ class TourMap extends StatefulWidget {
   final void Function(TourPerson person)? onPersonLongPress;
   /// 點一下地圖上的人（看氣泡、翻譯、傳訊息）
   final void Function(TourPerson person)? onPersonTap;
-  const TourMap({super.key, this.group, this.picking = false, this.intro = false, this.bottomInset = 0, this.onReady, this.onPersonLongPress, this.onPersonTap});
+  /// 一開始的地圖中心（選點時傳入已選過的點）；沒有就用最近一次的位置
+  final LatLng? center;
+  const TourMap({super.key, this.group, this.picking = false, this.intro = false, this.bottomInset = 0, this.onReady, this.onPersonLongPress, this.onPersonTap, this.center});
 
   @override
   State<TourMap> createState() => TourMapState();
 }
 
 class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
+  /// 最近一次取得的手機位置（所有地圖共用）：開新地圖時不用等定位就能先顯示
+  static LatLng? lastMe;
   String? _style;
   LatLng? _start;
   MapLibreMapController? _c;
@@ -95,24 +99,40 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
 
   Future<void> _locate() async {
     final g = widget.group;
+    // 先用已知的點立刻顯示地圖，不等定位（定位可能要好幾秒，選點畫面會一直空白）
+    final quick = widget.center ?? lastMe ??
+        (g?.call != null ? LatLng(g!.call!.lat, g.call!.lng) : null) ??
+        g?.stops.where((s) => s.lat != null).map((s) => LatLng(s.lat!, s.lng!)).firstOrNull;
+    if (quick != null && mounted) setState(() => _start = quick);
+    if (lastMe != null) _me = lastMe;
     LatLng? p;
     final allowed = await ensureLocation();
+    if (!mounted) return;
     if (mounted && allowed != _myLocation) setState(() => _myLocation = allowed);
     if (allowed) {
       try {
         final pos = await Geolocator.getLastKnownPosition() ?? await Geolocator.getCurrentPosition(locationSettings: const LocationSettings(timeLimit: Duration(seconds: 8)));
         p = LatLng(pos.latitude, pos.longitude);
         _me = p;
+        lastMe = p;
       } catch (_) {}
+      if (!mounted) return;
       if (_motion) {
         _position = Geolocator.getPositionStream(locationSettings: const LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 5)).listen((pos) {
           _me = LatLng(pos.latitude, pos.longitude);
+          lastMe = _me;
           _moveCamera();
           _syncPeople();
         }, onError: (_) {});
       }
     }
     // 抓不到位置：先看集合點，再看行程表第一個有座標的點，都沒有就看台北
+    if (_start != null) {
+      // 地圖已經先開了：跟著手機轉的地圖會自己移到我的位置；選點時沒傳入點，就移到我的位置
+      if (widget.picking && widget.center == null && p != null) _c?.animateCamera(CameraUpdate.newLatLng(p));
+      _moveCamera(force: true);
+      return;
+    }
     p ??= g?.call != null ? LatLng(g!.call!.lat, g.call!.lng) : null;
     p ??= g?.stops.where((s) => s.lat != null).map((s) => LatLng(s.lat!, s.lng!)).firstOrNull;
     p ??= const LatLng(25.0478, 121.5170);
@@ -190,7 +210,7 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
 
   Future<void> _onStyleLoaded() async {
     final c = _c;
-    if (c == null) return;
+    if (c == null || !mounted) return;
     try {
       // 夜色 3D 建築：越高越亮，只有最高的建築帶一點淡紫（與城市低語相同）
       await c.addFillExtrusionLayer('openmaptiles', '3d-buildings', const FillExtrusionLayerProperties(
@@ -230,9 +250,11 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
         textField: ['get', 'label'], textFont: ['Noto Sans Regular'], textSize: 12, textColor: '#FF6B7A',
         textHaloColor: '#070B1F', textHaloWidth: 1.5, textOffset: [0, 1.6], textAllowOverlap: true,
       ));
+      if (!mounted) return;
       _layersReady = true;
       await _syncLayers();
     } catch (_) {}
+    if (!mounted) return;
     widget.onReady?.call(c);
     if (widget.intro) {
       _playIntro();
@@ -346,9 +368,9 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
       TourPerson? best;
       var bestD = 44.0;
       for (var i = 0; i < people.length && i < pts.length; i++) {
-        // 大頭貼與氣泡畫在定位點上方，往上 36 點也算點到
+        // 大頭貼與氣泡畫在定位點上方，往上 28 點也算點到
         final pt = Offset(pts[i].x / k, pts[i].y / k);
-        final d = [(pt - at).distance, (pt.translate(0, -36) - at).distance].reduce((x, y) => x < y ? x : y);
+        final d = [(pt - at).distance, (pt.translate(0, -28) - at).distance].reduce((x, y) => x < y ? x : y);
         if (d < bestD) { bestD = d; best = people[i]; }
       }
       return best;
@@ -428,7 +450,8 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
         ),
       ),
       // 地圖資料授權要求的出處標示
-      Positioned(left: 12, bottom: widget.bottomInset + 4, child: const IgnorePointer(child: Text('© OpenMapTiles © OpenStreetMap', style: TextStyle(color: Night.inkFaint, fontSize: 10)))),
+      // 放在畫面最底下（手勢列上方），不擋到按鈕
+      Positioned(left: 16, bottom: max(2.0, MediaQuery.of(context).padding.bottom - 14), child: const IgnorePointer(child: Text('© OpenMapTiles © OpenStreetMap', style: TextStyle(color: Night.inkFaint, fontSize: 9)))),
       if (_motion && _focus != null)
         Positioned(
           left: 0, right: 0, bottom: widget.bottomInset + Night.space6,
