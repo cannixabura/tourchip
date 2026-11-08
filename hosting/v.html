@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#070b1f">
+<title>旅行團 團購券 · TourChip</title>
+<style>
+:root{color-scheme:dark;--bg:#070b1f;--line:rgba(196,170,255,.38);--ink:#f3f0ff;--muted:#b9b6d6;--faint:#8c89b0}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:radial-gradient(circle at 50% 18%,#241a55,var(--bg) 60%);color:var(--ink);font:400 16px/1.7 "Noto Sans TC","PingFang TC",system-ui,sans-serif;padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom))}
+.card{width:100%;max-width:420px;background:rgba(26,31,74,.72);border:1px solid var(--line);border-radius:24px;padding:28px 22px;text-align:center}
+h1{font-size:26px;margin:4px 0}
+h1 b{background:linear-gradient(90deg,#b44cff,#4fc3f7);-webkit-background-clip:text;background-clip:text;color:transparent}
+.code{font-size:28px;letter-spacing:5px;margin:14px 0}
+p{color:var(--muted);margin:6px 0}
+a.btn{display:block;margin-top:12px;padding:14px;border-radius:999px;text-decoration:none;color:#fff;font-weight:600;background:linear-gradient(90deg,#8e2de2,#2a63d4)}
+a.ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
+small{display:block;margin-top:18px;color:var(--faint);font-size:12px}
+footer{margin-top:18px;font-size:12px;color:var(--faint)}footer a{color:var(--muted)}
+</style>
+</head>
+<body>
+<main class="card">
+  <h1><b>團購</b>券</h1>
+  <p>旅行社發給領隊的 7 天方案券。領隊開團後，在 App 的「升級到 100 人 → 掃描團購券」使用。</p>
+  <div class="code" id="code">— — — —</div>
+  <a class="btn" id="open" href="#">打開旅行團使用</a>
+  <a class="btn ghost" href="https://apps.apple.com/app/idREPLACE_APP_STORE_ID">App Store 下載</a>
+  <a class="btn ghost" href="https://play.google.com/store/apps/details?id=com.softchip.tourchip">Google Play 下載</a>
+  <small>TourChip voucher: start a group, then scan this voucher under "Upgrade to 100 people".</small>
+</main>
+<script>
+const m = location.pathname.match(/\/v\/([A-HJ-NP-Z2-9]{10})/i);
+if (m) { document.getElementById('code').textContent = m[1].toUpperCase(); document.getElementById('open').href = location.href; }
+</script>
+</body>
+</html>

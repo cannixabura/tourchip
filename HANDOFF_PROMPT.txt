@@ -1,0 +1,1 @@
+請讀 CLAUDE.md，依「開工步驟」從第 1 步開始做到第 6 步：初始化 git、產生 iOS／Android 平台資料夾、flutterfire configure、修好 flutter analyze 的所有錯誤、完成 iOS 與 Android 設定，然後在我的 iPhone 上 flutter run。每完成一步先 commit，遇到需要我登入（Apple、Google、Firebase）或付款的地方就停下來告訴我要做什麼。第 7 步（部署後端）和第 8 步（官網）做之前先問我。

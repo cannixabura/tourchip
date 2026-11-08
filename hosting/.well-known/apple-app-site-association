@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["JCFN9LMAXF.com.softchip.tourchip"],
+        "components": [
+          { "/": "/g/*", "comment": "入團 QR code 與分享連結" },
+          { "/": "/v/*", "comment": "團購券" }
+        ]
+      }
+    ]
+  }
+}

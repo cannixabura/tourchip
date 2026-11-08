@@ -1,0 +1,4 @@
+{
+  "projects": { "default": "mood-whisper-f7de9" },
+  "targets": { "mood-whisper-f7de9": { "hosting": { "tourchip": ["tourchip"] } } }
+}

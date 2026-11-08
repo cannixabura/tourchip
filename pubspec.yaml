@@ -1,0 +1,49 @@
+name: tourchip
+description: "旅行團 TourChip：給領隊、導遊的帶團工具（集合、點名、3D 集合點光柱）"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.13.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  cupertino_icons: ^1.0.8
+  # 與城市低語相同版本，降低踩雷機會
+  firebase_core: ^4.15.0
+  firebase_auth: ^6.7.0
+  firebase_database: ^12.6.0
+  firebase_messaging: ^16.7.0
+  firebase_crashlytics: ^5.4.0
+  maplibre_gl: ^0.27.1
+  geolocator: ^14.0.3
+  flutter_compass: ^0.8.1
+  http: ^1.6.0
+  shared_preferences: ^2.5.5
+  flutter_local_notifications: ^22.3.2
+  flutter_timezone: ^5.1.1
+  timezone: ^0.11.2
+  audioplayers: ^6.8.1
+  in_app_purchase: ^3.3.1
+  qr_flutter: ^4.1.0
+  app_links: ^7.2.2
+  share_plus: ^13.3.1
+  url_launcher: ^6.3.3
+  wakelock_plus: ^1.8.0
+  # 新增：App 內掃 QR code（入團、團購券）
+  mobile_scanner: ^7.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/map/night_style.json
+    - assets/audio/group_call.wav
