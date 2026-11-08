@@ -4,7 +4,9 @@
     "target": {
       "namespace": "android_app",
       "package_name": "com.softchip.tourchip",
-      "sha256_cert_fingerprints": ["REPLACE_WITH_PLAY_APP_SIGNING_SHA256", "REPLACE_WITH_UPLOAD_KEY_SHA256"]
+      "sha256_cert_fingerprints": [
+        "1E:62:53:3B:F7:3E:72:BE:D0:F7:0E:D2:0F:A5:7C:03:3B:42:15:D9:85:5C:23:08:D6:69:18:8B:BA:26:92:C9"
+      ]
     }
   }
 ]
