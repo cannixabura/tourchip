@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 低語團集合呼叫的音效只在推播裡用名稱引用，發佈版縮減資源時要保留 -->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@raw/group_call" />
