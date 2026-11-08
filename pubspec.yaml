@@ -54,7 +54,7 @@ flutter:
     - assets/opencc/s2t.txt
     - assets/opencc/t2s.txt
 
-# App 圖示：assets/icon/gen_icon.py 產生（集合光柱＋光之旗＋一圈團員，夜光配色）
+# App 圖示：assets/icon/options/gen_options2.py 的 C 款「帶隊前進」（導遊舉黃旗、團員跟隨、集合光柱）
 flutter_launcher_icons:
   ios: true
   remove_alpha_ios: true
