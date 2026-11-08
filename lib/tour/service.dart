@@ -33,6 +33,11 @@ class TourService {
   /// 前景收到點名
   static final incomingRoll = ValueNotifier<String?>(null);
   static Timer? _poll;
+  /// 點了私訊通知：要打開和誰的對話（main.dart 監聽）
+  static final openChat = ValueNotifier<String?>(null);
+  static StreamSubscription<Position>? _posSub;
+  static DateTime _posSentAt = DateTime.fromMillisecondsSinceEpoch(0);
+  static Position? _posSent;
 
   static Future<Map<String, dynamic>> call(String action, [Map<String, dynamic> body = const {}]) async {
     try {
@@ -76,19 +81,49 @@ class TourService {
     if (after != null && !after.isStaff && after.rollId != null && after.rollMine == null && before?.rollId != after.rollId) {
       incomingRoll.value = after.rollId;
     }
+    after != null && after.shareOn ? _startPos() : _stopPos();
     _schedulePoll();
   }
 
-  /// 在團裡時定期更新：有集合或點名時 10 秒一次，平常 30 秒；App 在背景時暫停
+  /// 同團互相看得到：App 開著、在團裡、開著分享時才回報位置（最多 15 秒一次；走超過 30 公尺會提早送）
+  static void _startPos() {
+    if (_posSub != null) return;
+    _posSub = Geolocator.getPositionStream(locationSettings: const LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 10)).listen((p) {
+      final since = DateTime.now().difference(_posSentAt).inSeconds;
+      final moved = _posSent == null ? 1e9 : Geolocator.distanceBetween(_posSent!.latitude, _posSent!.longitude, p.latitude, p.longitude);
+      if (since < 15 && !(moved > 30 && since >= 5)) return;
+      _posSentAt = DateTime.now();
+      _posSent = p;
+      call('pos', {'lat': p.latitude, 'lng': p.longitude});
+    }, onError: (_) {});
+  }
+
+  static void _stopPos() {
+    _posSub?.cancel();
+    _posSub = null;
+    _posSent = null;
+  }
+
+  /// 分享位置的開關；第一次打開要帶 consent（已滿 18 歲或家長／監護人同意）
+  static Future<Map<String, dynamic>> setShare(bool on, {bool consent = false}) async {
+    final r = await call('share', {'on': on, if (consent) 'consent': true});
+    if (on && r['success'] == true) _posSentAt = DateTime.fromMillisecondsSinceEpoch(0);
+    return r;
+  }
+
+  /// 在團裡時定期更新：有集合或點名時 10 秒一次，平常 15 秒（同團的人在地圖上移動）；App 在背景時暫停
   static void _schedulePoll() {
     _poll?.cancel();
     final g = current.value;
     if (g == null) return;
-    _poll = Timer(Duration(seconds: g.call != null || g.rollId != null ? 10 : 30), refresh);
+    _poll = Timer(Duration(seconds: g.call != null || g.rollId != null ? 10 : 15), refresh);
   }
 
   static Future<void> refresh() => call('status');
-  static void pause() => _poll?.cancel();
+  static void pause() {
+    _poll?.cancel();
+    _stopPos(); // App 到背景就不再回報位置
+  }
 
   /// 收到推播（前景）：重新整理；集合呼叫與點名會由 _apply 跳出卡片
   static void onPush(Map<String, dynamic> data) {
@@ -161,6 +196,9 @@ String tourError(String code) => switch (code) {
       'voucher_expired' => tx('這張團購券已經過期。', 'This voucher has expired.'),
       'already_paid' => tx('這一團已經升級過了。', 'This group is already upgraded.'),
       'used' => tx('這筆購買已經用過了。', 'This purchase was already used.'),
+      'not_sharing' => tx('你目前沒有分享位置。', 'Location sharing is off.'),
+      'need_consent' => tx('要先同意分享，才能發氣泡或傳訊息。', 'Please agree to sharing first.'),
+      'too_fast' => tx('傳得太快了，休息一下再傳。', 'Slow down a little.'),
       _ => tx('連線不穩，請稍後再試。', 'Connection problem. Please try again.'),
     };
 

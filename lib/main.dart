@@ -17,6 +17,7 @@ import 'screens/call_overlay.dart';
 import 'screens/group_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/join.dart';
+import 'screens/social.dart';
 import 'tour/profile.dart';
 import 'tour/service.dart';
 import 'tour/zones.dart';
@@ -45,6 +46,7 @@ Future<void> main() async {
     if (FirebaseAuth.instance.currentUser == null) await FirebaseAuth.instance.signInAnonymously();
   } catch (_) {}
   PassStore.init();
+  initUnread();
   runApp(const TourChipApp());
 }
 
@@ -98,6 +100,7 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
     TourService.createAndroidChannel();
     TourService.incomingCall.addListener(_onIncomingCall);
     TourService.incomingRoll.addListener(_onIncomingRoll);
+    TourService.openChat.addListener(_onOpenChat);
     PassStore.notice.addListener(_onPassNotice);
     PassStore.load();
     _initPush();
@@ -109,6 +112,7 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     TourService.incomingCall.removeListener(_onIncomingCall);
     TourService.incomingRoll.removeListener(_onIncomingRoll);
+    TourService.openChat.removeListener(_onOpenChat);
     PassStore.notice.removeListener(_onPassNotice);
     _linkSub?.cancel();
     super.dispose();
@@ -139,8 +143,13 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
       if (token != null) await FirebaseDatabase.instance.ref('tokens/$uid').set(token);
       messaging.onTokenRefresh.listen((t) => FirebaseDatabase.instance.ref('tokens/$uid').set(t));
     } catch (_) {}
-    FirebaseMessaging.onMessageOpenedApp.listen((m) => TourService.onPush(m.data));
-    FirebaseMessaging.instance.getInitialMessage().then((m) { if (m != null) TourService.onPush(m.data); });
+    // 點了通知打開 App：私訊直接打開那個人的對話
+    void opened(RemoteMessage m) {
+      TourService.onPush(m.data);
+      if ('${m.data['type']}' == 'tgroup_msg' && '${m.data['from'] ?? ''}'.isNotEmpty) TourService.openChat.value = '${m.data['from']}';
+    }
+    FirebaseMessaging.onMessageOpenedApp.listen(opened);
+    FirebaseMessaging.instance.getInitialMessage().then((m) { if (m != null) opened(m); });
     FirebaseMessaging.onMessage.listen((m) {
       final type = '${m.data['type']}';
       TourService.onPush(m.data);
@@ -182,6 +191,18 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
     TourService.incomingRoll.value = null;
     _overlayOpen = true;
     showRollOverlay(context, rollId).whenComplete(() => _overlayOpen = false);
+  }
+
+  /// 等團的資料讀進來再打開對話（從通知冷啟動時還沒讀完）
+  Future<void> _onOpenChat() async {
+    final uid = TourService.openChat.value;
+    if (uid == null || !mounted) return;
+    for (var i = 0; i < 20 && TourService.current.value == null; i++) {
+      await Future.delayed(const Duration(milliseconds: 300));
+    }
+    TourService.openChat.value = null;
+    if (!mounted || TourService.current.value == null) return;
+    await openChat(context, uid);
   }
 
   void _onPassNotice() {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n.dart';
 import '../ui/night.dart';
 
 /// 旅行團的資料（伺服器 geo-service/tourgroup_api.js 的 statusView）
@@ -68,6 +69,35 @@ class TourStop {
   Map<String, dynamic> toJson() => {'id': id, 'at': at, 'tz': tz, 'place': place, 'lat': lat, 'lng': lng, 'sub': sub};
 }
 
+/// 3D 地圖上同團的人（同意並開著分享、10 分鐘內有位置）
+class TourPerson {
+  final String uid, name, avatar, role, bubble;
+  final int no, at;
+  final double lat, lng;
+  TourPerson(this.uid, this.no, this.name, this.avatar, this.role, this.bubble, this.lat, this.lng, this.at);
+  factory TourPerson.fromJson(Map j) => TourPerson(_str(j['uid']), _int(j['no']) ?? 0, _str(j['name']), _str(j['avatar']), _str(j['role']), _str(j['bubble']),
+      _dbl(j['lat']) ?? 0, _dbl(j['lng']) ?? 0, _int(j['at']) ?? 0);
+  bool get isStaff => role == 'host' || role == 'cohost';
+}
+
+/// 團裡的私訊
+class TourMsg {
+  final String id, from, to, text;
+  final int at;
+  final bool mine;
+  TourMsg(this.id, this.from, this.to, this.text, this.at, this.mine);
+  factory TourMsg.fromJson(Map j) => TourMsg(_str(j['id']), _str(j['from']), _str(j['to']), _str(j['text']), _int(j['at']) ?? 0, j['mine'] == true);
+  /// 對話的另一方
+  String get other => mine ? to : from;
+}
+
+/// 團員的稱呼（私訊、名單用）：團號、暱稱、大頭貼、身分
+class TourWho {
+  final int no;
+  final String name, avatar, role;
+  const TourWho(this.no, this.name, this.avatar, this.role);
+}
+
 class TourVoucher {
   final String code, link;
   final int createdAt;
@@ -92,6 +122,13 @@ class TourGroup {
   final List<TourLost> lost;
   final List<TourAnnouncement> announcements;
   final List<TourStop> stops;
+  final List<TourPerson> people;
+  final List<TourMsg> messages;
+  final Map<String, TourWho> names;
+  final List<String> blocked;
+  final String myBubble;
+  /// 分享位置：同意過（已滿 18 歲或家長同意）、開著
+  final bool shareConsent, shareOn;
 
   TourGroup.fromJson(Map<String, dynamic> j)
       : code = _str(j['code']), name = _str(j['name']), color = _str(j['color']), role = _str(j['role']), hostName = _str(j['hostName']),
@@ -125,7 +162,25 @@ class TourGroup {
         stops = [
           for (final s in (j['stops'] as List? ?? const []))
             TourStop(_str(s['id']), _int(s['at']) ?? 0, _str(s['tz']), _str(s['place']), _dbl(s['lat']), _dbl(s['lng']), _int(s['sub']))
-        ];
+        ],
+        people = [for (final p in (j['people'] as List? ?? const [])) TourPerson.fromJson(p)],
+        messages = [for (final m in (j['messages'] as List? ?? const [])) TourMsg.fromJson(m)],
+        names = {
+          for (final e in ((j['names'] as Map?) ?? const {}).entries)
+            '${e.key}': TourWho(_int(e.value['no']) ?? 0, _str(e.value['name']), _str(e.value['avatar']), _str(e.value['role']))
+        },
+        blocked = [for (final b in (j['blocked'] as List? ?? const [])) '$b'],
+        myBubble = _str(j['myBubble']),
+        shareConsent = (j['share'] as Map?)?['consent'] == true,
+        shareOn = (j['share'] as Map?)?['on'] == true;
+
+  /// 怎麼稱呼某個人：暱稱，沒有就「3 號」；團主、共同團主加身分
+  String whoLabel(String uid) {
+    final w = names[uid];
+    if (w == null) return tx('已離團', 'Left the group');
+    final base = w.name.isNotEmpty ? w.name : tx('${w.no} 號', 'No. ${w.no}');
+    return switch (w.role) { 'host' => tx('團主 · $base', 'Leader · $base'), 'cohost' => tx('共同團主 · $base', 'Co-leader · $base'), _ => base };
+  }
 
   bool get isHost => role == 'host';
   /// 團主或共同團主：可以集合、點名、公告、改行程

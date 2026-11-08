@@ -18,6 +18,7 @@ import 'pass_screen.dart';
 import 'qr_screen.dart';
 import 'roll_call_screen.dart';
 import 'settings_screen.dart';
+import 'social.dart';
 
 /// 在團裡的主畫面：3D 夜光地圖＋集合點光柱，下方是操作面板。
 /// 團主、共同團主看到集合、點名、公告、行程；團員看到集合卡片、團旗、我迷路了。設計稿：領隊 3D 地圖
@@ -36,6 +37,11 @@ class _GroupScreenState extends State<GroupScreen> {
     super.initState();
     // 倒數計時每秒更新
     _tick = Timer.periodic(const Duration(seconds: 1), (_) { if (mounted) setState(() {}); });
+    // 第一次進團：問要不要和團員互相看得到（按過「先不要」就不再主動問）
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final g = TourService.current.value;
+      if (g != null && mounted) maybeAskConsent(context, g);
+    });
   }
 
   @override
@@ -52,13 +58,20 @@ class _GroupScreenState extends State<GroupScreen> {
         if (g == null) return const SizedBox.shrink();
         return Scaffold(
           body: Stack(children: [
-            Positioned.fill(child: TourMap(key: _map, group: g)),
+            Positioned.fill(child: TourMap(key: _map, group: g, onPersonLongPress: (p) => openChat(context, p.uid))),
             Positioned(left: Night.space4, right: Night.space4, top: MediaQuery.of(context).padding.top + Night.space2, child: _TopBar(g: g)),
             Positioned(
               left: 0, right: 0, bottom: 0,
-              child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.end, children: [
-                // 右下角：設定（大頭貼、暱稱、語言、說明…）
-                const Padding(padding: EdgeInsets.fromLTRB(0, 0, Night.space4, Night.space3), child: SettingsButton()),
+              child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                // 左邊：我的氣泡；右下角：設定（大頭貼、暱稱、語言、分享位置、說明…）
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(Night.space4, 0, Night.space4, Night.space3),
+                  child: Row(children: [
+                    Flexible(child: _BubbleChip(g: g)),
+                    const Spacer(),
+                    const SettingsButton(),
+                  ]),
+                ),
                 g.isStaff ? _StaffPanel(g: g, map: _map) : _MemberPanel(g: g, map: _map),
               ]),
             ),
@@ -103,6 +116,14 @@ class _TopBar extends StatelessWidget {
             icon: const Icon(Icons.qr_code_2, color: Night.ink),
             onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const QrScreen())),
           ),
+        ValueListenableBuilder<int>(
+          valueListenable: unreadMsgs,
+          builder: (context, n, _) => IconButton(
+            tooltip: tx('訊息', 'Messages'),
+            icon: Badge(isLabelVisible: n > 0, label: Text('$n'), backgroundColor: Night.knockPink, child: const Icon(Icons.chat_bubble_outline, color: Night.ink)),
+            onPressed: () => showInbox(context),
+          ),
+        ),
         IconButton(tooltip: tx('更多', 'More'), icon: const Icon(Icons.more_vert, color: Night.ink), onPressed: () => _menu(context, g)),
       ]),
     );
@@ -424,6 +445,34 @@ class SubPicker extends StatelessWidget {
             selectedColor: Night.ink, labelStyle: TextStyle(color: value == i ? Night.night900 : Night.ink), backgroundColor: Night.night600,
           ),
       ]),
+    );
+  }
+}
+
+/// 我的氣泡：沒發過顯示「發一個氣泡」，發過顯示內容；點了編輯
+class _BubbleChip extends StatelessWidget {
+  final TourGroup g;
+  const _BubbleChip({required this.g});
+  @override
+  Widget build(BuildContext context) {
+    final has = g.myBubble.isNotEmpty;
+    return Material(
+      color: Night.glassFill,
+      shape: StadiumBorder(side: BorderSide(color: has ? Night.auroraViolet : Night.glassLine)),
+      child: InkWell(
+        customBorder: const StadiumBorder(),
+        onTap: () => editBubble(context),
+        child: Container(
+          height: 52,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(mainAxisSize: MainAxisSize.min, children: [
+            Icon(has ? Icons.chat_bubble : Icons.add_comment_outlined, color: has ? Night.auroraViolet : Night.inkMuted, size: 20),
+            const SizedBox(width: 8),
+            Flexible(child: Text(has ? g.myBubble : tx('發一個氣泡', 'Post a bubble'),
+                style: TextStyle(color: has ? Night.ink : Night.inkMuted, fontSize: 15), overflow: TextOverflow.ellipsis)),
+          ]),
+        ),
+      ),
     );
   }
 }

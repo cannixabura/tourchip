@@ -5,12 +5,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../l10n.dart';
+import '../tour/model.dart';
 import '../tour/profile.dart';
 import '../tour/service.dart';
 import '../ui/avatar.dart';
 import '../ui/night.dart';
 import 'join.dart';
 import 'pass_screen.dart';
+import 'social.dart';
 
 const _site = 'https://tourchip.web.app';
 const _contact = 'service.softchip@gmail.com';
@@ -79,6 +81,27 @@ class _SettingsBodyState extends State<_SettingsBody> {
               onTap: () => editProfile(context),
             ),
           ),
+          ValueListenableBuilder<TourGroup?>(
+            valueListenable: TourService.current,
+            builder: (context, g, _) => g == null
+                ? const SizedBox.shrink()
+                : _SwitchRow(
+                    icon: Icons.share_location_outlined,
+                    title: tx('和團員互相看得到', 'Share location with my group'),
+                    subtitle: g.shareOn
+                        ? tx('同團的人在地圖上看得到你；關掉後立刻消失', 'Your group sees you on the map. Turn off to disappear right away.')
+                        : tx('關著：同團的人看不到你的位置', 'Off: your group cannot see your location'),
+                    value: g.shareOn,
+                    onChanged: (on) async {
+                      if (on && !g.shareConsent) {
+                        await askShareConsent(context);
+                        return;
+                      }
+                      final r = await TourService.setShare(on);
+                      if (r['success'] != true && context.mounted) showGlassToast(context, tourError('${r['code']}'), danger: true);
+                    },
+                  ),
+          ),
           _Row(
             icon: Icons.translate,
             title: tx('語言', 'Language'),
@@ -126,6 +149,33 @@ class _SettingsBodyState extends State<_SettingsBody> {
     } catch (_) {
       if (mounted) showGlassToast(context, url, icon: Icons.link);
     }
+  }
+}
+
+class _SwitchRow extends StatelessWidget {
+  final IconData icon;
+  final String title, subtitle;
+  final bool value;
+  final ValueChanged<bool> onChanged;
+  const _SwitchRow({required this.icon, required this.title, required this.subtitle, required this.value, required this.onChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: Night.space2, vertical: Night.space3),
+      child: Row(children: [
+        SizedBox(width: 36, child: Center(child: Icon(icon, color: Night.ink, size: 24))),
+        const SizedBox(width: Night.space4),
+        Expanded(
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(title, style: const TextStyle(color: Night.ink, fontSize: 17, fontWeight: FontWeight.w500)),
+            const SizedBox(height: 2),
+            Text(subtitle, style: Night.caption.copyWith(color: Night.inkMuted, fontSize: 13)),
+          ]),
+        ),
+        Switch(value: value, onChanged: onChanged, activeTrackColor: Night.deepViolet),
+      ]),
+    );
   }
 }
 
@@ -319,8 +369,18 @@ class HelpScreen extends StatelessWidget {
           tx('3D 地圖會跟著手機轉，光柱就是集合點；卡片上有當地時間、倒數、距離與方向。', 'The 3D map turns with your phone. The light pillar is the meetup; the card shows local time, countdown, distance and direction.'),
           tx('兩指縮放地圖；看別的地方後按「回到我的位置」回來。', 'Pinch to zoom. After looking elsewhere, tap "Back to me".'),
         ]),
+        block(Icons.people_alt_outlined, tx('和團員互相看得到', 'See your group on the map'), [
+          tx('同意分享後，同一團的人（含領隊）會在 3D 地圖上看到彼此的大頭貼和位置；不在團裡的人看不到任何人。', 'After you agree to share, everyone in your group, including leaders, sees each other on the 3D map. People outside the group see no one.'),
+          tx('位置只在 App 開著時更新；退團或團解散就刪除。隨時可以在設定關掉。', 'Location updates only while the app is open and is deleted when you leave or the group ends. Turn it off any time in Settings.'),
+          tx('未滿 18 歲要先取得家長或監護人同意才能分享。', 'Under 18? Ask a parent or guardian before sharing.'),
+        ]),
+        block(Icons.chat_bubble_outline, tx('氣泡與訊息', 'Bubbles and messages'), [
+          tx('在地圖下方「發一個氣泡」，同團的人會在你的大頭貼上方看到（最多 20 字）。', 'Tap "Post a bubble" below the map. Your group sees it above your photo (up to 20 characters).'),
+          tx('長按地圖上的人就能傳訊息，對方會收到通知；右上角的訊息按鈕可以看所有對話。', 'Long-press someone on the map to message them. They get a notification. The messages button at the top shows all chats.'),
+          tx('在對話右上角可以封鎖或檢舉。團解散後訊息全部刪除。', 'Block or report from the top of a chat. Messages are deleted when the group ends.'),
+        ]),
         block(Icons.sos_outlined, tx('我迷路了', "I'm lost"), [
-          tx('你的位置平常不會傳給領隊。只有按「我迷路了」才傳一次，30 分鐘後自動刪除。', 'Your location is never sent to your leader, except once when you tap "I\'m lost". It is deleted after 30 minutes.'),
+          tx('按「我迷路了」會把你現在的位置傳給團主與共同團主，地圖上出現紅點與團號，30 分鐘後自動刪除。', 'Tapping "I\'m lost" sends your current location to the leaders as a red dot with your number. It is deleted after 30 minutes.'),
         ]),
         block(Icons.event_note_outlined, tx('行程表與解散', 'Itinerary and ending'), [
           tx('行程表的時間都用集合點的當地時區。', 'Itinerary times use the local time zone of each meetup.'),

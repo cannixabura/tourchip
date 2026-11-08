@@ -10,14 +10,17 @@ import 'package:sensors_plus/sensors_plus.dart';
 
 import '../l10n.dart';
 import '../tour/model.dart';
+import '../tour/profile.dart';
 import '../tour/service.dart';
 import '../ui/night.dart';
+import 'person_marker.dart';
 
 /// 城市低語的 3D 夜光地圖（MapLibre＋OpenFreeMap），加上旅行團的圖層：
 ///   集合點光柱：團色的 3D 柱子（fill-extrusion，真的立在建築之間）＋地面光環
 ///   迷路的團員：紅色圓點＋團號（團員自己按「我迷路了」才有，只有團主與共同團主看得到）
 ///   行程表的集合點：小圓點（行程預覽）
-/// 團員的位置不會出現在這張地圖上；自己的位置是系統藍點，只在自己的手機上。
+///   同團的人：大頭貼＋氣泡＋稱呼（同意並開著分享的人才看得到；沒入團的人看不到任何人）。長按可以傳訊息
+///   自己：大頭貼（在自己的位置；在團裡時帶著自己的氣泡）
 ///
 /// 鏡頭和城市低語一樣跟著手機動：
 ///   方位跟著羅盤（手機朝哪裡，地圖就轉到哪裡）
@@ -36,7 +39,9 @@ class TourMap extends StatefulWidget {
   /// 地圖下方被面板蓋住的高度：「回到我的位置」按鈕放在它上面
   final double bottomInset;
   final void Function(MapLibreMapController controller)? onReady;
-  const TourMap({super.key, this.group, this.picking = false, this.intro = false, this.bottomInset = 0, this.onReady});
+  /// 長按地圖上的人
+  final void Function(TourPerson person)? onPersonLongPress;
+  const TourMap({super.key, this.group, this.picking = false, this.intro = false, this.bottomInset = 0, this.onReady, this.onPersonLongPress});
 
   @override
   State<TourMap> createState() => TourMapState();
@@ -58,6 +63,8 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
   StreamSubscription<CompassEvent>? _compass;
   StreamSubscription<AccelerometerEvent>? _tilt;
   StreamSubscription<Position>? _position;
+  final Set<String> _images = {};
+  bool _peopleBusy = false, _peopleAgain = false;
   late final AnimationController _fade = AnimationController(vsync: this, duration: const Duration(milliseconds: 2600));
 
   bool get _motion => !widget.picking;
@@ -66,6 +73,7 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     rootBundle.loadString(_styleAsset).then((s) { if (mounted) setState(() => _style = s); });
+    ProfileStore.me.addListener(_syncPeople);
     if (!widget.intro) _fade.value = 1;
     _locate();
     if (_motion) _startSensors();
@@ -73,6 +81,7 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
 
   @override
   void dispose() {
+    ProfileStore.me.removeListener(_syncPeople);
     _compass?.cancel();
     _tilt?.cancel();
     _position?.cancel();
@@ -95,6 +104,7 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
         _position = Geolocator.getPositionStream(locationSettings: const LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 5)).listen((pos) {
           _me = LatLng(pos.latitude, pos.longitude);
           _moveCamera();
+          _syncPeople();
         }, onError: (_) {});
       }
     }
@@ -199,6 +209,11 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
       await c.addCircleLayer('tour-lost', 'tour-lost-dot', const CircleLayerProperties(
         circleRadius: 9, circleColor: '#FF6B7A', circleStrokeColor: '#070B1F', circleStrokeWidth: 2,
       ));
+      await c.addGeoJsonSource('tour-people', empty);
+      await c.addSymbolLayer('tour-people', 'tour-people', const SymbolLayerProperties(
+        iconImage: ['get', 'icon'], iconAnchor: 'center', iconAllowOverlap: true, iconIgnorePlacement: true,
+        iconPitchAlignment: 'viewport', iconRotationAlignment: 'viewport', symbolSortKey: ['get', 'z'],
+      ));
       await c.addSymbolLayer('tour-lost', 'tour-lost-label', const SymbolLayerProperties(
         textField: ['get', 'label'], textFont: ['Noto Sans Regular'], textSize: 12, textColor: '#FF6B7A',
         textHaloColor: '#070B1F', textHaloWidth: 1.5, textOffset: [0, 1.6], textAllowOverlap: true,
@@ -241,6 +256,73 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
       await c.setGeoJsonSource('tour-lost', _points([for (final l in g?.lost ?? const <TourLost>[]) (l.lat, l.lng, '${l.no}')]));
       await c.setGeoJsonSource('tour-stops', _points([for (final s in g?.stops ?? const <TourStop>[]) if (s.lat != null) (s.lat!, s.lng!, '')]));
     } catch (_) {}
+    _syncPeople();
+  }
+
+  static String _label(TourPerson p) {
+    final base = p.name.isNotEmpty ? p.name : tx('${p.no} 號', 'No. ${p.no}');
+    return switch (p.role) { 'host' => tx('團主 $base', 'Leader $base'), 'cohost' => tx('共同團主 $base', 'Co-leader $base'), _ => base };
+  }
+
+  static Color _ring(String role) => switch (role) { 'host' => Night.cityAmber, 'cohost' => Night.knockPink, _ => Night.auroraBlue };
+
+  /// 同團的人＋自己：每個人畫成一張圖（內容變了才重畫），再更新圖層
+  Future<void> _syncPeople() async {
+    final c = _c;
+    if (c == null || !_layersReady || widget.picking) return;
+    if (_peopleBusy) { _peopleAgain = true; return; }
+    _peopleBusy = true;
+    try {
+      final dpr = MediaQuery.of(context).devicePixelRatio;
+      final g = widget.group;
+      final prof = ProfileStore.me.value;
+      final rows = <(String id, double lat, double lng, String label, String bubble, String avatar, Color ring, bool me, int z)>[
+        for (final p in g?.people ?? const <TourPerson>[]) ('p:${p.uid}', p.lat, p.lng, _label(p), p.bubble, p.avatar, _ring(p.role), false, p.isStaff ? 2 : 1),
+        if (_me != null) ('me', _me!.latitude, _me!.longitude, tx('我', 'Me'), g?.myBubble ?? '', prof.avatar, Night.auroraViolet, true, 3),
+      ];
+      final features = <Map<String, dynamic>>[];
+      for (final r in rows) {
+        final icon = 'person-${Object.hash(r.$4, r.$5, r.$6, r.$7.toARGB32(), dpr).toUnsigned(32).toRadixString(16)}';
+        if (!_images.contains(icon)) {
+          final png = await PersonMarker.render(label: r.$4, bubble: r.$5, avatar: r.$6, ring: r.$7, dpr: dpr, me: r.$8);
+          if (!mounted) return;
+          await c.addImage(icon, png);
+          _images.add(icon);
+        }
+        features.add({'type': 'Feature', 'properties': {'icon': icon, 'id': r.$1, 'z': r.$9}, 'geometry': {'type': 'Point', 'coordinates': [r.$3, r.$2]}});
+      }
+      await c.setGeoJsonSource('tour-people', {'type': 'FeatureCollection', 'features': features});
+      // 有自己的大頭貼時不再畫系統藍點
+      if (mounted && _myLocation && _me != null && !_hideDot) setState(() => _hideDot = true);
+    } catch (_) {
+    } finally {
+      _peopleBusy = false;
+      if (_peopleAgain && mounted) { _peopleAgain = false; _syncPeople(); }
+    }
+  }
+
+  bool _hideDot = false;
+
+  /// 長按：找手指附近（44 點以內）最近的人
+  Future<void> _longPress(Offset at) async {
+    final c = _c, people = widget.group?.people ?? const <TourPerson>[];
+    if (c == null || people.isEmpty || widget.onPersonLongPress == null) return;
+    try {
+      final pts = await c.toScreenLocationBatch([for (final p in people) LatLng(p.lat, p.lng)]);
+      if (!mounted) return;
+      // Android 回傳實體像素，iOS 回傳點
+      final k = Theme.of(context).platform == TargetPlatform.android ? MediaQuery.of(context).devicePixelRatio : 1.0;
+      TourPerson? best;
+      var bestD = 44.0;
+      for (var i = 0; i < people.length && i < pts.length; i++) {
+        final d = (Offset(pts[i].x / k, pts[i].y / k) - at).distance;
+        if (d < bestD) { bestD = d; best = people[i]; }
+      }
+      if (best != null) {
+        HapticFeedback.mediumImpact();
+        widget.onPersonLongPress!(best);
+      }
+    } catch (_) {}
   }
 
   static String _hex(Color c) => '#${(c.toARGB32() & 0xFFFFFF).toRadixString(16).padLeft(6, '0')}';
@@ -277,7 +359,7 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
       onMapCreated: (c) => _c = c,
       onStyleLoadedCallback: _onStyleLoaded,
       trackCameraPosition: true,
-      myLocationEnabled: _myLocation,
+      myLocationEnabled: _myLocation && !_hideDot,
       myLocationRenderMode: MyLocationRenderMode.normal,
       compassEnabled: false,
       // 跟著手機轉時，手指只負責縮放（由外面的手勢處理）
@@ -297,6 +379,7 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
             _scale = (_baseScale * d.scale).clamp(0.2, 8.0);
             _moveCamera();
           },
+          onLongPressStart: (d) => _longPress(d.localPosition),
           child: map,
         )
       else

@@ -40,7 +40,7 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>從相簿選一張照片當你的頭像。</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>旅行團會在你使用 App 時取得位置，用來在你的手機上算出到集合點的距離與方向；不會傳給領隊，除非你按下『我迷路了』。</string>
+	<string>旅行團會在你使用 App 時取得位置，算出到集合點的距離與方向；你同意分享後，同一團的人（含領隊）會在地圖上看到你的位置，可以隨時在設定關閉。</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

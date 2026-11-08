@@ -22,10 +22,11 @@
 - 20 人以內免費，第 21 人起團主買 `tour_pass_7d`（消耗型，NT$290），上限 100 人
 - 團購券 = 同一個商品 `tour_pass_7d`，App 內購買，變成 QR code（`https://tourchip.web.app/v/<10 碼>`）發給領隊
 - 共同團主最多 2 位；團主才能升級、交棒、解散
-- **團員的位置不會給團主**；只有團員自己按「我迷路了」才傳一次，30 分鐘刪除（Apple 5.1.2(i)）
+- **同團的人在 3D 地圖上互相看得到**（2026-11-08 改，取代原本「團員位置不給團主」）：入團時先同意（勾「已滿 18 歲或已取得家長／監護人同意」）才分享，同意後預設分享、設定裡可隨時關；只在 App 開著時更新；退團、被移出、解散就刪除；**沒入團的人看不到任何人**。「我迷路了」照舊另外傳一次、30 分鐘刪除
+- **氣泡與私訊**：每人一個氣泡（20 字）；長按地圖上的人傳私訊（同團任何人互傳，200 字），對方收到推播；有髒話過濾、封鎖（對方不知道）、檢舉；同樣要先同意；解散就刪除。Redis：`tgroup_share`、`tgroup_pos:`、`tgroup_bubble:`、`tgroup_msgs:`、`tgroup_blocks:`、`tgroup_reports`
 - 集合時間、行程表一律用「集合點的當地時區」；解散時間 = 結束日 23:59，以最後一個集合點的時區為準
 - 不需要帳號：Firebase 匿名登入，身分和城市低語各自獨立、彼此不相認
-- 第一版開放未成年團員；第二階段的「行程中分享位置給領隊」上線前要先做家長同意流程
+- 開放未成年團員；分享位置、氣泡、私訊前要勾「已滿 18 歲或已取得家長／監護人同意」（App 內的同意流程）。年齡分級目標 12+（Apple 沒有 12+，用最接近的 13+；問卷的「傳訊和聊天」「使用者生成內容」要選「是」）
 - 介面文字目前用 `tx('中文', 'English')`（`lib/l10n.dart`），之後再換 ARB
 
 ## 開工步驟（在 Mac 上依序做，每一步做完再下一步）
@@ -41,7 +42,7 @@
    - Deployment target 與城市低語相同（Podfile `platform :ios, '18.0'`）
    - Signing：Team JCFN9LMAXF，bundle `com.softchip.tourchip`
    - Capabilities：Push Notifications、Time Sensitive Notifications（entitlement `com.apple.developer.usernotifications.time-sensitive`）、Associated Domains `applinks:tourchip.web.app`、In-App Purchase、Background Modes → Remote notifications
-   - Info.plist：`NSLocationWhenInUseUsageDescription`（「旅行團會在你使用 App 時取得位置，用來在你的手機上算出到集合點的距離與方向；不會傳給領隊，除非你按下『我迷路了』。」）、`NSCameraUsageDescription`（「掃描領隊的入團 QR code 或團購券。」）
+   - Info.plist：`NSLocationWhenInUseUsageDescription`（「旅行團會在你使用 App 時取得位置，用來在你的手機上算出到集合點的距離與方向；你同意分享後，同一團的人（含領隊）會在地圖上看到你的位置，可以隨時在設定關閉。」）、`NSCameraUsageDescription`（「掃描領隊的入團 QR code 或團購券。」）
    - 顯示名稱：繁中 `旅行團`、英文 `TourChip`（`CFBundleDisplayName` ＋ `zh-Hant.lproj/InfoPlist.strings`）
    - 把 `platform_assets/ios/group_call.caf` 加進 Runner target（集合專屬提示音）
 6. **Android 設定**（參考 `~/lbs_dating_app/android/app`）：
@@ -66,7 +67,7 @@
 9. **商店**：
    - App Store Connect 新增 App，名稱「旅行團 TourChip－帶團集合點名」（英文「TourChip: Lead Your Group」），bundle `com.softchip.tourchip`；建立消耗型商品 `tour_pass_7d`，NT$290
    - Play Console 新增 App，建立一次性商品 `tour_pass_7d`
-   - 隱私權政策網址 https://tourchip.web.app/privacy ；年齡分級不要選 18+（第一版開放未成年團員；沒有陌生人聊天、沒有公開內容）
+   - 隱私權政策網址 https://tourchip.web.app/privacy ；年齡分級目標 12+（Apple 用 13+）：開放未成年團員；有同團私訊與氣泡（不是陌生人聊天、沒有公開內容）
 10. **推播翻譯**：伺服器推播的中文原文要加進 `geo-service/i18n.js` 的翻譯表（英文至少）：
     「第 21 位團員正在等待入團，升級 7 天方案或使用團購券後就能加入。」「你成為這一團的共同團主了，可以發集合、點名和公告。」「你成為這一團的團主了。」「這一團已經解散，謝謝這幾天一起同行。」「點名：到了請按「我到了」」「… 號需要幫忙」「… 號迷路了，傳來了目前的位置」以及 `tourgroup.js` 的 `callText()`。（已完成：12 種語言都已加入；推播語言記在 Redis `tgroup_lang`，因為旅行團帳號沒有城市低語的 `user_data`，`wgPush` 多了 `opts.langs`）
 
