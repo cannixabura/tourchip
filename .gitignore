@@ -12,3 +12,6 @@ android/.gradle/
 android/local.properties
 android/key.properties
 *.jks
+
+# Firebase Hosting 部署快取
+.firebase/
