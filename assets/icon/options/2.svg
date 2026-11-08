@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024"><defs>
+<radialGradient id="sky" cx="50%" cy="65%" r="80%"><stop offset="0" stop-color="#2A2F66"/><stop offset=".55" stop-color="#121848"/><stop offset="1" stop-color="#070B1F"/></radialGradient>
+<linearGradient id="deep" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6A1FD8"/><stop offset=".55" stop-color="#3A2DB8"/><stop offset="1" stop-color="#1E5FD4"/></linearGradient>
+<linearGradient id="beam" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".35" stop-color="#BFEFFF"/><stop offset=".75" stop-color="#4FC3F7" stop-opacity=".85"/><stop offset="1" stop-color="#4FC3F7" stop-opacity="0"/></linearGradient>
+<linearGradient id="aur" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B44CFF"/><stop offset="1" stop-color="#4FC3F7"/></linearGradient>
+<linearGradient id="flag" x1="0" y1="0" x2="1" y2=".4"><stop offset="0" stop-color="#FF5FD2"/><stop offset="1" stop-color="#B44CFF"/></linearGradient>
+<linearGradient id="warm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFD54A"/><stop offset="1" stop-color="#FF8A3D"/></linearGradient>
+<radialGradient id="pool" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#8FDCFF" stop-opacity=".6"/><stop offset="1" stop-color="#4FC3F7" stop-opacity="0"/></radialGradient>
+<radialGradient id="core" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".4" stop-color="#BFEFFF"/><stop offset="1" stop-color="#4FC3F7" stop-opacity="0"/></radialGradient>
+<filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="22"/></filter>
+<filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="8"/></filter>
+</defs><rect width="1024" height="1024" fill="url(#deep)"/><circle cx="380" cy="300" r="380" fill="#B44CFF" opacity=".35" filter="url(#glow)"/><path d="M392 210 L812 360 L392 510 Z" fill="#FF5FD2" opacity=".6" filter="url(#glow)"/><path d="M392 210 L812 360 L392 510 Q452 360 392 210 Z" fill="url(#warm)"/><rect x="352" y="180" width="44" height="680" rx="22" fill="#FFFFFF"/><ellipse cx="374" cy="860" rx="170" ry="38" fill="#FFFFFF" opacity=".25"/></svg>
