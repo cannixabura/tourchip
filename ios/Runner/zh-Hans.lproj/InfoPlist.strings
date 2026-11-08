@@ -1,0 +1,5 @@
+/* App name and permission descriptions (Info.plist translations) */
+"CFBundleDisplayName" = "旅行团";
+"NSLocationWhenInUseUsageDescription" = "旅行团会在你使用 App 时取得位置，算出到集合点的距离与方向；你同意分享后，同一团的人（含领队）会在地图上看到你的位置，可以随时在设置关闭。";
+"NSCameraUsageDescription" = "扫描领队的入团二维码或团购券。";
+"NSPhotoLibraryUsageDescription" = "从相册选一张照片当你的头像。";

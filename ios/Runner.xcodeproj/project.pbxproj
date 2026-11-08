@@ -77,6 +77,13 @@
 		C2D45BE9848A56C7495ACD57 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 		E449E310DDDCFD5E03F9D172 /* Pods-RunnerTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.profile.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.profile.xcconfig"; sourceTree = "<group>"; };
 		FFE3117D3BAB66764BDB7935 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B7B2CA904BCAA321E7AFDFF /* zh-Hans */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		282D694A036DC7F4B6DB8B6E /* ja */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = ja; path = "ja.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		CC57E58D8A76F35E48A5F883 /* ko */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = ko; path = "ko.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		31323312BA66D1E8D959EEFC /* ms */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = ms; path = "ms.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		9E0C2A413697707CCE8FCA34 /* id */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = id; path = "id.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		390D415D1385A36ECD7467D4 /* vi */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = vi; path = "vi.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		7D6DCDBA8618B1F8414749FB /* th */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = th; path = "th.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,6 +264,13 @@
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				th,
+				vi,
+				id,
+				ms,
+				ko,
+				ja,
+				"zh-Hans",
 				en,
 				Base,
 				"zh-Hant",
@@ -461,6 +475,13 @@
 		BE40AAA4EEF6B392B4472F05 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
+				7D6DCDBA8618B1F8414749FB /* th */,
+				390D415D1385A36ECD7467D4 /* vi */,
+				9E0C2A413697707CCE8FCA34 /* id */,
+				31323312BA66D1E8D959EEFC /* ms */,
+				CC57E58D8A76F35E48A5F883 /* ko */,
+				282D694A036DC7F4B6DB8B6E /* ja */,
+				2B7B2CA904BCAA321E7AFDFF /* zh-Hans */,
 				B773BD523EE7607212E9196E /* en */,
 				1ACD0DE361B965A132DE6C58 /* zh-Hant */,
 			);

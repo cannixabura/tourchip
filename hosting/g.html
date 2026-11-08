@@ -22,16 +22,16 @@ footer{margin-top:18px;font-size:12px;color:var(--faint)}footer a{color:var(--mu
 </style>
 </head>
 <body>
-<main class="card">
-  <h1>加入<b>旅行</b>團</h1>
-  <p>這是一個私人的團，只有拿到領隊分享的人才能加入。</p>
+<main class="card" data-title="g_title">
+  <h1 data-t="g_h" data-t-html>加入<b>旅行</b>團</h1>
+  <p data-t="g_1">這是一個私人的團，只有拿到領隊分享的人才能加入。</p>
   <div class="code" id="code">— — — —</div>
-  <a class="btn" id="open" href="#">打開旅行團加入</a>
-  <a class="btn ghost" href="https://apps.apple.com/app/id6832215611">App Store 下載</a>
-  <a class="btn ghost" href="https://play.google.com/store/apps/details?id=com.softchip.tourchip">Google Play 下載</a>
-  <p style="margin-top:16px">已經安裝 App：用手機相機掃 QR code 會直接打開；也可以在 App 裡按「掃碼入團」。</p>
-  <small>Join this private tour group: install TourChip, then open this link again or scan the leader's QR code.</small>
+  <a class="btn" id="open" data-t="g_open" href="#">打開旅行團加入</a>
+  <a class="btn ghost" data-t="ios" href="https://apps.apple.com/app/id6832215611">App Store 下載</a>
+  <a class="btn ghost" data-t="android" href="https://play.google.com/store/apps/details?id=com.softchip.tourchip">Google Play 下載</a>
+  <p style="margin-top:16px" data-t="g_2">已經安裝 App：用手機相機掃 QR code 會直接打開；也可以在 App 裡按「掃碼入團」。</p>
 </main>
+<script src="/i18n.js"></script>
 <script>
 // 團代碼只顯示在這一頁，不傳到任何地方
 const m = location.pathname.match(/\/g\/([A-HJ-NP-Z2-9]{8})/i);

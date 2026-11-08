@@ -1,0 +1,5 @@
+/* App name and permission descriptions (Info.plist translations) */
+"CFBundleDisplayName" = "TourChip";
+"NSLocationWhenInUseUsageDescription" = "TourChip dùng vị trí khi bạn mở ứng dụng để hiển thị khoảng cách và hướng đến điểm hẹn. Nếu bạn đồng ý chia sẻ, người trong đoàn (kể cả trưởng đoàn) sẽ thấy vị trí của bạn trên bản đồ. Bạn có thể tắt trong Cài đặt bất cứ lúc nào.";
+"NSCameraUsageDescription" = "Quét mã QR tham gia của trưởng đoàn hoặc phiếu cho đoàn.";
+"NSPhotoLibraryUsageDescription" = "Chọn ảnh từ thư viện làm ảnh đại diện.";

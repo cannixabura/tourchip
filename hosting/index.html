@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#070b1f">
 <title>旅行團 TourChip · 帶團集合點名</title>
-<meta name="description" content="給領隊、導遊的帶團工具：掃一下入團，集合時每個人都收得到。3D 集合點光柱、點名、我迷路了。">
+<meta name="description" content="給領隊、導遊的帶團工具：掃一下入團，集合時每個人都收得到。3D 集合點光柱、點名、同團互相看得到、我迷路了。">
 <style>
 :root{color-scheme:dark;--bg:#070b1f;--line:rgba(196,170,255,.38);--ink:#f3f0ff;--muted:#b9b6d6;--faint:#8c89b0}
 *{box-sizing:border-box}
@@ -22,14 +22,15 @@ footer{margin-top:18px;font-size:12px;color:var(--faint)}footer a{color:var(--mu
 </style>
 </head>
 <body>
-<main class="card">
-  <h1><b>旅行</b>團</h1>
-  <p>掃一下入團，集合時每個人都收得到。</p>
-  <p>給領隊、導遊的帶團工具：集合呼叫、點名、3D 集合點光柱、我迷路了。團員的位置不會給領隊。</p>
-  <a class="btn ghost" href="https://apps.apple.com/app/id6832215611">App Store 下載</a>
-  <a class="btn ghost" href="https://play.google.com/store/apps/details?id=com.softchip.tourchip">Google Play 下載</a>
-  <small>20 人以內免費 · 團員永遠免費 · TourChip: the gather-and-roll-call app for tour leaders.</small>
-  <footer><a href="/privacy">隱私權政策 Privacy</a> · <a href="/terms">使用條款 Terms</a> · Softchip</footer>
+<main class="card" data-title="home_title">
+  <h1 data-t="home_h" data-t-html><b>旅行</b>團</h1>
+  <p data-t="home_1">掃一下入團，集合時每個人都收得到。</p>
+  <p data-t="home_2">給領隊、導遊的帶團工具：集合呼叫、點名、3D 集合點光柱、同團互相看得到、我迷路了。</p>
+  <a class="btn ghost" data-t="ios" href="https://apps.apple.com/app/id6832215611">App Store 下載</a>
+  <a class="btn ghost" data-t="android" href="https://play.google.com/store/apps/details?id=com.softchip.tourchip">Google Play 下載</a>
+  <small data-t="home_3">20 人以內免費 · 團員永遠免費</small>
+  <footer><a href="/privacy" data-t="privacy">隱私權政策</a> · <a href="/terms" data-t="terms">使用條款</a> · Softchip</footer>
 </main>
+<script src="/i18n.js"></script>
 </body>
 </html>

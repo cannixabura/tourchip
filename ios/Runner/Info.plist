@@ -18,6 +18,13 @@
 	<array>
 		<string>en</string>
 		<string>zh-Hant</string>
+		<string>zh-Hans</string>
+		<string>ja</string>
+		<string>ko</string>
+		<string>ms</string>
+		<string>id</string>
+		<string>vi</string>
+		<string>th</string>
 	</array>
 	<key>CFBundleName</key>
 	<string>TourChip</string>

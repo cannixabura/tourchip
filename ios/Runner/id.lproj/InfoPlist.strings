@@ -1,0 +1,5 @@
+/* App name and permission descriptions (Info.plist translations) */
+"CFBundleDisplayName" = "TourChip";
+"NSLocationWhenInUseUsageDescription" = "TourChip memakai lokasimu saat aplikasi digunakan untuk menampilkan jarak dan arah ke titik kumpul. Jika kamu setuju berbagi, orang di grupmu (termasuk pemimpin) melihat lokasimu di peta. Kamu bisa mematikannya di Pengaturan kapan saja.";
+"NSCameraUsageDescription" = "Pindai kode QR bergabung dari pemimpin atau voucher grup.";
+"NSPhotoLibraryUsageDescription" = "Pilih foto dari galeri sebagai foto profilmu.";
