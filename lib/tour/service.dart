@@ -88,6 +88,13 @@ class TourService {
   /// 同團互相看得到：App 開著、在團裡、開著分享時才回報位置（最多 15 秒一次；走超過 30 公尺會提早送）
   static void _startPos() {
     if (_posSub != null) return;
+    // 先送一次目前位置：沒在移動時位置串流可能很久才有第一筆，團員會一直看不到你
+    Geolocator.getCurrentPosition(locationSettings: const LocationSettings(timeLimit: Duration(seconds: 10))).then((p) {
+      if (_posSub == null || _posSent != null) return;
+      _posSentAt = DateTime.now();
+      _posSent = p;
+      call('pos', {'lat': p.latitude, 'lng': p.longitude});
+    }).catchError((_) {});
     _posSub = Geolocator.getPositionStream(locationSettings: const LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 10)).listen((p) {
       final since = DateTime.now().difference(_posSentAt).inSeconds;
       final moved = _posSent == null ? 1e9 : Geolocator.distanceBetween(_posSent!.latitude, _posSent!.longitude, p.latitude, p.longitude);

@@ -64,6 +64,8 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
   StreamSubscription<AccelerometerEvent>? _tilt;
   StreamSubscription<Position>? _position;
   final Set<String> _images = {};
+  (double, double, double)? _lastAccel;
+  bool _tiltLive = false;
   bool _peopleBusy = false, _peopleAgain = false;
   late final AnimationController _fade = AnimationController(vsync: this, duration: const Duration(milliseconds: 2600));
 
@@ -125,6 +127,14 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
     } catch (_) {}
     try {
       _tilt = accelerometerEventStream().listen((e) {
+        // 真的手機讀數一直在微微跳動；模擬器、少數裝置會一直送同一個固定值。
+        // 讀數開始變動之後才跟著傾斜，否則保持預設的 3D 仰角（不要躺平成正上方）
+        final first = _lastAccel;
+        _lastAccel = (e.x, e.y, e.z);
+        if (!_tiltLive) {
+          if (first == null || first == _lastAccel) return;
+          _tiltLive = true;
+        }
         final target = atan2(e.y, e.z).clamp(0.0, 80 * pi / 180);
         _pitch += (target - _pitch) * 0.1;
         _moveCamera();
@@ -222,7 +232,12 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
       await _syncLayers();
     } catch (_) {}
     widget.onReady?.call(c);
-    if (widget.intro) _playIntro();
+    if (widget.intro) {
+      _playIntro();
+    } else if (_motion) {
+      // iOS 不一定套用 initialCameraPosition 的仰角：地圖準備好後主動擺一次 3D 鏡頭
+      _moveCamera(force: true);
+    }
   }
 
   /// 進場鏡頭：從城市高空、正上方俯視，2.6 秒俯衝到街道並傾斜成 3D，夜光地圖同時從黑暗中亮起。

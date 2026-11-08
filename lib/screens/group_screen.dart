@@ -307,7 +307,7 @@ class _StaffPanel extends StatelessWidget {
         _ActionTile(tx('行程', 'Itinerary'), Icons.event_note_outlined, () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ItineraryScreen()))),
       ]),
       const SizedBox(height: Night.space3),
-      Text(tx('團員的位置不會出現在這裡，只有按「我迷路了」的人會傳一次位置給你。', 'Members\' locations are never shown. Only someone who taps "I\'m lost" shares a location once.'), style: Night.caption),
+      Text(tx('同意分享的團員會出現在地圖上；長按大頭貼可以傳訊息。按「我迷路了」的人會另外以紅點標出。', 'Members who share appear on the map. Long-press a photo to message them. Anyone who taps "I\'m lost" also shows as a red dot.'), style: Night.caption),
     ]);
   }
 }
