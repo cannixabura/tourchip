@@ -54,7 +54,7 @@
 7. **後端部署**（只部署新的兩個 function，不動其他）：
    ```
    cd ~/lbs_dating_app/geo-service && npm test
-   cd ~/lbs_dating_app && firebase deploy --only functions:tourGroup,functions:remindTourGroups
+   cd ~/lbs_dating_app && firebase deploy --only functions:geo-service:tourGroup,functions:geo-service:remindTourGroups
    ```
    在 Play Console 把 Cloud Functions 的服務帳號也加到新 App `com.softchip.tourchip`（「查看財務資料」），Google Play 購買驗證才會通過。
 8. **官網**（在這個資料夾）：
@@ -68,7 +68,7 @@
    - Play Console 新增 App，建立一次性商品 `tour_pass_7d`
    - 隱私權政策網址 https://tourchip.web.app/privacy ；年齡分級不要選 18+（第一版開放未成年團員；沒有陌生人聊天、沒有公開內容）
 10. **推播翻譯**：伺服器推播的中文原文要加進 `geo-service/i18n.js` 的翻譯表（英文至少）：
-    「第 21 位團員正在等待入團，升級 7 天方案或使用團購券後就能加入。」「你成為這一團的共同團主了，可以發集合、點名和公告。」「你成為這一團的團主了。」「這一團已經解散，謝謝這幾天一起同行。」「點名：到了請按「我到了」」「… 號需要幫忙」「… 號迷路了，傳來了目前的位置」以及 `tourgroup.js` 的 `callText()`。
+    「第 21 位團員正在等待入團，升級 7 天方案或使用團購券後就能加入。」「你成為這一團的共同團主了，可以發集合、點名和公告。」「你成為這一團的團主了。」「這一團已經解散，謝謝這幾天一起同行。」「點名：到了請按「我到了」」「… 號需要幫忙」「… 號迷路了，傳來了目前的位置」以及 `tourgroup.js` 的 `callText()`。（已完成：12 種語言都已加入；推播語言記在 Redis `tgroup_lang`，因為旅行團帳號沒有城市低語的 `user_data`，`wgPush` 多了 `opts.langs`）
 
 ## 兩台手機實測清單
 
