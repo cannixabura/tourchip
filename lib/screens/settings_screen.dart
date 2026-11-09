@@ -19,11 +19,12 @@ const _contact = 'service.softchip@gmail.com';
 
 /// 右下角的設定按鈕（首頁、團的畫面都有）
 class SettingsButton extends StatelessWidget {
-  const SettingsButton({super.key});
+  final Color fill;
+  const SettingsButton({super.key, this.fill = Night.glassFill});
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Night.glassFill,
+      color: fill,
       shape: const CircleBorder(side: BorderSide(color: Night.glassLine)),
       elevation: 0,
       child: InkWell(

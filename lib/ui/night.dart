@@ -14,6 +14,9 @@ class Night {
   static const night700 = Color(0xFF1A1F4A); // 輸入框、列表列
   static const night600 = Color(0xFF2A2F66); // 分隔線、按下狀態
   static const glassFill = Color(0xB81A1F4A); // rgba(26,31,74,0.72)
+  static const mapGlass = Color(0x731A1F4A); // 地圖上的浮動元件：45%，透出地圖
+  static const mapGlassPanel = Color(0x8C1A1F4A); // 地圖上的底部面板：55%
+  static const mapGlassTile = Color(0x662A2F66); // 面板裡的按鈕：40%
   static const glassLine = Color(0x61C4AAFF); // rgba(196,170,255,0.38)
   static const ink = Color(0xFFF3F0FF);
   static const inkMuted = Color(0xFFB9B6D6);

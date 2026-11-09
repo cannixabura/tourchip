@@ -63,23 +63,26 @@ class _CallCardState extends State<CallCard> {
     final acked = (TourService.current.value?.call?.mine ?? c.mine) == 'ack';
     final left = Duration(milliseconds: max(0, c.at - DateTime.now().millisecondsSinceEpoch));
     return Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Text(tx('${hm(c.at, c.tz)} 集合', 'Gather at ${hm(c.at, c.tz)}'), style: Night.title.copyWith(fontSize: widget.big ? 22 : 20)),
-      const SizedBox(height: 2),
+      // 時區放在標題同一行，面板裡的卡片才不會太高
+      Row(crossAxisAlignment: CrossAxisAlignment.baseline, textBaseline: TextBaseline.alphabetic, children: [
+        Text(tx('${hm(c.at, c.tz)} 集合', 'Gather at ${hm(c.at, c.tz)}'), style: Night.title.copyWith(fontSize: widget.big ? 22 : 20)),
+        const SizedBox(width: Night.space2),
+        Flexible(child: Text(tx('${zoneName(c.tz).split('・').first}時間', '${zoneName(c.tz).split(' / ').first} time'), style: Night.caption, overflow: TextOverflow.ellipsis)),
+      ]),
       // 集合點名稱是領隊打的字：可以點一下翻譯
       if (c.place.isNotEmpty) TranslatableText(c.place, compact: true, style: Night.body.copyWith(color: Night.ink)),
-      Text(tx('${zoneName(c.tz).split('・').first}時間', '${zoneName(c.tz).split(' / ').first} time'), style: Night.body),
-      const SizedBox(height: Night.space3),
+      SizedBox(height: widget.big ? Night.space3 : Night.space2),
       Row(children: [
         Expanded(
           child: Text(left.inSeconds > 0 ? '${left.inMinutes}:${two(left.inSeconds % 60)}' : tx('現在', 'Now'),
-              style: TextStyle(color: Night.ink, fontSize: widget.big ? 48 : 34, fontWeight: FontWeight.w600, fontFeatures: const [FontFeature.tabularFigures()])),
+              style: TextStyle(color: Night.ink, fontSize: widget.big ? 48 : 30, fontWeight: FontWeight.w600, fontFeatures: const [FontFeature.tabularFigures()])),
         ),
         if (dist != null && bearing != null) ...[
           Semantics(
             label: tx('集合點的方向', 'Direction to the meeting point'),
             child: Container(
-              width: 52, height: 52, decoration: const BoxDecoration(color: Night.night600, shape: BoxShape.circle),
-              child: Transform.rotate(angle: (bearing - (_heading ?? pos?.heading ?? 0)) * pi / 180, child: Icon(Icons.navigation, color: widget.g.tint, size: 28)),
+              width: widget.big ? 52 : 42, height: widget.big ? 52 : 42, decoration: const BoxDecoration(color: Night.night600, shape: BoxShape.circle),
+              child: Transform.rotate(angle: (bearing - (_heading ?? pos?.heading ?? 0)) * pi / 180, child: Icon(Icons.navigation, color: widget.g.tint, size: widget.big ? 28 : 24)),
             ),
           ),
           const SizedBox(width: 10),
@@ -89,15 +92,18 @@ class _CallCardState extends State<CallCard> {
           ]),
         ],
       ]),
-      const SizedBox(height: Night.space4),
+      SizedBox(height: widget.big ? Night.space4 : Night.space2),
       acked
           ? Text(tx('已收到，領隊看得到', 'Got it. Your leader can see that.'), style: const TextStyle(color: Night.moodCalm, fontSize: 15), textAlign: TextAlign.center)
           : NightButton(tx('收到', 'Got it'), icon: Icons.check, onPressed: () {
               HapticFeedback.heavyImpact();
               TourService.call('ack', {'callId': c.id});
             }),
-      const SizedBox(height: Night.space2),
-      Text(tx('距離和方向在你的手機上計算，不會傳給任何人', 'Distance and direction are worked out on your phone and never sent'), style: Night.caption, textAlign: TextAlign.center),
+      // 隱私說明只放在全螢幕卡片，面板裡省下一行
+      if (widget.big) ...[
+        const SizedBox(height: Night.space2),
+        Text(tx('距離和方向在你的手機上計算，不會傳給任何人', 'Distance and direction are worked out on your phone and never sent'), style: Night.caption, textAlign: TextAlign.center),
+      ],
     ]);
   }
 }

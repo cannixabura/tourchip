@@ -70,7 +70,7 @@ class _GroupScreenState extends State<GroupScreen> {
                   child: Row(children: [
                     Flexible(child: _BubbleChip(g: g)),
                     const Spacer(),
-                    const SettingsButton(),
+                    const SettingsButton(fill: Night.mapGlass),
                   ]),
                 ),
                 g.isStaff ? _StaffPanel(g: g, map: _map) : _MemberPanel(g: g, map: _map),
@@ -105,7 +105,7 @@ class _TopBar extends StatelessWidget {
     return Container(
       height: 52,
       padding: const EdgeInsets.only(left: 14, right: 4),
-      decoration: BoxDecoration(color: Night.glassFill, borderRadius: BorderRadius.circular(999), border: Border.all(color: Night.glassLine), boxShadow: const [Night.lift]),
+      decoration: BoxDecoration(color: Night.mapGlass, borderRadius: BorderRadius.circular(999), border: Border.all(color: Night.glassLine)),
       child: Row(children: [
         Container(width: 10, height: 10, decoration: BoxDecoration(color: g.tint, shape: BoxShape.circle, boxShadow: [BoxShadow(color: g.tint, blurRadius: 8)])),
         const SizedBox(width: 10),
@@ -188,10 +188,9 @@ class _Panel extends StatelessWidget {
     return Container(
       padding: EdgeInsets.fromLTRB(Night.space4, 18, Night.space4, max(MediaQuery.of(context).padding.bottom, Night.space4) + 4),
       decoration: BoxDecoration(
-        color: Night.night700.withValues(alpha: 0.94),
+        color: Night.mapGlassPanel,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(Night.radiusLg)),
         border: const Border(top: BorderSide(color: Night.glassLine)),
-        boxShadow: const [Night.lift],
       ),
       child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: children),
     );
@@ -208,7 +207,7 @@ class _ActionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Material(
-        color: Night.night600,
+        color: Night.mapGlassTile,
         borderRadius: BorderRadius.circular(Night.radiusMd),
         child: InkWell(
           borderRadius: BorderRadius.circular(Night.radiusMd),
@@ -356,16 +355,16 @@ class _MemberPanel extends StatelessWidget {
           Text(tx('下一個集合：${md(next.at, next.tz)} ${hm(next.at, next.tz)} ${next.place}', 'Next: ${md(next.at, next.tz)} ${hm(next.at, next.tz)} ${next.place}'), style: Night.caption.copyWith(color: Night.inkMuted)),
         ],
       ],
-      const SizedBox(height: Night.space4),
+      SizedBox(height: call != null ? Night.space3 : Night.space4),
       Row(children: [
         Expanded(child: NightButton(tx('舉起團旗', 'Raise flag'), kind: NightButtonKind.ghost, onPressed: () => showFlag(context, g))),
         const SizedBox(width: 8),
         Expanded(child: NightButton(g.lostSent ? tx('已通知領隊', 'Leader notified') : tx('我迷路了', 'I\'m lost'), kind: NightButtonKind.danger, onPressed: () => askLost(context, g))),
       ]),
-      const SizedBox(height: Night.space2),
+      const SizedBox(height: Night.space1),
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        TextButton(onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ItineraryScreen())), child: Text(tx('行程表', 'Itinerary'))),
-        TextButton(onPressed: () => showAnnouncements(context, g), child: Text(tx('公告（${g.announcements.length}）', 'Notices (${g.announcements.length})'))),
+        TextButton(style: TextButton.styleFrom(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap), onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ItineraryScreen())), child: Text(tx('行程表', 'Itinerary'))),
+        TextButton(style: TextButton.styleFrom(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap), onPressed: () => showAnnouncements(context, g), child: Text(tx('公告（${g.announcements.length}）', 'Notices (${g.announcements.length})'))),
       ]),
     ]);
   }
@@ -458,7 +457,7 @@ class _BubbleChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final has = g.myBubble.isNotEmpty;
     return Material(
-      color: Night.glassFill,
+      color: Night.mapGlass,
       shape: StadiumBorder(side: BorderSide(color: has ? Night.auroraViolet : Night.glassLine)),
       child: InkWell(
         customBorder: const StadiumBorder(),
