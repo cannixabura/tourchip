@@ -808,6 +808,98 @@
 "en": "e.g. Mom"
 },
 {
+"zh": "一道光，把大家找回來",
+"en": "One beam of light brings everyone back"
+},
+{
+"zh": "領隊在地圖上放下集合點，每個人的手機都會出現光柱、時間、距離和方向。",
+"en": "Your leader drops a meeting point, and everyone sees a light beam, the time, distance and direction."
+},
+{
+"zh": "領隊一按，全團都收到",
+"en": "One tap, the whole group knows"
+},
+{
+"zh": "拖曳地圖選好集合點就發出；鎖屏、專注模式也會響，沒按收到的人會再提醒。",
+"en": "Drag the map to pick a spot and send. It rings even on lock screen or Focus, and repeats until people reply."
+},
+{
+"zh": "掃一下就入團",
+"en": "Scan once to join"
+},
+{
+"zh": "用 App 掃領隊的 QR code 就加入，不用帳號、不用加好友，團員永遠免費。",
+"en": "Scan your leader's QR code with the app. No account, no friend requests, always free for members."
+},
+{
+"zh": "點名，一秒就好",
+"en": "Roll call in a second"
+},
+{
+"zh": "到了按「我到了」；誰還沒到、誰需要幫忙，領隊一眼就知道。",
+"en": "Tap \"I'm here\". Your leader sees at a glance who's missing and who needs help."
+},
+{
+"zh": "迷路了也不怕",
+"en": "Lost? Don't worry"
+},
+{
+"zh": "按「我迷路了」，領隊的地圖上會出現你的位置，跟著光回到大家身邊。",
+"en": "Tap \"I'm lost\" and your location appears on your leader's map. Follow the light back to the group."
+},
+{
+"zh": "同團的人，在地圖上互相看得到",
+"en": "See your group on the map"
+},
+{
+"zh": "同意分享後才會出現在地圖上，設定裡隨時可以關；沒入團的人看不到任何人。",
+"en": "You appear only after you agree, and can turn it off anytime. People outside the group see no one."
+},
+{
+"zh": "一顆氣泡，說說現在的心情",
+"en": "A bubble for how you feel"
+},
+{
+"zh": "每人一顆 20 字的氣泡；長按地圖上的人就能傳私訊，也可以封鎖和檢舉。",
+"en": "Everyone gets a 20-character bubble. Long-press someone on the map to message them; block and report are built in."
+},
+{
+"zh": "分車分組，各自集合",
+"en": "Split into buses and teams"
+},
+{
+"zh": "1 號車、2 號車分開集合，只會叫到你那一組。",
+"en": "Bus 1 and bus 2 gather separately. You only get calls for your own team."
+},
+{
+"zh": "跨國行程，時間不會錯",
+"en": "Across time zones, always on time"
+},
+{
+"zh": "集合時間一律用集合點的當地時間，台北飛東京也不用自己換算。",
+"en": "Meeting times always use the meeting point's local time, so Taipei to Tokyo needs no math."
+},
+{
+"zh": "謝謝這幾天一起同行",
+"en": "Thanks for traveling together"
+},
+{
+"zh": "行程結束自動解散，位置、氣泡和訊息都會一起刪除。",
+"en": "The group ends on its own after the trip, and locations, bubbles and messages are deleted."
+},
+{
+"zh": "略過",
+"en": "Skip"
+},
+{
+"zh": "開始使用",
+"en": "Get started"
+},
+{
+"zh": "下一頁",
+"en": "Next"
+},
+{
 "zh": "新增集合點",
 "en": "Add stop"
 },

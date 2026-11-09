@@ -53,6 +53,7 @@ flutter:
     - assets/audio/group_call.wav
     - assets/opencc/s2t.txt
     - assets/opencc/t2s.txt
+    - assets/images/
 
 # App 圖示：assets/icon/options/gen_options2.py 的 C 款「帶隊前進」（導遊舉黃旗、團員跟隨、集合光柱）
 flutter_launcher_icons:

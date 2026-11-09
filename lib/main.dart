@@ -16,6 +16,7 @@ import 'l10n.dart';
 import 'screens/call_overlay.dart';
 import 'screens/group_screen.dart';
 import 'screens/home_screen.dart';
+import 'screens/intro_screen.dart';
 import 'screens/join.dart';
 import 'screens/social.dart';
 import 'tour/profile.dart';
@@ -93,6 +94,7 @@ class RootGate extends StatefulWidget {
 class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
   StreamSubscription<Uri>? _linkSub;
   bool _overlayOpen = false;
+  bool _introDone = false; // 每次打開 App 都先看導覽（和城市低語一樣），略過或看完才進首頁／團
 
   @override
   void initState() {
@@ -227,6 +229,7 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
       builder: (context, loaded, _) => ValueListenableBuilder(
         valueListenable: TourService.current,
         builder: (context, g, _) {
+          if (!_introDone) return IntroScreen(onDone: () => setState(() => _introDone = true));
           if (!loaded) return const Scaffold(body: Center(child: CircularProgressIndicator(color: Night.auroraViolet)));
           return g == null ? const HomeScreen() : GroupScreen(key: ValueKey(g.code));
         },
