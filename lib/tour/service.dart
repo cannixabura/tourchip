@@ -232,7 +232,8 @@ class PassStore {
   static final vouchers = ValueNotifier<List<TourVoucher>>(const []);
   static StreamSubscription<List<PurchaseDetails>>? _sub;
 
-  static String priceOf(String product) => details.value[product]?.price ?? 'NT\$290';
+  /// 價格一律用商店給的（依使用者的商店地區顯示幣別）；還沒載入就顯示「—」，不寫死
+  static String priceOf(String product) => details.value[product]?.price ?? '—';
 
   static void init() {
     _sub ??= InAppPurchase.instance.purchaseStream.listen(_onPurchases, onError: (_) => busy.value = false);
@@ -242,7 +243,8 @@ class PassStore {
     try {
       if (!await InAppPurchase.instance.isAvailable()) return;
       final r = await InAppPurchase.instance.queryProductDetails({people, days});
-      details.value = {for (final p in r.productDetails) p.id: p};
+      // 合併，不覆蓋：某次只回來一種時，已經載到的另一種保留
+      details.value = {...details.value, for (final p in r.productDetails) p.id: p};
     } catch (_) {}
   }
 
@@ -252,7 +254,8 @@ class PassStore {
   }
 
   static Future<void> buy(String product, PassPurpose purpose) async {
-    final p = details.value[product];
+    var p = details.value[product];
+    if (p == null) { await load(); p = details.value[product]; }
     if (p == null) { notice.value = tx('現在無法購買，請稍後再試。', 'Purchases are unavailable right now.'); return; }
     busy.value = true;
     // 記住這次購買的用途：交易可能在 App 重開後才完成
