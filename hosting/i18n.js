@@ -1,5 +1,6 @@
 // 官網頁面的多語言：依瀏覽器語言顯示（繁中、簡中、英、日、韓、馬來、印尼、越南、泰），其他語言用英文。
-// 頁面上 data-t="key" 的元素會換成對應文字；data-t-html 允許 <b> 標記。
+// 頁面上 data-t="key" 的元素會換成對應文字；data-t-html 允許 HTML 標記；data-ta 翻譯屬性；
+// select[data-lang] 是手動切換語言的選單（記在 localStorage）；網址 ?lang=xx 也可以指定語言。
 (function () {
   var T = {
     'zh-Hant': {
@@ -17,7 +18,7 @@
       g_2: '已經安裝 App：用手機相機掃 QR code 會直接打開；也可以在 App 裡按「掃碼入團」。',
       v_title: '旅行團 團購券 · TourChip',
       v_h: '<b>團購</b>券',
-      v_1: '旅行社發給領隊的 7 天方案券。領隊開團後，在 App 的「升級到 100 人 → 掃描團購券」使用。',
+      v_1: '旅行社發給領隊的團購券（人數券或天數券）。領隊開團後，在 App 的「人數券、天數券 → 掃描團購券」使用。',
       v_open: '打開旅行團使用'
     },
     'zh-Hans': {
@@ -35,7 +36,7 @@
       g_2: '已经安装 App：用手机相机扫二维码会直接打开；也可以在 App 里按“扫码入团”。',
       v_title: '旅行团 团购券 · TourChip',
       v_h: '<b>团购</b>券',
-      v_1: '旅行社发给领队的 7 天方案券。领队开团后，在 App 的“升级到 100 人 → 扫描团购券”使用。',
+      v_1: '旅行社发给领队的团购券（人数券或天数券）。领队开团后，在 App 的“人数券、天数券 → 扫描团购券”使用。',
       v_open: '打开旅行团使用'
     },
     en: {
@@ -53,7 +54,7 @@
       g_2: 'Already installed? Scanning the QR code with your camera opens the app. You can also tap "Scan to join" in the app.',
       v_title: 'TourChip voucher',
       v_h: '<b>Tour</b>Chip voucher',
-      v_1: 'A 7-day pass from your agency. After starting a group, the leader scans it under "Upgrade to 100 people".',
+      v_1: 'A voucher from your agency (group-size pass or day pass). After starting a group, the leader scans it under "Passes → Scan voucher".',
       v_open: 'Open TourChip to use it'
     },
     ja: {
@@ -71,7 +72,7 @@
       g_2: 'インストール済みなら、カメラでQRコードをスキャンするとアプリが開きます。アプリ内の「スキャンして参加」でも参加できます。',
       v_title: 'TourChip クーポン',
       v_h: '<b>Tour</b>Chip クーポン',
-      v_1: '旅行会社からリーダーに渡される7日間プランのクーポンです。グループ作成後、「100人にアップグレード」からスキャンします。',
+      v_1: '旅行会社からリーダーに渡されるクーポン（人数パスまたは日数パス）です。グループ作成後、「人数パス・日数パス → クーポンをスキャン」から使います。',
       v_open: 'TourChip を開いて使う'
     },
     ko: {
@@ -89,7 +90,7 @@
       g_2: '이미 설치했다면 카메라로 QR 코드를 스캔하면 앱이 열려요. 앱에서 "스캔해서 참가"를 눌러도 돼요.',
       v_title: 'TourChip 이용권',
       v_h: '<b>Tour</b>Chip 이용권',
-      v_1: '여행사가 리더에게 주는 7일 플랜 이용권이에요. 그룹을 만든 뒤 "100명으로 업그레이드"에서 스캔하세요.',
+      v_1: '여행사가 리더에게 주는 이용권(인원 이용권 또는 일수 이용권)이에요. 그룹을 만든 뒤 "인원·일수 이용권 → 이용권 스캔"에서 사용하세요.',
       v_open: 'TourChip 열고 사용'
     },
     ms: {
@@ -107,7 +108,7 @@
       g_2: 'Sudah dipasang? Imbas kod QR dengan kamera untuk membuka aplikasi, atau ketik "Imbas untuk sertai" dalam aplikasi.',
       v_title: 'Baucar TourChip',
       v_h: 'Baucar <b>Tour</b>Chip',
-      v_1: 'Pas 7 hari daripada agensi anda. Selepas memulakan kumpulan, ketua mengimbasnya di "Naik taraf ke 100 orang".',
+      v_1: 'Baucar daripada agensi anda (pas saiz kumpulan atau pas hari). Selepas memulakan kumpulan, ketua mengimbasnya di "Pas → Imbas baucar".',
       v_open: 'Buka TourChip untuk guna'
     },
     id: {
@@ -125,7 +126,7 @@
       g_2: 'Sudah terpasang? Pindai kode QR dengan kamera untuk membuka aplikasi, atau ketuk "Pindai untuk bergabung" di aplikasi.',
       v_title: 'Voucher TourChip',
       v_h: 'Voucher <b>Tour</b>Chip',
-      v_1: 'Paket 7 hari dari agen perjalanan. Setelah membuat grup, pemimpin memindainya di "Upgrade ke 100 orang".',
+      v_1: 'Voucher dari agen perjalanan (tiket jumlah anggota atau tiket hari). Setelah membuat grup, pemimpin memindainya di "Tiket → Pindai voucher".',
       v_open: 'Buka TourChip untuk memakai'
     },
     vi: {
@@ -143,7 +144,7 @@
       g_2: 'Đã cài ứng dụng? Quét mã QR bằng camera để mở ứng dụng, hoặc chạm "Quét để tham gia" trong ứng dụng.',
       v_title: 'Phiếu TourChip',
       v_h: 'Phiếu <b>Tour</b>Chip',
-      v_1: 'Gói 7 ngày do công ty du lịch cấp cho trưởng đoàn. Sau khi tạo đoàn, quét phiếu ở mục "Nâng cấp lên 100 người".',
+      v_1: 'Phiếu do công ty du lịch cấp cho trưởng đoàn (vé số người hoặc vé ngày). Sau khi tạo đoàn, quét phiếu ở mục "Vé → Quét phiếu".',
       v_open: 'Mở TourChip để dùng'
     },
     th: {
@@ -161,31 +162,78 @@
       g_2: 'ติดตั้งแอปแล้ว? สแกน QR code ด้วยกล้องเพื่อเปิดแอป หรือแตะ "สแกนเพื่อเข้าร่วม" ในแอป',
       v_title: 'คูปอง TourChip',
       v_h: 'คูปอง <b>Tour</b>Chip',
-      v_1: 'แพ็กเกจ 7 วันจากบริษัททัวร์ หลังสร้างกลุ่มแล้ว หัวหน้าสแกนที่ "อัปเกรดเป็น 100 คน"',
+      v_1: 'คูปองจากบริษัททัวร์ (บัตรเพิ่มจำนวนคนหรือบัตรเพิ่มวัน) หลังสร้างกลุ่มแล้ว หัวหน้าสแกนที่ "บัตร → สแกนคูปอง"',
       v_open: 'เปิด TourChip เพื่อใช้'
     }
   };
 
+  // 其他頁面（例如首頁）的字串放在 window.TC_I18N，載入 i18n.js 之前先定義
+  var X = window.TC_I18N || {};
+  for (var L in X) { if (!T[L]) T[L] = {}; for (var k in X[L]) T[L][k] = X[L][k]; }
+
+  var NAMES = { 'zh-Hant': '繁體中文', 'zh-Hans': '简体中文', en: 'English', ja: '日本語', ko: '한국어', ms: 'Bahasa Melayu', id: 'Bahasa Indonesia', vi: 'Tiếng Việt', th: 'ไทย' };
+
+  function norm(tag) {
+    tag = String(tag || '').toLowerCase().replace(/_/g, '-');
+    var p = tag.split('-');
+    if (p[0] === 'zh') return /hans|cn|sg|my/.test(tag) ? 'zh-Hans' : 'zh-Hant';
+    if (p[0] === 'in') return 'id';
+    return T[p[0]] ? p[0] : null;
+  }
+
   function pick() {
+    // 1. 網址 ?lang=ja  2. 上次手動選的語言  3. 瀏覽器語言  4. 英文
+    try { var q = norm(new URLSearchParams(location.search).get('lang')); if (q) return q; } catch (e) {}
+    try { var s = norm(localStorage.getItem('tc_lang')); if (s) return s; } catch (e) {}
     var list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || 'en'];
-    for (var i = 0; i < list.length; i++) {
-      var tag = String(list[i]).toLowerCase().replace(/_/g, '-');
-      var p = tag.split('-');
-      if (p[0] === 'zh') return /hans|cn|sg|my/.test(tag) ? 'zh-Hans' : 'zh-Hant';
-      if (p[0] === 'in') return 'id';
-      if (T[p[0]]) return p[0];
-    }
+    for (var i = 0; i < list.length; i++) { var n = norm(list[i]); if (n) return n; }
     return 'en';
   }
 
-  var lang = pick(), d = T[lang];
-  document.documentElement.lang = lang;
-  var nodes = document.querySelectorAll('[data-t]');
-  for (var i = 0; i < nodes.length; i++) {
-    var k = nodes[i].getAttribute('data-t');
-    if (d[k] == null) continue;
-    if (nodes[i].hasAttribute('data-t-html')) nodes[i].innerHTML = d[k]; else nodes[i].textContent = d[k];
+  function apply(lang) {
+    var d = T[lang] || T.en, base = T['zh-Hant'];
+    document.documentElement.lang = lang;
+    var nodes = document.querySelectorAll('[data-t]');
+    for (var i = 0; i < nodes.length; i++) {
+      var k = nodes[i].getAttribute('data-t');
+      // 頁面原本寫的繁中文字先記下來，切回繁中或缺翻譯時用
+      if (nodes[i]._zh == null) nodes[i]._zh = nodes[i].hasAttribute('data-t-html') ? nodes[i].innerHTML : nodes[i].textContent;
+      var v = d[k] != null ? d[k] : (lang !== 'zh-Hant' && T.en[k] != null ? T.en[k] : nodes[i]._zh);
+      if (nodes[i].hasAttribute('data-t-html')) nodes[i].innerHTML = v; else nodes[i].textContent = v;
+    }
+    // data-ta="alt:key;content:key"：翻譯屬性
+    var an = document.querySelectorAll('[data-ta]');
+    for (var j = 0; j < an.length; j++) {
+      an[j].getAttribute('data-ta').split(';').forEach(function (pair) {
+        var p = pair.split(':'); if (p.length !== 2) return;
+        var el = an[j]; el._zha = el._zha || {};
+        if (el._zha[p[0]] == null) el._zha[p[0]] = el.getAttribute(p[0]) || '';
+        var v = d[p[1]] != null ? d[p[1]] : (lang !== 'zh-Hant' && T.en[p[1]] != null ? T.en[p[1]] : el._zha[p[0]]);
+        if (v != null) an[j].setAttribute(p[0], v.replace(/<[^>]+>/g, ''));
+      });
+    }
+    // 截圖：中文看中文版，其他語言看英文版
+    var shots = document.querySelectorAll('img[data-shot]');
+    for (var m = 0; m < shots.length; m++) shots[m].src = '/img/shots/' + (lang.indexOf('zh') === 0 ? 'zh' : 'en') + '/' + shots[m].getAttribute('data-shot') + '.webp';
+    var t = document.querySelector('[data-title]');
+    if (window._zhTitle == null) window._zhTitle = document.title;
+    if (t) { var tk = t.getAttribute('data-title'); document.title = d[tk] || (lang !== 'zh-Hant' && T.en[tk]) || window._zhTitle; }
+    var sel = document.querySelectorAll('select[data-lang]');
+    for (var n = 0; n < sel.length; n++) sel[n].value = lang;
   }
-  var t = document.querySelector('[data-title]');
-  if (t && d[t.getAttribute('data-title')]) document.title = d[t.getAttribute('data-title')];
+
+  var current = pick();
+  apply(current);
+
+  // 語言選單
+  var sels = document.querySelectorAll('select[data-lang]');
+  for (var i = 0; i < sels.length; i++) {
+    if (!sels[i].options.length) for (var code in NAMES) { var o = document.createElement('option'); o.value = code; o.textContent = NAMES[code]; sels[i].appendChild(o); }
+    sels[i].value = current;
+    sels[i].addEventListener('change', function (e) {
+      current = e.target.value;
+      try { localStorage.setItem('tc_lang', current); } catch (err) {}
+      apply(current);
+    });
+  }
 })();

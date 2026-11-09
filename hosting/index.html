@@ -4,33 +4,201 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#070b1f">
+<meta name="apple-itunes-app" content="app-id=6832215611">
 <title>旅行團 TourChip · 帶團集合點名</title>
-<meta name="description" content="給領隊、導遊的帶團工具：掃一下入團，集合時每個人都收得到。3D 集合點光柱、點名、同團互相看得到、我迷路了。">
-<style>
-:root{color-scheme:dark;--bg:#070b1f;--line:rgba(196,170,255,.38);--ink:#f3f0ff;--muted:#b9b6d6;--faint:#8c89b0}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;display:grid;place-items:center;background:radial-gradient(circle at 50% 18%,#241a55,var(--bg) 60%);color:var(--ink);font:400 16px/1.7 "Noto Sans TC","PingFang TC",system-ui,sans-serif;padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom))}
-.card{width:100%;max-width:420px;background:rgba(26,31,74,.72);border:1px solid var(--line);border-radius:24px;padding:28px 22px;text-align:center}
-h1{font-size:26px;margin:4px 0}
-h1 b{background:linear-gradient(90deg,#b44cff,#4fc3f7);-webkit-background-clip:text;background-clip:text;color:transparent}
-.code{font-size:28px;letter-spacing:5px;margin:14px 0}
-p{color:var(--muted);margin:6px 0}
-a.btn{display:block;margin-top:12px;padding:14px;border-radius:999px;text-decoration:none;color:#fff;font-weight:600;background:linear-gradient(90deg,#8e2de2,#2a63d4)}
-a.ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
-small{display:block;margin-top:18px;color:var(--faint);font-size:12px}
-footer{margin-top:18px;font-size:12px;color:var(--faint)}footer a{color:var(--muted)}
-</style>
+<meta name="description" data-ta="content:meta_desc" content="給領隊、導遊、老師的帶團 App：團員掃 QR code 入團，發集合每支手機都會響，3D 地圖上的集合旗帶你走到集合點。點名、我迷路了、行程表、每日資訊卡、車輛飯店緊急資訊。20 人、3 天以內免費。">
+<link rel="canonical" href="https://tourchip.web.app/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="旅行團 TourChip">
+<meta property="og:title" data-ta="content:og_title" content="旅行團 TourChip｜集合時，每支手機都會響">
+<meta property="og:description" data-ta="content:meta_desc" content="給領隊、導遊、老師的帶團 App：掃一下入團，發集合每支手機都會響，3D 地圖集合旗、點名、我迷路了。20 人、3 天以內免費。">
+<meta property="og:image" content="https://tourchip.web.app/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://tourchip.web.app/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/img/icon.png">
+<link rel="apple-touch-icon" href="/img/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"MobileApplication","name":"旅行團 TourChip","alternateName":"TourChip","operatingSystem":"iOS, Android","applicationCategory":"TravelApplication","url":"https://tourchip.web.app/","image":"https://tourchip.web.app/img/icon-512.png","offers":{"@type":"Offer","price":"0","priceCurrency":"TWD"},"publisher":{"@type":"Organization","name":"Softchip","email":"service.softchip@gmail.com"}}
+</script>
 </head>
-<body>
-<main class="card" data-title="home_title">
-  <h1 data-t="home_h" data-t-html><b>旅行</b>團</h1>
-  <p data-t="home_1">掃一下入團，集合時每個人都收得到。</p>
-  <p data-t="home_2">給領隊、導遊的帶團工具：集合呼叫、點名、3D 集合點光柱、同團互相看得到、我迷路了。</p>
-  <a class="btn ghost" data-t="ios" href="https://apps.apple.com/app/id6832215611">App Store 下載</a>
-  <a class="btn ghost" data-t="android" href="https://play.google.com/store/apps/details?id=com.softchip.tourchip">Google Play 下載</a>
-  <small data-t="home_3">20 人以內免費 · 團員永遠免費</small>
-  <footer><a href="/privacy" data-t="privacy">隱私權政策</a> · <a href="/terms" data-t="terms">使用條款</a> · Softchip</footer>
+<body data-title="home_title">
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/img/icon.png" alt="" width="32" height="32"><span data-t="brand">旅行團</span><small data-t="brand_sub">TourChip</small></a>
+    <nav aria-label="頁面" data-ta="aria-label:nav_label">
+      <a href="#how" data-t="nav_how">怎麼用</a>
+      <a href="#features" data-t="nav_features">功能</a>
+      <a href="#pricing" data-t="nav_price">價格</a>
+      <a href="#faq" data-t="nav_faq">常見問題</a>
+      <a href="/support" data-t="nav_support">支援</a>
+    </nav>
+    <label class="lang"><span aria-hidden="true">🌐</span><select data-lang aria-label="Language"></select></label>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="wrap">
+      <div class="text">
+        <p class="kicker"><i></i><span data-t="kicker">給領隊、導遊、老師的帶團 App</span></p>
+        <h1 data-t="hero_h" data-t-html><em>集合時，</em><br>每支手機都會響</h1>
+        <div class="rule"></div>
+        <p class="lead" data-t="hero_lead">帶團最怕有人走散。團員掃一下 QR code 就入團，發集合時全團手機一起響，3D 地圖上的集合旗帶大家走到集合點。誰收到了、誰還沒到，領隊一眼就知道。</p>
+        <div class="stores" id="download">
+          <a class="store" href="https://apps.apple.com/app/id6832215611"><span><b>App Store</b><small data-t="st_ios">iPhone 下載</small></span></a>
+          <a class="store" href="https://play.google.com/store/apps/details?id=com.softchip.tourchip"><span><b>Google Play</b><small data-t="st_android">Android 下載</small></span></a>
+        </div>
+        <p class="free" data-t="hero_free">20 人、3 天以內免費 · 團員永遠免費 · 不需要註冊帳號</p>
+      </div>
+      <div class="phone"><img data-shot="01" src="/img/shots/zh/01.webp" width="600" height="971" alt="3D 夜光地圖上的集合旗與團員大頭貼" data-ta="alt:alt_hero"></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section id="how" aria-labelledby="how-h">
+      <h2 id="how-h" data-t="how_h">三步驟，開始帶團</h2>
+      <p class="sub" data-t="how_sub">不用加好友、不用留電話、不用註冊。領隊開團，團員掃碼，就能發集合。</p>
+      <div class="steps">
+        <div class="glass" data-t="step1" data-t-html><b>領隊開團</b><span>輸入團名、出發日與天數、分組（例如 1 號車、2 號車），App 產生這一團的入團 QR code。</span></div>
+        <div class="glass" data-t="step2" data-t-html><b>團員掃碼入團</b><span>用 App 或手機相機掃一下就入團；也可以把連結傳到群組。只有拿到 QR code 的人才能加入。</span></div>
+        <div class="glass" data-t="step3" data-t-html><b>發集合</b><span>在地圖上把集合旗拖到集合點、選好時間，全團手機立刻響起，誰收到了一眼就知道。</span></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="shots-h">
+      <h2 id="shots-h" data-t="shots_h">打開 App 看看</h2>
+      <p class="sub" data-t="shots_sub">夜光 3D 地圖跟著手機轉，抬頭就知道往哪走。</p>
+      <div class="gallery">
+        <figure class="shot"><img data-shot="01" src="/img/shots/zh/01.webp" width="600" height="971" loading="lazy" alt=""><figcaption data-t="shot1" data-t-html><b>集合點是一面旗</b>3D 地圖跟著手機轉，抬頭就知道往哪走。</figcaption></figure>
+        <figure class="shot"><img data-shot="02" src="/img/shots/zh/02.webp" width="600" height="971" loading="lazy" alt=""><figcaption data-t="shot2" data-t-html><b>每支手機都會響</b>專注模式也會送達；沒按「收到」每分鐘再提醒。</figcaption></figure>
+        <figure class="shot"><img data-shot="03" src="/img/shots/zh/03.webp" width="600" height="971" loading="lazy" alt=""><figcaption data-t="shot3" data-t-html><b>團員在哪，一眼就看到</b>只有同團的人看得到，還能發氣泡。</figcaption></figure>
+        <figure class="shot"><img data-shot="04" src="/img/shots/zh/04.webp" width="600" height="971" loading="lazy" alt=""><figcaption data-t="shot4" data-t-html><b>長按大頭貼傳訊息</b>對方立刻收到通知，可以封鎖、檢舉。</figcaption></figure>
+        <figure class="shot"><img data-shot="05" src="/img/shots/zh/05.webp" width="600" height="971" loading="lazy" alt=""><figcaption data-t="shot5" data-t-html><b>掃一下就入團</b>不用加好友、不用留電話。</figcaption></figure>
+        <figure class="shot"><img data-shot="06" src="/img/shots/zh/06.webp" width="600" height="971" loading="lazy" alt=""><figcaption data-t="shot6" data-t-html><b>誰收到了，領隊都知道</b>集合、點名、公告、行程表一次搞定。</figcaption></figure>
+      </div>
+    </section>
+
+    <section id="features" aria-labelledby="features-h">
+      <h2 id="features-h" data-t="feat_h">帶團需要的，都在這裡</h2>
+      <p class="sub" data-t="feat_sub">從集合、點名到每天的飯店與注意事項，領隊不用再在群組裡一則一則貼。</p>
+      <div class="cards">
+        <div class="glass"><i aria-hidden="true">🚩</i><span data-t="f1" data-t-html><b>3D 地圖集合旗</b>把團色三角旗拖到集合點。團員的 3D 夜光地圖跟著手機轉，旗子立在建築之間，卡片上有當地時間、倒數、距離和方向。</span></div>
+        <div class="glass"><i aria-hidden="true">🔔</i><span data-t="f2" data-t-html><b>專屬提示音</b>集合時全團手機響起專屬提示音，鎖屏、專注模式也會送達。沒按「收到」的人每分鐘再響一次，最多 3 次；也能只叫某一組，或單獨呼叫一個人。</span></div>
+        <div class="glass"><i aria-hidden="true">✅</i><span data-t="f3" data-t-html><b>點名</b>團員回「我到了」「還要 5 分鐘」「需要幫忙」。需要幫忙的人排在最上面，團主和共同團主都會收到全螢幕提醒。</span></div>
+        <div class="glass"><i aria-hidden="true">🆘</i><span data-t="f4" data-t-html><b>我迷路了</b>按一下，就把現在的位置傳給領隊，地圖上出現紅點和你的團號；找到後消失，30 分鐘後也會自動刪除。</span></div>
+        <div class="glass"><i aria-hidden="true">🗓️</i><span data-t="f5" data-t-html><b>行程表<em class="new">新</em></b>每個集合時間都用集合點的當地時區，跨國行程也不會算錯。集合前 15 分鐘全團自動再提醒一次；自由活動最長可以排到 12 小時後集合。</span></div>
+        <div class="glass"><i aria-hidden="true">📋</i><span data-t="f6" data-t-html><b>每日資訊卡<em class="new">新</em></b>每天一張：餐食、注意事項、穿著，今晚的飯店，還有最多 10 個攻略連結。團員點一下就能翻譯成自己的語言。</span></div>
+        <div class="glass"><i aria-hidden="true">🚌</i><span data-t="f7" data-t-html><b>車輛・飯店・緊急<em class="new">新</em></b>車牌、司機稱呼與電話；飯店地址用當地語言「給司機看」；領隊與旅行社的 24 小時電話，還有當地報警、救護電話，一按就撥。</span></div>
+        <div class="glass"><i aria-hidden="true">🩺</i><span data-t="f8" data-t-html><b>團員資料只給團主看<em class="new">新</em></b>飲食禁忌、過敏與常用藥、緊急聯絡人。團員自己決定要不要填，只有團主與共同團主看得到，退團或解散就刪除。</span></div>
+        <div class="glass"><i aria-hidden="true">🧭</i><span data-t="f9" data-t-html><b>導航到集合點<em class="new">新</em></b>一按就用 Apple 地圖或 Google 地圖，步行帶你走到集合點或今晚的飯店。</span></div>
+        <div class="glass"><i aria-hidden="true">💬</i><span data-t="f10" data-t-html><b>氣泡與私訊</b>每人頭上一個氣泡（20 字），例如「在找廁所」「買到珍奶了」。長按地圖上的人就能傳私訊，有不當字詞過濾，也能封鎖、檢舉。</span></div>
+        <div class="glass"><i aria-hidden="true">🌐</i><span data-t="f11" data-t-html><b>點一下翻譯</b>公告、訊息、氣泡和每日資訊，點一下翻成你的語言，在手機上翻譯。外國團員、跨國團都方便。</span></div>
+        <div class="glass"><i aria-hidden="true">📣</i><span data-t="f12" data-t-html><b>公告、分組與共同團主</b>公告發給全團或某一組（1 號車、2 號車）。最多 2 位共同團主幫忙集合、點名和公告；團主可以交棒。</span></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="who-h">
+      <h2 id="who-h" data-t="who_h">誰在用旅行團</h2>
+      <p class="sub" data-t="who_sub">只要是一群人一起出門，怕有人走散，就用得上。</p>
+      <div class="who">
+        <div class="glass" data-t="who1" data-t-html><b>領隊・導遊</b><span>出國團、國內團、一日遊</span></div>
+        <div class="glass" data-t="who2" data-t-html><b>老師</b><span>校外教學、畢業旅行</span></div>
+        <div class="glass" data-t="who3" data-t-html><b>社團・登山</b><span>健行、營隊、活動工作人員</span></div>
+        <div class="glass" data-t="who4" data-t-html><b>公司・家族</b><span>員工旅遊、家族旅行</span></div>
+      </div>
+    </section>
+
+    <section id="pricing" aria-labelledby="price-h">
+      <h2 id="price-h" data-t="price_h">價格</h2>
+      <p class="sub" data-t="price_sub">團員永遠免費。小團、短程直接用；人多或天數長，再由團主買券。都是一次性購買，不自動續費。</p>
+      <div class="prices">
+        <div class="glass price hl">
+          <h3 data-t="p_free_t">免費</h3>
+          <div class="amt" data-t="p_free_amt" data-t-html>NT$0</div>
+          <ul data-t="p_free_d" data-t-html><li>20 人以內（含團主）</li><li>行程 3 天以內</li><li>所有功能都能用</li><li>團員永遠免費</li></ul>
+        </div>
+        <div class="glass price">
+          <h3 data-t="p_people_t">人數券</h3>
+          <div class="amt" data-t="p_people_amt" data-t-html>NT$290<small>／一團</small></div>
+          <p data-t="p_people_d">這一團的人數上限提高到 100 人。第 21 位團員入團時，團主會收到通知。</p>
+        </div>
+        <div class="glass price">
+          <h3 data-t="p_days_t">天數券</h3>
+          <div class="amt" data-t="p_days_amt" data-t-html>NT$290<small>／張</small></div>
+          <p data-t="p_days_d">每張讓這一團多 7 天，一團最長 30 天。例如 10 天的行程，買 1 張就夠。</p>
+        </div>
+        <div class="glass price">
+          <h3 data-t="p_vou_t">旅行社團購券</h3>
+          <div class="amt" data-t="p_vou_amt" data-t-html>QR code</div>
+          <p data-t="p_vou_d">旅行社先在 App 裡買人數券或天數券的團購券，變成 QR code 發給領隊；領隊開團後掃描就用在那一團，不用另外付款。</p>
+        </div>
+      </div>
+      <p class="note" data-t="price_note">價格為台灣售價，其他國家與地區依 App Store、Google Play 當地價格。團購券購買後 400 天內有效。退款依 App Store、Google Play 的流程辦理。</p>
+    </section>
+
+    <section aria-labelledby="safe-h">
+      <h2 id="safe-h" data-t="safe_h">安心，是帶團的第一件事</h2>
+      <p class="sub" data-t="safe_sub">團是私人的，不公開、不能搜尋；行程結束，資料就刪除。</p>
+      <div class="safe">
+        <div class="glass" data-t="safe1" data-t-html><b>不需要帳號</b><span>不收集電話、Email 或真實姓名，打開 App 就能用。</span></div>
+        <div class="glass" data-t="safe2" data-t-html><b>只有同團看得到</b><span>同意分享後，同一團的人才看得到你的位置；不在團裡的人看不到任何人，隨時可以在設定關掉。</span></div>
+        <div class="glass" data-t="safe3" data-t-html><b>未成年有保護</b><span>未滿 18 歲要先取得家長或監護人同意，才能分享位置、發氣泡和傳私訊；訊息有過濾，可以封鎖、檢舉。</span></div>
+        <div class="glass" data-t="safe4" data-t-html><b>解散就刪除</b><span>行程最後一天 23:59 自動解散，名單、位置、訊息、團員資料全部刪除。</span></div>
+      </div>
+    </section>
+
+    <section id="faq" aria-labelledby="faq-h">
+      <h2 id="faq-h" data-t="faq_h">常見問題</h2>
+      <div class="faq">
+        <details class="glass"><summary data-t="q1">團員要付錢嗎？</summary><p data-t="a1">不用，團員永遠免費。只有團主在人數超過 20 人或行程超過 3 天時，需要買人數券或天數券（或使用旅行社的團購券）。</p></details>
+        <details class="glass"><summary data-t="q2">團員一定要裝 App 嗎？要註冊嗎？</summary><p data-t="a2">要裝 App，集合提示音、全螢幕集合卡片和 3D 地圖都需要 App。App 免費下載，不需要註冊帳號，也不用留電話或 Email。</p></details>
+        <details class="glass"><summary data-t="q3">手機靜音或開專注模式，也會響嗎？</summary><p data-t="a3">集合是「時效性通知」，鎖屏和專注模式下也會送達。第一次打開 App 時請允許通知；手機關機或沒有網路時收不到，所以沒按「收到」的人，領隊一看就知道。</p></details>
+        <details class="glass"><summary data-t="q4">領隊看得到我的位置嗎？</summary><p data-t="a4">只有你在入團時同意「和團員互相看得到」，同一團的人（含領隊）才會在地圖上看到你，而且只在 App 開著時更新；隨時可以在設定關掉。不同意也能正常收集合和點名。按「我迷路了」則會另外把當下位置傳給領隊，30 分鐘後刪除。</p></details>
+        <details class="glass"><summary data-t="q5">跨國行程的時間怎麼算？</summary><p data-t="a5">行程表與集合時間一律用集合點的當地時間，例如台北出發、東京集合，就顯示東京時間。團在最後一個集合點當地時間的結束日 23:59 解散。</p></details>
+        <details class="glass"><summary data-t="q6">超過 20 人或 3 天怎麼辦？</summary><p data-t="a6">人數券讓一團最多 100 人；天數券每張多 7 天，一團最長 30 天。兩種都是 NT$290、一次性購買，在團裡的「人數券、天數券」購買或掃描團購券。</p></details>
+        <details class="glass"><summary data-t="q7">旅行社怎麼幫領隊買？</summary><p data-t="a7">在 App 的設定 →「購買團購券」買人數券或天數券，每張會變成一個 QR code，傳給要帶團的領隊。領隊開團後掃描，就直接用在那一團；同一張券只能用一次，你可以看到哪些已經用掉。</p></details>
+        <details class="glass"><summary data-t="q8">沒有網路可以用嗎？</summary><p data-t="a8">收集合、點名、看到團員都需要網路（行動網路或 Wi-Fi）。出國建議準備網卡、eSIM 或分享器。集合點的距離和方向是在你的手機上計算的。</p></details>
+        <details class="glass"><summary data-t="q9">團什麼時候解散？資料會留下嗎？</summary><p data-t="a9">團在行程最後一天 23:59 自動解散，團主也可以提早解散。解散時團的資料、名單、位置、氣泡、私訊與團員資料全部刪除。</p></details>
+        <details class="glass"><summary data-t="q10">怎麼刪除我的資料？</summary><p data-t="a10" data-t-html>退團或解散就會刪除團裡的資料；暱稱、大頭貼可以在設定清除。其他資料請看<a href="/delete-account">刪除資料</a>，或寫信到 service.softchip@gmail.com。</p></details>
+      </div>
+    </section>
+
+    <section aria-labelledby="cta-h">
+      <div class="glass cta">
+        <h2 id="cta-h" data-t="cta_h">下一趟，一個都不走散</h2>
+        <p class="sub" data-t="cta_sub">免費下載，20 人、3 天以內不用付費。</p>
+        <div class="stores">
+          <a class="store" href="https://apps.apple.com/app/id6832215611"><span><b>App Store</b><small data-t="st_ios">iPhone 下載</small></span></a>
+          <a class="store" href="https://play.google.com/store/apps/details?id=com.softchip.tourchip"><span><b>Google Play</b><small data-t="st_android">Android 下載</small></span></a>
+        </div>
+      </div>
+    </section>
+  </div>
 </main>
+
+<footer>
+  <div class="wrap">
+    <nav aria-label="法律與聯絡" data-ta="aria-label:foot_label">
+      <a href="/support" data-t="foot_support">支援與聯絡</a>
+      <a href="/privacy" data-t="privacy">隱私權政策</a>
+      <a href="/terms" data-t="terms">使用條款</a>
+      <a href="/delete-account" data-t="foot_delete">刪除資料</a>
+      <a href="/child-safety" data-t="foot_child">兒童安全</a>
+      <a href="mailto:service.softchip@gmail.com" data-t="foot_contact">聯絡我們</a>
+    </nav>
+    <span data-t="foot_copy">© 2026 Softchip · 旅行團 TourChip</span>
+  </div>
+</footer>
+
+<script src="/home-i18n.js"></script>
 <script src="/i18n.js"></script>
 </body>
 </html>

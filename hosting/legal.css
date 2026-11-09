@@ -1,0 +1,20 @@
+/* 旅行團 TourChip 文件頁（隱私權、條款、支援、刪除資料、兒童安全）：夜光色系、高可讀性 */
+:root { color-scheme: dark; }
+body { margin: 0; background: #070b1f; color: #f3f0ff; font: 16px/1.8 "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+main { max-width: 720px; margin: 0 auto; padding: 40px max(20px, env(safe-area-inset-right)) 80px max(20px, env(safe-area-inset-left)); }
+h1 { font-size: 26px; line-height: 1.35; letter-spacing: 1px; margin: 0 0 8px; }
+h2 { font-size: 18px; margin: 34px 0 8px; color: #f3f0ff; }
+p, li, td, th { color: #b9b6d6; }
+b, strong { color: #f3f0ff; font-weight: 500; }
+a { color: #4fc3f7; overflow-wrap: anywhere; }
+hr { border: 0; border-top: 1px solid #2a2f66; margin: 40px 0; }
+ul, ol { padding-left: 1.3em; }
+.meta, .note { color: #8c89b0; font-size: 13px; letter-spacing: .5px; }
+.home { margin: 0 0 28px; font-size: 14px; }
+.home a { color: #b9b6d6; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+.home img { width: 28px; height: 28px; border-radius: 8px; }
+.box { background: rgba(26, 31, 74, .72); border: 1px solid rgba(196, 170, 255, .38); border-radius: 18px; padding: 16px 20px; margin: 16px 0; }
+.box > :first-child { margin-top: 0; }
+.box > :last-child { margin-bottom: 0; }
+.legal-foot { margin-top: 48px; padding-top: 20px; border-top: 1px solid #2a2f66; font-size: 13px; color: #8c89b0; line-height: 2.2; }
+.legal-foot a { color: #b9b6d6; text-decoration: none; margin-right: 16px; white-space: nowrap; }
