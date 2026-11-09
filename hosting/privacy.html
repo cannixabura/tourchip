@@ -12,20 +12,21 @@ main{max-width:720px;margin:0 auto;padding:40px 20px 64px}h1{font-size:26px}h2{f
 <p>旅行團不需要註冊，也不收集電話、Email 或真實姓名。App 第一次開啟時會建立一個匿名代號（Firebase 匿名登入），只用來辨認你在哪一團。這個代號和城市低語 App 的代號各自獨立，彼此不相認。</p>
 <h2>收集哪些資料、為什麼</h2>
 <ul>
-<li><b>團的資料</b>：團名、團色、行程日期、分組、公告、行程表（集合時間、集合點說明與團主放的座標）。用來讓團主帶團。</li>
+<li><b>團的資料</b>：團名、團色、出發日與天數、分組、公告、行程表（集合時間、集合點說明與團主放的座標）、每日資訊卡（當天說明、飯店名稱地址電話、攻略連結）、車輛資訊（車牌、司機稱呼與電話）、緊急聯絡（領隊與旅行社電話）。由團主與共同團主填寫，同一團的人看得到，用來帶團。</li>
 <li><b>團員名單</b>：入團順序的團號、團主寫的備註（例如姓名、房號）、所在分組。備註只有團主與共同團主看得到。</li>
 <li><b>暱稱與大頭貼（自己決定要不要填）</b>：在設定裡填的暱稱與上傳的照片。團主與共同團主在名單上看得到，用來點名時認人。不填也能正常使用。</li>
+<li><b>團員資料（自己決定要不要填）</b>：飲食禁忌、健康狀況（過敏、慢性病、常用藥）、緊急聯絡人姓名與電話。只有團主與共同團主看得到，用來安排餐食與緊急時聯絡家人；不填也能正常使用。</li>
 <li><b>回覆狀態</b>：集合時有沒有按「收到」，點名時回答「我到了」、「還要 5 分鐘」或「需要幫忙」。</li>
 <li><b>「我迷路了」的位置</b>：只有你自己按下「我迷路了」時，才會把那一刻的位置傳一次給團主與共同團主，30 分鐘後自動刪除，不會持續追蹤。</li>
 <li><b>和團員互相看得到（你同意後才有）</b>：你在 App 開著時的位置、你發的氣泡（最多 20 字）、你和同團的人之間的私訊、你封鎖的對象、你提出的檢舉。位置、氣泡只有同一團的人看得到；私訊只有雙方看得到；檢舉內容只有我們看得到，用來處理不當行為。</li>
 <li><b>推播權杖</b>：用來送集合、點名與公告的通知。</li>
-<li><b>購買紀錄</b>：7 天方案與團購券的購買憑證，用來確認付款、避免同一筆購買被重複使用。</li>
+<li><b>購買紀錄</b>：人數券、天數券與團購券的購買憑證，用來確認付款、避免同一筆購買被重複使用。</li>
 <li><b>當機紀錄</b>：Firebase Crashlytics 收集 App 當機時的技術資訊，用來修正錯誤。</li>
 </ul>
 <h2>位置</h2>
 <p>集合點的距離與方向在你的手機上計算，不會上傳。第一次入團時，App 會請你決定要不要「和團員互相看得到」：同意後（未滿 18 歲須先取得家長或監護人同意），同一團的人（含團主與共同團主）會在 3D 地圖上看到你的位置與大頭貼，你也看得到他們；位置只在 App 開著時更新，不在團裡的人看不到。你可以隨時在設定關掉，關掉後位置立刻刪除。不同意也能正常入團、收集合與點名。「我迷路了」會另外把當下位置傳給團主與共同團主，30 分鐘後刪除。</p>
 <h2>保存多久</h2>
-<p>團在行程結束日 23:59（最後一個集合點的當地時間）自動解散，或由團主提早解散。解散時，團的資料、團員名單、回覆狀態、公告、行程表、位置、氣泡與私訊全部刪除；你退團或被移出時，你的位置與氣泡立刻刪除。檢舉紀錄最多保留最近 1000 筆。團購券保存 400 天。暱稱與大頭貼保留到你在設定裡清除或移除為止。</p>
+<p>團在行程結束日 23:59（最後一個集合點的當地時間）自動解散，或由團主提早解散。解散時，團的資料、團員名單、團員資料、回覆狀態、公告、行程表、每日資訊卡、車輛與緊急聯絡、位置、氣泡與私訊全部刪除；你退團或被移出時，你的位置、氣泡與團員資料立刻刪除。檢舉紀錄最多保留最近 1000 筆。團購券保存 400 天。暱稱與大頭貼保留到你在設定裡清除或移除為止。</p>
 <h2>未成年人</h2>
 <p>旅行團可以讓未滿 18 歲的人以團員身分入團（例如校外教學）。未滿 18 歲的使用者必須先取得家長或監護人同意，才能分享位置、發氣泡與傳私訊；沒有同意也能入團、收集合與點名。私訊只限同一團的人之間，有髒話過濾，並可封鎖與檢舉；不提供和陌生人聊天。</p>
 <h2>與第三方</h2>
@@ -36,12 +37,13 @@ main{max-width:720px;margin:0 auto;padding:40px 20px 64px}h1{font-size:26px}h2{f
 <h2 id="delete">如何刪除你的資料（旅行團 TourChip）</h2>
 <ol>
 <li><b>暱稱與大頭貼</b>：打開旅行團 → 右下角設定 → 編輯個人資料 → 移除大頭貼、清空暱稱 → 儲存，伺服器上的資料立即刪除。</li>
+<li><b>團員資料</b>：在團裡打開「車輛・飯店・緊急」→ 我的資料 → 右上角刪除，伺服器上的資料立即刪除；退團或解散也會刪除。</li>
 <li><b>位置、氣泡</b>：設定 → 關掉「和團員互相看得到」，你的位置立即刪除；在氣泡上按「收起氣泡」即刪除氣泡。退團時位置與氣泡也會刪除。</li>
 <li><b>團的資料、名單、訊息</b>：在團裡按「退出這一團」（團主按「解散這一團」）；團也會在行程最後一天 23:59 自動解散並全部刪除。</li>
 <li><b>其他所有資料</b>：寫信到 service.softchip@gmail.com，主旨寫「刪除資料」，並附上你的暱稱與所在的團名（有的話），我們會在 30 天內刪除與你有關的所有資料。購買憑證依稅務法規需保留者，只保留到法定期限為止；當機紀錄由 Firebase Crashlytics 保存 90 天後自動刪除。</li>
 </ol>
 
 <h1>Privacy Policy (English)</h1>
-<p>TourChip needs no account. An anonymous ID identifies which group you are in. We store the group's name, itinerary, notices, member numbers, leader notes and sub-groups, your replies to gather calls and roll calls, an optional nickname and profile photo (visible to your leaders; kept until you remove them in Settings), push tokens, purchase receipts and crash reports. If you agree (with a parent or guardian's consent if you are under 18), people in your group, including leaders, see your location on the map while the app is open, along with your bubble; you can message people in your group, block and report. Nobody outside the group can see you. You can turn sharing off any time in Settings. "I'm lost" sends your location once to the leaders; it is deleted after 30 minutes. All group data, locations, bubbles and messages are deleted when the group ends. Vouchers are kept for 400 days. Contact: service.softchip@gmail.com.</p>
+<p>TourChip needs no account. An anonymous ID identifies which group you are in. We store the group's name, dates, itinerary, day cards (notes, hotel, guide links), bus and emergency contact info entered by leaders, notices, member numbers, leader notes and sub-groups, optional member details you choose to enter (diet, health notes, emergency contact; visible only to your leaders and deleted when you leave or the group ends), your replies to gather calls and roll calls, an optional nickname and profile photo (visible to your leaders; kept until you remove them in Settings), push tokens, purchase receipts and crash reports. If you agree (with a parent or guardian's consent if you are under 18), people in your group, including leaders, see your location on the map while the app is open, along with your bubble; you can message people in your group, block and report. Nobody outside the group can see you. You can turn sharing off any time in Settings. "I'm lost" sends your location once to the leaders; it is deleted after 30 minutes. All group data, member details, locations, bubbles and messages are deleted when the group ends. Vouchers are kept for 400 days. Contact: service.softchip@gmail.com.</p>
 <p id="delete-en"><b>Delete your data:</b> clear your nickname and photo in Settings → Edit profile; turn off "Share location with my group" to delete your location; leave or end the group to delete group data and messages (groups also end automatically). For anything else, email service.softchip@gmail.com with the subject "Delete my data" and we will delete it within 30 days. Purchase receipts are kept only as long as tax law requires; crash reports are deleted by Firebase Crashlytics after 90 days.</p>
 </main></body></html>

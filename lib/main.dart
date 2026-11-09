@@ -155,6 +155,12 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
     FirebaseMessaging.onMessage.listen((m) {
       final type = '${m.data['type']}';
       TourService.onPush(m.data);
+      // 集合前 15 分鐘的提醒（集合呼叫或行程表）：App 開著時推播不會響，自己響一次並顯示
+      if ((type == 'tgroup_call' && '${m.data['pre'] ?? ''}' == '1') || type == 'tgroup_stop') {
+        buzz();
+        if (m.notification != null && mounted) showGlassToast(context, m.notification!.body ?? '', icon: Icons.alarm);
+        return;
+      }
       if (type == 'tgroup_call' || type == 'tgroup_roll') return; // 由 _apply 跳出全螢幕卡片
       if ((type == 'tgroup_lost' || type == 'tgroup_help') && mounted && !_overlayOpen) {
         _overlayOpen = true;

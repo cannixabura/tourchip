@@ -12,6 +12,7 @@ import '../translate.dart';
 import '../ui/night.dart';
 import 'call_overlay.dart';
 import 'gather_screen.dart';
+import 'info_screen.dart';
 import 'itinerary_screen.dart';
 import 'join.dart';
 import 'members_screen.dart';
@@ -92,6 +93,8 @@ String dayLabel(TourGroup g) {
   if (parts.length != 3 || parts.contains(null)) return '';
   final start = DateTime(parts[0]!, parts[1]!, parts[2]!);
   final day = DateTime(today.year, today.month, today.day).difference(start).inDays + 1;
+  // 出發前：顯示出發日
+  if (day <= 0) return tx('${start.month}/${start.day} 出發', 'Starts ${start.month}/${start.day}');
   final next = g.stops.where((s) => s.at >= now - 3600000).firstOrNull;
   final place = next == null ? '' : ' · ${zoneName(next.tz).split('・').first}';
   return '${tx('第 $day 天', 'Day $day')}$place';
@@ -153,7 +156,7 @@ class _TopBar extends StatelessWidget {
         const SizedBox(height: Night.space2),
       ],
       if (g.isHost) ...[
-        NightButton(g.paid ? tx('7 天方案（已升級）', '7-day pass (active)') : tx('升級到 100 人', 'Upgrade to 100 people'), kind: NightButtonKind.ghost, icon: Icons.workspace_premium_outlined, onPressed: () {
+        NightButton(tx('人數券、天數券', 'Passes'), kind: NightButtonKind.ghost, icon: Icons.workspace_premium_outlined, onPressed: () {
           Navigator.pop(ctx);
           Navigator.of(context).push(MaterialPageRoute(builder: (_) => const PassScreen()));
         }),
@@ -309,6 +312,8 @@ class _StaffPanel extends StatelessWidget {
         _ActionTile(tx('公告', 'Notice'), Icons.announcement_outlined, () => showAnnounceSheet(context, g)),
         const SizedBox(width: 8),
         _ActionTile(tx('行程', 'Itinerary'), Icons.event_note_outlined, () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ItineraryScreen()))),
+        const SizedBox(width: 8),
+        _ActionTile(tx('資訊', 'Info'), Icons.info_outline, () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const InfoScreen()))),
       ]),
       const SizedBox(height: Night.space3),
       Text(tx('同意分享的團員會出現在地圖上；長按大頭貼可以傳訊息。按「我迷路了」的人會另外以紅點標出。', 'Members who share appear on the map. Long-press a photo to message them. Anyone who taps "I\'m lost" also shows as a red dot.'), style: Night.caption),
@@ -369,6 +374,7 @@ class _MemberPanel extends StatelessWidget {
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         TextButton(style: TextButton.styleFrom(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap), onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ItineraryScreen())), child: Text(tx('行程表', 'Itinerary'))),
         TextButton(style: TextButton.styleFrom(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap), onPressed: () => showAnnouncements(context, g), child: Text(tx('公告（${g.announcements.length}）', 'Notices (${g.announcements.length})'))),
+        TextButton(style: TextButton.styleFrom(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap), onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const InfoScreen())), child: Text(tx('車輛・飯店・緊急', 'Bus · Hotel · SOS'))),
       ]),
     ]);
   }

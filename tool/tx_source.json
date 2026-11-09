@@ -60,6 +60,10 @@
 "en": "about {max(1, (dist / 80).round())} min walk"
 },
 {
+"zh": "用地圖帶我走過去",
+"en": "Walk me there with Maps"
+},
+{
 "zh": "已收到，領隊看得到",
 "en": "Got it. Your leader can see that."
 },
@@ -180,18 +184,6 @@
 "en": "The meeting-point flag and group flag use this color."
 },
 {
-"zh": "行程天數（最長 7 天）",
-"en": "Trip length (up to 7 days)"
-},
-{
-"zh": "今天 {d(now)}",
-"en": "Today {d(now)}"
-},
-{
-"zh": "結束日 23:59 自動解散，以最後一個集合點的當地時間為準。",
-"en": "Ends at 23:59 on the last day, local time at the last meeting point."
-},
-{
 "zh": "分組（可以不分）",
 "en": "Sub-groups (optional)"
 },
@@ -200,20 +192,168 @@
 "en": "e.g. Bus 1, Bus 2. Gather, roll call and notices can go to one sub-group."
 },
 {
-"zh": "20 人以內免費。超過時再買 7 天方案或使用團購券。",
-"en": "Free up to 20. Upgrade later with a 7-day pass or a voucher."
+"zh": "20 人、3 天以內免費。人數或天數超過時，再買人數券、天數券或使用團購券。",
+"en": "Free for up to 20 people and 3 days. Buy passes or use vouchers for more."
 },
 {
 "zh": "開團，產生 QR code",
 "en": "Create and show QR code"
 },
 {
-"zh": "發出集合",
-"en": "Gather the group"
+"zh": "出發日",
+"en": "Start date"
+},
+{
+"zh": "今天 {d(start)}",
+"en": "Today {d(start)}"
+},
+{
+"zh": "可以先開團讓團員入團，最遠選 90 天後",
+"en": "Set up early so members can join; up to 90 days ahead"
+},
+{
+"zh": "行程天數",
+"en": "Trip length"
+},
+{
+"zh": "1 天 {d(start)}",
+"en": "1 day {d(start)}"
+},
+{
+"zh": "{days} 天 {d(start)}–{d(end)}",
+"en": "{days} days {d(start)}–{d(end)}"
+},
+{
+"zh": "3 天以內免費。結束日 23:59 自動解散，以最後一個集合點的當地時間為準。",
+"en": "Free up to 3 days. Ends at 23:59 on the last day, local time at the last meeting point."
+},
+{
+"zh": "前 3 天免費，之後要 {passes} 張天數券（每張多 7 天）。還沒買之前，這一團會在第 3 天結束。",
+"en": "First 3 days free; needs {passes} day pass(es) (7 days each). Until then the group ends on day 3."
+},
+{
+"zh": "出發日與天數",
+"en": "Dates"
 },
 {
 "zh": "關閉",
 "en": "Close"
+},
+{
+"zh": "已經出發，只能改天數。",
+"en": "The trip has started; only the length can change."
+},
+{
+"zh": "目前開通 {g.allowedDays} 天",
+"en": "{g.allowedDays} days active"
+},
+{
+"zh": "儲存",
+"en": "Save"
+},
+{
+"zh": "寫這一天的資訊（說明、飯店、攻略連結）",
+"en": "Add info for this day"
+},
+{
+"zh": "今天的資訊",
+"en": "About this day"
+},
+{
+"zh": "編輯",
+"en": "Edit"
+},
+{
+"zh": "攻略連結",
+"en": "Guides"
+},
+{
+"zh": "今晚的飯店",
+"en": "Tonight's hotel"
+},
+{
+"zh": "給司機看",
+"en": "Show driver"
+},
+{
+"zh": "帶我走過去",
+"en": "Walk there"
+},
+{
+"zh": "請載我到這裡",
+"en": "Please take me here"
+},
+{
+"zh": "這一天的資訊已更新",
+"en": "Day info updated"
+},
+{
+"zh": "{d.month}/{d.day} 的資訊",
+"en": "Info for {d.month}/{d.day}"
+},
+{
+"zh": "刪除",
+"en": "Remove"
+},
+{
+"zh": "今天的說明（餐食、注意事項、穿著…）",
+"en": "Notes for the day (meals, reminders…)"
+},
+{
+"zh": "例如：早餐 7:00 一樓餐廳；午餐自理；今天走路多，請穿好走的鞋",
+"en": "e.g. Breakfast 7:00 on 1F; lunch on your own; wear good shoes"
+},
+{
+"zh": "團員可以點一下翻譯成自己的語言。",
+"en": "Members can tap to translate it."
+},
+{
+"zh": "沿用前一晚：{prev.name}",
+"en": "Same as before: {prev.name}"
+},
+{
+"zh": "飯店名稱（當地語言）",
+"en": "Hotel name (local language)"
+},
+{
+"zh": "地址（當地語言，給司機看）",
+"en": "Address (local language, for drivers)"
+},
+{
+"zh": "電話",
+"en": "Phone"
+},
+{
+"zh": "在地圖上的位置（導航用，可以不選）",
+"en": "Location on map (for directions, optional)"
+},
+{
+"zh": "還沒選",
+"en": "Not set"
+},
+{
+"zh": "攻略連結（最多 10 個；團員點了用瀏覽器打開）",
+"en": "Guide links (up to 10; open in the browser)"
+},
+{
+"zh": "標題",
+"en": "Title"
+},
+{
+"zh": "例如：清水寺怎麼逛",
+"en": "e.g. Kiyomizu-dera guide"
+},
+{
+"zh": "貼上",
+"en": "Paste"
+},
+{
+"zh": "新增連結",
+"en": "Add link"
+},
+{
+"zh": "發出集合",
+"en": "Gather the group"
 },
 {
 "zh": "幾分鐘後集合",
@@ -268,6 +408,10 @@
 "en": "This phone"
 },
 {
+"zh": "{start.month}/{start.day} 出發",
+"en": "Starts {start.month}/{start.day}"
+},
+{
 "zh": "第 {day} 天",
 "en": "Day {day}"
 },
@@ -300,12 +444,8 @@
 "en": "Members"
 },
 {
-"zh": "7 天方案（已升級）",
-"en": "7-day pass (active)"
-},
-{
-"zh": "升級到 100 人",
-"en": "Upgrade to 100 people"
+"zh": "人數券、天數券",
+"en": "Passes"
 },
 {
 "zh": "解散這一團",
@@ -380,6 +520,10 @@
 "en": "Itinerary"
 },
 {
+"zh": "資訊",
+"en": "Info"
+},
+{
 "zh": "同意分享的團員會出現在地圖上；長按大頭貼可以傳訊息。按「我迷路了」的人會另外以紅點標出。",
 "en": "Members who share appear on the map. Long-press a photo to message them. Anyone who taps \"I'm lost\" also shows as a red dot."
 },
@@ -422,6 +566,10 @@
 {
 "zh": "公告（{g.announcements.length}）",
 "en": "Notices ({g.announcements.length})"
+},
+{
+"zh": "車輛・飯店・緊急",
+"en": "Bus · Hotel · SOS"
 },
 {
 "zh": "發公告",
@@ -476,6 +624,194 @@
 "en": "Settings"
 },
 {
+"zh": "團體資訊",
+"en": "Group info"
+},
+{
+"zh": "車輛",
+"en": "Bus"
+},
+{
+"zh": "還沒填車輛資訊",
+"en": "No bus info yet"
+},
+{
+"zh": "領隊還沒填車輛資訊",
+"en": "No bus info yet"
+},
+{
+"zh": "{day.month}/{day.day} 的飯店",
+"en": "Hotel on {day.month}/{day.day}"
+},
+{
+"zh": "在行程表的每日資訊裡設定飯店",
+"en": "Set hotels in the day info on the itinerary"
+},
+{
+"zh": "領隊還沒填飯店",
+"en": "No hotel yet"
+},
+{
+"zh": "緊急聯絡",
+"en": "Emergency contacts"
+},
+{
+"zh": "旅行社",
+"en": "Agencies"
+},
+{
+"zh": "24 小時緊急電話",
+"en": "24-hour line"
+},
+{
+"zh": "{local.country}當地",
+"en": "In {local.country}"
+},
+{
+"zh": "報警、救護、消防",
+"en": "Police, ambulance, fire"
+},
+{
+"zh": "報警",
+"en": "Police"
+},
+{
+"zh": "救護車",
+"en": "Ambulance"
+},
+{
+"zh": "領隊還沒填緊急聯絡",
+"en": "No emergency contacts yet"
+},
+{
+"zh": "我的資料",
+"en": "My details"
+},
+{
+"zh": "飲食禁忌、健康狀況、緊急聯絡人。只有團主和共同團主看得到，退團或解散就刪除。",
+"en": "Diet, health and an emergency contact. Only the leaders can see it; deleted when you leave or the group ends."
+},
+{
+"zh": "飲食：{g.myData!.diet}",
+"en": "Diet: {g.myData!.diet}"
+},
+{
+"zh": "健康：{g.myData!.health}",
+"en": "Health: {g.myData!.health}"
+},
+{
+"zh": "緊急聯絡人：{g.myData!.contact} {g.myData!.contactPhone}",
+"en": "Contact: {g.myData!.contact} {g.myData!.contactPhone}"
+},
+{
+"zh": "填寫我的資料",
+"en": "Add my details"
+},
+{
+"zh": "修改我的資料",
+"en": "Edit my details"
+},
+{
+"zh": "司機",
+"en": "Driver"
+},
+{
+"zh": "司機 {b.driver}",
+"en": "Driver {b.driver}"
+},
+{
+"zh": "團體資訊已更新",
+"en": "Group info updated"
+},
+{
+"zh": "編輯團體資訊",
+"en": "Edit group info"
+},
+{
+"zh": "全團的車（每組不同車就填下面）",
+"en": "Bus for everyone (or fill in each sub-group below)"
+},
+{
+"zh": "{g.subName(b.sub)}的車",
+"en": "Bus for {g.subName(b.sub)}"
+},
+{
+"zh": "車牌",
+"en": "Plate number"
+},
+{
+"zh": "車色、車型（例如：白色大巴）",
+"en": "Color and type (e.g. white coach)"
+},
+{
+"zh": "司機稱呼",
+"en": "Driver name"
+},
+{
+"zh": "司機電話",
+"en": "Driver phone"
+},
+{
+"zh": "備註（例如：停在 B2 出口）",
+"en": "Note (e.g. parked at exit B2)"
+},
+{
+"zh": "領隊電話",
+"en": "Leader phone"
+},
+{
+"zh": "旅行社名稱",
+"en": "Travel agency"
+},
+{
+"zh": "旅行社 24 小時電話",
+"en": "Agency 24-hour phone"
+},
+{
+"zh": "其他（例如：駐日代表處電話、保險公司）",
+"en": "Other (e.g. embassy, insurance)"
+},
+{
+"zh": "當地的報警、救護電話會依集合點的國家自動顯示。",
+"en": "Local police and ambulance numbers are shown automatically."
+},
+{
+"zh": "已刪除我的資料",
+"en": "Your details were deleted"
+},
+{
+"zh": "已儲存，只有領隊看得到",
+"en": "Saved. Only your leaders can see it."
+},
+{
+"zh": "全部都可以不填。只有團主和共同團主看得到，用來安排餐食和緊急時聯絡家人；你退團或這一團解散時就刪除。",
+"en": "Everything is optional. Only your leaders can see it, for meals and emergencies. Deleted when you leave or the group ends."
+},
+{
+"zh": "飲食禁忌",
+"en": "Diet"
+},
+{
+"zh": "例如：素食、不吃牛、海鮮過敏",
+"en": "e.g. vegetarian, no beef"
+},
+{
+"zh": "健康狀況（過敏、慢性病、常用藥）",
+"en": "Health (allergies, conditions, medicine)"
+},
+{
+"zh": "緊急聯絡人",
+"en": "Emergency contact"
+},
+{
+"zh": "例如：媽媽 王小明",
+"en": "e.g. Mom"
+},
+{
+"zh": "緊急聯絡人電話",
+"en": "Contact phone"
+},
+{
 "zh": "新增集合點",
 "en": "Add stop"
 },
@@ -484,12 +820,20 @@
 "en": "Day {i + 1}"
 },
 {
+"zh": "行程 {g.days} 天，目前開到第 {g.allowedDays} 天。再 {g.daysNeeded} 張天數券就能用到最後一天。",
+"en": "Trip is {g.days} days; {g.allowedDays} are active. {g.daysNeeded} more day pass(es) needed."
+},
+{
+"zh": "買天數券",
+"en": "Buy"
+},
+{
 "zh": "這一天跨時區。每個集合時間都是當地時間，團員不用自己換算。",
 "en": "This day crosses time zones. Every time is local to its meeting point."
 },
 {
-"zh": "每個集合時間都是集合點的當地時間。",
-"en": "Every time is local to its meeting point."
+"zh": "每個集合時間都是集合點的當地時間。集合前 15 分鐘會自動提醒。",
+"en": "Every time is local to its meeting point. Everyone is reminded 15 minutes before."
 },
 {
 "zh": "這一天還沒有集合點",
@@ -510,10 +854,6 @@
 {
 "zh": "修改集合點",
 "en": "Edit stop"
-},
-{
-"zh": "刪除",
-"en": "Remove"
 },
 {
 "zh": "刪除這個集合點？",
@@ -544,16 +884,8 @@
 "en": "Location on map (optional)"
 },
 {
-"zh": "還沒選",
-"en": "Not set"
-},
-{
 "zh": "哪一組",
 "en": "Which sub-group"
-},
-{
-"zh": "儲存",
-"en": "Save"
 },
 {
 "zh": "拖曳地圖選集合點",
@@ -572,12 +904,16 @@
 "en": "The group leader scans the voucher after creating a group."
 },
 {
-"zh": "用這張團購券升級「{g.name}」？升級後最多 100 人。",
-"en": "Use this voucher to upgrade \"{g.name}\" to 100 people?"
+"zh": "把這張團購券用在「{g.name}」？人數券會讓這一團最多 100 人，天數券會讓這一團多 7 天。",
+"en": "Use this voucher on \"{g.name}\"? A group-size pass allows 100 people; a day pass adds 7 days."
 },
 {
 "zh": "使用團購券",
 "en": "Use voucher"
+},
+{
+"zh": "這一團多了 7 天。",
+"en": "Added 7 days to this group."
 },
 {
 "zh": "這一團已升級，最多 100 人。",
@@ -598,6 +934,10 @@
 {
 "zh": "團員名單 · {g.count} 人",
 "en": "Members · {g.count}"
+},
+{
+"zh": "飲食與健康總表",
+"en": "Diet and health"
 },
 {
 "zh": "分組",
@@ -630,6 +970,10 @@
 {
 "zh": "未分組",
 "en": "None"
+},
+{
+"zh": "有健康備註",
+"en": "Health note"
 },
 {
 "zh": "{m.no} 號 {m.label}",
@@ -672,6 +1016,14 @@
 "en": "Remove"
 },
 {
+"zh": "團員自己填的，只有團主與共同團主看得到。{rows.length}／{g.members.length} 人有填。",
+"en": "Filled in by members; only leaders can see it. {rows.length}/{g.members.length} filled."
+},
+{
+"zh": "還沒有人填。團員可以在「車輛・飯店・緊急」裡填寫。",
+"en": "No one has filled it in yet."
+},
+{
 "zh": "備註",
 "en": "Note"
 },
@@ -696,24 +1048,28 @@
 "en": "Bus {ctls.length + 1}"
 },
 {
+"zh": "緊急聯絡人：{d.contact} {d.contactPhone}",
+"en": "Emergency contact: {d.contact} {d.contactPhone}"
+},
+{
 "zh": "團已滿 20 人",
 "en": "Group is full (20)"
 },
 {
-"zh": "7 天方案與團購券",
-"en": "Passes and vouchers"
+"zh": "「{g.name}」：最多 100 人，目前開通 {g.allowedDays} 天",
+"en": "\"{g.name}\": up to 100 people, {g.allowedDays} days active"
 },
 {
-"zh": "「{g.name}」已升級，最多 100 人。",
-"en": "\"{g.name}\" is upgraded. Up to 100 people."
+"zh": "「{g.name}」：20 人以內免費，目前開通 {g.allowedDays} 天",
+"en": "\"{g.name}\": free up to 20 people, {g.allowedDays} days active"
 },
 {
-"zh": "升級這一團後，最多可以有 100 人。",
-"en": "Upgrade this group to allow up to 100 people."
+"zh": "已用人數券，最多 100 人。",
+"en": "Group-size pass active. Up to 100 people."
 },
 {
-"zh": "7 天方案",
-"en": "7-day pass"
+"zh": "人數券",
+"en": "Group-size"
 },
 {
 "zh": "人數上限提高到 100 人",
@@ -724,24 +1080,52 @@
 "en": "For \"{g.name}\" until it ends"
 },
 {
-"zh": "一次購買，不會自動續費",
-"en": "One-time purchase, no renewal"
-},
-{
 "zh": "團員永遠免費",
 "en": "Always free for members"
 },
 {
-"zh": "購買 7 天方案",
-"en": "Buy 7-day pass"
+"zh": "購買人數券",
+"en": "Buy group-size pass"
+},
+{
+"zh": "已經是最長的 30 天。",
+"en": "Already at the 30-day maximum."
+},
+{
+"zh": "天數券",
+"en": "Day pass"
+},
+{
+"zh": "這一團多 7 天（可以買好幾張，最長 30 天）",
+"en": "+7 days for this group (stack up to 30 days)"
+},
+{
+"zh": "行程 {g.days} 天，還要 {g.daysNeeded} 張",
+"en": "Trip is {g.days} days: {g.daysNeeded} more needed"
+},
+{
+"zh": "出發日起前 3 天免費",
+"en": "The first 3 days are free"
+},
+{
+"zh": "天數在行程表右上角「出發日與天數」設定",
+"en": "Set the trip length from the itinerary"
+},
+{
+"zh": "購買天數券",
+"en": "Buy day pass"
+},
+{
+"zh": "一次購買，不會自動續費。",
+"en": "One-time purchases, no renewal."
 },
 {
 "zh": "有旅行社給的團購券",
 "en": "Have a voucher from your agency?"
 },
 {
-"zh": "掃描券上的 QR code，這一團直接升級，不用另外付款。",
-"en": "Scan its QR code to upgrade this group at no cost."
+"zh": "掃描券上的 QR code，人數券或天數券直接用在這一團，不用另外付款。",
+"en": "Scan its QR code to apply it to this group at no cost."
 },
 {
 "zh": "掃描團購券",
@@ -756,12 +1140,8 @@
 "en": "Agency vouchers"
 },
 {
-"zh": "每張 {price}。買到的券會變成 QR code，發給要帶團的領隊，領隊開團後掃描就能升級。可以看到哪些券已經用掉。",
-"en": "{price} each. Each voucher is a QR code for a leader to scan after starting a group."
-},
-{
-"zh": "購買一張團購券",
-"en": "Buy a voucher"
+"zh": "人數券 {people}、天數券 {days}。買到的券會變成 QR code，發給要帶團的領隊，領隊開團後掃描就能使用。可以看到哪些券已經用掉。",
+"en": "Group-size {people}, day pass {days}. Each voucher is a QR code for a leader to scan after starting a group."
 },
 {
 "zh": "我買的團購券（{list.where((v) => !v.used).length} 張可用）",
@@ -776,11 +1156,15 @@
 "en": "Bought {md(v.createdAt, deviceTz)}"
 },
 {
-"zh": "團購券",
-"en": "Voucher"
+"zh": "天數券團購券（多 7 天）",
+"en": "Day-pass voucher (+7 days)"
 },
 {
-"zh": "請領隊開團後，在「升級」裡掃描",
+"zh": "人數券團購券（100 人）",
+"en": "Group-size voucher (100 people)"
+},
+{
+"zh": "請領隊開團後，在「人數券、天數券」裡掃描",
 "en": "The leader scans this after starting a group"
 },
 {
@@ -788,8 +1172,12 @@
 "en": "Share with a leader"
 },
 {
-"zh": "旅行團團購券：開團後在「升級」掃描或點這個連結 {v.link}",
-"en": "TourChip voucher: {v.link}"
+"zh": "旅行團天數券團購券：開團後在「人數券、天數券」掃描或點這個連結 {v.link}",
+"en": "TourChip day-pass voucher: {v.link}"
+},
+{
+"zh": "旅行團人數券團購券：開團後在「人數券、天數券」掃描或點這個連結 {v.link}",
+"en": "TourChip group-size voucher: {v.link}"
 },
 {
 "zh": "只有領隊看得到入團 QR code",
@@ -814,6 +1202,10 @@
 {
 "zh": "剩餘",
 "en": "left"
+},
+{
+"zh": "升級到 100 人",
+"en": "Upgrade to 100 people"
 },
 {
 "zh": "換新 QR code",
@@ -916,10 +1308,6 @@
 "en": "Language"
 },
 {
-"zh": "旅行社",
-"en": "Agencies"
-},
-{
 "zh": "購買團購券",
 "en": "Buy group passes"
 },
@@ -988,16 +1376,16 @@
 "en": "Leaders: start a group"
 },
 {
-"zh": "首頁按「開一個團」，填團名、選團色和天數，可以分組（例如 1 號車、2 號車）。",
-"en": "Tap \"Start a group\", set a name, color and number of days. You can add sub-groups such as Bus 1 and Bus 2."
+"zh": "首頁按「開一個團」，填團名、選團色、出發日和天數，可以分組（例如 1 號車、2 號車）。出發前就能先開團讓團員入團。",
+"en": "Tap \"Start a group\", set a name, color, start date and length. You can add sub-groups such as Bus 1 and Bus 2, and set it up before departure."
 },
 {
 "zh": "出示 QR code，團員用 App 或手機相機掃一下就入團。",
 "en": "Show the QR code. Members scan it with the app or their camera to join."
 },
 {
-"zh": "20 人以內免費；第 21 人起升級 7 天方案或使用團購券，最多 100 人。",
-"en": "Free up to 20 people. From the 21st, upgrade to the 7-day pass or use a group pass (up to 100)."
+"zh": "20 人、3 天以內免費。人數券讓一團最多 100 人；天數券每張多 7 天，最長 30 天；也可以用旅行社的團購券。",
+"en": "Free for 20 people and 3 days. A group-size pass allows 100 people; each day pass adds 7 days (up to 30). Agency vouchers work too."
 },
 {
 "zh": "發集合",
@@ -1010,6 +1398,14 @@
 {
 "zh": "沒按「收到」的人每分鐘再響一次，最多 3 次；也可以只叫某一組或單獨呼叫一個人。",
 "en": "Anyone who has not tapped \"Got it\" is reminded every minute, up to 3 times. You can call one sub-group or one person."
+},
+{
+"zh": "自由活動可以排到 12 小時後集合；集合前 15 分鐘全團會再響一次。",
+"en": "Free time can run up to 12 hours. Everyone is reminded 15 minutes before."
+},
+{
+"zh": "集合卡片上按「用地圖帶我走過去」，可以用 Apple 地圖或 Google 地圖步行導航。",
+"en": "Tap \"Walk me there with Maps\" on the card for walking directions in Apple Maps or Google Maps."
 },
 {
 "zh": "團員可以回「我到了」「還要 5 分鐘」「需要幫忙」，需要幫忙的人排在最上面。",
@@ -1056,6 +1452,18 @@
 "en": "Block or report from the top of a chat. Messages are deleted when the group ends."
 },
 {
+"zh": "車輛、飯店、緊急聯絡",
+"en": "Bus, hotel and emergency"
+},
+{
+"zh": "「車輛・飯店・緊急」裡有你坐的車（車牌、司機電話）、今晚的飯店（可以給司機看、導航）、領隊和旅行社電話，以及當地報警和救護電話。",
+"en": "The \"Bus · Hotel · SOS\" page shows your bus, tonight's hotel (show the driver or get directions), leader and agency phones, and local emergency numbers."
+},
+{
+"zh": "也可以填「我的資料」（飲食禁忌、健康狀況、緊急聯絡人），只有團主和共同團主看得到，退團或解散就刪除。",
+"en": "You can add your details (diet, health, emergency contact). Only leaders see them; they are deleted when you leave or the group ends."
+},
+{
 "zh": "按「我迷路了」會把你現在的位置傳給團主與共同團主，地圖上出現紅點與團號，30 分鐘後自動刪除。",
 "en": "Tapping \"I'm lost\" sends your current location to the leaders as a red dot with your number. It is deleted after 30 minutes."
 },
@@ -1064,8 +1472,12 @@
 "en": "Itinerary and ending"
 },
 {
-"zh": "行程表的時間都用集合點的當地時區。",
-"en": "Itinerary times use the local time zone of each meetup."
+"zh": "行程表的時間都用集合點的當地時區；每個集合點前 15 分鐘會自動提醒。",
+"en": "Itinerary times use the local time zone of each meetup. Everyone is reminded 15 minutes before each one."
+},
+{
+"zh": "領隊可以替每一天寫資訊卡：當天說明、今晚的飯店、攻略連結，團員點那一天就看得到。",
+"en": "Leaders can write a card for each day: notes, tonight's hotel and guide links. Members see it by tapping that day."
 },
 {
 "zh": "最後一天 23:59 團自動解散，名單、點名紀錄全部刪除。",
@@ -1188,6 +1600,102 @@
 "en": "Co-leader · {base}"
 },
 {
+"zh": "用哪個地圖帶你走過去？",
+"en": "Which map should guide you?"
+},
+{
+"zh": "Apple 地圖",
+"en": "Apple Maps"
+},
+{
+"zh": "Google 地圖",
+"en": "Google Maps"
+},
+{
+"zh": "打不開，請稍後再試。",
+"en": "Couldn't open it."
+},
+{
+"zh": "台灣",
+"en": "Taiwan"
+},
+{
+"zh": "日本",
+"en": "Japan"
+},
+{
+"zh": "韓國",
+"en": "Korea"
+},
+{
+"zh": "中國",
+"en": "China"
+},
+{
+"zh": "香港",
+"en": "Hong Kong"
+},
+{
+"zh": "澳門",
+"en": "Macau"
+},
+{
+"zh": "泰國",
+"en": "Thailand"
+},
+{
+"zh": "觀光警察",
+"en": "Tourist police"
+},
+{
+"zh": "越南",
+"en": "Vietnam"
+},
+{
+"zh": "新加坡",
+"en": "Singapore"
+},
+{
+"zh": "馬來西亞",
+"en": "Malaysia"
+},
+{
+"zh": "印尼",
+"en": "Indonesia"
+},
+{
+"zh": "緊急總機",
+"en": "General emergency"
+},
+{
+"zh": "菲律賓",
+"en": "Philippines"
+},
+{
+"zh": "澳洲",
+"en": "Australia"
+},
+{
+"zh": "紐西蘭",
+"en": "New Zealand"
+},
+{
+"zh": "英國",
+"en": "UK"
+},
+{
+"zh": "也可以撥",
+"en": "Also"
+},
+{
+"zh": "歐洲",
+"en": "Europe"
+},
+{
+"zh": "美國／加拿大",
+"en": "US / Canada"
+},
+{
 "zh": "集合與點名",
 "en": "Gather and roll call"
 },
@@ -1200,8 +1708,24 @@
 "en": "You are already in another group. Leave it first."
 },
 {
-"zh": "這個團已滿 20 人。請領隊升級 7 天方案或使用團購券。",
+"zh": "這個團已滿 20 人。請領隊買人數券或使用團購券。",
 "en": "This group is full (20). Ask your leader to upgrade."
+},
+{
+"zh": "天數要在 1～30 天之間，而且結束日不能已經過去。",
+"en": "Trip length must be 1–30 days and end in the future."
+},
+{
+"zh": "出發日要在今天到 90 天後之間。",
+"en": "The start date must be within the next 90 days."
+},
+{
+"zh": "這一團已經是最長的 30 天了。",
+"en": "This group already has the maximum 30 days."
+},
+{
+"zh": "連結要是 http 或 https 開頭的網址。",
+"en": "Links must start with http or https."
 },
 {
 "zh": "這個團已滿 100 人。",
@@ -1298,6 +1822,10 @@
 {
 "zh": "購買沒有完成，請稍後再試。",
 "en": "The purchase did not go through."
+},
+{
+"zh": "這一團已經是 30 天，這張天數券先存成團購券，可以用在下一團。",
+"en": "This group is already 30 days. The pass was saved as a voucher."
 },
 {
 "zh": "團購券已經準備好，可以發給領隊了。",

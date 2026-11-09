@@ -354,13 +354,15 @@ class HelpScreen extends StatelessWidget {
       appBar: AppBar(backgroundColor: Night.night900, foregroundColor: Night.ink, title: Text(tx('操作說明', 'How to use'))),
       body: ListView(padding: const EdgeInsets.all(Night.space4), children: [
         block(Icons.flag_outlined, tx('領隊：開團', 'Leaders: start a group'), [
-          tx('首頁按「開一個團」，填團名、選團色和天數，可以分組（例如 1 號車、2 號車）。', 'Tap "Start a group", set a name, color and number of days. You can add sub-groups such as Bus 1 and Bus 2.'),
+          tx('首頁按「開一個團」，填團名、選團色、出發日和天數，可以分組（例如 1 號車、2 號車）。出發前就能先開團讓團員入團。', 'Tap "Start a group", set a name, color, start date and length. You can add sub-groups such as Bus 1 and Bus 2, and set it up before departure.'),
           tx('出示 QR code，團員用 App 或手機相機掃一下就入團。', 'Show the QR code. Members scan it with the app or their camera to join.'),
-          tx('20 人以內免費；第 21 人起升級 7 天方案或使用團購券，最多 100 人。', 'Free up to 20 people. From the 21st, upgrade to the 7-day pass or use a group pass (up to 100).'),
+          tx('20 人、3 天以內免費。人數券讓一團最多 100 人；天數券每張多 7 天，最長 30 天；也可以用旅行社的團購券。', 'Free for 20 people and 3 days. A group-size pass allows 100 people; each day pass adds 7 days (up to 30). Agency vouchers work too.'),
         ]),
         block(Icons.place_outlined, tx('發集合', 'Call a meetup'), [
           tx('拖曳地圖把旗子放在集合點，選時間後送出，全團手機都會響專屬提示音。', 'Drag the map to place the flag, pick a time and send. Every phone plays the meetup sound.'),
           tx('沒按「收到」的人每分鐘再響一次，最多 3 次；也可以只叫某一組或單獨呼叫一個人。', 'Anyone who has not tapped "Got it" is reminded every minute, up to 3 times. You can call one sub-group or one person.'),
+          tx('自由活動可以排到 12 小時後集合；集合前 15 分鐘全團會再響一次。', 'Free time can run up to 12 hours. Everyone is reminded 15 minutes before.'),
+          tx('集合卡片上按「用地圖帶我走過去」，可以用 Apple 地圖或 Google 地圖步行導航。', 'Tap "Walk me there with Maps" on the card for walking directions in Apple Maps or Google Maps.'),
         ]),
         block(Icons.how_to_reg_outlined, tx('點名', 'Roll call'), [
           tx('團員可以回「我到了」「還要 5 分鐘」「需要幫忙」，需要幫忙的人排在最上面。', 'Members answer "I\'m here", "5 more minutes" or "I need help". Those who need help are listed first.'),
@@ -379,11 +381,16 @@ class HelpScreen extends StatelessWidget {
           tx('長按地圖上的人就能傳訊息，對方會收到通知；右上角的訊息按鈕可以看所有對話。', 'Long-press someone on the map to message them. They get a notification. The messages button at the top shows all chats.'),
           tx('在對話右上角可以封鎖或檢舉。團解散後訊息全部刪除。', 'Block or report from the top of a chat. Messages are deleted when the group ends.'),
         ]),
+        block(Icons.info_outline, tx('車輛、飯店、緊急聯絡', 'Bus, hotel and emergency'), [
+          tx('「車輛・飯店・緊急」裡有你坐的車（車牌、司機電話）、今晚的飯店（可以給司機看、導航）、領隊和旅行社電話，以及當地報警和救護電話。', 'The "Bus · Hotel · SOS" page shows your bus, tonight\'s hotel (show the driver or get directions), leader and agency phones, and local emergency numbers.'),
+          tx('也可以填「我的資料」（飲食禁忌、健康狀況、緊急聯絡人），只有團主和共同團主看得到，退團或解散就刪除。', 'You can add your details (diet, health, emergency contact). Only leaders see them; they are deleted when you leave or the group ends.'),
+        ]),
         block(Icons.sos_outlined, tx('我迷路了', "I'm lost"), [
           tx('按「我迷路了」會把你現在的位置傳給團主與共同團主，地圖上出現紅點與團號，30 分鐘後自動刪除。', 'Tapping "I\'m lost" sends your current location to the leaders as a red dot with your number. It is deleted after 30 minutes.'),
         ]),
         block(Icons.event_note_outlined, tx('行程表與解散', 'Itinerary and ending'), [
-          tx('行程表的時間都用集合點的當地時區。', 'Itinerary times use the local time zone of each meetup.'),
+          tx('行程表的時間都用集合點的當地時區；每個集合點前 15 分鐘會自動提醒。', 'Itinerary times use the local time zone of each meetup. Everyone is reminded 15 minutes before each one.'),
+          tx('領隊可以替每一天寫資訊卡：當天說明、今晚的飯店、攻略連結，團員點那一天就看得到。', 'Leaders can write a card for each day: notes, tonight\'s hotel and guide links. Members see it by tapping that day.'),
           tx('最後一天 23:59 團自動解散，名單、點名紀錄全部刪除。', 'The group ends at 23:59 on the last day and the list and roll calls are deleted.'),
         ]),
       ]),

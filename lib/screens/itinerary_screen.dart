@@ -4,13 +4,17 @@ import 'package:maplibre_gl/maplibre_gl.dart';
 import '../l10n.dart';
 import '../map/tour_map.dart';
 import '../tour/model.dart';
+import '../tour/nav.dart';
 import '../tour/service.dart';
 import '../tour/zones.dart';
 import '../ui/night.dart';
+import 'create_screen.dart';
+import 'day_screen.dart';
 import 'gather_screen.dart';
 import 'join.dart';
+import 'pass_screen.dart';
 
-/// 行程表：每天的集合時間與集合點，一律用集合點的當地時間。設計稿：行程表
+/// 行程表：每天的資訊卡（說明、飯店、攻略連結）與集合時間、集合點，一律用集合點的當地時間。設計稿：行程表
 /// 團主、共同團主可以新增、修改、刪除；時間快到時一鍵「發出這次集合」。
 /// 最後一個集合點的時區決定這一團幾點解散（結束日 23:59 當地時間）。
 class ItineraryScreen extends StatefulWidget {
@@ -55,7 +59,10 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
           appBar: AppBar(
             backgroundColor: Night.night900, foregroundColor: Night.ink,
             title: Text(tx('行程表', 'Itinerary'), style: Night.title),
-            actions: [if (g.isStaff) TextButton(onPressed: () => _edit(context, g, days.isEmpty ? null : days[day]), child: Text(tx('新增集合點', 'Add stop')))],
+            actions: [
+              if (g.isHost) IconButton(tooltip: tx('出發日與天數', 'Dates'), icon: const Icon(Icons.date_range_outlined), onPressed: () => editTrip(context, g)),
+              if (g.isStaff) TextButton(onPressed: () => _edit(context, g, days.isEmpty ? null : days[day]), child: Text(tx('新增集合點', 'Add stop'))),
+            ],
           ),
           body: SafeArea(
             child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
@@ -83,29 +90,50 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
                   },
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.fromLTRB(Night.space4, 4, Night.space4, Night.space3),
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(color: Night.night700, borderRadius: BorderRadius.circular(Night.radiusMd)),
-                child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  const Icon(Icons.schedule, color: Night.inkMuted, size: 18),
-                  const SizedBox(width: 10),
-                  Expanded(child: Text(
-                    crossZone
-                        ? tx('這一天跨時區。每個集合時間都是當地時間，團員不用自己換算。', 'This day crosses time zones. Every time is local to its meeting point.')
-                        : tx('每個集合時間都是集合點的當地時間。', 'Every time is local to its meeting point.'),
-                    style: Night.caption.copyWith(color: Night.inkMuted),
-                  )),
-                ]),
-              ),
               Expanded(
-                child: stops.isEmpty
-                    ? Center(child: Text(g.isStaff ? tx('這一天還沒有集合點', 'No stops on this day yet') : tx('這一天沒有安排集合', 'No meeting points this day'), style: Night.body))
-                    : ListView.builder(
-                        padding: const EdgeInsets.symmetric(horizontal: Night.space4),
-                        itemCount: stops.length,
-                        itemBuilder: (_, i) => _StopRow(g: g, s: stops[i], isNext: next?.id == stops[i].id, last: i == stops.length - 1, onEdit: () => _edit(context, g, null, stops[i])),
-                      ),
+                child: ListView(padding: const EdgeInsets.fromLTRB(Night.space4, 4, Night.space4, Night.space4), children: [
+                  // 行程比目前開通的天數長：提醒團主買天數券
+                  if (g.isHost && g.daysNeeded > 0)
+                    Container(
+                      margin: const EdgeInsets.only(bottom: Night.space3),
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(Night.radiusMd), border: Border.all(color: Night.cityAmber)),
+                      child: Row(children: [
+                        const Icon(Icons.event_busy_outlined, color: Night.cityAmber, size: 20),
+                        const SizedBox(width: 10),
+                        Expanded(child: Text(
+                          tx('行程 ${g.days} 天，目前開到第 ${g.allowedDays} 天。再 ${g.daysNeeded} 張天數券就能用到最後一天。',
+                              'Trip is ${g.days} days; ${g.allowedDays} are active. ${g.daysNeeded} more day pass(es) needed.'),
+                          style: const TextStyle(color: Night.ink, fontSize: 13),
+                        )),
+                        TextButton(onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const PassScreen())), child: Text(tx('買天數券', 'Buy'))),
+                      ]),
+                    ),
+                  if (days.isNotEmpty) DaySection(g: g, day: days[day]),
+                  Container(
+                    margin: const EdgeInsets.only(bottom: Night.space3),
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(color: Night.night700, borderRadius: BorderRadius.circular(Night.radiusMd)),
+                    child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                      const Icon(Icons.schedule, color: Night.inkMuted, size: 18),
+                      const SizedBox(width: 10),
+                      Expanded(child: Text(
+                        crossZone
+                            ? tx('這一天跨時區。每個集合時間都是當地時間，團員不用自己換算。', 'This day crosses time zones. Every time is local to its meeting point.')
+                            : tx('每個集合時間都是集合點的當地時間。集合前 15 分鐘會自動提醒。', 'Every time is local to its meeting point. Everyone is reminded 15 minutes before.'),
+                        style: Night.caption.copyWith(color: Night.inkMuted),
+                      )),
+                    ]),
+                  ),
+                  if (stops.isEmpty)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: Night.space6),
+                      child: Text(g.isStaff ? tx('這一天還沒有集合點', 'No stops on this day yet') : tx('這一天沒有安排集合', 'No meeting points this day'), style: Night.body, textAlign: TextAlign.center),
+                    )
+                  else
+                    for (var i = 0; i < stops.length; i++)
+                      _StopRow(g: g, s: stops[i], isNext: next?.id == stops[i].id, last: i == stops.length - 1, onEdit: () => _edit(context, g, null, stops[i])),
+                ]),
               ),
             ]),
           ),
@@ -131,7 +159,7 @@ class _StopRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final now = DateTime.now().millisecondsSinceEpoch;
     final past = s.at < now - 10 * 60000;
-    final canSend = g.isStaff && isNext && s.at - now <= 3 * 3600000;
+    final canSend = g.isStaff && isNext && s.at - now <= 12 * 3600000;
     return IntrinsicHeight(
       child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         SizedBox(width: 14, child: Column(children: [
@@ -165,7 +193,15 @@ class _StopRow extends StatelessWidget {
                   ),
                 ]),
                 const SizedBox(height: 4),
-                Text(s.place, style: const TextStyle(color: Night.ink, fontSize: 15)),
+                Row(children: [
+                  Expanded(child: Text(s.place, style: const TextStyle(color: Night.ink, fontSize: 15))),
+                  if (s.lat != null && s.lng != null && !past)
+                    IconButton(
+                      tooltip: tx('帶我走過去', 'Walk there'), visualDensity: VisualDensity.compact,
+                      icon: const Icon(Icons.directions_walk, color: Night.auroraBlue, size: 22),
+                      onPressed: () => walkTo(context, s.lat!, s.lng!, label: s.place),
+                    ),
+                ]),
                 if (s.sub != null) Text(g.subName(s.sub), style: Night.caption.copyWith(color: Night.inkMuted)),
                 if (canSend) ...[
                   const SizedBox(height: 8),

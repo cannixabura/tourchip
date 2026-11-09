@@ -23,9 +23,12 @@ class TourMember {
   final String state;
   /// 大頭貼網址（團員自己在設定裡上傳的；沒有就是空字串）
   final String avatar;
-  TourMember(this.uid, this.no, this.name, this.note, this.sub, this.state, {this.avatar = ''});
+  /// 團員自己填的資料（只有團主與共同團主拿得到）
+  final MemberData? data;
+  TourMember(this.uid, this.no, this.name, this.note, this.sub, this.state, {this.avatar = '', this.data});
   factory TourMember.fromJson(Map j, {String stateKey = ''}) =>
-      TourMember(_str(j['uid']), _int(j['no']) ?? 0, _str(j['name']), _str(j['note']), _int(j['sub']), stateKey.isEmpty ? '' : _str(j[stateKey]), avatar: _str(j['avatar']));
+      TourMember(_str(j['uid']), _int(j['no']) ?? 0, _str(j['name']), _str(j['note']), _int(j['sub']), stateKey.isEmpty ? '' : _str(j[stateKey]),
+          avatar: _str(j['avatar']), data: MemberData.fromJson(j['data']));
   /// 名單上顯示的稱呼：備註優先，其次暱稱
   String get label => note.isNotEmpty ? note : (name.isNotEmpty ? name : '');
 }
@@ -104,13 +107,78 @@ class TourVoucher {
   final String code, link;
   final int createdAt;
   final bool used;
-  TourVoucher(this.code, this.link, this.createdAt, this.used);
-  factory TourVoucher.fromJson(Map j) => TourVoucher(_str(j['code']), _str(j['link']), _int(j['createdAt']) ?? 0, j['used'] == true);
+  /// people：人數券；days：天數券
+  final String kind;
+  TourVoucher(this.code, this.link, this.createdAt, this.used, this.kind);
+  factory TourVoucher.fromJson(Map j) =>
+      TourVoucher(_str(j['code']), _str(j['link']), _int(j['createdAt']) ?? 0, j['used'] == true, j['kind'] == 'days' ? 'days' : 'people');
+  bool get isDays => kind == 'days';
+}
+
+/// 團員資料：飲食禁忌、健康狀況、緊急聯絡人（團員自己填，只有團主與共同團主看得到）
+class MemberData {
+  final String diet, health, contact, contactPhone;
+  const MemberData(this.diet, this.health, this.contact, this.contactPhone);
+  static MemberData? fromJson(Object? j) =>
+      j is Map ? MemberData(_str(j['diet']), _str(j['health']), _str(j['contact']), _str(j['contactPhone'])) : null;
+  bool get isEmpty => diet.isEmpty && health.isEmpty && contact.isEmpty && contactPhone.isEmpty;
+}
+
+/// 每日資訊卡的飯店
+class TourHotel {
+  final String name, addr, phone;
+  final double? lat, lng;
+  const TourHotel(this.name, this.addr, this.phone, this.lat, this.lng);
+  static TourHotel? fromJson(Object? j) => j is Map ? TourHotel(_str(j['name']), _str(j['addr']), _str(j['phone']), _dbl(j['lat']), _dbl(j['lng'])) : null;
+  Map<String, dynamic> toJson() => {'name': name, 'addr': addr, 'phone': phone, 'lat': lat, 'lng': lng};
+  bool get hasCoord => lat != null && lng != null;
+}
+
+class GuideLink {
+  final String title, url;
+  const GuideLink(this.title, this.url);
+  Map<String, dynamic> toJson() => {'title': title, 'url': url};
+}
+
+/// 每日資訊卡：日期（YYYY-MM-DD）、說明、今晚的飯店、攻略連結
+class DayCard {
+  final String date, note;
+  final TourHotel? hotel;
+  final List<GuideLink> links;
+  const DayCard(this.date, this.note, this.hotel, this.links);
+  factory DayCard.fromJson(Map j) => DayCard(_str(j['date']), _str(j['note']), TourHotel.fromJson(j['hotel']),
+      [for (final l in (j['links'] as List? ?? const [])) GuideLink(_str(l['title']), _str(l['url']))]);
+}
+
+/// 車輛（全團或某一組）
+class TourBus {
+  final int? sub;
+  final String plate, desc, driver, phone, note;
+  const TourBus(this.sub, this.plate, this.desc, this.driver, this.phone, this.note);
+  factory TourBus.fromJson(Map j) => TourBus(_int(j['sub']), _str(j['plate']), _str(j['desc']), _str(j['driver']), _str(j['phone']), _str(j['note']));
+  Map<String, dynamic> toJson() => {'sub': sub, 'plate': plate, 'desc': desc, 'driver': driver, 'phone': phone, 'note': note};
+}
+
+/// 緊急聯絡：領隊電話、旅行社、旅行社 24 小時電話、其他說明
+class TourEmergency {
+  final String phone, agency, agencyPhone, note;
+  const TourEmergency(this.phone, this.agency, this.agencyPhone, this.note);
+  factory TourEmergency.fromJson(Object? j) => j is Map
+      ? TourEmergency(_str(j['phone']), _str(j['agency']), _str(j['agencyPhone']), _str(j['note']))
+      : const TourEmergency('', '', '', '');
+  Map<String, dynamic> toJson() => {'phone': phone, 'agency': agency, 'agencyPhone': agencyPhone, 'note': note};
+  bool get isEmpty => phone.isEmpty && agency.isEmpty && agencyPhone.isEmpty && note.isEmpty;
 }
 
 class TourGroup {
   final String code, name, color, role, hostName, tz, startDate, endDate;
   final int endsAt, limit, count;
+  /// 想要的天數、目前能用的天數（免費 3 天＋天數券）、還要買幾張天數券
+  final int days, allowedDays, daysNeeded;
+  final List<DayCard> dayCards;
+  final List<TourBus> buses;
+  final TourEmergency emergency;
+  final MemberData? myData;
   final int? myNo, mySub;
   final bool paid, lostSent;
   final String? qr;
@@ -136,6 +204,11 @@ class TourGroup {
       : code = _str(j['code']), name = _str(j['name']), color = _str(j['color']), role = _str(j['role']), hostName = _str(j['hostName']),
         tz = _str(j['tz']), startDate = _str(j['startDate']), endDate = _str(j['endDate']),
         endsAt = _int(j['endsAt']) ?? 0, limit = _int(j['limit']) ?? 20, count = _int(j['count']) ?? 0,
+        days = _int(j['days']) ?? 1, allowedDays = _int(j['allowedDays']) ?? 3, daysNeeded = _int(j['daysNeeded']) ?? 0,
+        dayCards = [for (final d in (j['dayCards'] as List? ?? const [])) DayCard.fromJson(d)],
+        buses = [for (final b in ((j['info'] as Map?)?['buses'] as List? ?? const [])) TourBus.fromJson(b)],
+        emergency = TourEmergency.fromJson((j['info'] as Map?)?['emergency']),
+        myData = MemberData.fromJson(j['myData']),
         myNo = _int(j['myNo']), mySub = _int(j['mySub']), paid = j['paid'] == true, lostSent = j['lostSent'] == true,
         qr = j['qr'] as String?,
         subs = [for (final s in (j['subs'] as List? ?? const [])) '$s'],
@@ -189,4 +262,11 @@ class TourGroup {
   bool get isStaff => role == 'host' || role == 'cohost';
   Color get tint => tourColor(color);
   String subName(int? i) => i == null || i < 0 || i >= subs.length ? '' : subs[i];
+  DayCard? dayCard(String date) => dayCards.where((d) => d.date == date).firstOrNull;
+  /// 我坐的車：自己那一組的車，沒有就用全團的車（團主、共同團主看全部）
+  List<TourBus> get myBuses {
+    if (isStaff) return buses;
+    final mine = buses.where((b) => b.sub != null && b.sub == mySub).toList();
+    return mine.isNotEmpty ? mine : buses.where((b) => b.sub == null).toList();
+  }
 }

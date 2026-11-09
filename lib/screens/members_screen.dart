@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../l10n.dart';
 import '../tour/model.dart';
+import '../tour/nav.dart';
 import '../tour/service.dart';
 import '../ui/avatar.dart';
 import '../ui/night.dart';
@@ -22,7 +23,10 @@ class MembersScreen extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Night.night900, foregroundColor: Night.ink,
             title: Text(tx('團員名單 · ${g.count} 人', 'Members · ${g.count}'), style: Night.title),
-            actions: [if (g.isStaff) TextButton(onPressed: () => _editSubs(context, g), child: Text(tx('分組', 'Sub-groups')))],
+            actions: [
+              IconButton(tooltip: tx('飲食與健康總表', 'Diet and health list'), icon: const Icon(Icons.restaurant_menu), onPressed: () => _dataSummary(context, g)),
+              if (g.isStaff) TextButton(onPressed: () => _editSubs(context, g), child: Text(tx('分組', 'Sub-groups'))),
+            ],
           ),
           body: SafeArea(
             child: ListView(padding: const EdgeInsets.all(Night.space4), children: [
@@ -47,7 +51,11 @@ class MembersScreen extends StatelessWidget {
                   contentPadding: EdgeInsets.zero,
                   leading: _NoAvatar(m.no, m.avatar),
                   title: Text(m.label.isEmpty ? tx('${m.no} 號', 'No. ${m.no}') : m.label, style: const TextStyle(color: Night.ink)),
-                  subtitle: Text(m.sub == null ? tx('未分組', 'No sub-group') : g.subName(m.sub), style: Night.caption),
+                  subtitle: Text([
+                    m.sub == null ? tx('未分組', 'No sub-group') : g.subName(m.sub),
+                    if (m.data?.diet.isNotEmpty == true) m.data!.diet,
+                    if (m.data?.health.isNotEmpty == true) tx('有健康備註', 'Health note'),
+                  ].join(' · '), style: Night.caption, maxLines: 1, overflow: TextOverflow.ellipsis),
                   trailing: const Icon(Icons.chevron_right, color: Night.inkFaint),
                   onTap: () => _memberMenu(context, g, m),
                 ),
@@ -61,6 +69,10 @@ class MembersScreen extends StatelessWidget {
   void _memberMenu(BuildContext context, TourGroup g, TourMember m) {
     showPanel(context, (ctx, _) => Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Text(tx('${m.no} 號 ${m.label}', 'No. ${m.no} ${m.label}'), style: Night.title, textAlign: TextAlign.center),
+      if (m.data != null && !m.data!.isEmpty) ...[
+        const SizedBox(height: Night.space3),
+        _DataBox(m.data!),
+      ],
       const SizedBox(height: Night.space4),
       NightButton(tx('寫備註（例如姓名、房號）', 'Add a note (name, room)'), kind: NightButtonKind.ghost, icon: Icons.edit_outlined, onPressed: () { Navigator.pop(ctx); _editNote(context, m); }),
       if (g.subs.isNotEmpty) ...[
@@ -88,6 +100,33 @@ class MembersScreen extends StatelessWidget {
         if (ok == true) await TourService.call('kick', {'uid': m.uid});
       }),
     ]));
+  }
+
+  /// 飲食與健康總表：訂餐、安排房間時一眼看完
+  void _dataSummary(BuildContext context, TourGroup g) {
+    final rows = g.members.where((m) => m.data != null && !m.data!.isEmpty).toList();
+    showPanel(context, (ctx, _) => ConstrainedBox(
+      constraints: BoxConstraints(maxHeight: MediaQuery.of(ctx).size.height * 0.7),
+      child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        SheetTitle(tx('飲食與健康總表', 'Diet and health'), closeTooltip: tx('關閉', 'Close')),
+        Text(tx('團員自己填的，只有團主與共同團主看得到。${rows.length}／${g.members.length} 人有填。', 'Filled in by members; only leaders can see it. ${rows.length}/${g.members.length} filled.'), style: Night.caption, textAlign: TextAlign.center),
+        const SizedBox(height: Night.space3),
+        Flexible(
+          child: ListView(shrinkWrap: true, children: [
+            if (rows.isEmpty) Text(tx('還沒有人填。團員可以在「車輛・飯店・緊急」裡填寫。', 'No one has filled it in yet.'), style: Night.body, textAlign: TextAlign.center),
+            for (final m in rows)
+              Padding(
+                padding: const EdgeInsets.only(bottom: Night.space3),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                  Text(tx('${m.no} 號 ${m.label}', 'No. ${m.no} ${m.label}'), style: const TextStyle(color: Night.ink, fontWeight: FontWeight.w600)),
+                  const SizedBox(height: 4),
+                  _DataBox(m.data!),
+                ]),
+              ),
+          ]),
+        ),
+      ]),
+    ));
   }
 
   void _editNote(BuildContext context, TourMember m) {
@@ -161,5 +200,35 @@ class _NoAvatar extends StatelessWidget {
         child: Text('$no', style: const TextStyle(color: Night.ink, fontSize: 11, fontWeight: FontWeight.w600)),
       )),
     ]));
+  }
+}
+
+/// 團員自己填的資料：飲食、健康、緊急聯絡人（可以直接撥電話）
+class _DataBox extends StatelessWidget {
+  final MemberData d;
+  const _DataBox(this.d);
+  @override
+  Widget build(BuildContext context) {
+    Widget line(IconData icon, String text) => Padding(
+          padding: const EdgeInsets.only(bottom: 4),
+          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Icon(icon, size: 16, color: Night.inkMuted),
+            const SizedBox(width: 8),
+            Expanded(child: Text(text, style: Night.body.copyWith(color: Night.ink, height: 1.4))),
+          ]),
+        );
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(color: Night.night700, borderRadius: BorderRadius.circular(Night.radiusMd)),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        if (d.diet.isNotEmpty) line(Icons.restaurant_outlined, d.diet),
+        if (d.health.isNotEmpty) line(Icons.medical_information_outlined, d.health),
+        if (d.contact.isNotEmpty || d.contactPhone.isNotEmpty)
+          InkWell(
+            onTap: d.contactPhone.isEmpty ? null : () => callPhone(context, d.contactPhone),
+            child: line(Icons.contact_phone_outlined, tx('緊急聯絡人：${d.contact} ${d.contactPhone}', 'Emergency contact: ${d.contact} ${d.contactPhone}')),
+          ),
+      ]),
+    );
   }
 }

@@ -184,7 +184,11 @@ TourLink? parseTourLink(String raw) {
 /// 伺服器錯誤代碼 → 給人看的話
 String tourError(String code) => switch (code) {
       'in_group' => tx('你已經在另一個團裡了，先退出那一團再加入。', 'You are already in another group. Leave it first.'),
-      'full' => tx('這個團已滿 20 人。請領隊升級 7 天方案或使用團購券。', 'This group is full (20). Ask your leader to upgrade.'),
+      'full' => tx('這個團已滿 20 人。請領隊買人數券或使用團購券。', 'This group is full (20). Ask your leader to upgrade.'),
+      'days' => tx('天數要在 1～30 天之間，而且結束日不能已經過去。', 'Trip length must be 1–30 days and end in the future.'),
+      'start' => tx('出發日要在今天到 90 天後之間。', 'The start date must be within the next 90 days.'),
+      'max_days' => tx('這一團已經是最長的 30 天了。', 'This group already has the maximum 30 days.'),
+      'url' => tx('連結要是 http 或 https 開頭的網址。', 'Links must start with http or https.'),
       'paid_full' => tx('這個團已滿 100 人。', 'This group is full (100).'),
       'qr' => tx('這個 QR code 已經換新，請向領隊要新的。', 'This QR code was replaced. Ask your leader for the new one.'),
       'ended' || 'not_found' || 'no_group' => tx('這個團已經結束了。', 'This group has ended.'),
@@ -209,20 +213,26 @@ String tourError(String code) => switch (code) {
       _ => tx('連線不穩，請稍後再試。', 'Connection problem. Please try again.'),
     };
 
-// ---------- 7 天方案與團購券（同一個消耗型商品 tour_pass_7d） ----------
+// ---------- 人數券、天數券與團購券 ----------
+// 人數券 tour_pass_7d（NT$290）：這一團升到 100 人，到解散為止
+// 天數券 tour_days_7d（NT$290）：這一團多 7 天（出發日起免費 3 天，最長 30 天）
+// 兩種都是消耗型商品；買來用在目前帶的團，或做成團購券發給領隊
 
 /// 購買的用途：用在目前帶的團（group），或買成團購券發給領隊（voucher）
 enum PassPurpose { group, voucher }
 
 class PassStore {
   PassStore._();
-  static const product = 'tour_pass_7d';
+  static const people = 'tour_pass_7d';
+  static const days = 'tour_days_7d';
   static const _purposeKey = 'pass_purpose';
-  static final details = ValueNotifier<ProductDetails?>(null);
+  static final details = ValueNotifier<Map<String, ProductDetails>>(const {});
   static final busy = ValueNotifier<bool>(false);
   static final notice = ValueNotifier<String?>(null);
   static final vouchers = ValueNotifier<List<TourVoucher>>(const []);
   static StreamSubscription<List<PurchaseDetails>>? _sub;
+
+  static String priceOf(String product) => details.value[product]?.price ?? 'NT\$290';
 
   static void init() {
     _sub ??= InAppPurchase.instance.purchaseStream.listen(_onPurchases, onError: (_) => busy.value = false);
@@ -231,8 +241,8 @@ class PassStore {
   static Future<void> load() async {
     try {
       if (!await InAppPurchase.instance.isAvailable()) return;
-      final r = await InAppPurchase.instance.queryProductDetails({product});
-      if (r.productDetails.isNotEmpty) details.value = r.productDetails.first;
+      final r = await InAppPurchase.instance.queryProductDetails({people, days});
+      details.value = {for (final p in r.productDetails) p.id: p};
     } catch (_) {}
   }
 
@@ -241,8 +251,8 @@ class PassStore {
     if (r['success'] == true) vouchers.value = [for (final v in (r['vouchers'] as List? ?? const [])) TourVoucher.fromJson(v)];
   }
 
-  static Future<void> buy(PassPurpose purpose) async {
-    final p = details.value;
+  static Future<void> buy(String product, PassPurpose purpose) async {
+    final p = details.value[product];
     if (p == null) { notice.value = tx('現在無法購買，請稍後再試。', 'Purchases are unavailable right now.'); return; }
     busy.value = true;
     // 記住這次購買的用途：交易可能在 App 重開後才完成
@@ -257,7 +267,7 @@ class PassStore {
   }
 
   static Future<void> _onPurchases(List<PurchaseDetails> list) async {
-    for (final p in list.where((p) => p.productID == product)) {
+    for (final p in list.where((p) => p.productID == people || p.productID == days)) {
       switch (p.status) {
         case PurchaseStatus.pending:
           busy.value = true;
@@ -277,12 +287,27 @@ class PassStore {
           busy.value = false;
           final code = '${data['code'] ?? ''}';
           // 成功、或這筆已經用過（不必再試）才結束交易；連不上時留著，下次啟動再送
+          // max_days：已經 30 天了，這張天數券改做成團購券留著用（不讓錢白花）
+          if (code == 'max_days' && purpose != PassPurpose.voucher.name) {
+            final v = await TourService.call('buy_voucher', {'purchase': purchase});
+            if (v['success'] == true) {
+              if (p.pendingCompletePurchase) await InAppPurchase.instance.completePurchase(p);
+              if (v['vouchers'] is List) vouchers.value = [for (final x in v['vouchers']) TourVoucher.fromJson(x)];
+              notice.value = tx('這一團已經是 30 天，這張天數券先存成團購券，可以用在下一團。', 'This group is already 30 days. The pass was saved as a voucher.');
+              continue;
+            }
+          }
           if (data['success'] == true || code == 'used' || code == 'unknown_product' || code == 'revoked' || code == 'wrong_app') {
             if (p.pendingCompletePurchase) await InAppPurchase.instance.completePurchase(p);
           }
           if (data['vouchers'] is List) vouchers.value = [for (final v in data['vouchers']) TourVoucher.fromJson(v)];
+          final isDays = p.productID == days;
           notice.value = data['success'] == true
-              ? (purpose == PassPurpose.voucher.name ? tx('團購券已經準備好，可以發給領隊了。', 'Your voucher is ready to share.') : tx('這一團已升級，最多 100 人。', 'Upgraded. Up to 100 people.'))
+              ? (purpose == PassPurpose.voucher.name
+                  ? tx('團購券已經準備好，可以發給領隊了。', 'Your voucher is ready to share.')
+                  : isDays
+                      ? tx('這一團多了 7 天。', 'Added 7 days to this group.')
+                      : tx('這一團已升級，最多 100 人。', 'Upgraded. Up to 100 people.'))
               : tourError(code);
       }
     }

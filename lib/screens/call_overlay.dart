@@ -9,6 +9,7 @@ import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../l10n.dart';
 import '../tour/model.dart';
+import '../tour/nav.dart';
 import '../tour/service.dart';
 import '../tour/zones.dart';
 import '../translate.dart';
@@ -93,6 +94,17 @@ class _CallCardState extends State<CallCard> {
         ],
       ]),
       SizedBox(height: widget.big ? Night.space4 : Night.space2),
+      // 用 Apple／Google 地圖步行導航到集合點
+      Align(
+        alignment: Alignment.center,
+        child: TextButton.icon(
+          style: TextButton.styleFrom(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+          icon: const Icon(Icons.directions_walk, size: 18, color: Night.auroraBlue),
+          label: Text(tx('用地圖帶我走過去', 'Walk me there with Maps'), style: const TextStyle(color: Night.auroraBlue)),
+          onPressed: () => walkTo(context, c.lat, c.lng, label: c.place),
+        ),
+      ),
+      SizedBox(height: widget.big ? Night.space2 : 4),
       acked
           ? Text(tx('已收到，領隊看得到', 'Got it. Your leader can see that.'), style: const TextStyle(color: Night.moodCalm, fontSize: 15), textAlign: TextAlign.center)
           : NightButton(tx('收到', 'Got it'), icon: Icons.check, onPressed: () {

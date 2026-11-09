@@ -337,3 +337,158 @@
 請輸入 1～720 分鐘	1〜720分で入力してください	1~720분으로 입력하세요	Masukkan 1 hingga 720 minit	Masukkan 1 sampai 720 menit	Nhập từ 1 đến 720 phút	ใส่ 1 ถึง 720 นาที
 這則氣泡已經是你的語言	この吹き出しはすでにあなたの言語です	이 말풍선은 이미 내 언어예요	Gelembung ini sudah dalam bahasa anda	Gelembung ini sudah dalam bahasamu	Bong bóng này đã ở ngôn ngữ của bạn	บับเบิลนี้เป็นภาษาของคุณอยู่แล้ว
 這個語言目前無法翻譯	この言語はまだ翻訳できません	이 언어는 아직 번역할 수 없어요	Bahasa ini belum boleh diterjemah	Bahasa ini belum bisa diterjemahkan	Chưa thể dịch ngôn ngữ này	ยังแปลภาษานี้ไม่ได้
+用地圖帶我走過去	地図で道案内	지도로 길 안내	Tunjuk jalan dengan peta	Tunjukkan jalan dengan peta	Chỉ đường bằng bản đồ	นำทางด้วยแผนที่
+20 人、3 天以內免費。人數或天數超過時，再買人數券、天數券或使用團購券。	20人・3日まで無料。超える場合は人数パス・日数パスを購入するか、クーポンを使えます。	20명, 3일까지 무료예요. 넘으면 인원 이용권·일수 이용권을 사거나 쿠폰을 쓰세요.	Percuma untuk 20 orang dan 3 hari. Untuk lebih, beli pas atau guna baucar.	Gratis untuk 20 orang dan 3 hari. Untuk lebih, beli tiket atau pakai voucher.	Miễn phí cho 20 người và 3 ngày. Muốn hơn thì mua vé hoặc dùng phiếu.	ฟรีสำหรับ 20 คนและ 3 วัน ถ้าเกินให้ซื้อบัตรหรือใช้คูปอง
+出發日	出発日	출발일	Tarikh bertolak	Tanggal berangkat	Ngày khởi hành	วันออกเดินทาง
+今天 {d(start)}	今日 {0}	오늘 {0}	Hari ini {0}	Hari ini {0}	Hôm nay {0}	วันนี้ {0}
+可以先開團讓團員入團，最遠選 90 天後	先にグループを作ってメンバーを招待できます（90日後まで）	미리 만들어 멤버를 받을 수 있어요(최대 90일 뒤)	Sediakan awal supaya ahli boleh sertai; sehingga 90 hari lagi	Siapkan lebih awal agar anggota bisa bergabung; hingga 90 hari lagi	Tạo trước để thành viên vào đoàn; tối đa 90 ngày tới	สร้างล่วงหน้าให้สมาชิกเข้าร่วมได้ สูงสุด 90 วัน
+行程天數	旅行日数	여행 일수	Tempoh perjalanan	Lama perjalanan	Số ngày đi	จำนวนวัน
+1 天 {d(start)}	1日 {0}	1일 {0}	1 hari {0}	1 hari {0}	1 ngày {0}	1 วัน {0}
+{days} 天 {d(start)}–{d(end)}	{0}日 {1}–{2}	{0}일 {1}–{2}	{0} hari {1}–{2}	{0} hari {1}–{2}	{0} ngày {1}–{2}	{0} วัน {1}–{2}
+3 天以內免費。結束日 23:59 自動解散，以最後一個集合點的當地時間為準。	3日まで無料。最終日の23:59（最後の集合場所の現地時間）に自動で解散します。	3일까지 무료예요. 마지막 날 23:59(마지막 집합 장소 현지 시간)에 자동으로 끝나요.	Percuma sehingga 3 hari. Tamat pada 23:59 hari terakhir, waktu tempatan tempat berkumpul terakhir.	Gratis hingga 3 hari. Berakhir pukul 23:59 di hari terakhir, waktu lokal titik kumpul terakhir.	Miễn phí tối đa 3 ngày. Kết thúc lúc 23:59 ngày cuối theo giờ địa phương của điểm hẹn cuối.	ฟรีไม่เกิน 3 วัน สิ้นสุด 23:59 ของวันสุดท้าย ตามเวลาท้องถิ่นของจุดรวมตัวสุดท้าย
+前 3 天免費，之後要 {passes} 張天數券（每張多 7 天）。還沒買之前，這一團會在第 3 天結束。	最初の3日は無料。その後は日数パスが{0}枚必要です（1枚で7日）。購入するまでは3日目で終了します。	처음 3일은 무료, 그 뒤로 일수 이용권 {0}장이 필요해요(장당 7일). 사기 전에는 3일째에 끝나요.	3 hari pertama percuma; perlu {0} pas hari (7 hari setiap satu). Sebelum itu kumpulan tamat pada hari ke-3.	3 hari pertama gratis; perlu {0} tiket hari (7 hari per tiket). Sebelum itu grup berakhir di hari ke-3.	3 ngày đầu miễn phí; cần {0} vé ngày (mỗi vé 7 ngày). Trước khi mua, đoàn kết thúc vào ngày 3.	3 วันแรกฟรี ต้องใช้บัตรเพิ่มวัน {0} ใบ (ใบละ 7 วัน) ก่อนซื้อ กลุ่มจะสิ้นสุดในวันที่ 3
+出發日與天數	出発日と日数	출발일과 일수	Tarikh	Tanggal	Ngày đi	วันที่
+已經出發，只能改天數。	出発済みのため、日数だけ変更できます。	이미 출발해서 일수만 바꿀 수 있어요.	Perjalanan sudah bermula; hanya tempoh boleh diubah.	Perjalanan sudah dimulai; hanya lamanya yang bisa diubah.	Đã khởi hành, chỉ đổi được số ngày.	ออกเดินทางแล้ว เปลี่ยนได้เฉพาะจำนวนวัน
+目前開通 {g.allowedDays} 天	現在 {0}日分 有効	현재 {0}일 사용 가능	{0} hari aktif	{0} hari aktif	Đang mở {0} ngày	เปิดใช้ {0} วัน
+寫這一天的資訊（說明、飯店、攻略連結）	この日の情報を書く（説明・ホテル・ガイドリンク）	이날의 정보 쓰기(안내·호텔·가이드 링크)	Tambah info hari ini	Tambah info hari ini	Thêm thông tin ngày này	เพิ่มข้อมูลของวันนี้
+今天的資訊	この日の情報	이날의 정보	Info hari ini	Info hari ini	Thông tin ngày này	ข้อมูลของวันนี้
+編輯	編集	편집	Sunting	Edit	Sửa	แก้ไข
+攻略連結	ガイドリンク	가이드 링크	Pautan panduan	Tautan panduan	Liên kết hướng dẫn	ลิงก์คู่มือ
+今晚的飯店	今夜のホテル	오늘 밤 호텔	Hotel malam ini	Hotel malam ini	Khách sạn tối nay	โรงแรมคืนนี้
+給司機看	運転手に見せる	기사님께 보여 주기	Tunjuk kepada pemandu	Tunjukkan ke sopir	Đưa tài xế xem	ให้คนขับดู
+帶我走過去	歩いて行く	걸어서 가기	Jalan ke sana	Jalan ke sana	Đi bộ đến đó	เดินไปที่นั่น
+請載我到這裡	ここまでお願いします	여기로 가 주세요	Tolong bawa saya ke sini	Tolong antar saya ke sini	Vui lòng chở tôi đến đây	กรุณาพาไปที่นี่
+這一天的資訊已更新	この日の情報を更新しました	이날의 정보를 업데이트했어요	Info hari ini dikemas kini	Info hari ini diperbarui	Đã cập nhật thông tin ngày	อัปเดตข้อมูลของวันแล้ว
+{d.month}/{d.day} 的資訊	{0}/{1} の情報	{0}/{1} 정보	Info {0}/{1}	Info {0}/{1}	Thông tin {0}/{1}	ข้อมูลวันที่ {0}/{1}
+今天的說明（餐食、注意事項、穿著…）	この日の説明（食事・注意事項・服装など）	이날의 안내(식사·주의 사항·옷차림 등)	Nota hari ini (makan, peringatan…)	Catatan hari ini (makan, pengingat…)	Ghi chú trong ngày (bữa ăn, lưu ý…)	รายละเอียดวันนี้ (อาหาร ข้อควรระวัง…)
+例如：早餐 7:00 一樓餐廳；午餐自理；今天走路多，請穿好走的鞋	例：朝食 7:00 1階レストラン／昼食は各自／今日はよく歩くので歩きやすい靴で	예: 아침 7:00 1층 식당 / 점심 각자 / 오늘은 많이 걸으니 편한 신발	cth. Sarapan 7:00 tingkat 1; makan tengah hari sendiri; pakai kasut selesa	mis. Sarapan 7:00 lantai 1; makan siang sendiri; pakai sepatu nyaman	vd: Ăn sáng 7:00 tầng 1; trưa tự túc; hôm nay đi bộ nhiều, mang giày êm	เช่น อาหารเช้า 7:00 ชั้น 1 / มื้อกลางวันอิสระ / วันนี้เดินเยอะ ใส่รองเท้าสบาย
+團員可以點一下翻譯成自己的語言。	メンバーはタップで自分の言語に翻訳できます。	멤버는 눌러서 자기 언어로 번역할 수 있어요.	Ahli boleh ketik untuk menterjemah.	Anggota bisa ketuk untuk menerjemahkan.	Thành viên có thể chạm để dịch.	สมาชิกแตะเพื่อแปลได้
+沿用前一晚：{prev.name}	前の晩と同じ：{0}	전날과 같음: {0}	Sama seperti sebelum ini: {0}	Sama seperti sebelumnya: {0}	Giống đêm trước: {0}	เหมือนคืนก่อน: {0}
+飯店名稱（當地語言）	ホテル名（現地の言語）	호텔 이름(현지 언어)	Nama hotel (bahasa tempatan)	Nama hotel (bahasa lokal)	Tên khách sạn (tiếng địa phương)	ชื่อโรงแรม (ภาษาท้องถิ่น)
+地址（當地語言，給司機看）	住所（現地の言語、運転手に見せる用）	주소(현지 언어, 기사님께 보여 줄 용도)	Alamat (bahasa tempatan, untuk pemandu)	Alamat (bahasa lokal, untuk sopir)	Địa chỉ (tiếng địa phương, cho tài xế)	ที่อยู่ (ภาษาท้องถิ่น ให้คนขับดู)
+電話	電話	전화	Telefon	Telepon	Điện thoại	โทรศัพท์
+在地圖上的位置（導航用，可以不選）	地図上の位置（道案内用・任意）	지도 위치(길 안내용, 선택)	Lokasi pada peta (untuk arah, pilihan)	Lokasi di peta (untuk petunjuk arah, opsional)	Vị trí trên bản đồ (để chỉ đường, không bắt buộc)	ตำแหน่งบนแผนที่ (สำหรับนำทาง ไม่บังคับ)
+攻略連結（最多 10 個；團員點了用瀏覽器打開）	ガイドリンク（10件まで、ブラウザで開きます）	가이드 링크(최대 10개, 브라우저로 열려요)	Pautan panduan (hingga 10; dibuka dalam pelayar)	Tautan panduan (maks. 10; dibuka di browser)	Liên kết hướng dẫn (tối đa 10; mở bằng trình duyệt)	ลิงก์คู่มือ (สูงสุด 10 ลิงก์ เปิดในเบราว์เซอร์)
+標題	タイトル	제목	Tajuk	Judul	Tiêu đề	หัวข้อ
+例如：清水寺怎麼逛	例：清水寺の回り方	예: 기요미즈데라 둘러보기	cth. Panduan Kiyomizu-dera	mis. Panduan Kiyomizu-dera	vd: Tham quan chùa Kiyomizu	เช่น เที่ยววัดคิโยมิสึ
+貼上	貼り付け	붙여넣기	Tampal	Tempel	Dán	วาง
+新增連結	リンクを追加	링크 추가	Tambah pautan	Tambah tautan	Thêm liên kết	เพิ่มลิงก์
+{start.month}/{start.day} 出發	{0}/{1} 出発	{0}/{1} 출발	Bertolak {0}/{1}	Berangkat {0}/{1}	Khởi hành {0}/{1}	ออกเดินทาง {0}/{1}
+人數券、天數券	人数パス・日数パス	인원·일수 이용권	Pas	Tiket	Vé	บัตร
+資訊	情報	정보	Info	Info	Thông tin	ข้อมูล
+車輛・飯店・緊急	バス・ホテル・緊急	차량·호텔·긴급	Bas · Hotel · SOS	Bus · Hotel · SOS	Xe · Khách sạn · SOS	รถ · โรงแรม · ฉุกเฉิน
+團體資訊	グループ情報	그룹 정보	Info kumpulan	Info grup	Thông tin đoàn	ข้อมูลกลุ่ม
+車輛	バス	차량	Bas	Bus	Xe	รถ
+還沒填車輛資訊	バス情報はまだありません	차량 정보가 아직 없어요	Belum ada info bas	Belum ada info bus	Chưa có thông tin xe	ยังไม่มีข้อมูลรถ
+領隊還沒填車輛資訊	バス情報はまだありません	차량 정보가 아직 없어요	Belum ada info bas	Belum ada info bus	Chưa có thông tin xe	ยังไม่มีข้อมูลรถ
+{day.month}/{day.day} 的飯店	{0}/{1} のホテル	{0}/{1} 호텔	Hotel {0}/{1}	Hotel {0}/{1}	Khách sạn {0}/{1}	โรงแรมวันที่ {0}/{1}
+在行程表的每日資訊裡設定飯店	ホテルは旅程表の各日の情報で設定します	호텔은 일정표의 날짜별 정보에서 설정해요	Tetapkan hotel dalam info harian jadual	Atur hotel di info harian jadwal	Đặt khách sạn trong thông tin từng ngày của lịch trình	ตั้งโรงแรมในข้อมูลรายวันของกำหนดการ
+領隊還沒填飯店	ホテルはまだありません	호텔이 아직 없어요	Belum ada hotel	Belum ada hotel	Chưa có khách sạn	ยังไม่มีโรงแรม
+緊急聯絡	緊急連絡先	긴급 연락처	Hubungan kecemasan	Kontak darurat	Liên hệ khẩn cấp	ติดต่อฉุกเฉิน
+24 小時緊急電話	24時間緊急電話	24시간 긴급 전화	Talian 24 jam	Nomor 24 jam	Đường dây 24 giờ	สายด่วน 24 ชั่วโมง
+{local.country}當地	{0}の現地番号	{0} 현지	Di {0}	Di {0}	Tại {0}	ใน{0}
+報警、救護、消防	警察・救急・消防	경찰·구급·소방	Polis, ambulans, bomba	Polisi, ambulans, pemadam	Cảnh sát, cấp cứu, cứu hỏa	ตำรวจ รถพยาบาล ดับเพลิง
+報警	警察	경찰	Polis	Polisi	Cảnh sát	ตำรวจ
+救護車	救急車	구급차	Ambulans	Ambulans	Cấp cứu	รถพยาบาล
+領隊還沒填緊急聯絡	緊急連絡先はまだありません	긴급 연락처가 아직 없어요	Belum ada hubungan kecemasan	Belum ada kontak darurat	Chưa có liên hệ khẩn cấp	ยังไม่มีข้อมูลติดต่อฉุกเฉิน
+我的資料	自分の情報	내 정보	Butiran saya	Data saya	Thông tin của tôi	ข้อมูลของฉัน
+飲食禁忌、健康狀況、緊急聯絡人。只有團主和共同團主看得到，退團或解散就刪除。	食事制限・健康状態・緊急連絡先。リーダーと共同リーダーだけが見られ、退出か解散で削除されます。	식사 제한·건강 상태·긴급 연락처. 리더와 공동 리더만 볼 수 있고, 나가거나 그룹이 끝나면 삭제돼요.	Diet, kesihatan dan hubungan kecemasan. Hanya ketua boleh lihat; dipadam apabila anda keluar atau kumpulan tamat.	Pantangan makan, kesehatan, dan kontak darurat. Hanya pemimpin yang bisa melihat; dihapus saat kamu keluar atau grup berakhir.	Ăn kiêng, sức khỏe và người liên hệ khẩn cấp. Chỉ trưởng đoàn xem được; xóa khi bạn rời hoặc đoàn kết thúc.	อาหารที่ไม่ทาน สุขภาพ และผู้ติดต่อฉุกเฉิน มีแต่หัวหน้าที่เห็น ลบเมื่อออกจากกลุ่มหรือกลุ่มสิ้นสุด
+飲食：{g.myData!.diet}	食事：{0}	식사: {0}	Diet: {0}	Makanan: {0}	Ăn uống: {0}	อาหาร: {0}
+健康：{g.myData!.health}	健康：{0}	건강: {0}	Kesihatan: {0}	Kesehatan: {0}	Sức khỏe: {0}	สุขภาพ: {0}
+緊急聯絡人：{g.myData!.contact} {g.myData!.contactPhone}	緊急連絡先：{0} {1}	긴급 연락처: {0} {1}	Hubungan: {0} {1}	Kontak: {0} {1}	Liên hệ: {0} {1}	ผู้ติดต่อ: {0} {1}
+填寫我的資料	自分の情報を入力	내 정보 입력	Isi butiran saya	Isi data saya	Điền thông tin	กรอกข้อมูลของฉัน
+修改我的資料	自分の情報を編集	내 정보 수정	Sunting butiran saya	Ubah data saya	Sửa thông tin	แก้ไขข้อมูลของฉัน
+司機	運転手	기사	Pemandu	Sopir	Tài xế	คนขับ
+司機 {b.driver}	運転手 {0}	기사 {0}	Pemandu {0}	Sopir {0}	Tài xế {0}	คนขับ {0}
+團體資訊已更新	グループ情報を更新しました	그룹 정보를 업데이트했어요	Info kumpulan dikemas kini	Info grup diperbarui	Đã cập nhật thông tin đoàn	อัปเดตข้อมูลกลุ่มแล้ว
+編輯團體資訊	グループ情報を編集	그룹 정보 편집	Sunting info kumpulan	Edit info grup	Sửa thông tin đoàn	แก้ไขข้อมูลกลุ่ม
+全團的車（每組不同車就填下面）	全員のバス（グループごとに違う場合は下に入力）	전체 차량(조마다 다르면 아래에 입력)	Bas untuk semua (atau isi setiap subkumpulan di bawah)	Bus untuk semua (atau isi tiap subgrup di bawah)	Xe cho cả đoàn (hoặc điền từng nhóm bên dưới)	รถของทั้งกลุ่ม (ถ้าแต่ละกลุ่มย่อยต่างกันให้กรอกด้านล่าง)
+{g.subName(b.sub)}的車	{0}のバス	{0} 차량	Bas untuk {0}	Bus untuk {0}	Xe của {0}	รถของ{0}
+車牌	ナンバー	차량 번호	Nombor plat	Nomor polisi	Biển số	ทะเบียนรถ
+車色、車型（例如：白色大巴）	色・車種（例：白い大型バス）	색·차종(예: 흰색 대형 버스)	Warna dan jenis (cth. bas besar putih)	Warna dan jenis (mis. bus besar putih)	Màu và loại xe (vd: xe khách trắng)	สีและประเภทรถ (เช่น รถบัสสีขาว)
+司機稱呼	運転手の名前	기사님 성함	Nama pemandu	Nama sopir	Tên tài xế	ชื่อคนขับ
+司機電話	運転手の電話	기사님 전화	Telefon pemandu	Telepon sopir	SĐT tài xế	เบอร์คนขับ
+備註（例如：停在 B2 出口）	メモ（例：B2出口に停車）	메모(예: B2 출구에 정차)	Nota (cth. diparkir di pintu B2)	Catatan (mis. parkir di pintu B2)	Ghi chú (vd: đỗ ở lối ra B2)	หมายเหตุ (เช่น จอดที่ทางออก B2)
+領隊電話	リーダーの電話	리더 전화	Telefon ketua	Telepon pemimpin	SĐT trưởng đoàn	เบอร์หัวหน้ากลุ่ม
+旅行社名稱	旅行会社	여행사	Agensi pelancongan	Agen perjalanan	Công ty du lịch	บริษัทนำเที่ยว
+旅行社 24 小時電話	旅行会社の24時間電話	여행사 24시간 전화	Telefon 24 jam agensi	Telepon 24 jam agen	SĐT 24 giờ của công ty	เบอร์ 24 ชั่วโมงของบริษัท
+其他（例如：駐日代表處電話、保險公司）	その他（例：大使館・保険会社）	기타(예: 대사관, 보험사)	Lain-lain (cth. kedutaan, insurans)	Lainnya (mis. kedutaan, asuransi)	Khác (vd: đại sứ quán, bảo hiểm)	อื่น ๆ (เช่น สถานทูต ประกัน)
+當地的報警、救護電話會依集合點的國家自動顯示。	現地の警察・救急の番号は集合場所の国に合わせて自動で表示されます。	현지 경찰·구급 번호는 집합 장소의 나라에 맞춰 자동으로 표시돼요.	Nombor polis dan ambulans tempatan dipaparkan secara automatik.	Nomor polisi dan ambulans lokal ditampilkan otomatis.	Số cảnh sát và cấp cứu địa phương được hiển thị tự động.	เบอร์ตำรวจและรถพยาบาลท้องถิ่นจะแสดงอัตโนมัติ
+已刪除我的資料	自分の情報を削除しました	내 정보를 삭제했어요	Butiran anda dipadam	Data kamu dihapus	Đã xóa thông tin của bạn	ลบข้อมูลของคุณแล้ว
+已儲存，只有領隊看得到	保存しました。リーダーだけが見られます	저장했어요. 리더만 볼 수 있어요	Disimpan. Hanya ketua boleh lihat.	Tersimpan. Hanya pemimpin yang bisa melihat.	Đã lưu. Chỉ trưởng đoàn xem được.	บันทึกแล้ว มีแต่หัวหน้าที่เห็น
+全部都可以不填。只有團主和共同團主看得到，用來安排餐食和緊急時聯絡家人；你退團或這一團解散時就刪除。	すべて任意です。リーダーと共同リーダーだけが見られ、食事の手配や緊急時の連絡に使います。退出か解散で削除されます。	모두 선택 사항이에요. 리더와 공동 리더만 볼 수 있고, 식사 준비와 긴급 연락에 쓰여요. 나가거나 그룹이 끝나면 삭제돼요.	Semuanya pilihan. Hanya ketua boleh lihat, untuk makanan dan kecemasan. Dipadam apabila anda keluar atau kumpulan tamat.	Semuanya opsional. Hanya pemimpin yang bisa melihat, untuk makan dan keadaan darurat. Dihapus saat kamu keluar atau grup berakhir.	Tất cả đều không bắt buộc. Chỉ trưởng đoàn xem được, dùng cho bữa ăn và khi khẩn cấp. Xóa khi bạn rời hoặc đoàn kết thúc.	ไม่บังคับทั้งหมด มีแต่หัวหน้าที่เห็น ใช้จัดอาหารและติดต่อยามฉุกเฉิน ลบเมื่อออกจากกลุ่มหรือกลุ่มสิ้นสุด
+飲食禁忌	食事制限	식사 제한	Diet	Pantangan makan	Ăn kiêng	อาหารที่ไม่ทาน
+例如：素食、不吃牛、海鮮過敏	例：ベジタリアン、牛肉NG、魚介アレルギー	예: 채식, 소고기 X, 해산물 알레르기	cth. vegetarian, tiada daging lembu	mis. vegetarian, tidak makan sapi	vd: ăn chay, không ăn bò	เช่น มังสวิรัติ ไม่ทานเนื้อวัว
+健康狀況（過敏、慢性病、常用藥）	健康状態（アレルギー・持病・常用薬）	건강 상태(알레르기·지병·복용 약)	Kesihatan (alahan, penyakit, ubat)	Kesehatan (alergi, penyakit, obat)	Sức khỏe (dị ứng, bệnh, thuốc)	สุขภาพ (แพ้ โรคประจำตัว ยา)
+緊急聯絡人	緊急連絡先	긴급 연락처	Hubungan kecemasan	Kontak darurat	Người liên hệ khẩn cấp	ผู้ติดต่อฉุกเฉิน
+例如：媽媽 王小明	例：母	예: 엄마	cth. Ibu	mis. Ibu	vd: Mẹ	เช่น แม่
+緊急聯絡人電話	緊急連絡先の電話	긴급 연락처 전화	Telefon hubungan	Telepon kontak	SĐT người liên hệ	เบอร์ผู้ติดต่อ
+行程 {g.days} 天，目前開到第 {g.allowedDays} 天。再 {g.daysNeeded} 張天數券就能用到最後一天。	旅行は{0}日、現在{1}日分が有効です。あと日数パス{2}枚が必要です。	여행은 {0}일, 현재 {1}일 사용 가능해요. 일수 이용권 {2}장이 더 필요해요.	Perjalanan {0} hari; {1} aktif. Perlu {2} lagi pas hari.	Perjalanan {0} hari; {1} aktif. Perlu {2} tiket hari lagi.	Chuyến đi {0} ngày; đang mở {1}. Cần thêm {2} vé ngày.	ทริป {0} วัน เปิดใช้ {1} วัน ต้องใช้บัตรเพิ่มวันอีก {2} ใบ
+買天數券	購入	구매	Beli	Beli	Mua	ซื้อ
+每個集合時間都是集合點的當地時間。集合前 15 分鐘會自動提醒。	集合時間はすべて集合場所の現地時間です。集合15分前に自動で通知します。	집합 시간은 모두 집합 장소의 현지 시간이에요. 15분 전에 자동으로 알려 줘요.	Setiap masa ialah waktu tempatan tempat berkumpul. Semua diingatkan 15 minit sebelum.	Setiap waktu adalah waktu lokal titik kumpul. Semua diingatkan 15 menit sebelumnya.	Mọi giờ đều là giờ địa phương của điểm hẹn. Mọi người được nhắc trước 15 phút.	ทุกเวลาเป็นเวลาท้องถิ่นของจุดรวมตัว ทุกคนจะได้รับการเตือนก่อน 15 นาที
+把這張團購券用在「{g.name}」？人數券會讓這一團最多 100 人，天數券會讓這一團多 7 天。	このクーポンを「{0}」に使いますか？人数パスは最大100人、日数パスは7日延長です。	이 쿠폰을 "{0}"에 쓸까요? 인원 이용권은 최대 100명, 일수 이용권은 7일 늘려 줘요.	Guna baucar ini pada "{0}"? Pas saiz kumpulan membenarkan 100 orang; pas hari menambah 7 hari.	Pakai voucher ini untuk "{0}"? Tiket jumlah anggota membuka 100 orang; tiket hari menambah 7 hari.	Dùng phiếu này cho "{0}"? Vé số người cho phép 100 người; vé ngày thêm 7 ngày.	ใช้คูปองนี้กับ "{0}" ไหม บัตรเพิ่มจำนวนคนได้ 100 คน บัตรเพิ่มวันได้อีก 7 วัน
+這一團多了 7 天。	このグループを7日延長しました。	이 그룹이 7일 늘었어요.	7 hari ditambah pada kumpulan ini.	7 hari ditambahkan ke grup ini.	Đã thêm 7 ngày cho đoàn.	เพิ่มเวลาให้กลุ่มนี้ 7 วันแล้ว
+飲食與健康總表	食事と健康の一覧	식사·건강 목록	Diet dan kesihatan	Makanan dan kesehatan	Ăn uống và sức khỏe	อาหารและสุขภาพ
+有健康備註	健康メモあり	건강 메모 있음	Ada nota kesihatan	Ada catatan kesehatan	Có ghi chú sức khỏe	มีหมายเหตุสุขภาพ
+團員自己填的，只有團主與共同團主看得到。{rows.length}／{g.members.length} 人有填。	メンバーが入力した情報で、リーダーだけが見られます。{0}／{1}人が入力済み。	멤버가 직접 입력했고 리더만 볼 수 있어요. {0}/{1}명 입력.	Diisi oleh ahli; hanya ketua boleh lihat. {0}/{1} sudah isi.	Diisi anggota; hanya pemimpin yang bisa melihat. {0}/{1} sudah mengisi.	Do thành viên tự điền; chỉ trưởng đoàn xem được. {0}/{1} người đã điền.	สมาชิกกรอกเอง มีแต่หัวหน้าที่เห็น กรอกแล้ว {0}/{1} คน
+還沒有人填。團員可以在「車輛・飯店・緊急」裡填寫。	まだ誰も入力していません。	아직 아무도 입력하지 않았어요.	Belum ada yang mengisi.	Belum ada yang mengisi.	Chưa ai điền.	ยังไม่มีใครกรอก
+緊急聯絡人：{d.contact} {d.contactPhone}	緊急連絡先：{0} {1}	긴급 연락처: {0} {1}	Hubungan kecemasan: {0} {1}	Kontak darurat: {0} {1}	Liên hệ khẩn cấp: {0} {1}	ผู้ติดต่อฉุกเฉิน: {0} {1}
+「{g.name}」：最多 100 人，目前開通 {g.allowedDays} 天	「{0}」：最大100人、{1}日分 有効	"{0}": 최대 100명, {1}일 사용 가능	"{0}": hingga 100 orang, {1} hari aktif	"{0}": hingga 100 orang, {1} hari aktif	"{0}": tối đa 100 người, mở {1} ngày	"{0}": สูงสุด 100 คน เปิดใช้ {1} วัน
+「{g.name}」：20 人以內免費，目前開通 {g.allowedDays} 天	「{0}」：20人まで無料、{1}日分 有効	"{0}": 20명까지 무료, {1}일 사용 가능	"{0}": percuma hingga 20 orang, {1} hari aktif	"{0}": gratis hingga 20 orang, {1} hari aktif	"{0}": miễn phí đến 20 người, mở {1} ngày	"{0}": ฟรีไม่เกิน 20 คน เปิดใช้ {1} วัน
+已用人數券，最多 100 人。	人数パス使用中：最大100人。	인원 이용권 사용 중, 최대 100명.	Pas saiz kumpulan aktif. Hingga 100 orang.	Tiket jumlah anggota aktif. Hingga 100 orang.	Đã dùng vé số người, tối đa 100 người.	ใช้บัตรเพิ่มจำนวนคนแล้ว สูงสุด 100 คน
+人數券	人数パス	인원 이용권	Pas saiz kumpulan	Tiket jumlah anggota	Vé số người	บัตรเพิ่มจำนวนคน
+購買人數券	人数パスを購入	인원 이용권 구매	Beli pas saiz kumpulan	Beli tiket jumlah anggota	Mua vé số người	ซื้อบัตรเพิ่มจำนวนคน
+已經是最長的 30 天。	すでに最長の30日です。	이미 최대 30일이에요.	Sudah mencapai maksimum 30 hari.	Sudah maksimum 30 hari.	Đã tối đa 30 ngày.	ครบสูงสุด 30 วันแล้ว
+天數券	日数パス	일수 이용권	Pas hari	Tiket hari	Vé ngày	บัตรเพิ่มวัน
+這一團多 7 天（可以買好幾張，最長 30 天）	このグループを7日延長（複数購入可、最長30日）	이 그룹 7일 연장(여러 장 가능, 최대 30일)	+7 hari untuk kumpulan ini (boleh beli beberapa, hingga 30 hari)	+7 hari untuk grup ini (bisa beli beberapa, hingga 30 hari)	+7 ngày cho đoàn (mua nhiều vé được, tối đa 30 ngày)	เพิ่ม 7 วันให้กลุ่มนี้ (ซื้อได้หลายใบ สูงสุด 30 วัน)
+行程 {g.days} 天，還要 {g.daysNeeded} 張	旅行は{0}日、あと{1}枚必要	여행 {0}일, {1}장 더 필요	Perjalanan {0} hari: perlu {1} lagi	Perjalanan {0} hari: perlu {1} lagi	Chuyến {0} ngày: cần thêm {1} vé	ทริป {0} วัน ต้องการอีก {1} ใบ
+出發日起前 3 天免費	出発日から3日間は無料	출발일부터 3일은 무료	3 hari pertama percuma	3 hari pertama gratis	3 ngày đầu miễn phí	3 วันแรกฟรี
+天數在行程表右上角「出發日與天數」設定	日数は旅程表の右上「出発日と日数」で設定	일수는 일정표 오른쪽 위 "출발일과 일수"에서 설정	Tetapkan tempoh dari jadual perjalanan	Atur lamanya dari jadwal perjalanan	Đặt số ngày ở góc trên lịch trình	ตั้งจำนวนวันที่มุมขวาบนของกำหนดการ
+購買天數券	日数パスを購入	일수 이용권 구매	Beli pas hari	Beli tiket hari	Mua vé ngày	ซื้อบัตรเพิ่มวัน
+一次購買，不會自動續費。	1回きりの購入で、自動更新はありません。	한 번 구매, 자동 갱신 없음.	Pembelian sekali, tiada pembaharuan.	Pembelian sekali, tanpa perpanjangan otomatis.	Mua một lần, không tự gia hạn.	ซื้อครั้งเดียว ไม่ต่ออายุอัตโนมัติ
+掃描券上的 QR code，人數券或天數券直接用在這一團，不用另外付款。	クーポンのQRコードを読み取ると、このグループに無料で適用されます。	쿠폰의 QR 코드를 스캔하면 이 그룹에 바로 적용돼요.	Imbas kod QR untuk guna pada kumpulan ini tanpa bayaran.	Pindai kode QR untuk memakainya di grup ini tanpa biaya.	Quét mã QR để dùng cho đoàn này, không tốn phí.	สแกน QR เพื่อใช้กับกลุ่มนี้ได้ทันทีโดยไม่เสียเงิน
+人數券 {people}、天數券 {days}。買到的券會變成 QR code，發給要帶團的領隊，領隊開團後掃描就能使用。可以看到哪些券已經用掉。	人数パス {0}、日数パス {1}。購入したクーポンはQRコードになり、リーダーがグループ作成後に読み取って使います。	인원 이용권 {0}, 일수 이용권 {1}. 산 쿠폰은 QR 코드가 되고, 리더가 그룹을 만든 뒤 스캔해서 써요.	Saiz kumpulan {0}, pas hari {1}. Setiap baucar ialah kod QR untuk diimbas oleh ketua.	Jumlah anggota {0}, tiket hari {1}. Setiap voucher berupa kode QR untuk dipindai pemimpin.	Vé số người {0}, vé ngày {1}. Mỗi phiếu là một mã QR để trưởng đoàn quét.	บัตรเพิ่มจำนวนคน {0} บัตรเพิ่มวัน {1} คูปองแต่ละใบเป็น QR ให้หัวหน้าสแกน
+天數券團購券（多 7 天）	日数パスのクーポン（+7日）	일수 이용권 쿠폰(+7일)	Baucar pas hari (+7 hari)	Voucher tiket hari (+7 hari)	Phiếu vé ngày (+7 ngày)	คูปองบัตรเพิ่มวัน (+7 วัน)
+人數券團購券（100 人）	人数パスのクーポン（100人）	인원 이용권 쿠폰(100명)	Baucar saiz kumpulan (100 orang)	Voucher jumlah anggota (100 orang)	Phiếu vé số người (100 người)	คูปองบัตรเพิ่มจำนวนคน (100 คน)
+請領隊開團後，在「人數券、天數券」裡掃描	リーダーがグループ作成後に「人数パス・日数パス」で読み取ります	리더가 그룹을 만든 뒤 "인원·일수 이용권"에서 스캔해요	Ketua mengimbas ini selepas memulakan kumpulan	Pemimpin memindai ini setelah membuat grup	Trưởng đoàn quét sau khi tạo đoàn	หัวหน้าสแกนหลังสร้างกลุ่ม
+旅行團天數券團購券：開團後在「人數券、天數券」掃描或點這個連結 {v.link}	TourChip 日数パスのクーポン：{0}	TourChip 일수 이용권 쿠폰: {0}	Baucar pas hari TourChip: {0}	Voucher tiket hari TourChip: {0}	Phiếu vé ngày TourChip: {0}	คูปองบัตรเพิ่มวัน TourChip: {0}
+旅行團人數券團購券：開團後在「人數券、天數券」掃描或點這個連結 {v.link}	TourChip 人数パスのクーポン：{0}	TourChip 인원 이용권 쿠폰: {0}	Baucar saiz kumpulan TourChip: {0}	Voucher jumlah anggota TourChip: {0}	Phiếu vé số người TourChip: {0}	คูปองบัตรเพิ่มจำนวนคน TourChip: {0}
+首頁按「開一個團」，填團名、選團色、出發日和天數，可以分組（例如 1 號車、2 號車）。出發前就能先開團讓團員入團。	ホームの「グループを作る」で名前・色・出発日・日数を設定。1号車・2号車のように分けられ、出発前に作っておけます。	홈에서 "그룹 만들기"를 눌러 이름·색·출발일·일수를 정해요. 1호차·2호차처럼 나눌 수 있고, 출발 전에 미리 만들 수 있어요.	Ketik "Mulakan kumpulan", tetapkan nama, warna, tarikh bertolak dan tempoh. Boleh tambah subkumpulan seperti Bas 1 dan Bas 2, dan sediakan sebelum bertolak.	Ketuk "Buat grup", atur nama, warna, tanggal berangkat, dan lamanya. Bisa tambah subgrup seperti Bus 1 dan Bus 2, dan disiapkan sebelum berangkat.	Chạm "Tạo đoàn", đặt tên, màu, ngày đi và số ngày. Có thể chia nhóm như Xe 1, Xe 2 và tạo trước khi khởi hành.	แตะ "สร้างกลุ่ม" ตั้งชื่อ สี วันออกเดินทาง และจำนวนวัน แบ่งกลุ่มย่อยเช่นรถคันที่ 1 คันที่ 2 ได้ และสร้างล่วงหน้าได้
+20 人、3 天以內免費。人數券讓一團最多 100 人；天數券每張多 7 天，最長 30 天；也可以用旅行社的團購券。	20人・3日まで無料。人数パスで最大100人、日数パスは1枚7日延長（最長30日）。旅行会社のクーポンも使えます。	20명·3일까지 무료. 인원 이용권으로 최대 100명, 일수 이용권은 장당 7일(최대 30일). 여행사 쿠폰도 쓸 수 있어요.	Percuma untuk 20 orang dan 3 hari. Pas saiz kumpulan untuk 100 orang; setiap pas hari menambah 7 hari (hingga 30). Baucar agensi juga boleh.	Gratis untuk 20 orang dan 3 hari. Tiket jumlah anggota untuk 100 orang; tiap tiket hari menambah 7 hari (hingga 30). Voucher agen juga bisa.	Miễn phí 20 người và 3 ngày. Vé số người cho 100 người; mỗi vé ngày thêm 7 ngày (tối đa 30). Phiếu của công ty du lịch cũng dùng được.	ฟรี 20 คนและ 3 วัน บัตรเพิ่มจำนวนคนได้ 100 คน บัตรเพิ่มวันใบละ 7 วัน (สูงสุด 30) ใช้คูปองของบริษัทนำเที่ยวได้
+自由活動可以排到 12 小時後集合；集合前 15 分鐘全團會再響一次。	自由行動は12時間後まで集合を設定でき、集合15分前に全員にもう一度鳴ります。	자유 시간은 12시간 뒤까지 정할 수 있고, 15분 전에 모두에게 한 번 더 울려요.	Masa bebas boleh hingga 12 jam. Semua diingatkan 15 minit sebelum.	Waktu bebas bisa hingga 12 jam. Semua diingatkan 15 menit sebelumnya.	Thời gian tự do tối đa 12 giờ. Mọi người được nhắc trước 15 phút.	เวลาอิสระตั้งได้ถึง 12 ชั่วโมง ทุกคนจะได้รับการเตือนก่อน 15 นาที
+集合卡片上按「用地圖帶我走過去」，可以用 Apple 地圖或 Google 地圖步行導航。	集合カードの「地図で道案内」で、Apple マップか Google マップの徒歩ルートを開けます。	집합 카드의 "지도로 길 안내"를 누르면 Apple 지도나 Google 지도로 도보 길 안내를 받아요.	Ketik "Tunjuk jalan dengan peta" pada kad untuk arah berjalan kaki dalam Apple Maps atau Google Maps.	Ketuk "Tunjukkan jalan dengan peta" di kartu untuk rute jalan kaki di Apple Maps atau Google Maps.	Chạm "Chỉ đường bằng bản đồ" trên thẻ để đi bộ bằng Apple Maps hoặc Google Maps.	แตะ "นำทางด้วยแผนที่" บนการ์ดเพื่อเดินตาม Apple Maps หรือ Google Maps
+車輛、飯店、緊急聯絡	バス・ホテル・緊急連絡先	차량·호텔·긴급 연락처	Bas, hotel dan kecemasan	Bus, hotel, dan darurat	Xe, khách sạn và khẩn cấp	รถ โรงแรม และเหตุฉุกเฉิน
+「車輛・飯店・緊急」裡有你坐的車（車牌、司機電話）、今晚的飯店（可以給司機看、導航）、領隊和旅行社電話，以及當地報警和救護電話。	「バス・ホテル・緊急」には乗るバス（ナンバー・運転手の電話）、今夜のホテル（運転手に見せる・道案内）、リーダーと旅行会社の電話、現地の警察・救急の番号があります。	"차량·호텔·긴급"에는 타는 차(번호·기사 전화), 오늘 밤 호텔(기사님께 보여 주기·길 안내), 리더와 여행사 전화, 현지 경찰·구급 번호가 있어요.	Halaman "Bas · Hotel · SOS" menunjukkan bas anda, hotel malam ini (tunjuk pemandu atau dapatkan arah), telefon ketua dan agensi, serta nombor kecemasan tempatan.	Halaman "Bus · Hotel · SOS" menampilkan bus kamu, hotel malam ini (tunjukkan ke sopir atau petunjuk arah), telepon pemimpin dan agen, serta nomor darurat lokal.	Trang "Xe · Khách sạn · SOS" có xe của bạn, khách sạn tối nay (đưa tài xế xem hoặc chỉ đường), SĐT trưởng đoàn và công ty, cùng số khẩn cấp địa phương.	หน้า "รถ · โรงแรม · ฉุกเฉิน" มีรถที่คุณนั่ง โรงแรมคืนนี้ (ให้คนขับดูหรือนำทาง) เบอร์หัวหน้าและบริษัท และเบอร์ฉุกเฉินท้องถิ่น
+也可以填「我的資料」（飲食禁忌、健康狀況、緊急聯絡人），只有團主和共同團主看得到，退團或解散就刪除。	「自分の情報」（食事制限・健康状態・緊急連絡先）も入力でき、リーダーだけが見られます。退出か解散で削除されます。	"내 정보"(식사 제한·건강 상태·긴급 연락처)도 입력할 수 있고 리더만 볼 수 있어요. 나가거나 그룹이 끝나면 삭제돼요.	Anda boleh tambah butiran (diet, kesihatan, hubungan kecemasan). Hanya ketua boleh lihat; dipadam apabila anda keluar atau kumpulan tamat.	Kamu bisa isi data (pantangan makan, kesehatan, kontak darurat). Hanya pemimpin yang melihat; dihapus saat kamu keluar atau grup berakhir.	Bạn có thể điền thông tin (ăn kiêng, sức khỏe, người liên hệ). Chỉ trưởng đoàn xem được; xóa khi bạn rời hoặc đoàn kết thúc.	กรอก "ข้อมูลของฉัน" (อาหาร สุขภาพ ผู้ติดต่อฉุกเฉิน) ได้ มีแต่หัวหน้าที่เห็น ลบเมื่อออกหรือกลุ่มสิ้นสุด
+行程表的時間都用集合點的當地時區；每個集合點前 15 分鐘會自動提醒。	旅程表の時間は集合場所の現地時間です。各集合の15分前に自動で通知します。	일정표 시간은 집합 장소의 현지 시간이에요. 집합 15분 전에 자동으로 알려 줘요.	Masa jadual ikut waktu tempatan setiap tempat berkumpul. Semua diingatkan 15 minit sebelum.	Waktu jadwal memakai waktu lokal tiap titik kumpul. Semua diingatkan 15 menit sebelumnya.	Giờ trong lịch trình theo giờ địa phương của điểm hẹn. Nhắc trước 15 phút mỗi điểm.	เวลาในกำหนดการเป็นเวลาท้องถิ่นของจุดรวมตัว เตือนก่อนทุกจุด 15 นาที
+領隊可以替每一天寫資訊卡：當天說明、今晚的飯店、攻略連結，團員點那一天就看得到。	リーダーは日ごとに情報カード（説明・今夜のホテル・ガイドリンク）を作れます。メンバーはその日をタップして見られます。	리더는 날마다 정보 카드(안내·오늘 밤 호텔·가이드 링크)를 쓸 수 있고, 멤버는 그날을 눌러 볼 수 있어요.	Ketua boleh tulis kad untuk setiap hari: nota, hotel malam ini dan pautan panduan. Ahli melihatnya dengan mengetik hari itu.	Pemimpin bisa menulis kartu untuk tiap hari: catatan, hotel malam ini, dan tautan panduan. Anggota melihatnya dengan mengetuk hari itu.	Trưởng đoàn có thể viết thẻ cho từng ngày: ghi chú, khách sạn tối nay và liên kết hướng dẫn. Thành viên chạm vào ngày đó để xem.	หัวหน้าเขียนการ์ดรายวันได้ ทั้งรายละเอียด โรงแรมคืนนี้ และลิงก์คู่มือ สมาชิกแตะวันนั้นเพื่อดู
+用哪個地圖帶你走過去？	どの地図で道案内しますか？	어떤 지도로 안내할까요?	Guna peta mana?	Pakai peta yang mana?	Dùng bản đồ nào?	ใช้แผนที่ไหนนำทาง
+Apple 地圖	Apple マップ	Apple 지도	Apple Maps	Apple Maps	Apple Maps	Apple Maps
+Google 地圖	Google マップ	Google 지도	Google Maps	Google Maps	Google Maps	Google Maps
+打不開，請稍後再試。	開けませんでした。	열 수 없어요.	Tidak dapat dibuka.	Tidak bisa dibuka.	Không mở được.	เปิดไม่ได้
+台灣	台湾	대만	Taiwan	Taiwan	Đài Loan	ไต้หวัน
+日本	日本	일본	Jepun	Jepang	Nhật Bản	ญี่ปุ่น
+韓國	韓国	한국	Korea	Korea	Hàn Quốc	เกาหลี
+中國	中国	중국	China	Tiongkok	Trung Quốc	จีน
+香港	香港	홍콩	Hong Kong	Hong Kong	Hồng Kông	ฮ่องกง
+澳門	マカオ	마카오	Macau	Makau	Ma Cao	มาเก๊า
+泰國	タイ	태국	Thailand	Thailand	Thái Lan	ไทย
+觀光警察	ツーリストポリス	관광 경찰	Polis pelancong	Polisi pariwisata	Cảnh sát du lịch	ตำรวจท่องเที่ยว
+越南	ベトナム	베트남	Vietnam	Vietnam	Việt Nam	เวียดนาม
+新加坡	シンガポール	싱가포르	Singapura	Singapura	Singapore	สิงคโปร์
+馬來西亞	マレーシア	말레이시아	Malaysia	Malaysia	Malaysia	มาเลเซีย
+印尼	インドネシア	인도네시아	Indonesia	Indonesia	Indonesia	อินโดนีเซีย
+緊急總機	緊急通報	긴급 전화	Kecemasan umum	Darurat umum	Khẩn cấp chung	เหตุฉุกเฉินทั่วไป
+菲律賓	フィリピン	필리핀	Filipina	Filipina	Philippines	ฟิลิปปินส์
+澳洲	オーストラリア	호주	Australia	Australia	Úc	ออสเตรเลีย
+紐西蘭	ニュージーランド	뉴질랜드	New Zealand	Selandia Baru	New Zealand	นิวซีแลนด์
+英國	イギリス	영국	UK	Inggris	Anh	สหราชอาณาจักร
+也可以撥	こちらも可	이것도 가능	Juga	Juga	Hoặc	หรือ
+歐洲	ヨーロッパ	유럽	Eropah	Eropa	Châu Âu	ยุโรป
+美國／加拿大	アメリカ／カナダ	미국/캐나다	AS / Kanada	AS / Kanada	Mỹ / Canada	สหรัฐฯ / แคนาดา
+這個團已滿 20 人。請領隊買人數券或使用團購券。	このグループは20人で満員です。リーダーに人数パスかクーポンを頼んでください。	이 그룹은 20명이 다 찼어요. 리더에게 인원 이용권이나 쿠폰을 부탁하세요.	Kumpulan ini penuh (20). Minta ketua naik taraf.	Grup ini penuh (20). Minta pemimpin meningkatkan.	Đoàn đã đủ 20 người. Nhờ trưởng đoàn nâng cấp.	กลุ่มนี้ครบ 20 คนแล้ว ขอให้หัวหน้าอัปเกรด
+天數要在 1～30 天之間，而且結束日不能已經過去。	日数は1〜30日で、終了日は未来の日付にしてください。	일수는 1~30일이고, 끝나는 날이 지나지 않아야 해요.	Tempoh mesti 1–30 hari dan tamat pada masa hadapan.	Lamanya harus 1–30 hari dan berakhir di masa depan.	Số ngày phải từ 1–30 và ngày kết thúc chưa qua.	จำนวนวันต้อง 1–30 วัน และวันสิ้นสุดต้องยังไม่ผ่าน
+出發日要在今天到 90 天後之間。	出発日は今日から90日後までです。	출발일은 오늘부터 90일 뒤까지예요.	Tarikh bertolak mesti dalam 90 hari akan datang.	Tanggal berangkat harus dalam 90 hari ke depan.	Ngày đi phải trong 90 ngày tới.	วันออกเดินทางต้องอยู่ภายใน 90 วันข้างหน้า
+這一團已經是最長的 30 天了。	このグループはすでに最長の30日です。	이 그룹은 이미 최대 30일이에요.	Kumpulan ini sudah mencapai maksimum 30 hari.	Grup ini sudah maksimum 30 hari.	Đoàn đã tối đa 30 ngày.	กลุ่มนี้ครบสูงสุด 30 วันแล้ว
+連結要是 http 或 https 開頭的網址。	リンクは http か https で始まる URL にしてください。	링크는 http 또는 https로 시작해야 해요.	Pautan mesti bermula dengan http atau https.	Tautan harus diawali http atau https.	Liên kết phải bắt đầu bằng http hoặc https.	ลิงก์ต้องขึ้นต้นด้วย http หรือ https
+這一團已經是 30 天，這張天數券先存成團購券，可以用在下一團。	このグループはすでに30日のため、日数パスはクーポンとして保存しました。	이 그룹은 이미 30일이라 일수 이용권을 쿠폰으로 저장했어요.	Kumpulan ini sudah 30 hari. Pas disimpan sebagai baucar.	Grup ini sudah 30 hari. Tiket disimpan sebagai voucher.	Đoàn đã 30 ngày. Vé được lưu thành phiếu.	กลุ่มนี้ครบ 30 วันแล้ว เก็บบัตรไว้เป็นคูปอง

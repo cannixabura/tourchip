@@ -23,11 +23,12 @@ Future<void> openTourLink(BuildContext context, TourLink link) async {
         showGlassToast(context, tx('團購券要由團主在開團後掃描使用。', 'The group leader scans the voucher after creating a group.'), icon: Icons.info_outline);
         return;
       }
-      final ok = await confirmSheet(context, tx('用這張團購券升級「${g.name}」？升級後最多 100 人。', 'Use this voucher to upgrade "${g.name}" to 100 people?'), action: tx('使用團購券', 'Use voucher'));
+      final ok = await confirmSheet(context, tx('把這張團購券用在「${g.name}」？人數券會讓這一團最多 100 人，天數券會讓這一團多 7 天。', 'Use this voucher on "${g.name}"? A group-size pass allows 100 people; a day pass adds 7 days.'), action: tx('使用團購券', 'Use voucher'));
       if (ok != true) return;
       final r = await TourService.call('redeem', {'voucher': code});
       if (!context.mounted) return;
-      showGlassToast(context, r['success'] == true ? tx('這一團已升級，最多 100 人。', 'Upgraded. Up to 100 people.') : tourError('${r['code']}'),
+      final done = r['kind'] == 'days' ? tx('這一團多了 7 天。', 'Added 7 days to this group.') : tx('這一團已升級，最多 100 人。', 'Upgraded. Up to 100 people.');
+      showGlassToast(context, r['success'] == true ? done : tourError('${r['code']}'),
           danger: r['success'] != true, icon: r['success'] == true ? Icons.workspace_premium_outlined : Icons.error_outline);
   }
 }
