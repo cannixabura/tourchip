@@ -110,8 +110,8 @@ class InfoScreen extends StatelessWidget {
                   if (g.myData != null && !g.myData!.isEmpty) ...[
                     if (g.myData!.diet.isNotEmpty) Text(tx('飲食：${g.myData!.diet}', 'Diet: ${g.myData!.diet}'), style: Night.body.copyWith(color: Night.ink)),
                     if (g.myData!.health.isNotEmpty) Text(tx('健康：${g.myData!.health}', 'Health: ${g.myData!.health}'), style: Night.body.copyWith(color: Night.ink)),
-                    if (g.myData!.contact.isNotEmpty || g.myData!.contactPhone.isNotEmpty)
-                      Text(tx('緊急聯絡人：${g.myData!.contact} ${g.myData!.contactPhone}', 'Contact: ${g.myData!.contact} ${g.myData!.contactPhone}'), style: Night.body.copyWith(color: Night.ink)),
+                    if (g.myData!.contact.isNotEmpty)
+                      Text(tx('緊急聯絡人：${g.myData!.contact}', 'Emergency contact: ${g.myData!.contact}'), style: Night.body.copyWith(color: Night.ink)),
                     const SizedBox(height: 8),
                   ],
                   NightButton(g.myData == null ? tx('填寫我的資料', 'Add my details') : tx('修改我的資料', 'Edit my details'), kind: NightButtonKind.ghost, icon: Icons.edit_outlined,
@@ -282,12 +282,11 @@ class _MemberDataEditorState extends State<MemberDataEditor> {
   late final _diet = TextEditingController(text: widget.data?.diet ?? '');
   late final _health = TextEditingController(text: widget.data?.health ?? '');
   late final _contact = TextEditingController(text: widget.data?.contact ?? '');
-  late final _contactPhone = TextEditingController(text: widget.data?.contactPhone ?? '');
   bool _busy = false;
 
   @override
   void dispose() {
-    for (final c in [_diet, _health, _contact, _contactPhone]) {
+    for (final c in [_diet, _health, _contact]) {
       c.dispose();
     }
     super.dispose();
@@ -297,7 +296,7 @@ class _MemberDataEditorState extends State<MemberDataEditor> {
     setState(() => _busy = true);
     final r = await TourService.call('mdata', clear
         ? const {}
-        : {'diet': _diet.text, 'health': _health.text, 'contact': _contact.text, 'contactPhone': _contactPhone.text});
+        : {'diet': _diet.text, 'health': _health.text, 'contact': _contact.text});
     if (!mounted) return;
     setState(() => _busy = false);
     if (r['success'] == true) {
@@ -331,7 +330,7 @@ class _MemberDataEditorState extends State<MemberDataEditor> {
               const Icon(Icons.lock_outline, color: Night.inkMuted, size: 18),
               const SizedBox(width: 10),
               Expanded(child: Text(
-                tx('全部都可以不填。只有團主和共同團主看得到，用來安排餐食和緊急時聯絡家人；你退團或這一團解散時就刪除。',
+                tx('全部都可以不填。只有團主和共同團主看得到，用來安排餐食和處理緊急狀況；你退團或這一團解散時就刪除。',
                     'Everything is optional. Only your leaders can see it, for meals and emergencies. Deleted when you leave or the group ends.'),
                 style: Night.caption.copyWith(color: Night.inkMuted),
               )),
@@ -341,7 +340,6 @@ class _MemberDataEditorState extends State<MemberDataEditor> {
           field(_diet, tx('飲食禁忌', 'Diet'), 60, hint: tx('例如：素食、不吃牛、海鮮過敏', 'e.g. vegetarian, no beef')),
           field(_health, tx('健康狀況（過敏、慢性病、常用藥）', 'Health (allergies, conditions, medicine)'), 150, lines: 4),
           field(_contact, tx('緊急聯絡人', 'Emergency contact'), 20, hint: tx('例如：媽媽 王小明', 'e.g. Mom')),
-          field(_contactPhone, tx('緊急聯絡人電話', 'Contact phone'), 25, kb: TextInputType.phone),
           const SizedBox(height: Night.space6),
           NightButton(tx('儲存', 'Save'), expand: true, onPressed: _busy ? null : () => _save()),
         ]),

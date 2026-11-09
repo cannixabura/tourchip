@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../l10n.dart';
 import '../tour/model.dart';
-import '../tour/nav.dart';
 import '../tour/service.dart';
 import '../ui/avatar.dart';
 import '../ui/night.dart';
@@ -223,11 +222,7 @@ class _DataBox extends StatelessWidget {
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         if (d.diet.isNotEmpty) line(Icons.restaurant_outlined, d.diet),
         if (d.health.isNotEmpty) line(Icons.medical_information_outlined, d.health),
-        if (d.contact.isNotEmpty || d.contactPhone.isNotEmpty)
-          InkWell(
-            onTap: d.contactPhone.isEmpty ? null : () => callPhone(context, d.contactPhone),
-            child: line(Icons.contact_phone_outlined, tx('緊急聯絡人：${d.contact} ${d.contactPhone}', 'Emergency contact: ${d.contact} ${d.contactPhone}')),
-          ),
+        if (d.contact.isNotEmpty) line(Icons.contact_emergency_outlined, tx('緊急聯絡人：${d.contact}', 'Emergency contact: ${d.contact}')),
       ]),
     );
   }

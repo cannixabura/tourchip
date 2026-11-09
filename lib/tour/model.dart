@@ -115,13 +115,12 @@ class TourVoucher {
   bool get isDays => kind == 'days';
 }
 
-/// 團員資料：飲食禁忌、健康狀況、緊急聯絡人（團員自己填，只有團主與共同團主看得到）
+/// 團員資料：飲食禁忌、健康狀況、緊急聯絡人稱呼（團員自己填，只有團主與共同團主看得到；不收電話）
 class MemberData {
-  final String diet, health, contact, contactPhone;
-  const MemberData(this.diet, this.health, this.contact, this.contactPhone);
-  static MemberData? fromJson(Object? j) =>
-      j is Map ? MemberData(_str(j['diet']), _str(j['health']), _str(j['contact']), _str(j['contactPhone'])) : null;
-  bool get isEmpty => diet.isEmpty && health.isEmpty && contact.isEmpty && contactPhone.isEmpty;
+  final String diet, health, contact;
+  const MemberData(this.diet, this.health, this.contact);
+  static MemberData? fromJson(Object? j) => j is Map ? MemberData(_str(j['diet']), _str(j['health']), _str(j['contact'])) : null;
+  bool get isEmpty => diet.isEmpty && health.isEmpty && contact.isEmpty;
 }
 
 /// 每日資訊卡的飯店
