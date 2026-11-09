@@ -74,9 +74,11 @@ class TourPerson {
   final String uid, name, avatar, role, bubble;
   final int no, at;
   final double lat, lng;
-  TourPerson(this.uid, this.no, this.name, this.avatar, this.role, this.bubble, this.lat, this.lng, this.at);
+  /// false：超過 30 分鐘沒有回應（App 被關掉、手機關機）→ 地圖上畫成灰色，位置是最後一次的
+  final bool online;
+  TourPerson(this.uid, this.no, this.name, this.avatar, this.role, this.bubble, this.lat, this.lng, this.at, {this.online = true});
   factory TourPerson.fromJson(Map j) => TourPerson(_str(j['uid']), _int(j['no']) ?? 0, _str(j['name']), _str(j['avatar']), _str(j['role']), _str(j['bubble']),
-      _dbl(j['lat']) ?? 0, _dbl(j['lng']) ?? 0, _int(j['at']) ?? 0);
+      _dbl(j['lat']) ?? 0, _dbl(j['lng']) ?? 0, _int(j['at']) ?? 0, online: j['online'] != false);
   bool get isStaff => role == 'host' || role == 'cohost';
 }
 

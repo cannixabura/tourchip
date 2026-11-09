@@ -337,10 +337,11 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
       final dpr = MediaQuery.of(context).devicePixelRatio;
       final g = widget.group;
       final prof = ProfileStore.me.value;
-      final rows = <(String id, double lat, double lng, String label, String bubble, String avatar, Color ring, bool me, int z, bool tr)>[
+      final rows = <(String id, double lat, double lng, String label, String bubble, String avatar, Color ring, bool me, int z, bool tr, bool off)>[
+        // 灰色（離線）的人排在下面，在線的人蓋在上面
         for (final p in g?.people ?? const <TourPerson>[])
-          ('p:${p.uid}', p.lat, p.lng, _label(p), _shownBubble(p) ?? p.bubble, p.avatar, _ring(p.role), false, p.isStaff ? 2 : 1, _shownBubble(p) != null),
-        if (_me != null) ('me', _me!.latitude, _me!.longitude, tx('我', 'Me'), g?.myBubble ?? '', prof.avatar, Night.auroraViolet, true, 3, false),
+          ('p:${p.uid}', p.lat, p.lng, _label(p), _shownBubble(p) ?? p.bubble, p.avatar, _ring(p.role), false, p.online ? (p.isStaff ? 2 : 1) : 0, _shownBubble(p) != null, !p.online),
+        if (_me != null) ('me', _me!.latitude, _me!.longitude, tx('我', 'Me'), g?.myBubble ?? '', prof.avatar, Night.auroraViolet, true, 3, false, false),
       ];
       final features = <Map<String, dynamic>>[];
       final shapes = <(LatLng, Rect)>[];
@@ -349,9 +350,9 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
         for (final rect in [sh.bubble, sh.avatar, sh.name]) {
           if (rect != null) shapes.add((LatLng(r.$2, r.$3), rect));
         }
-        final icon = 'person-${Object.hash(r.$4, r.$5, r.$6, r.$7.toARGB32(), dpr, r.$10).toUnsigned(32).toRadixString(16)}';
+        final icon = 'person-${Object.hash(r.$4, r.$5, r.$6, r.$7.toARGB32(), dpr, r.$10, r.$11).toUnsigned(32).toRadixString(16)}';
         if (!_images.contains(icon)) {
-          final png = await PersonMarker.render(label: r.$4, bubble: r.$5, avatar: r.$6, ring: r.$7, dpr: dpr, me: r.$8, translated: r.$10);
+          final png = await PersonMarker.render(label: r.$4, bubble: r.$5, avatar: r.$6, ring: r.$7, dpr: dpr, me: r.$8, translated: r.$10, offline: r.$11);
           if (!mounted) return;
           await c.addImage(icon, png);
           _images.add(icon);
@@ -389,8 +390,11 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
       return;
     }
     final text = p.bubble;
-    if (!await ChatTranslator.needsTranslation(text)) {
-      if (mounted) showGlassToast(context, tx('這則氣泡已經是你的語言', 'This bubble is already in your language'), icon: Icons.translate);
+    final can = await ChatTranslator.check(text);
+    if (can != TranslateCheck.ok) {
+      if (mounted) {
+        showGlassToast(context, can == TranslateCheck.same ? tx('這則氣泡已經是你的語言', 'This bubble is already in your language') : tx('這個語言目前無法翻譯', "This language can't be translated yet"), icon: Icons.translate);
+      }
       return;
     }
     if (!mounted) return;

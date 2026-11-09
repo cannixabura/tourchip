@@ -28,6 +28,10 @@
 "en": "This bubble is already in your language"
 },
 {
+"zh": "這個語言目前無法翻譯",
+"en": "This language can't be translated yet"
+},
+{
 "zh": "目前無法翻譯",
 "en": "Can't translate right now"
 },

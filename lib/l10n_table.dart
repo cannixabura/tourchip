@@ -10,6 +10,7 @@ const uiTable = <List<String>>[
   ['共同團主 {0}', 'Co-leader {0}', 'サブリーダー {0}', '공동 리더 {0}', 'Ketua bersama {0}', 'Wakil pemimpin {0}', 'Đồng trưởng đoàn {0}', 'หัวหน้าร่วม {0}'],
   ['我', 'Me', '自分', '나', 'Saya', 'Saya', 'Tôi', 'ฉัน'],
   ['這則氣泡已經是你的語言', 'This bubble is already in your language', 'この吹き出しはすでにあなたの言語です', '이 말풍선은 이미 내 언어예요', 'Gelembung ini sudah dalam bahasa anda', 'Gelembung ini sudah dalam bahasamu', 'Bong bóng này đã ở ngôn ngữ của bạn', 'บับเบิลนี้เป็นภาษาของคุณอยู่แล้ว'],
+  ['這個語言目前無法翻譯', 'This language can\'t be translated yet', 'この言語はまだ翻訳できません', '이 언어는 아직 번역할 수 없어요', 'Bahasa ini belum boleh diterjemah', 'Bahasa ini belum bisa diterjemahkan', 'Chưa thể dịch ngôn ngữ này', 'ยังแปลภาษานี้ไม่ได้'],
   ['目前無法翻譯', 'Can\'t translate right now', '現在翻訳できません', '지금은 번역할 수 없어요', 'Tidak dapat menterjemah sekarang', 'Tidak bisa menerjemahkan sekarang', 'Hiện không dịch được', 'ตอนนี้แปลไม่ได้'],
   ['回到我的位置', 'Back to me', '現在地に戻る', '내 위치로', 'Kembali ke lokasi saya', 'Kembali ke lokasi saya', 'Về vị trí của tôi', 'กลับมาที่ตำแหน่งของฉัน'],
   ['{0} 集合', 'Gather at {0}', '{0} 集合', '{0} 집합', 'Berkumpul pada {0}', 'Kumpul pukul {0}', 'Tập trung lúc {0}', 'รวมตัวเวลา {0}'],

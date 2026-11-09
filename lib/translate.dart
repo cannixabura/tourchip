@@ -10,6 +10,8 @@ import 'ui/night.dart';
 /// iPhone 用 Apple 翻譯（iOS 18，需要下載語言時系統會自己問），
 /// Android 用 Google ML Kit（第一次翻某種語言要下載約 30 MB 的模型，下載前先問）。
 /// 原生程式在 ios/Runner/AppDelegate.swift 與 android/.../Translator.kt（與城市低語相同）。
+enum TranslateCheck { same, unsupported, ok }
+
 class ChatTranslator {
   ChatTranslator._();
 
@@ -77,32 +79,56 @@ class ChatTranslator {
     return lang == 'zh-Hans' ? 'zh-Hans' : 'zh-Hant';
   }
 
+  /// iPhone 的翻譯對中文的代碼很挑：zh-Hant 不認得時改用 zh-TW 等寫法
+  static List<String> _appleIds(String code) => switch (code) {
+        'zh-Hant' => const ['zh-Hant', 'zh-TW', 'zh-Hant-TW'],
+        'zh-Hans' => const ['zh-Hans', 'zh-CN', 'zh-Hans-CN'],
+        _ => [code],
+      };
+  /// iPhone：實際能用的一組代碼（source, target）
+  static final Map<String, (String, String)> _applePair = {};
+
   static Future<bool> _supported(String source, String target) async {
     final key = '$source>$target';
     final known = _pairSupported[key];
     if (known != null) return known;
     var ok = false;
     try {
-      ok = Platform.isIOS
-          ? await _channel.invokeMethod<String>('status', {'source': source, 'target': target}) != 'unsupported'
-          : await _channel.invokeMethod<bool>('supported', {'lang': source}) == true;
+      if (Platform.isIOS) {
+        search:
+        for (final s in _appleIds(source)) {
+          for (final t in _appleIds(target)) {
+            if (await _channel.invokeMethod<String>('status', {'source': s, 'target': t}) != 'unsupported') {
+              _applePair[key] = (s, t);
+              ok = true;
+              break search;
+            }
+          }
+        }
+      } else {
+        ok = await _channel.invokeMethod<bool>('supported', {'lang': source}) == true;
+      }
     } catch (_) {}
     return _pairSupported[key] = ok;
   }
 
-  /// 跟使用者的語言不同（或繁簡不同）、而且翻得了，才回傳 true
-  static Future<bool> needsTranslation(String text) async {
-    if (text.trim().isEmpty) return false;
+  /// 能不能翻：same＝已經是使用者的語言（或認不出來）、unsupported＝這組語言翻不了、ok＝可以翻
+  static Future<TranslateCheck> check(String text) async {
+    if (text.trim().isEmpty) return TranslateCheck.same;
     final source = await detect(text);
-    if (source == null) return false;
+    if (source == null) return TranslateCheck.same;
     final t = target;
     if (_base(source) == _base(t)) {
-      if (_base(t) != 'zh') return false;
+      if (_base(t) != 'zh') return TranslateCheck.same;
       await ChineseConverter.load();
-      return (_traditional ? ChineseConverter.toTraditional(text) : ChineseConverter.toSimplified(text)) != text;
+      final conv = _traditional ? ChineseConverter.toTraditional(text) : ChineseConverter.toSimplified(text);
+      return conv != text ? TranslateCheck.ok : TranslateCheck.same;
     }
-    return _supported(source, t);
+    return await _supported(source, t) ? TranslateCheck.ok : TranslateCheck.unsupported;
   }
+
+  /// 跟使用者的語言不同（或繁簡不同）、而且翻得了，才回傳 true
+  static Future<bool> needsTranslation(String text) async => await check(text) == TranslateCheck.ok;
 
   static Future<bool> _hasModel(String lang) async =>
       await _channel.invokeMethod<bool>('isDownloaded', {'lang': lang}) == true;
@@ -133,7 +159,9 @@ class ChatTranslator {
             }
           }
         }
-        out = await _channel.invokeMethod<String>('translate', {'text': text, 'source': source, 'target': t});
+        if (Platform.isIOS && !await _supported(source, t)) return null;
+        final pair = Platform.isIOS ? _applePair['$source>$t'] ?? (source, t) : (source, t);
+        out = await _channel.invokeMethod<String>('translate', {'text': text, 'source': pair.$1, 'target': pair.$2});
       } catch (_) {
         out = null;
       }

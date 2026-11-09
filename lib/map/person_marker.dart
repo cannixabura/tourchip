@@ -53,10 +53,13 @@ class PersonMarker {
 
   /// PNG：dpr 是螢幕倍率（地圖會用同一個倍率把圖縮回邏輯大小）
   /// translated：氣泡顯示的是翻譯（前面加翻譯小圖示、外框改藍色）
-  static Future<Uint8List> render({required String label, required String bubble, required String avatar, required Color ring, required double dpr, bool me = false, bool translated = false}) async {
+  /// offline：超過 30 分鐘沒回應的人，整個變灰（照片去色、光環與文字變灰）
+  static Future<Uint8List> render({required String label, required String bubble, required String avatar, required Color ring, required double dpr, bool me = false, bool translated = false, bool offline = false}) async {
     final photo = await _photo(avatar);
-    final name = _text(label, 12, me ? Night.auroraBlue : Night.ink, maxWidth: 140);
-    final bub = bubble.isEmpty ? null : _text(bubble, 14, Night.ink, maxWidth: 170, lines: 2);
+    if (offline) ring = Night.shadowInk;
+    final ink = offline ? Night.inkFaint : Night.ink;
+    final name = _text(label, 12, me ? Night.auroraBlue : ink, maxWidth: 140);
+    final bub = bubble.isEmpty ? null : _text(bubble, 14, ink, maxWidth: 170, lines: 2);
     final iconW = translated ? _iconW : 0.0;
     final bubW = bub == null ? 0.0 : bub.width + 24 + iconW, bubH = bub == null ? 0.0 : bub.height + 14;
     final top = bub == null ? 0.0 : bubH + 8 + gap; // 氣泡＋尾巴
@@ -74,7 +77,7 @@ class PersonMarker {
       final y0 = half - top;
       final r = RRect.fromRectAndRadius(Rect.fromLTWH(cx - bubW / 2, y0, bubW, bubH), const Radius.circular(14));
       final tail = Path()..moveTo(cx - 7, y0 + bubH - 1)..lineTo(cx, y0 + bubH + 8)..lineTo(cx + 7, y0 + bubH - 1)..close();
-      final fill = Paint()..color = const Color(0xE61A1F4A);
+      final fill = Paint()..color = offline ? const Color(0xE6262A40) : const Color(0xE61A1F4A);
       c.drawRRect(r, fill);
       c.drawPath(tail, fill);
       c.drawRRect(r, Paint()..color = (translated ? Night.auroraBlue : ring).withValues(alpha: 0.85)..style = PaintingStyle.stroke..strokeWidth = 1.5);
@@ -99,7 +102,11 @@ class PersonMarker {
     if (photo != null) {
       final s = min(photo.width, photo.height).toDouble();
       final src = Rect.fromCenter(center: Offset(photo.width / 2, photo.height / 2), width: s, height: s);
-      c.drawImageRect(photo, src, inner, Paint()..filterQuality = FilterQuality.medium);
+      c.drawImageRect(photo, src, inner, Paint()
+        ..filterQuality = FilterQuality.medium
+        ..colorFilter = offline
+            ? const ColorFilter.matrix([0.2126, 0.7152, 0.0722, 0, 0, 0.2126, 0.7152, 0.0722, 0, 0, 0.2126, 0.7152, 0.0722, 0, 0, 0, 0, 0, 0.6, 0])
+            : null);
     } else {
       final icon = TextPainter(
         text: TextSpan(text: String.fromCharCode(Icons.person.codePoint), style: TextStyle(fontSize: av * 0.6, fontFamily: Icons.person.fontFamily, package: Icons.person.fontPackage, color: Night.inkMuted)),

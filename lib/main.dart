@@ -26,6 +26,8 @@ import 'ui/night.dart';
 @pragma('vm:entry-point')
 Future<void> _onBackgroundMessage(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // 伺服器的無聲推播：App 還在（在背景）就回一聲，地圖上才不會變灰
+  if (message.data['type'] == 'tgroup_ping') await TourService.call('pong');
 }
 
 Future<void> main() async {
