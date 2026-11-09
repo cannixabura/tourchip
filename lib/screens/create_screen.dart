@@ -85,7 +85,7 @@ class _CreateScreenState extends State<CreateScreen> {
                   ),
               ]),
               const SizedBox(height: Night.space2),
-              Text(tx('集合光柱、團旗都用這個顏色。同一個景點有別的團時，選不一樣的顏色比較好認。', 'The meeting pillar and group flag use this color.'), style: Night.caption),
+              Text(tx('集合點的旗子、團旗都用這個顏色。同一個景點有別的團時，選不一樣的顏色比較好認。', 'The meeting-point flag and group flag use this color.'), style: Night.caption),
               const SizedBox(height: Night.space6),
               label(tx('行程天數（最長 7 天）', 'Trip length (up to 7 days)')),
               Row(children: [

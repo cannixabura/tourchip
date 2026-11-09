@@ -66,10 +66,11 @@ class _GroupScreenState extends State<GroupScreen> {
               child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
                 // 左邊：我的氣泡；右下角：設定（大頭貼、暱稱、語言、分享位置、說明…）
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(Night.space4, 0, Night.space2, Night.space3),
-                  child: Row(children: [
+                  padding: const EdgeInsets.fromLTRB(Night.space4, 0, Night.space4, Night.space3),
+                  // 不能用 Spacer：它和 Flexible 各分一半寬度，氣泡用不完的空間會留在齒輪右邊
+                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                     Flexible(child: _BubbleChip(g: g)),
-                    const Spacer(),
+                    const SizedBox(width: Night.space3),
                     const SettingsButton(fill: Night.mapGlass),
                   ]),
                 ),
@@ -185,12 +186,15 @@ class _Panel extends StatelessWidget {
   const _Panel({required this.children});
   @override
   Widget build(BuildContext context) {
+    // 浮在地圖上的完整卡片：四邊都看得到；底下留空間給地圖出處標示（TourMap 畫在畫面最底下）
+    final pb = MediaQuery.of(context).padding.bottom;
     return Container(
-      padding: EdgeInsets.fromLTRB(Night.space4, 18, Night.space4, max(MediaQuery.of(context).padding.bottom, Night.space4) + 4),
+      margin: EdgeInsets.fromLTRB(Night.space4, 0, Night.space4, (pb < 12 ? 12.0 : pb) + 6),
+      padding: const EdgeInsets.fromLTRB(Night.space4, 16, Night.space4, Night.space4),
       decoration: BoxDecoration(
         color: Night.mapGlassPanel,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(Night.radiusLg)),
-        border: const Border(top: BorderSide(color: Night.glassLine)),
+        borderRadius: BorderRadius.circular(Night.radiusLg),
+        border: Border.all(color: Night.glassLine),
       ),
       child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: children),
     );

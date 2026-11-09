@@ -164,8 +164,8 @@
 "en": "Group color"
 },
 {
-"zh": "集合光柱、團旗都用這個顏色。同一個景點有別的團時，選不一樣的顏色比較好認。",
-"en": "The meeting pillar and group flag use this color."
+"zh": "集合點的旗子、團旗都用這個顏色。同一個景點有別的團時，選不一樣的顏色比較好認。",
+"en": "The meeting-point flag and group flag use this color."
 },
 {
 "zh": "行程天數（最長 7 天）",
@@ -196,16 +196,12 @@
 "en": "Create and show QR code"
 },
 {
-"zh": "關閉",
-"en": "Close"
-},
-{
-"zh": "拖曳地圖，把光柱放到集合點",
-"en": "Drag the map to place the pillar"
-},
-{
 "zh": "發出集合",
 "en": "Gather the group"
+},
+{
+"zh": "關閉",
+"en": "Close"
 },
 {
 "zh": "幾分鐘後集合",
@@ -216,8 +212,16 @@
 "en": "{m} min"
 },
 {
-"zh": "{_minutes} 分",
-"en": "{_minutes} min"
+"zh": "自訂",
+"en": "Custom"
+},
+{
+"zh": "分",
+"en": "min"
+},
+{
+"zh": "請輸入 1～720 分鐘",
+"en": "Enter 1 to 720 minutes"
 },
 {
 "zh": "{hm(at, _tz)} 集合，{zoneChip(at, _tz)}（點一下換時區）",
@@ -238,6 +242,10 @@
 {
 "zh": "發出集合呼叫",
 "en": "Send gather call"
+},
+{
+"zh": "拖曳地圖，把旗子放到集合點",
+"en": "Drag the map to place the flag"
 },
 {
 "zh": "集合點的當地時間",
@@ -984,8 +992,8 @@
 "en": "Call a meetup"
 },
 {
-"zh": "拖曳地圖把光柱放在集合點，選時間後送出，全團手機都會響專屬提示音。",
-"en": "Drag the map to place the light pillar, pick a time and send. Every phone plays the meetup sound."
+"zh": "拖曳地圖把旗子放在集合點，選時間後送出，全團手機都會響專屬提示音。",
+"en": "Drag the map to place the flag, pick a time and send. Every phone plays the meetup sound."
 },
 {
 "zh": "沒按「收到」的人每分鐘再響一次，最多 3 次；也可以只叫某一組或單獨呼叫一個人。",
@@ -1000,8 +1008,8 @@
 "en": "Members: find the meetup"
 },
 {
-"zh": "3D 地圖會跟著手機轉，光柱就是集合點；卡片上有當地時間、倒數、距離與方向。",
-"en": "The 3D map turns with your phone. The light pillar is the meetup; the card shows local time, countdown, distance and direction."
+"zh": "3D 地圖會跟著手機轉，團色的旗子就是集合點；卡片上有當地時間、倒數、距離與方向。",
+"en": "The 3D map turns with your phone. The flag in your group color is the meetup; the card shows local time, countdown, distance and direction."
 },
 {
 "zh": "兩指縮放地圖；看別的地方後按「回到我的位置」回來。",

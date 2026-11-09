@@ -359,14 +359,14 @@ class HelpScreen extends StatelessWidget {
           tx('20 人以內免費；第 21 人起升級 7 天方案或使用團購券，最多 100 人。', 'Free up to 20 people. From the 21st, upgrade to the 7-day pass or use a group pass (up to 100).'),
         ]),
         block(Icons.place_outlined, tx('發集合', 'Call a meetup'), [
-          tx('拖曳地圖把光柱放在集合點，選時間後送出，全團手機都會響專屬提示音。', 'Drag the map to place the light pillar, pick a time and send. Every phone plays the meetup sound.'),
+          tx('拖曳地圖把旗子放在集合點，選時間後送出，全團手機都會響專屬提示音。', 'Drag the map to place the flag, pick a time and send. Every phone plays the meetup sound.'),
           tx('沒按「收到」的人每分鐘再響一次，最多 3 次；也可以只叫某一組或單獨呼叫一個人。', 'Anyone who has not tapped "Got it" is reminded every minute, up to 3 times. You can call one sub-group or one person.'),
         ]),
         block(Icons.how_to_reg_outlined, tx('點名', 'Roll call'), [
           tx('團員可以回「我到了」「還要 5 分鐘」「需要幫忙」，需要幫忙的人排在最上面。', 'Members answer "I\'m here", "5 more minutes" or "I need help". Those who need help are listed first.'),
         ]),
         block(Icons.explore_outlined, tx('團員：找到集合點', 'Members: find the meetup'), [
-          tx('3D 地圖會跟著手機轉，光柱就是集合點；卡片上有當地時間、倒數、距離與方向。', 'The 3D map turns with your phone. The light pillar is the meetup; the card shows local time, countdown, distance and direction.'),
+          tx('3D 地圖會跟著手機轉，團色的旗子就是集合點；卡片上有當地時間、倒數、距離與方向。', 'The 3D map turns with your phone. The flag in your group color is the meetup; the card shows local time, countdown, distance and direction.'),
           tx('兩指縮放地圖；看別的地方後按「回到我的位置」回來。', 'Pinch to zoom. After looking elsewhere, tap "Back to me".'),
         ]),
         block(Icons.people_alt_outlined, tx('和團員互相看得到', 'See your group on the map'), [

@@ -13,10 +13,11 @@ import '../tour/model.dart';
 import '../tour/profile.dart';
 import '../tour/service.dart';
 import '../ui/night.dart';
+import 'meet_flag.dart';
 import 'person_marker.dart';
 
 /// 城市低語的 3D 夜光地圖（MapLibre＋OpenFreeMap），加上旅行團的圖層：
-///   集合點光柱：團色的 3D 柱子（fill-extrusion，真的立在建築之間）＋地面光環
+///   集合點：團色的長桿三角旗（會飄揚）＋地面流動的彩色光圈（MeetFlag，疊在地圖上、跟著集合點的螢幕位置移動）
 ///   迷路的團員：紅色圓點＋團號（團員自己按「我迷路了」才有，只有團主與共同團主看得到）
 ///   行程表的集合點：小圓點（行程預覽）
 ///   同團的人：大頭貼＋氣泡＋稱呼（同意並開著分享的人才看得到；沒入團的人看不到任何人）。長按可以傳訊息
@@ -26,7 +27,7 @@ import 'person_marker.dart';
 ///   方位跟著羅盤（手機朝哪裡，地圖就轉到哪裡）
 ///   仰角跟著手機的傾斜（拿直看遠方、平放看正下方）
 ///   兩指縮放；鏡頭中心是自己的位置（看集合點、迷路的團員時會先飛過去，按「回到我的位置」回來）
-/// 選集合點（picking）時改回一般地圖：拖曳、縮放、旋轉都用手指，十字光柱對準地圖中央。
+/// 選集合點（picking）時改回一般地圖：拖曳、縮放、旋轉都用手指，旗子的光圈對準地圖中央。
 const _styleAsset = 'assets/map/night_style.json';
 
 class TourMap extends StatefulWidget {
@@ -89,6 +90,7 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
 
   @override
   void dispose() {
+    _c?.removeListener(_onCamera);
     ProfileStore.me.removeListener(_syncPeople);
     _compass?.cancel();
     _tilt?.cancel();
@@ -223,20 +225,9 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
     try {
       const empty = {'type': 'FeatureCollection', 'features': []};
       await c.addGeoJsonSource('tour-stops', empty);
-      await c.addGeoJsonSource('tour-meet-ring', empty);
-      await c.addGeoJsonSource('tour-meet-pillar', empty);
       await c.addGeoJsonSource('tour-lost', empty);
       await c.addCircleLayer('tour-stops', 'tour-stops-dot', const CircleLayerProperties(
         circleRadius: 5, circleColor: '#F3F0FF', circleOpacity: 0.55, circleStrokeColor: '#070B1F', circleStrokeWidth: 1.5, circlePitchAlignment: 'map',
-      ));
-      await c.addCircleLayer('tour-meet-ring', 'tour-meet-glow', CircleLayerProperties(
-        circleRadius: 34, circleColor: _hex(_tint), circleOpacity: 0.16, circleBlur: 0.6, circlePitchAlignment: 'map',
-      ));
-      await c.addCircleLayer('tour-meet-ring', 'tour-meet-ring', CircleLayerProperties(
-        circleRadius: 20, circleColor: '#000000', circleOpacity: 0, circleStrokeColor: _hex(_tint), circleStrokeWidth: 2.5, circlePitchAlignment: 'map',
-      ));
-      await c.addFillExtrusionLayer('tour-meet-pillar', 'tour-meet-pillar', FillExtrusionLayerProperties(
-        fillExtrusionColor: _hex(_tint), fillExtrusionHeight: 180, fillExtrusionBase: 0, fillExtrusionOpacity: 0.85,
       ));
       await c.addCircleLayer('tour-lost', 'tour-lost-dot', const CircleLayerProperties(
         circleRadius: 9, circleColor: '#FF6B7A', circleStrokeColor: '#070B1F', circleStrokeWidth: 2,
@@ -285,17 +276,38 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
     final c = _c;
     if (c == null) return;
     final g = widget.group;
-    final call = g?.call;
     try {
-      await c.setGeoJsonSource('tour-meet-ring', _points(call == null ? const [] : [(call.lat, call.lng, '')]));
-      await c.setGeoJsonSource('tour-meet-pillar', {
-        'type': 'FeatureCollection',
-        'features': call == null ? [] : [_square(call.lat, call.lng, 4)],
-      });
       await c.setGeoJsonSource('tour-lost', _points([for (final l in g?.lost ?? const <TourLost>[]) (l.lat, l.lng, '${l.no}')]));
       await c.setGeoJsonSource('tour-stops', _points([for (final s in g?.stops ?? const <TourStop>[]) if (s.lat != null) (s.lat!, s.lng!, '')]));
     } catch (_) {}
     _syncPeople();
+    _syncFlag();
+  }
+
+  /// 集合點在螢幕上的位置（旗子跟著它）；鏡頭一動就重算
+  Offset? _flagAt;
+  bool _flagBusy = false, _flagAgain = false;
+  void _onCamera() => _syncFlag();
+  Future<void> _syncFlag() async {
+    final c = _c, call = widget.group?.call;
+    if (c == null || widget.picking) return;
+    if (call == null) {
+      if (_flagAt != null && mounted) setState(() => _flagAt = null);
+      return;
+    }
+    if (_flagBusy) { _flagAgain = true; return; }
+    _flagBusy = true;
+    try {
+      final pt = await c.toScreenLocation(LatLng(call.lat, call.lng));
+      if (!mounted) return;
+      final k = Theme.of(context).platform == TargetPlatform.android ? MediaQuery.of(context).devicePixelRatio : 1.0;
+      final at = Offset(pt.x / k, pt.y / k);
+      if (at != _flagAt) setState(() => _flagAt = at);
+    } catch (_) {
+    } finally {
+      _flagBusy = false;
+      if (_flagAgain && mounted) { _flagAgain = false; _syncFlag(); }
+    }
   }
 
   static String _label(TourPerson p) {
@@ -379,8 +391,6 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
     }
   }
 
-  static String _hex(Color c) => '#${(c.toARGB32() & 0xFFFFFF).toRadixString(16).padLeft(6, '0')}';
-
   static Map<String, dynamic> _points(List<(double, double, String)> pts) => {
         'type': 'FeatureCollection',
         'features': [
@@ -389,20 +399,6 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
         ],
       };
 
-  /// 光柱的底：以集合點為中心、邊長約 2×half 公尺的正方形
-  static Map<String, dynamic> _square(double lat, double lng, double half) {
-    final dLat = half / 111320.0, dLng = half / (111320.0 * cos(lat * pi / 180));
-    return {
-      'type': 'Feature', 'properties': {},
-      'geometry': {
-        'type': 'Polygon',
-        'coordinates': [
-          [[lng - dLng, lat - dLat], [lng + dLng, lat - dLat], [lng + dLng, lat + dLat], [lng - dLng, lat + dLat], [lng - dLng, lat - dLat]]
-        ],
-      },
-    };
-  }
-
   @override
   Widget build(BuildContext context) {
     if (_style == null || _start == null) return const ColoredBox(color: Night.night900, child: Center(child: CircularProgressIndicator(color: Night.auroraViolet)));
@@ -410,7 +406,10 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
       styleString: _style!,
       // 進場鏡頭的起點：城市高空、正上方
       initialCameraPosition: widget.intro ? CameraPosition(target: _start!, zoom: 12) : CameraPosition(target: _start!, zoom: 16, tilt: 50),
-      onMapCreated: (c) => _c = c,
+      onMapCreated: (c) {
+        _c = c;
+        c.addListener(_onCamera);
+      },
       onStyleLoadedCallback: _onStyleLoaded,
       trackCameraPosition: true,
       myLocationEnabled: _myLocation && !_hideDot,
@@ -449,6 +448,13 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
           },
         ),
       ),
+      // 集合點的旗子（跟著集合點的螢幕位置；越近越大一點）
+      if (!widget.picking && _flagAt != null && widget.group?.call != null)
+        Builder(builder: (context) {
+          final k = (0.75 + (_zoom - 15) * 0.15).clamp(0.6, 1.2);
+          final a = MeetFlag.anchor(k);
+          return Positioned(left: _flagAt!.dx - a.dx, top: _flagAt!.dy - a.dy, child: MeetFlag(tint: _tint, scale: k));
+        }),
       // 地圖資料授權要求的出處標示
       // 放在畫面最底下（手勢列上方），不擋到按鈕
       Positioned(left: 16, bottom: max(2.0, MediaQuery.of(context).padding.bottom - 14), child: const IgnorePointer(child: Text('© OpenMapTiles © OpenStreetMap', style: TextStyle(color: Night.inkFaint, fontSize: 9)))),
@@ -474,20 +480,12 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
             ),
           ),
         ),
+      // 選點：旗子的光圈中心對準地圖中央
       if (widget.picking)
-        IgnorePointer(
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 104),
-              child: Column(mainAxisSize: MainAxisSize.min, children: [
-                Container(width: 14, height: 90, decoration: BoxDecoration(
-                  gradient: LinearGradient(begin: Alignment.bottomCenter, end: Alignment.topCenter, colors: [_tint, _tint.withValues(alpha: 0)]),
-                )),
-                Container(width: 46, height: 14, decoration: BoxDecoration(shape: BoxShape.rectangle, borderRadius: BorderRadius.circular(99), border: Border.all(color: _tint, width: 2.5))),
-              ]),
-            ),
-          ),
-        ),
+        Positioned.fill(child: LayoutBuilder(builder: (context, box) {
+          final a = MeetFlag.anchor(1);
+          return Stack(children: [Positioned(left: box.maxWidth / 2 - a.dx, top: box.maxHeight / 2 - a.dy, child: MeetFlag(tint: _tint))]);
+        })),
     ]);
   }
 }
