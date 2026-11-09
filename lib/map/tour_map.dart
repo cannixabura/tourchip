@@ -12,6 +12,7 @@ import '../l10n.dart';
 import '../tour/model.dart';
 import '../tour/profile.dart';
 import '../tour/service.dart';
+import '../translate.dart';
 import '../ui/night.dart';
 import 'meet_flag.dart';
 import 'person_marker.dart';
@@ -286,6 +287,8 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
 
   /// 集合點在螢幕上的位置（旗子跟著它）；鏡頭一動就重算
   Offset? _flagAt;
+  /// 旗子範圍內大家的頭像、氣泡、稱呼（螢幕座標）：從旗子上挖掉，看起來就像人在旗子前面
+  List<Rect> _flagHoles = const [];
   bool _flagBusy = false, _flagAgain = false;
   void _onCamera() => _syncFlag();
   Future<void> _syncFlag() async {
@@ -298,11 +301,18 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
     if (_flagBusy) { _flagAgain = true; return; }
     _flagBusy = true;
     try {
-      final pt = await c.toScreenLocation(LatLng(call.lat, call.lng));
-      if (!mounted) return;
+      final shapes = _shapes;
+      final pts = await c.toScreenLocationBatch([LatLng(call.lat, call.lng), for (final s in shapes) s.$1]);
+      if (!mounted || pts.isEmpty) return;
       final k = Theme.of(context).platform == TargetPlatform.android ? MediaQuery.of(context).devicePixelRatio : 1.0;
-      final at = Offset(pt.x / k, pt.y / k);
-      if (at != _flagAt) setState(() => _flagAt = at);
+      final at = Offset(pts[0].x / k, pts[0].y / k);
+      final holes = <Rect>[
+        for (var i = 0; i < shapes.length && i + 1 < pts.length; i++) shapes[i].$2.shift(Offset(pts[i + 1].x / k, pts[i + 1].y / k)),
+      ];
+      setState(() {
+        _flagAt = at;
+        _flagHoles = holes;
+      });
     } catch (_) {
     } finally {
       _flagBusy = false;
@@ -327,15 +337,21 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
       final dpr = MediaQuery.of(context).devicePixelRatio;
       final g = widget.group;
       final prof = ProfileStore.me.value;
-      final rows = <(String id, double lat, double lng, String label, String bubble, String avatar, Color ring, bool me, int z)>[
-        for (final p in g?.people ?? const <TourPerson>[]) ('p:${p.uid}', p.lat, p.lng, _label(p), p.bubble, p.avatar, _ring(p.role), false, p.isStaff ? 2 : 1),
-        if (_me != null) ('me', _me!.latitude, _me!.longitude, tx('我', 'Me'), g?.myBubble ?? '', prof.avatar, Night.auroraViolet, true, 3),
+      final rows = <(String id, double lat, double lng, String label, String bubble, String avatar, Color ring, bool me, int z, bool tr)>[
+        for (final p in g?.people ?? const <TourPerson>[])
+          ('p:${p.uid}', p.lat, p.lng, _label(p), _shownBubble(p) ?? p.bubble, p.avatar, _ring(p.role), false, p.isStaff ? 2 : 1, _shownBubble(p) != null),
+        if (_me != null) ('me', _me!.latitude, _me!.longitude, tx('我', 'Me'), g?.myBubble ?? '', prof.avatar, Night.auroraViolet, true, 3, false),
       ];
       final features = <Map<String, dynamic>>[];
+      final shapes = <(LatLng, Rect)>[];
       for (final r in rows) {
-        final icon = 'person-${Object.hash(r.$4, r.$5, r.$6, r.$7.toARGB32(), dpr).toUnsigned(32).toRadixString(16)}';
+        final sh = PersonMarker.shapes(label: r.$4, bubble: r.$5, translated: r.$10);
+        for (final rect in [sh.bubble, sh.avatar, sh.name]) {
+          if (rect != null) shapes.add((LatLng(r.$2, r.$3), rect));
+        }
+        final icon = 'person-${Object.hash(r.$4, r.$5, r.$6, r.$7.toARGB32(), dpr, r.$10).toUnsigned(32).toRadixString(16)}';
         if (!_images.contains(icon)) {
-          final png = await PersonMarker.render(label: r.$4, bubble: r.$5, avatar: r.$6, ring: r.$7, dpr: dpr, me: r.$8);
+          final png = await PersonMarker.render(label: r.$4, bubble: r.$5, avatar: r.$6, ring: r.$7, dpr: dpr, me: r.$8, translated: r.$10);
           if (!mounted) return;
           await c.addImage(icon, png);
           _images.add(icon);
@@ -343,6 +359,8 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
         features.add({'type': 'Feature', 'properties': {'icon': icon, 'id': r.$1, 'z': r.$9}, 'geometry': {'type': 'Point', 'coordinates': [r.$3, r.$2]}});
       }
       await c.setGeoJsonSource('tour-people', {'type': 'FeatureCollection', 'features': features});
+      _shapes = shapes;
+      _syncFlag();
       // 有自己的大頭貼時不再畫系統藍點
       if (mounted && _myLocation && _me != null && !_hideDot) setState(() => _hideDot = true);
     } catch (_) {
@@ -354,6 +372,56 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
 
   bool _hideDot = false;
 
+  /// 地圖上大家看得到的部分（氣泡、大頭貼、稱呼）：旗子要避開
+  List<(LatLng, Rect)> _shapes = const [];
+
+  /// 點一下氣泡翻譯：uid → (原文, 譯文)；原文變了就作廢
+  final Map<String, (String, String)> _bubbleTr = {};
+  String? _shownBubble(TourPerson p) {
+    final t = _bubbleTr[p.uid];
+    return t != null && t.$1 == p.bubble ? t.$2 : null;
+  }
+
+  Future<void> _toggleBubble(TourPerson p) async {
+    if (_shownBubble(p) != null) {
+      _bubbleTr.remove(p.uid);
+      _syncPeople();
+      return;
+    }
+    final text = p.bubble;
+    if (!await ChatTranslator.needsTranslation(text)) {
+      if (mounted) showGlassToast(context, tx('這則氣泡已經是你的語言', 'This bubble is already in your language'), icon: Icons.translate);
+      return;
+    }
+    if (!mounted) return;
+    final out = await ChatTranslator.translate(context, text);
+    if (!mounted) return;
+    if (out == null) {
+      showGlassToast(context, tx('目前無法翻譯', "Can't translate right now"), danger: true);
+      return;
+    }
+    _bubbleTr[p.uid] = (text, out);
+    _syncPeople();
+  }
+
+  /// 點到的是不是某人的氣泡（氣泡在大頭貼上方）
+  Future<TourPerson?> _bubbleAt(Offset at) async {
+    final c = _c, people = (widget.group?.people ?? const <TourPerson>[]).where((p) => p.bubble.isNotEmpty).toList();
+    if (c == null || people.isEmpty) return null;
+    try {
+      final pts = await c.toScreenLocationBatch([for (final p in people) LatLng(p.lat, p.lng)]);
+      if (!mounted) return null;
+      final k = Theme.of(context).platform == TargetPlatform.android ? MediaQuery.of(context).devicePixelRatio : 1.0;
+      // 後畫的在上面：從最後一個往前找
+      for (var i = min(people.length, pts.length) - 1; i >= 0; i--) {
+        final p = people[i];
+        final b = PersonMarker.shapes(label: _label(p), bubble: _shownBubble(p) ?? p.bubble, translated: _shownBubble(p) != null).bubble;
+        if (b != null && b.inflate(6).shift(Offset(pts[i].x / k, pts[i].y / k)).contains(at)) return p;
+      }
+    } catch (_) {}
+    return null;
+  }
+
   /// 長按：找手指附近（44 點以內）最近的人
   Future<void> _longPress(Offset at) async {
     final p = await _personAt(at);
@@ -363,6 +431,12 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
   }
 
   Future<void> _tap(Offset at) async {
+    final b = await _bubbleAt(at);
+    if (b != null) {
+      HapticFeedback.selectionClick();
+      _toggleBubble(b);
+      return;
+    }
     final p = await _personAt(at);
     if (p == null || widget.onPersonTap == null) return;
     HapticFeedback.selectionClick();
@@ -433,7 +507,7 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
             _moveCamera();
           },
           onLongPressStart: (d) => _longPress(d.localPosition),
-          onTapUp: widget.onPersonTap == null ? null : (d) => _tap(d.localPosition),
+          onTapUp: (d) => _tap(d.localPosition),
           child: map,
         )
       else
@@ -453,7 +527,11 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
         Builder(builder: (context) {
           final k = (0.75 + (_zoom - 15) * 0.15).clamp(0.6, 1.2);
           final a = MeetFlag.anchor(k);
-          return Positioned(left: _flagAt!.dx - a.dx, top: _flagAt!.dy - a.dy, child: MeetFlag(tint: _tint, scale: k));
+          final origin = _flagAt! - a;
+          final box = origin & Size(MeetFlag.width * k, MeetFlag.height * k);
+          final holes = [for (final h in _flagHoles) if (h.overlaps(box)) h.shift(-origin)];
+          final flag = MeetFlag(tint: _tint, scale: k);
+          return Positioned(left: origin.dx, top: origin.dy, child: holes.isEmpty ? flag : ClipPath(clipper: _Holes(holes), child: flag));
         }),
       // 地圖資料授權要求的出處標示
       // 放在畫面最底下（手勢列上方），不擋到按鈕
@@ -488,4 +566,20 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
         })),
     ]);
   }
+}
+
+/// 旗子挖洞：整個範圍減掉大家的頭像、氣泡、稱呼
+class _Holes extends CustomClipper<Path> {
+  final List<Rect> holes;
+  _Holes(this.holes);
+  @override
+  Path getClip(Size size) {
+    final cut = Path();
+    for (final h in holes) {
+      cut.addRRect(RRect.fromRectAndRadius(h, const Radius.circular(12)));
+    }
+    return Path.combine(PathOperation.difference, Path()..addRect(Offset.zero & size), cut);
+  }
+  @override
+  bool shouldReclip(_Holes old) => old.holes != holes;
 }

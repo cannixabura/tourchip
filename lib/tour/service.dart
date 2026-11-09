@@ -38,6 +38,7 @@ class TourService {
   static StreamSubscription<Position>? _posSub;
   static DateTime _posSentAt = DateTime.fromMillisecondsSinceEpoch(0);
   static Position? _posSent;
+  static Timer? _posBeat;
 
   static Future<Map<String, dynamic>> call(String action, [Map<String, dynamic> body = const {}]) async {
     try {
@@ -103,9 +104,22 @@ class TourService {
       _posSent = p;
       call('pos', {'lat': p.latitude, 'lng': p.longitude});
     }, onError: (_) {});
+    // 站著不動時位置串流不會再有新的一筆（distanceFilter 10 公尺），伺服器 10 分鐘沒收到就不再顯示這個人：
+    // 每 2 分鐘補送一次目前位置
+    _posBeat = Timer.periodic(const Duration(minutes: 2), (_) {
+      if (_posSub == null || DateTime.now().difference(_posSentAt).inSeconds < 100) return;
+      Geolocator.getCurrentPosition(locationSettings: const LocationSettings(timeLimit: Duration(seconds: 10))).then((p) {
+        if (_posSub == null) return;
+        _posSentAt = DateTime.now();
+        _posSent = p;
+        call('pos', {'lat': p.latitude, 'lng': p.longitude});
+      }).catchError((_) {});
+    });
   }
 
   static void _stopPos() {
+    _posBeat?.cancel();
+    _posBeat = null;
     _posSub?.cancel();
     _posSub = null;
     _posSent = null;

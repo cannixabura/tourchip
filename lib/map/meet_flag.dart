@@ -12,7 +12,7 @@ class MeetFlag extends StatefulWidget {
   final double scale;
   const MeetFlag({super.key, required this.tint, this.scale = 1});
 
-  static const width = 150.0, height = 170.0, ringH = 26.0;
+  static const width = 150.0, height = 166.0, ringH = 18.0;
   /// 光圈中心在 widget 裡的位置（用來把它對準地圖上的點）
   static Offset anchor(double scale) => Offset(width / 2 * scale, (height - ringH / 2) * scale);
 
@@ -70,21 +70,22 @@ class _FlagPainter extends CustomPainter {
     final cx = w / 2, cy = h - rh / 2;
 
     // ---- 地面光圈：柔光＋流動的彩色圈 ----
-    final ringRect = Rect.fromCenter(center: Offset(cx, cy), width: 76, height: rh - 4);
-    canvas.drawOval(ringRect.inflate(10), Paint()
-      ..shader = RadialGradient(colors: [tint.withValues(alpha: 0.45), tint.withValues(alpha: 0)]).createShader(ringRect.inflate(10))
+    // 原本 76×22，縮小 1/3
+    final ringRect = Rect.fromCenter(center: Offset(cx, cy), width: 51, height: 15);
+    canvas.drawOval(ringRect.inflate(7), Paint()
+      ..shader = RadialGradient(colors: [tint.withValues(alpha: 0.45), tint.withValues(alpha: 0)]).createShader(ringRect.inflate(7))
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4));
     final colors = [tint, Night.auroraBlue, Night.moodCalm, Night.cityAmber, Night.knockPink, tint];
     final sweep = SweepGradient(colors: colors, transform: GradientRotation(t * 2 * pi * 2));
     // 外層光暈
     canvas.drawOval(ringRect, Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 7
+      ..strokeWidth = 5
       ..shader = sweep.createShader(ringRect)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4));
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3));
     canvas.drawOval(ringRect, Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 3
+      ..strokeWidth = 2.5
       ..shader = sweep.createShader(ringRect));
 
     // ---- 旗桿 ----

@@ -35,13 +35,30 @@ class PersonMarker {
     )..layout(maxWidth: maxWidth);
   }
 
+  static const av = 31.0, gap = 5.0; // 大頭貼直徑（原本 46，縮小 1/3）
+  static const _iconW = 18.0; // 翻譯過的氣泡前面的小圖示
+
+  /// 圖示裡看得到的部分（氣泡、大頭貼、稱呼），座標以大頭貼中心為原點。
+  /// 地圖用它判斷點到的是不是氣泡，集合點的旗子也用它避開大家的頭像和氣泡。
+  static ({Rect? bubble, Rect avatar, Rect name}) shapes({required String label, required String bubble, bool translated = false}) {
+    final name = _text(label, 12, Night.ink, maxWidth: 140);
+    final bub = bubble.isEmpty ? null : _text(bubble, 14, Night.ink, maxWidth: 170, lines: 2);
+    final bubW = bub == null ? 0.0 : bub.width + 24 + (translated ? _iconW : 0), bubH = bub == null ? 0.0 : bub.height + 14;
+    return (
+      bubble: bub == null ? null : Rect.fromLTWH(-bubW / 2, -av / 2 - gap - 8 - bubH, bubW, bubH + 8),
+      avatar: Rect.fromCircle(center: Offset.zero, radius: av / 2 + 2),
+      name: Rect.fromLTWH(-name.width / 2, av / 2 + gap, name.width, name.height),
+    );
+  }
+
   /// PNG：dpr 是螢幕倍率（地圖會用同一個倍率把圖縮回邏輯大小）
-  static Future<Uint8List> render({required String label, required String bubble, required String avatar, required Color ring, required double dpr, bool me = false}) async {
-    const av = 31.0, gap = 5.0; // 大頭貼直徑（原本 46，縮小 1/3）
+  /// translated：氣泡顯示的是翻譯（前面加翻譯小圖示、外框改藍色）
+  static Future<Uint8List> render({required String label, required String bubble, required String avatar, required Color ring, required double dpr, bool me = false, bool translated = false}) async {
     final photo = await _photo(avatar);
     final name = _text(label, 12, me ? Night.auroraBlue : Night.ink, maxWidth: 140);
     final bub = bubble.isEmpty ? null : _text(bubble, 14, Night.ink, maxWidth: 170, lines: 2);
-    final bubW = bub == null ? 0.0 : bub.width + 24, bubH = bub == null ? 0.0 : bub.height + 14;
+    final iconW = translated ? _iconW : 0.0;
+    final bubW = bub == null ? 0.0 : bub.width + 24 + iconW, bubH = bub == null ? 0.0 : bub.height + 14;
     final top = bub == null ? 0.0 : bubH + 8 + gap; // 氣泡＋尾巴
     final bottom = gap + name.height;
     final half = max(top, bottom); // 上下等高，大頭貼才會在正中央
@@ -60,8 +77,16 @@ class PersonMarker {
       final fill = Paint()..color = const Color(0xE61A1F4A);
       c.drawRRect(r, fill);
       c.drawPath(tail, fill);
-      c.drawRRect(r, Paint()..color = ring.withValues(alpha: 0.85)..style = PaintingStyle.stroke..strokeWidth = 1.5);
-      bub.paint(c, Offset(cx - bub.width / 2, y0 + 7));
+      c.drawRRect(r, Paint()..color = (translated ? Night.auroraBlue : ring).withValues(alpha: 0.85)..style = PaintingStyle.stroke..strokeWidth = 1.5);
+      final tx0 = cx - (bub.width + iconW) / 2;
+      if (translated) {
+        final icon = TextPainter(
+          text: TextSpan(text: String.fromCharCode(Icons.translate.codePoint), style: TextStyle(fontSize: 13, fontFamily: Icons.translate.fontFamily, package: Icons.translate.fontPackage, color: Night.auroraBlue)),
+          textDirection: TextDirection.ltr,
+        )..layout();
+        icon.paint(c, Offset(tx0, y0 + bubH / 2 - icon.height / 2));
+      }
+      bub.paint(c, Offset(tx0 + iconW, y0 + 7));
     }
 
     // 大頭貼：光暈＋光環＋照片（沒有照片就畫人形）

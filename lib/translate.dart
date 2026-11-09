@@ -28,15 +28,53 @@ class ChatTranslator {
 
   static String _base(String code) => code.split('-').first;
 
+  static final _kana = RegExp(r'[\u3040-\u30ff\u31f0-\u31ff\uff66-\uff9f]');
+  static final _hangul = RegExp(r'[\uac00-\ud7af\u1100-\u11ff\u3130-\u318f]');
+  static final _thai = RegExp(r'[\u0e00-\u0e7f]');
+  static final _han = RegExp(r'[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]');
+
   /// 這段文字是什麼語言；認不出來回傳 null。結果會快取。
+  /// 系統的語言偵測對短字串很不準（「停車場」「集合」這種全是漢字的字會被當成日文），所以先看文字本身用的字：
+  ///   有假名 → 日文；有韓文字母 → 韓文；有泰文字母 → 泰文
+  ///   有漢字、沒有假名 → 中文（日文使用者例外：系統也說是日文才算日文），再用繁簡轉換表分辨繁體或簡體
+  ///   其他（拉丁字母等）才交給系統偵測
   static Future<String?> detect(String text) async {
-    if (_detected.containsKey(text)) return _detected[text];
+    // 結果跟使用者的語言有關（日文、繁簡的判斷），快取要分語言
+    final key = '$lang\u0000$text';
+    if (_detected.containsKey(key)) return _detected[key];
     String? found;
+    if (_kana.hasMatch(text)) {
+      found = 'ja';
+    } else if (_hangul.hasMatch(text)) {
+      found = 'ko';
+    } else if (_thai.hasMatch(text)) {
+      found = 'th';
+    } else if (_han.hasMatch(text)) {
+      found = lang == 'ja' && await _native(text) == 'ja' ? 'ja' : await _chineseScript(text);
+    } else {
+      found = await _native(text);
+    }
+    return _detected[key] = found;
+  }
+
+  static Future<String?> _native(String text) async {
     try {
       final code = await _channel.invokeMethod<String>('identify', {'text': text});
-      if (code != null && code != 'und') found = Platform.isIOS ? code : _base(code);
+      if (code != null && code != 'und') return Platform.isIOS ? code : _base(code);
     } catch (_) {}
-    return _detected[text] = found;
+    return null;
+  }
+
+  /// 繁體或簡體：只有一邊轉得動才算那一邊；兩邊都一樣（「九份老街」）就當成跟使用者相同。
+  /// iPhone 回傳 zh-Hant／zh-Hans；Android 的 ML Kit 只有 zh
+  static Future<String> _chineseScript(String text) async {
+    if (!Platform.isIOS) return 'zh';
+    await ChineseConverter.load();
+    final isHant = ChineseConverter.toSimplified(text) != text; // 有繁體專用字
+    final isHans = ChineseConverter.toTraditional(text) != text; // 有簡體專用字
+    if (isHant && !isHans) return 'zh-Hant';
+    if (isHans && !isHant) return 'zh-Hans';
+    return lang == 'zh-Hans' ? 'zh-Hans' : 'zh-Hant';
   }
 
   static Future<bool> _supported(String source, String target) async {

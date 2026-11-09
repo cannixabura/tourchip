@@ -24,6 +24,14 @@
 "en": "Me"
 },
 {
+"zh": "這則氣泡已經是你的語言",
+"en": "This bubble is already in your language"
+},
+{
+"zh": "目前無法翻譯",
+"en": "Can't translate right now"
+},
+{
 "zh": "回到我的位置",
 "en": "Back to me"
 },
@@ -1302,10 +1310,6 @@
 {
 "zh": "下載",
 "en": "Download"
-},
-{
-"zh": "目前無法翻譯",
-"en": "Can't translate right now"
 },
 {
 "zh": "翻譯中…",
