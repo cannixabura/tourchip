@@ -22,7 +22,9 @@ class CallCard extends StatefulWidget {
   final TourGroup g;
   final TourCall call;
   final bool big;
-  const CallCard({super.key, required this.g, required this.call, this.big = false});
+  /// 領隊、共同團主看集合資訊時不顯示「收到」
+  final bool ack;
+  const CallCard({super.key, required this.g, required this.call, this.big = false, this.ack = true});
   @override
   State<CallCard> createState() => _CallCardState();
 }
@@ -105,12 +107,15 @@ class _CallCardState extends State<CallCard> {
         ),
       ),
       SizedBox(height: widget.big ? Night.space2 : 4),
-      acked
-          ? Text(tx('已收到，領隊看得到', 'Got it. Your leader can see that.'), style: const TextStyle(color: Night.moodCalm, fontSize: 15), textAlign: TextAlign.center)
-          : NightButton(tx('收到', 'Got it'), icon: Icons.check, onPressed: () {
-              HapticFeedback.heavyImpact();
-              TourService.call('ack', {'callId': c.id});
-            }),
+      if (!widget.ack)
+        const SizedBox.shrink()
+      else if (acked)
+        Text(tx('已收到，領隊看得到', 'Got it. Your leader can see that.'), style: const TextStyle(color: Night.moodCalm, fontSize: 15), textAlign: TextAlign.center)
+      else
+        NightButton(tx('收到', 'Got it'), icon: Icons.check, onPressed: () {
+          HapticFeedback.heavyImpact();
+          TourService.call('ack', {'callId': c.id});
+        }),
       // 隱私說明只放在全螢幕卡片，面板裡省下一行
       if (widget.big) ...[
         const SizedBox(height: Night.space2),
@@ -152,6 +157,41 @@ class RollButtons extends StatelessWidget {
       b('help', tx('需要幫忙', 'Need help'), Icons.sos, Night.danger),
     ]);
   }
+}
+
+/// 點地圖上的集合點旗子：顯示集合資訊（時間、地點、倒數、距離方向、導航）；集合取消或結束就自動關閉
+Future<void> showCallInfo(BuildContext context) {
+  final g = TourService.current.value;
+  if (g?.call == null) return Future.value();
+  return showDialog(
+    context: context, barrierColor: Colors.black54,
+    builder: (ctx) => Dialog(
+      backgroundColor: Colors.transparent, insetPadding: const EdgeInsets.all(Night.space4),
+      child: SolidCard(child: ValueListenableBuilder<TourGroup?>(
+        valueListenable: TourService.current,
+        builder: (ctx, now, _) {
+          final call = now?.call;
+          if (now == null || call == null) {
+            Future.microtask(() { if (ctx.mounted && Navigator.canPop(ctx)) Navigator.pop(ctx); });
+            return const SizedBox.shrink();
+          }
+          return Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            Row(children: [
+              Container(width: 10, height: 10, decoration: BoxDecoration(color: now.tint, shape: BoxShape.circle)),
+              const SizedBox(width: 8),
+              Expanded(child: Text(tx('集合點', 'Meeting point'), style: Night.caption.copyWith(color: Night.inkMuted))),
+              IconButton(
+                tooltip: tx('關閉', 'Close'), visualDensity: VisualDensity.compact,
+                icon: const Icon(Icons.close, color: Night.inkMuted, size: 20),
+                onPressed: () => Navigator.pop(ctx),
+              ),
+            ]),
+            CallCard(g: now, call: call, big: true, ack: !now.isStaff),
+          ]);
+        },
+      )),
+    ),
+  );
 }
 
 /// 前景收到集合呼叫：全螢幕卡片＋震動「短 短 長」＋專屬音效；按「收到」後自動關閉

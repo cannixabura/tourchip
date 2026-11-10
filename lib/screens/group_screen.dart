@@ -61,7 +61,7 @@ class _GroupScreenState extends State<GroupScreen> {
         if (g == null) return const SizedBox.shrink();
         return Scaffold(
           body: Stack(children: [
-            Positioned.fill(child: TourMap(key: _map, group: g, onPersonLongPress: (p) => openChat(context, p.uid), onPersonTap: (p) => showPerson(context, p))),
+            Positioned.fill(child: TourMap(key: _map, group: g, onPersonLongPress: (p) => openChat(context, p.uid), onPersonTap: (p) => showPerson(context, p), onFlagTap: () => showCallInfo(context))),
             Positioned(left: Night.space4, right: Night.space4, top: MediaQuery.of(context).padding.top + Night.space2, child: _TopBar(g: g)),
             Positioned(
               left: 0, right: 0, bottom: 0,

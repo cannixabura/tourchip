@@ -45,9 +45,11 @@ class TourMap extends StatefulWidget {
   final void Function(TourPerson person)? onPersonLongPress;
   /// 點一下地圖上的人（看氣泡、翻譯、傳訊息）
   final void Function(TourPerson person)? onPersonTap;
+  /// 點集合點的旗子
+  final VoidCallback? onFlagTap;
   /// 一開始的地圖中心（選點時傳入已選過的點）；沒有就用最近一次的位置
   final LatLng? center;
-  const TourMap({super.key, this.group, this.picking = false, this.intro = false, this.bottomInset = 0, this.onReady, this.onPersonLongPress, this.onPersonTap, this.center});
+  const TourMap({super.key, this.group, this.picking = false, this.intro = false, this.bottomInset = 0, this.onReady, this.onPersonLongPress, this.onPersonTap, this.onFlagTap, this.center});
 
   @override
   State<TourMap> createState() => TourMapState();
@@ -535,7 +537,14 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
           final box = origin & Size(MeetFlag.width * k, MeetFlag.height * k);
           final holes = [for (final h in _flagHoles) if (h.overlaps(box)) h.shift(-origin)];
           final flag = MeetFlag(tint: _tint, scale: k);
-          return Positioned(left: origin.dx, top: origin.dy, child: holes.isEmpty ? flag : ClipPath(clipper: _Holes(holes), child: flag));
+          return Positioned(
+            left: origin.dx, top: origin.dy,
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: widget.onFlagTap == null ? null : () { HapticFeedback.selectionClick(); widget.onFlagTap!(); },
+              child: holes.isEmpty ? flag : ClipPath(clipper: _Holes(holes), child: flag),
+            ),
+          );
         }),
       // 地圖資料授權要求的出處標示
       // 放在畫面最底下（手勢列上方），不擋到按鈕
