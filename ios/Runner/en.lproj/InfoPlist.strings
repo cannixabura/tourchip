@@ -1,5 +1,5 @@
 /* Permission descriptions and app name (Info.plist translations) */
-"CFBundleDisplayName" = "TourChip";
+"CFBundleDisplayName" = "Tour Group";
 "NSLocationWhenInUseUsageDescription" = "TourChip uses your location while you use the app to show the distance and direction to the meeting point. If you agree to share, people in your group (including leaders) see your location on the map. You can turn this off in Settings any time.";
 "NSCameraUsageDescription" = "Scan your tour leader's join QR code or a group pass.";
 "NSPhotoLibraryUsageDescription" = "Choose a photo from your library as your avatar.";
