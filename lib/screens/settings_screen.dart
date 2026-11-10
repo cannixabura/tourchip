@@ -369,7 +369,9 @@ class HelpScreen extends StatelessWidget {
         ]),
         block(Icons.explore_outlined, tx('團員：找到集合點', 'Members: find the meetup'), [
           tx('3D 地圖會跟著手機轉，團色的旗子就是集合點；卡片上有當地時間、倒數、距離與方向。', 'The 3D map turns with your phone. The flag in your group color is the meetup; the card shows local time, countdown, distance and direction.'),
+          tx('點地圖上的旗子，可以隨時打開集合卡片：時間、地點、倒數、距離方向和導航。', 'Tap the flag on the map any time to open the meetup card: time, place, countdown, distance, direction and directions.'),
           tx('兩指縮放地圖；看別的地方後按「回到我的位置」回來。', 'Pinch to zoom. After looking elsewhere, tap "Back to me".'),
+          tx('人多找不到人時按「舉起團旗」，整個螢幕變成團色閃爍並顯示你的團號，舉起手機讓領隊看到。', 'In a crowd, tap "Raise flag". Your screen flashes in the group color with your number, so hold it up for your leader.'),
         ]),
         block(Icons.people_alt_outlined, tx('和團員互相看得到', 'See your group on the map'), [
           tx('同意分享後，同一團的人（含領隊）會在 3D 地圖上看到彼此的大頭貼和位置；不在團裡的人看不到任何人。', 'After you agree to share, everyone in your group, including leaders, sees each other on the 3D map. People outside the group see no one.'),
@@ -387,6 +389,13 @@ class HelpScreen extends StatelessWidget {
         ]),
         block(Icons.sos_outlined, tx('我迷路了', "I'm lost"), [
           tx('按「我迷路了」會把你現在的位置傳給團主與共同團主，地圖上出現紅點與團號，30 分鐘後自動刪除。', 'Tapping "I\'m lost" sends your current location to the leaders as a red dot with your number. It is deleted after 30 minutes.'),
+        ]),
+        block(Icons.auto_awesome_outlined, tx('艾婭 AI 小助理', 'AIYA, AI assistant'), [
+          tx('點右上角的艾婭頭像，可以問行程、集合時間、當地交通和注意事項；艾婭會參考領隊公布的行程，不會看到任何人的位置。', 'Tap AIYA\'s portrait at the top to ask about the itinerary, meetup times, getting around and tips. AIYA reads the itinerary your leader posted and never sees anyone\'s location.'),
+          tx('第一次使用要先同意 AI 資料處理；不用艾婭也能正常使用所有帶團功能。', 'You agree to AI data processing the first time. Every group feature works without AIYA.'),
+          tx('每天有 3 次免費文字聊天；想多聊可以買時光包，或訂閱艾婭之友（每天 20 次、每月送 60 分鐘語音通話）。', 'You get 3 free text chats a day. For more, buy a time pack or subscribe to AIYA Friend (20 chats a day and 60 call minutes a month).'),
+          tx('語音通話依秒數計時，先扣艾婭之友的贈送時間，再扣通話時間包；通話前會請你同意聲音送去處理，我們不錄音。', 'Voice calls are charged by the second, first from AIYA Friend minutes, then from call time packs. You agree before your first call; calls are not recorded.'),
+          tx('艾婭是 AI，可能會出錯；集合時間和地點請以領隊說的為準。', 'AIYA is an AI and can be wrong. Always follow your leader for meetup times and places.'),
         ]),
         block(Icons.event_note_outlined, tx('行程表與解散', 'Itinerary and ending'), [
           tx('行程表的時間都用集合點的當地時區；每個集合點前 15 分鐘會自動提醒。', 'Itinerary times use the local time zone of each meetup. Everyone is reminded 15 minutes before each one.'),

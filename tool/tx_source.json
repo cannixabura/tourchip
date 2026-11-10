@@ -1,5 +1,305 @@
 [
 {
+"zh": "艾婭 AI 小助理",
+"en": "AIYA, AI assistant"
+},
+{
+"zh": "艾婭今天累了，明天再來找她吧。",
+"en": "AIYA is resting today. See you tomorrow."
+},
+{
+"zh": "今天聊了很多了，明天再來找艾婭吧。",
+"en": "You've talked a lot today. Come back tomorrow."
+},
+{
+"zh": "嗨，我是艾婭，這趟旅程的 AI 小助理。行程、集合時間、當地的事，都可以問我。",
+"en": "Hi, I'm AIYA, your AI travel helper. Ask me about the itinerary, meeting times or anything local."
+},
+{
+"zh": "艾婭剛剛恍神了一下，可以再說一次嗎？",
+"en": "AIYA drifted off for a second. Could you say that again?"
+},
+{
+"zh": "沒有接通，請稍後再試。",
+"en": "Couldn't connect. Please try again later."
+},
+{
+"zh": "時間到了，我先回到光裡。旅途中有需要再叫我喔。",
+"en": "Time's up. I'll head back into the light. Call me any time on the trip."
+},
+{
+"zh": "通話時間用完了",
+"en": "You're out of call time"
+},
+{
+"zh": "這通已經聊了很久，休息一下再打給艾婭吧",
+"en": "That was a long call. Take a break and call AIYA again"
+},
+{
+"zh": "一段時間沒有人說話，通話已結束",
+"en": "No one spoke for a while, so the call ended"
+},
+{
+"zh": "通話已結束",
+"en": "Call ended"
+},
+{
+"zh": "和艾婭語音通話",
+"en": "Voice call with AIYA"
+},
+{
+"zh": "用說的問艾婭，就像打電話一樣，走路、拿行李時也方便。買通話時間就能打，艾婭之友每月還送 60 分鐘。",
+"en": "Talk to AIYA out loud, like a phone call, handy while walking or carrying bags. Buy call time to start; AIYA Friends get 60 free minutes every month."
+},
+{
+"zh": "{e.value} 分鐘",
+"en": "{e.value} minutes"
+},
+{
+"zh": "成為艾婭之友（每月 60 分鐘）",
+"en": "Become an AIYA Friend (60 min a month)"
+},
+{
+"zh": "先用文字聊",
+"en": "Chat by text for now"
+},
+{
+"zh": "通話時間不會過期，依實際通話秒數扣除。消耗型商品無法恢復購買。",
+"en": "Call time never expires and is used by the second. Consumable purchases can't be restored."
+},
+{
+"zh": "今天的通話次數用完了，明天再打給艾婭吧",
+"en": "You've used today's calls. Call AIYA again tomorrow"
+},
+{
+"zh": "這個月的通話次數用完了",
+"en": "You've used this month's calls"
+},
+{
+"zh": "艾婭的語音線路今天太忙了，晚點再試",
+"en": "AIYA's voice line is too busy today. Try again later"
+},
+{
+"zh": "要允許使用麥克風才能和艾婭通話，可以到手機的「設定」打開",
+"en": "Allow the microphone to call AIYA. You can turn it on in your phone's Settings"
+},
+{
+"zh": "通話中 {_callLeft()}",
+"en": "On call {_callLeft()}"
+},
+{
+"zh": "這句有不能傳的字或聯絡方式，換個說法試試。",
+"en": "That has words or contact details that aren't allowed. Try another way."
+},
+{
+"zh": "這個我不太方便聊，換個話題好嗎？",
+"en": "I can't really talk about that. How about something else?"
+},
+{
+"zh": "這次的聊天已經結束。",
+"en": "This chat has ended."
+},
+{
+"zh": "艾婭時光包",
+"en": "AIYA time packs"
+},
+{
+"zh": "今天的免費聊天用完了",
+"en": "You've used today's free chats"
+},
+{
+"zh": "每天有 3 次免費文字聊天，隔天重新計算。想多聊幾次，可以買時光包，每次最多 10 分鐘。",
+"en": "You get 3 free text chats a day, reset daily. For more, get a time pack. Each chat lasts up to 10 minutes."
+},
+{
+"zh": "成為艾婭之友",
+"en": "Become an AIYA Friend"
+},
+{
+"zh": "{e.value} 次聊天",
+"en": "{e.value} chats"
+},
+{
+"zh": "時光包綁定這支手機的帳號，刪除 App 後無法恢復。",
+"en": "Time packs belong to this phone's account and can't be restored if you delete the app."
+},
+{
+"zh": "艾婭之友",
+"en": "AIYA Friend"
+},
+{
+"zh": "自動續訂的月費方案",
+"en": "Auto-renewing monthly plan"
+},
+{
+"zh": "每月送 60 分鐘跟艾婭語音通話",
+"en": "60 minutes of voice calls with AIYA every month"
+},
+{
+"zh": "每天 20 次文字聊天（免費是 3 次）",
+"en": "20 text chats a day (3 when free)"
+},
+{
+"zh": "每次聊 20 分鐘或 40 則",
+"en": "Each chat lasts 20 minutes or 40 messages"
+},
+{
+"zh": "艾婭身邊多一圈星光（只有你看得到）",
+"en": "A circle of starlight around AIYA (only you see it)"
+},
+{
+"zh": "艾婭之友到 {_date(AiyaStore.friendExp.value!)}",
+"en": "AIYA Friend until {_date(AiyaStore.friendExp.value!)}"
+},
+{
+"zh": "{AiyaStore.priceOf(AiyaStore.friendProduct)} / 月",
+"en": "{AiyaStore.priceOf(AiyaStore.friendProduct)} / month"
+},
+{
+"zh": "訂閱艾婭之友",
+"en": "Subscribe"
+},
+{
+"zh": "訂閱期間為 1 個月，到期時會自動續訂並扣款，除非在到期前至少 24 小時關閉自動續訂。付款由 Apple 或 Google 帳戶處理，可以隨時到帳戶的訂閱設定管理或取消。每月贈送的通話時間當月有效、不累積。",
+"en": "The subscription lasts 1 month and renews automatically with payment unless auto-renew is turned off at least 24 hours before the end of the period. Payment is handled by your Apple or Google account; manage or cancel any time in your account's subscription settings. Monthly call minutes don't roll over."
+},
+{
+"zh": "使用條款",
+"en": "Terms of use"
+},
+{
+"zh": "隱私權政策",
+"en": "Privacy policy"
+},
+{
+"zh": "恢復購買",
+"en": "Restore"
+},
+{
+"zh": "管理訂閱",
+"en": "Manage subscription"
+},
+{
+"zh": "檢舉這句回覆",
+"en": "Report this reply"
+},
+{
+"zh": "已收到檢舉，謝謝你。",
+"en": "Thanks, we got your report."
+},
+{
+"zh": "剩 {s ~/ 60}:{(s % 60).toString().padLeft(2, '0')}",
+"en": "{s ~/ 60}:{(s % 60).toString().padLeft(2, '0')} left"
+},
+{
+"zh": "艾婭",
+"en": "AIYA"
+},
+{
+"zh": "結束",
+"en": "Close"
+},
+{
+"zh": "艾婭之友 · 今天還有 {_freeLeft} 次",
+"en": "Friend · {_freeLeft} left today"
+},
+{
+"zh": "今天免費 {_freeLeft} 次",
+"en": "{_freeLeft} free today"
+},
+{
+"zh": "時光包 {_credits} 次",
+"en": "{_credits} in packs"
+},
+{
+"zh": "通話 {_callSecondsLeft ~/ 60} 分鐘",
+"en": "{_callSecondsLeft ~/ 60} min of calls"
+},
+{
+"zh": "＋ 時光包",
+"en": "+ Time packs"
+},
+{
+"zh": "＋ 通話時間",
+"en": "+ Call time"
+},
+{
+"zh": "問艾婭行程、集合或當地的事…",
+"en": "Ask AIYA about the trip…"
+},
+{
+"zh": "取消靜音",
+"en": "Unmute"
+},
+{
+"zh": "靜音",
+"en": "Mute"
+},
+{
+"zh": "結束通話",
+"en": "Hang up"
+},
+{
+"zh": "傳送",
+"en": "Send"
+},
+{
+"zh": "先不要",
+"en": "Not now"
+},
+{
+"zh": "和艾婭聊天之前",
+"en": "Before you talk with AIYA"
+},
+{
+"zh": "艾婭是 AI，由 Anthropic 的 Claude 提供。你傳給艾婭的文字，以及團主公布的行程與集合資訊（不含任何人的位置），會送到 Anthropic（美國）處理，不會附上你的身分或暱稱；對話結束就刪除。艾婭的回覆可能出錯，集合時間、地點請以領隊說的為準，也不構成專業建議。",
+"en": "AIYA is an AI powered by Anthropic's Claude. What you send to AIYA, plus the itinerary and meeting info your leader shared (never anyone's location), is processed by Anthropic (USA) without your identity or nickname, and deleted when the chat ends. AIYA can make mistakes: always follow your leader for meeting times and places. AIYA doesn't give professional advice."
+},
+{
+"zh": "同意並開始",
+"en": "Agree and start"
+},
+{
+"zh": "語音通話時，你的聲音會即時送到 OpenAI（美國）由 AI 處理並回應，團主公布的行程與集合資訊也會一起送去（不含任何人的位置），不會附上你的身分或暱稱；我們不錄音，也不保存通話內容。艾婭是 AI，回覆可能出錯，不構成專業建議。",
+"en": "During a voice call, your voice is sent live to OpenAI (USA), whose AI processes it and replies, along with the itinerary and meeting info your leader shared (never anyone's location). It doesn't include your identity or nickname, and we don't record or keep the call. AIYA is an AI; replies may be wrong and are not professional advice."
+},
+{
+"zh": "同意並通話",
+"en": "Agree and call"
+},
+{
+"zh": "現在無法購買，請稍後再試。",
+"en": "Purchases are unavailable right now."
+},
+{
+"zh": "購買沒有完成，請稍後再試。",
+"en": "The purchase did not go through."
+},
+{
+"zh": "這個帳戶沒有找到艾婭之友的訂閱。",
+"en": "No AIYA Friend subscription was found."
+},
+{
+"zh": "已恢復艾婭之友。",
+"en": "AIYA Friend restored."
+},
+{
+"zh": "這個訂閱已經用在另一個旅行團帳號。",
+"en": "This subscription belongs to another TourChip account."
+},
+{
+"zh": "歡迎成為艾婭之友！每個月有 60 分鐘可以和艾婭通話。",
+"en": "Welcome, AIYA Friend! You get 60 minutes of calls every month."
+},
+{
+"zh": "多了 {minutes} 分鐘通話時間。",
+"en": "Added {minutes} minutes of call time."
+},
+{
+"zh": "多了 {added} 次聊天。",
+"en": "Added {added} chats."
+},
+{
 "zh": "跟隨手機設定",
 "en": "Same as phone"
 },
@@ -86,6 +386,14 @@
 {
 "zh": "需要幫忙",
 "en": "Needs help"
+},
+{
+"zh": "集合點",
+"en": "Meeting point"
+},
+{
+"zh": "關閉",
+"en": "Close"
 },
 {
 "zh": "{now.name} · 你是 {now.myNo ?? '-'} 號",
@@ -234,10 +542,6 @@
 {
 "zh": "出發日與天數",
 "en": "Dates"
-},
-{
-"zh": "關閉",
-"en": "Close"
 },
 {
 "zh": "已經出發，只能改天數。",
@@ -1416,14 +1720,6 @@
 "en": "From starting a group to roll call"
 },
 {
-"zh": "使用條款",
-"en": "Terms of use"
-},
-{
-"zh": "隱私權政策",
-"en": "Privacy policy"
-},
-{
 "zh": "聯絡我們",
 "en": "Contact us"
 },
@@ -1508,8 +1804,16 @@
 "en": "The 3D map turns with your phone. The flag in your group color is the meetup; the card shows local time, countdown, distance and direction."
 },
 {
+"zh": "點地圖上的旗子，可以隨時打開集合卡片：時間、地點、倒數、距離方向和導航。",
+"en": "Tap the flag on the map any time to open the meetup card: time, place, countdown, distance, direction and directions."
+},
+{
 "zh": "兩指縮放地圖；看別的地方後按「回到我的位置」回來。",
 "en": "Pinch to zoom. After looking elsewhere, tap \"Back to me\"."
+},
+{
+"zh": "人多找不到人時按「舉起團旗」，整個螢幕變成團色閃爍並顯示你的團號，舉起手機讓領隊看到。",
+"en": "In a crowd, tap \"Raise flag\". Your screen flashes in the group color with your number, so hold it up for your leader."
 },
 {
 "zh": "同意分享後，同一團的人（含領隊）會在 3D 地圖上看到彼此的大頭貼和位置；不在團裡的人看不到任何人。",
@@ -1556,6 +1860,26 @@
 "en": "Tapping \"I'm lost\" sends your current location to the leaders as a red dot with your number. It is deleted after 30 minutes."
 },
 {
+"zh": "點右上角的艾婭頭像，可以問行程、集合時間、當地交通和注意事項；艾婭會參考領隊公布的行程，不會看到任何人的位置。",
+"en": "Tap AIYA's portrait at the top to ask about the itinerary, meetup times, getting around and tips. AIYA reads the itinerary your leader posted and never sees anyone's location."
+},
+{
+"zh": "第一次使用要先同意 AI 資料處理；不用艾婭也能正常使用所有帶團功能。",
+"en": "You agree to AI data processing the first time. Every group feature works without AIYA."
+},
+{
+"zh": "每天有 3 次免費文字聊天；想多聊可以買時光包，或訂閱艾婭之友（每天 20 次、每月送 60 分鐘語音通話）。",
+"en": "You get 3 free text chats a day. For more, buy a time pack or subscribe to AIYA Friend (20 chats a day and 60 call minutes a month)."
+},
+{
+"zh": "語音通話依秒數計時，先扣艾婭之友的贈送時間，再扣通話時間包；通話前會請你同意聲音送去處理，我們不錄音。",
+"en": "Voice calls are charged by the second, first from AIYA Friend minutes, then from call time packs. You agree before your first call; calls are not recorded."
+},
+{
+"zh": "艾婭是 AI，可能會出錯；集合時間和地點請以領隊說的為準。",
+"en": "AIYA is an AI and can be wrong. Always follow your leader for meetup times and places."
+},
+{
 "zh": "行程表與解散",
 "en": "Itinerary and ending"
 },
@@ -1598,10 +1922,6 @@
 {
 "zh": "開始分享",
 "en": "Start sharing"
-},
-{
-"zh": "先不要",
-"en": "Not now"
 },
 {
 "zh": "同團的人會在地圖上你的大頭貼上方看到。",
@@ -1902,14 +2222,6 @@
 {
 "zh": "連線不穩，請稍後再試。",
 "en": "Connection problem. Please try again."
-},
-{
-"zh": "現在無法購買，請稍後再試。",
-"en": "Purchases are unavailable right now."
-},
-{
-"zh": "購買沒有完成，請稍後再試。",
-"en": "The purchase did not go through."
 },
 {
 "zh": "這一團已經是 30 天，這張天數券先存成團購券，可以用在下一團。",
