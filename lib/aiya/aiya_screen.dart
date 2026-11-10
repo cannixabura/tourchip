@@ -28,14 +28,10 @@ class AiyaButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => IconButton(
         tooltip: tx('艾婭 AI 小助理', 'AIYA, AI assistant'),
-        icon: Container(
-          width: 32, height: 32,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: const Color(0xFFFFC861), width: 1.5),
-            boxShadow: const [BoxShadow(color: Color(0x66FFC861), blurRadius: 8)],
-            image: const DecorationImage(image: AssetImage('assets/images/aiya_avatar.png'), fit: BoxFit.cover),
-          ),
+        // 去背的艾婭頭像（頭冠到肩膀，下緣淡出），不加圓框，半透明
+        icon: const Opacity(
+          opacity: 0.45,
+          child: Image(image: AssetImage('assets/images/aiya_avatar.png'), width: 38, height: 38, fit: BoxFit.contain),
         ),
         onPressed: () => openAiya(context),
       );
