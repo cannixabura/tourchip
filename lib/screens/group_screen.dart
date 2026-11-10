@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../aiya/aiya_screen.dart';
 import '../l10n.dart';
 import '../map/tour_map.dart';
 import '../tour/model.dart';
@@ -121,6 +122,7 @@ class _TopBar extends StatelessWidget {
             icon: const Icon(Icons.qr_code_2, color: Night.ink),
             onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const QrScreen())),
           ),
+        const AiyaButton(),
         ValueListenableBuilder<int>(
           valueListenable: unreadMsgs,
           builder: (context, n, _) => IconButton(

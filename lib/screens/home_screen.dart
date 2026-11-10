@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../aiya/aiya_screen.dart';
 import '../l10n.dart';
 import '../map/tour_map.dart';
 import '../tour/profile.dart';
@@ -125,6 +126,7 @@ class _ProfileBar extends StatelessWidget {
               ]),
             ),
           ),
+          const AiyaButton(),
           IconButton(
             tooltip: tx('設定', 'Settings'),
             iconSize: 28,

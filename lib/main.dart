@@ -11,6 +11,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'aiya/aiya_store.dart';
 import 'firebase_options.dart';
 import 'l10n.dart';
 import 'screens/call_overlay.dart';
@@ -49,6 +50,7 @@ Future<void> main() async {
     if (FirebaseAuth.instance.currentUser == null) await FirebaseAuth.instance.signInAnonymously();
   } catch (_) {}
   PassStore.init();
+  AiyaStore.init();
   initUnread();
   runApp(const TourChipApp());
 }
@@ -107,6 +109,7 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
     TourService.openChat.addListener(_onOpenChat);
     PassStore.notice.addListener(_onPassNotice);
     PassStore.load();
+    AiyaStore.load();
     _initPush();
     _listenLinks();
   }

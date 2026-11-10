@@ -21,17 +21,27 @@ main{max-width:720px;margin:0 auto;padding:40px 20px 64px}h1{font-size:26px}h2{f
 <li><b>「我迷路了」的位置</b>：只有你自己按下「我迷路了」時，才會把那一刻的位置傳一次給團主與共同團主，30 分鐘後自動刪除，不會持續追蹤。</li>
 <li><b>和團員互相看得到（你同意後才有）</b>：你在 App 開著時的位置、你發的氣泡（最多 20 字）、你和同團的人之間的私訊、你封鎖的對象、你提出的檢舉。位置、氣泡只有同一團的人看得到；私訊只有雙方看得到；檢舉內容只有我們看得到，用來處理不當行為。</li>
 <li><b>推播權杖</b>：用來送集合、點名與公告的通知。</li>
-<li><b>購買紀錄</b>：人數券、天數券與團購券的購買憑證，用來確認付款、避免同一筆購買被重複使用。</li>
+<li><b>購買紀錄</b>：人數券、天數券、團購券，以及艾婭時光包、通話時間包與艾婭之友訂閱的購買憑證，用來確認付款、避免同一筆購買被重複使用。</li>
+<li><b>艾婭 AIYA（你使用時才有）</b>：你傳給艾婭的文字、你同意 AI 資料處理與語音通話的紀錄、剩下的聊天次數與通話秒數、你檢舉的艾婭回覆。詳見下方「艾婭 AIYA 與 AI 資料處理」。</li>
 <li><b>當機紀錄</b>：Firebase Crashlytics 收集 App 當機時的技術資訊，用來修正錯誤。</li>
 </ul>
 <h2>位置</h2>
 <p>集合點的距離與方向在你的手機上計算，不會上傳。第一次入團時，App 會請你決定要不要「和團員互相看得到」：同意後（未滿 18 歲須先取得家長或監護人同意），同一團的人（含團主與共同團主）會在 3D 地圖上看到你的位置與大頭貼，你也看得到他們；位置只在 App 開著時更新，不在團裡的人看不到。你可以隨時在設定關掉，關掉後位置立刻刪除。不同意也能正常入團、收集合與點名。「我迷路了」會另外把當下位置傳給團主與共同團主，30 分鐘後刪除。</p>
+<h2>艾婭 AIYA 與 AI 資料處理</h2>
+<p>艾婭是 App 裡的 AI 小助理，可以回答行程、集合時間與當地的問題。第一次使用前，App 會先說明並請你同意；不同意也能正常使用旅行團的所有功能。</p>
+<ul>
+<li><b>文字聊天</b>：你傳給艾婭的文字，連同團主公布的行程與集合資訊（團名、日期、集合點與時間、公告、每日資訊卡，最多 800 字）和你手機的時區，會送到 Anthropic（美國）的 Claude 模型產生回覆。<b>不會送出任何人的位置</b>，也不會附上你的暱稱、大頭貼或團員資料。對話內容只在伺服器暫存最多 25 分鐘，聊天結束就刪除。</li>
+<li><b>語音通話</b>：打給艾婭前，App 會另外請你同意。通話時，你的聲音會<b>即時</b>送到 OpenAI（美國）的語音模型處理並回應，同樣附上團主公布的行程與集合資訊，不含任何人的位置、你的暱稱或身分。<b>我們不錄音，也不保存通話內容或逐字稿</b>；伺服器只記錄剩下的通話秒數，以及每通的開始、結束時間與秒數，只用來計時與扣除通話時間，不含通話內容。通話需要麥克風權限，只在通話中使用。</li>
+<li><b>Anthropic 與 OpenAI</b>：依它們的 API 條款，透過 API 送去的資料預設不會被用來訓練它們的模型，只為防止濫用而短期保存後刪除。</li>
+<li><b>檢舉</b>：你長按艾婭的回覆檢舉時，會把那一句回覆和你前一句話一起存下來，供我們人工檢視、改善艾婭，最多保留最近 1000 筆。</li>
+<li>艾婭是 AI，回覆可能出錯；集合時間與地點請以領隊說的為準，也不構成專業建議。</li>
+</ul>
 <h2>保存多久</h2>
 <p>團在行程結束日 23:59（最後一個集合點的當地時間）自動解散，或由團主提早解散。解散時，團的資料、團員名單、團員資料、回覆狀態、公告、行程表、每日資訊卡、車輛與緊急聯絡、位置、氣泡與私訊全部刪除；你退團或被移出時，你的位置、氣泡與團員資料立刻刪除。檢舉紀錄最多保留最近 1000 筆。團購券保存 400 天。暱稱與大頭貼保留到你在設定裡清除或移除為止。</p>
 <h2>未成年人</h2>
 <p>旅行團可以讓未滿 18 歲的人以團員身分入團（例如校外教學）。未滿 18 歲的使用者必須先取得家長或監護人同意，才能分享位置、發氣泡與傳私訊；沒有同意也能入團、收集合與點名。私訊只限同一團的人之間，有髒話過濾，並可封鎖與檢舉；不提供和陌生人聊天。</p>
 <h2>與第三方</h2>
-<p>資料存放在 Google Firebase 與 Upstash（Redis）。我們不販售資料，也不用於廣告。</p>
+<p>資料存放在 Google Firebase 與 Upstash（Redis）。使用艾婭時，文字會送到 Anthropic、語音通話的聲音會即時送到 OpenAI 處理（見上方「艾婭 AIYA 與 AI 資料處理」）。我們不販售資料，也不用於廣告。</p>
 <h2>你的權利</h2>
 <p>你可以隨時退出團，也可以在設定裡清除暱稱、移除大頭貼；團主可以移除團員。想刪除資料或有任何問題，請寫信到 service.softchip@gmail.com。</p>
 <hr>
@@ -41,11 +51,21 @@ main{max-width:720px;margin:0 auto;padding:40px 20px 64px}h1{font-size:26px}h2{f
 <li><b>團員資料</b>：在團裡打開「車輛・飯店・緊急」→ 我的資料 → 右上角刪除，伺服器上的資料立即刪除；退團或解散也會刪除。</li>
 <li><b>位置、氣泡</b>：設定 → 關掉「和團員互相看得到」，你的位置立即刪除；在氣泡上按「收起氣泡」即刪除氣泡。退團時位置與氣泡也會刪除。</li>
 <li><b>團的資料、名單、訊息</b>：在團裡按「退出這一團」（團主按「解散這一團」）；團也會在行程最後一天 23:59 自動解散並全部刪除。</li>
+<li><b>艾婭的聊天</b>：在艾婭畫面按「結束」，這次的對話立即刪除；語音通話本來就不保存。</li>
 <li><b>其他所有資料</b>：寫信到 service.softchip@gmail.com，主旨寫「刪除資料」，並附上你的暱稱與所在的團名（有的話），我們會在 30 天內刪除與你有關的所有資料。購買憑證依稅務法規需保留者，只保留到法定期限為止；當機紀錄由 Firebase Crashlytics 保存 90 天後自動刪除。</li>
 </ol>
 
 <h1>Privacy Policy (English)</h1>
 <p>TourChip needs no account. An anonymous ID identifies which group you are in. We store the group's name, dates, itinerary, day cards (notes, hotel, guide links), bus and emergency contact info entered by leaders, notices, member numbers, leader notes and sub-groups, optional member details you choose to enter (diet, health notes, an emergency contact's name (no phone number); visible only to your leaders and deleted when you leave or the group ends), your replies to gather calls and roll calls, an optional nickname and profile photo (visible to your leaders; kept until you remove them in Settings), push tokens, purchase receipts and crash reports. If you agree (with a parent or guardian's consent if you are under 18), people in your group, including leaders, see your location on the map while the app is open, along with your bubble; you can message people in your group, block and report. Nobody outside the group can see you. You can turn sharing off any time in Settings. "I'm lost" sends your location once to the leaders; it is deleted after 30 minutes. All group data, member details, locations, bubbles and messages are deleted when the group ends. Vouchers are kept for 400 days. Contact: service.softchip@gmail.com.</p>
+<p id="aiya-en"><b>AIYA, the AI assistant (only if you use it):</b> before first use the app asks for your consent; TourChip works fully without it. In text chats, what you type, together with the itinerary and meeting info your leaders shared (up to 800 characters) and your phone's time zone, is sent to Anthropic (USA, Claude) to generate replies. <b>No one's location is ever sent</b>, and neither is your nickname, photo or member details. The conversation is held on our server for at most 25 minutes and deleted when the chat ends. Voice calls need a separate consent and the microphone: your voice is sent <b>live</b> to OpenAI (USA) for processing, with the same group info. <b>We don't record calls or keep their content or transcripts</b>; we only store your remaining call seconds and each call's start time, end time and length, used only for timing and deducting call time, never the call's content. Under their API terms, Anthropic and OpenAI by default don't use API data to train their models and keep it only briefly for abuse prevention. If you report a reply, that reply and your previous message are kept (latest 1,000 reports) for review. We also keep your consent records, remaining chats and call seconds, and purchase receipts for AIYA time packs, call time packs and AIYA Friend. AIYA can make mistakes; always follow your leader for meeting times and places.</p>
 <p id="delete-en"><b>Delete your data:</b> clear your nickname and photo in Settings → Edit profile; turn off "Share location with my group" to delete your location; leave or end the group to delete group data and messages (groups also end automatically). For anything else, email service.softchip@gmail.com with the subject "Delete my data" and we will delete it within 30 days. Purchase receipts are kept only as long as tax law requires; crash reports are deleted by Firebase Crashlytics after 90 days.</p>
+<h2 id="aiya-i18n">艾婭 AIYA · AI data processing</h2>
+<p lang="zh-Hans"><b>简体中文</b>：艾娅是 AI 小助理，第一次使用前会请你同意。你传给艾娅的文字和团主公布的行程、集合信息（不含任何人的位置、你的昵称或身分）会送到 Anthropic（美国）处理，聊天结束就删除。语音通话另外同意，你的声音会实时送到 OpenAI（美国）处理；我们不录音，也不保存通话内容。</p>
+<p lang="ja"><b>日本語</b>：AIYA は AI アシスタントで、初回利用前に同意をお願いします。入力した文字とリーダーが共有した行程・集合情報（誰の位置情報も、ニックネームや身元も含みません）は Anthropic（米国）で処理され、チャット終了時に削除されます。音声通話は別途同意のうえ、声がリアルタイムで OpenAI（米国）に送られ処理されます。通話は録音せず、内容も保存しません。</p>
+<p lang="ko"><b>한국어</b>：AIYA는 AI 도우미이며 처음 사용하기 전에 동의를 받아요. 입력한 글과 리더가 공유한 일정·집합 정보(누구의 위치도, 닉네임이나 신원도 포함하지 않음)는 Anthropic(미국)에서 처리되고 대화가 끝나면 삭제돼요. 음성 통화는 따로 동의하며, 목소리가 OpenAI(미국)로 실시간 전송되어 처리돼요. 통화는 녹음하지 않고 내용도 저장하지 않아요.</p>
+<p lang="ms"><b>Bahasa Melayu</b>: AIYA ialah pembantu AI dan anda akan diminta bersetuju sebelum penggunaan pertama. Teks yang anda hantar dan maklumat jadual serta tempat berkumpul yang dikongsi ketua (tanpa lokasi sesiapa, nama samaran atau identiti anda) diproses oleh Anthropic (AS) dan dipadam apabila sembang tamat. Panggilan suara memerlukan persetujuan berasingan; suara anda dihantar secara langsung ke OpenAI (AS) untuk diproses. Kami tidak merakam atau menyimpan kandungan panggilan.</p>
+<p lang="id"><b>Bahasa Indonesia</b>: AIYA adalah asisten AI dan kamu akan diminta persetujuan sebelum pertama kali memakai. Teks yang kamu kirim serta info jadwal dan titik kumpul yang dibagikan pemimpin (tanpa lokasi siapa pun, nama panggilan, atau identitasmu) diproses oleh Anthropic (AS) dan dihapus saat obrolan selesai. Panggilan suara butuh persetujuan terpisah; suaramu dikirim langsung ke OpenAI (AS) untuk diproses. Kami tidak merekam atau menyimpan isi panggilan.</p>
+<p lang="vi"><b>Tiếng Việt</b>: AIYA là trợ lý AI, bạn sẽ được hỏi đồng ý trước lần dùng đầu tiên. Văn bản bạn gửi cùng lịch trình và thông tin điểm hẹn do trưởng đoàn chia sẻ (không có vị trí của bất kỳ ai, biệt danh hay danh tính của bạn) được Anthropic (Mỹ) xử lý và bị xóa khi cuộc trò chuyện kết thúc. Cuộc gọi thoại cần đồng ý riêng; giọng nói của bạn được gửi trực tiếp đến OpenAI (Mỹ) để xử lý. Chúng tôi không ghi âm và không lưu nội dung cuộc gọi.</p>
+<p lang="th"><b>ไทย</b>: AIYA คือผู้ช่วย AI และจะขอความยินยอมก่อนใช้ครั้งแรก ข้อความที่คุณส่งและข้อมูลกำหนดการและจุดนัดพบที่หัวหน้าแชร์ (ไม่มีตำแหน่งของใคร ชื่อเล่น หรือตัวตนของคุณ) จะถูกประมวลผลโดย Anthropic (สหรัฐฯ) และลบเมื่อแชทจบ การโทรด้วยเสียงต้องยินยอมแยกต่างหาก เสียงของคุณจะถูกส่งไปยัง OpenAI (สหรัฐฯ) แบบเรียลไทม์เพื่อประมวลผล เราไม่บันทึกเสียงและไม่เก็บเนื้อหาการโทร</p>
 <p class="legal-foot"><a href="/">旅行團 TourChip</a><a href="/terms">使用條款 Terms</a><a href="/delete-account">刪除資料 Delete data</a><a href="/child-safety">兒童安全 Child safety</a><a href="/support">支援 Support</a></p>
 </main></body></html>

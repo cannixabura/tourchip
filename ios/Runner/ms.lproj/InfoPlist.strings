@@ -3,3 +3,4 @@
 "NSLocationWhenInUseUsageDescription" = "TourChip menggunakan lokasi anda semasa aplikasi digunakan untuk menunjukkan jarak dan arah ke tempat berkumpul. Jika anda bersetuju berkongsi, orang dalam kumpulan anda (termasuk ketua) melihat lokasi anda pada peta. Anda boleh mematikannya dalam Tetapan bila-bila masa.";
 "NSCameraUsageDescription" = "Imbas kod QR untuk sertai daripada ketua anda atau baucar kumpulan.";
 "NSPhotoLibraryUsageDescription" = "Pilih foto daripada pustaka sebagai foto profil anda.";
+"NSMicrophoneUsageDescription" = "Bercakap dengan AIYA, pembantu AI, melalui suara. Suara anda hanya dihantar terus ke OpenAI semasa panggilan dan tidak dirakam.";

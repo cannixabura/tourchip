@@ -39,6 +39,9 @@ dependencies:
   sensors_plus: ^7.1.0
   image_picker: ^1.2.4
   firebase_storage: ^13.6.0
+  # 艾婭 AIYA：和城市低語共用的套件（粒子全息、影片、伺服器 API、GPT-Live 語音通話）
+  aiya:
+    path: ../lbs_dating_app/packages/aiya
 
 dev_dependencies:
   flutter_test:

@@ -3,3 +3,4 @@
 "NSLocationWhenInUseUsageDescription" = "TourChip はアプリの使用中に位置情報を取得し、集合場所までの距離と方向を表示します。共有に同意すると、同じグループの人（リーダーを含む）が地図上であなたの位置を見られます。設定でいつでもオフにできます。";
 "NSCameraUsageDescription" = "リーダーの参加用QRコードやクーポンをスキャンします。";
 "NSPhotoLibraryUsageDescription" = "ライブラリから写真を選んでプロフィール写真にします。";
+"NSMicrophoneUsageDescription" = "AIアシスタントのAIYAと音声で話します。声は通話中だけOpenAIにリアルタイムで送られ、録音されません。";

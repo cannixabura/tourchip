@@ -3,3 +3,4 @@
 "NSLocationWhenInUseUsageDescription" = "旅行團會在你使用 App 時取得位置，算出到集合點的距離與方向；你同意分享後，同一團的人（含領隊）會在地圖上看到你的位置，可以隨時在設定關閉。";
 "NSCameraUsageDescription" = "掃描領隊的入團 QR code 或團購券。";
 "NSPhotoLibraryUsageDescription" = "從相簿選一張照片當你的頭像。";
+"NSMicrophoneUsageDescription" = "用語音和 AI 小助理艾婭通話。只有通話時你的聲音會即時送到 OpenAI 處理，我們不錄音。";
