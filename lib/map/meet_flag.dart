@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../ui/frame_limit.dart';
 import '../ui/night.dart';
 
 /// 集合點標記：長桿三角旗（團色，會飄揚）＋地面彩色光圈（顏色沿著光圈流動）。
@@ -22,6 +23,8 @@ class MeetFlag extends StatefulWidget {
 
 class _MeetFlagState extends State<MeetFlag> with SingleTickerProviderStateMixin {
   late final AnimationController _t = AnimationController(vsync: this, duration: const Duration(seconds: 6));
+  /// 6 秒一圈的慢動作：重畫最多每秒 30 張
+  late final FrameLimited _tick = FrameLimited(_t);
 
   @override
   void didChangeDependencies() {
@@ -36,6 +39,7 @@ class _MeetFlagState extends State<MeetFlag> with SingleTickerProviderStateMixin
 
   @override
   void dispose() {
+    _tick.dispose();
     _t.dispose();
     super.dispose();
   }
@@ -48,7 +52,7 @@ class _MeetFlagState extends State<MeetFlag> with SingleTickerProviderStateMixin
         width: MeetFlag.width * s, height: MeetFlag.height * s,
         child: RepaintBoundary(
           child: AnimatedBuilder(
-            animation: _t,
+            animation: _tick,
             builder: (_, _) => CustomPaint(painter: _FlagPainter(widget.tint, _t.value, s)),
           ),
         ),

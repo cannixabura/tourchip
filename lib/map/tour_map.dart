@@ -58,6 +58,8 @@ class TourMap extends StatefulWidget {
 class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
   /// 最近一次取得的手機位置（所有地圖共用）：開新地圖時不用等定位就能先顯示
   static LatLng? lastMe;
+  /// 艾婭打開時是 true：畫面被蓋住，羅盤、傾斜、定位都先暫停（省電、不發燙）
+  static final paused = ValueNotifier<bool>(false);
   String? _style;
   LatLng? _start;
   MapLibreMapController? _c;
@@ -70,6 +72,12 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
   double _heading = 0, _pitch = 50 * pi / 180, _scale = 1, _baseScale = 1;
   bool _flying = false;
   DateTime _lastMove = DateTime.fromMillisecondsSinceEpoch(0);
+  // 羅盤與傾斜只記下最新的值，由 _pushSensors 一起推給鏡頭
+  double? _headingPending;
+  double _pitchSmooth = 50 * pi / 180;
+  final Stopwatch _sensorClock = Stopwatch()..start();
+  int _sensorLastMs = -1000;
+  Timer? _sensorPush;
   StreamSubscription<CompassEvent>? _compass;
   StreamSubscription<AccelerometerEvent>? _tilt;
   StreamSubscription<Position>? _position;
@@ -88,15 +96,29 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
     ProfileStore.me.addListener(_syncPeople);
     if (!widget.intro) _fade.value = 1;
     _locate();
-    if (_motion) _startSensors();
+    paused.addListener(_onPaused);
+    if (_motion && !paused.value) _startSensors();
+  }
+
+  void _onPaused() {
+    if (!_motion) return;
+    if (paused.value) {
+      _stopSensors();
+      _position?.cancel();
+      _position = null;
+    } else {
+      _startSensors();
+      if (_myLocation) _startPosition();
+      _moveCamera(force: true);
+    }
   }
 
   @override
   void dispose() {
     _c?.removeListener(_onCamera);
     ProfileStore.me.removeListener(_syncPeople);
-    _compass?.cancel();
-    _tilt?.cancel();
+    paused.removeListener(_onPaused);
+    _stopSensors();
     _position?.cancel();
     _fade.dispose();
     super.dispose();
@@ -122,14 +144,7 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
         lastMe = p;
       } catch (_) {}
       if (!mounted) return;
-      if (_motion) {
-        _position = Geolocator.getPositionStream(locationSettings: const LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 5)).listen((pos) {
-          _me = LatLng(pos.latitude, pos.longitude);
-          lastMe = _me;
-          _moveCamera();
-          _syncPeople();
-        }, onError: (_) {});
-      }
+      if (_motion && !paused.value) _startPosition();
     }
     // 抓不到位置：先看集合點，再看行程表第一個有座標的點，都沒有就看台北
     if (_start != null) {
@@ -144,16 +159,66 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
     if (mounted) setState(() => _start = p);
   }
 
+  void _startPosition() {
+    if (_position != null) return;
+    _position = Geolocator.getPositionStream(locationSettings: const LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 5)).listen((pos) {
+      _me = LatLng(pos.latitude, pos.longitude);
+      lastMe = _me;
+      _moveCamera();
+      _syncPeople();
+    }, onError: (_) {});
+  }
+
+  void _stopSensors() {
+    _sensorPush?.cancel();
+    _sensorPush = null;
+    _compass?.cancel();
+    _tilt?.cancel();
+    _compass = null;
+    _tilt = null;
+  }
+
+  /// 羅盤與傾斜統一推給鏡頭：最多每 50 毫秒一次、兩者同一次更新（不互搶），
+  /// 動畫時間略長於間隔，3D 建築的透視才會連續轉動不跳格。
+  static const _sensorGapMs = 50;
+  void _queueSensorPush() {
+    if (_sensorPush != null) return;
+    final wait = _sensorGapMs - (_sensorClock.elapsedMilliseconds - _sensorLastMs);
+    if (wait <= 0) {
+      _pushSensors();
+    } else {
+      _sensorPush = Timer(Duration(milliseconds: wait), _pushSensors);
+    }
+  }
+
+  void _pushSensors() {
+    _sensorPush = null;
+    if (!mounted) return;
+    _sensorLastMs = _sensorClock.elapsedMilliseconds;
+    var changed = false;
+    final h = _headingPending;
+    if (h != null && _headingDiff(h).abs() >= 0.5) { _heading = h; changed = true; }
+    if ((_pitchSmooth - _pitch).abs() >= 0.2 * pi / 180) { _pitch = _pitchSmooth; changed = true; }
+    if (changed) _moveCamera(force: true, duration: 90);
+  }
+
+  double _headingDiff(double h) => ((h - _heading + 540) % 360) - 180;
+
   void _startSensors() {
+    _stopSensors();
+    _pitchSmooth = _pitch;
+    _headingPending = null;
     try {
       _compass = FlutterCompass.events?.listen((e) {
-        if (e.heading == null) return;
-        _heading = e.heading!;
-        _moveCamera();
+        final h = e.heading;
+        if (h == null) return;
+        _headingPending = h;
+        if (_headingDiff(h).abs() >= 0.5) _queueSensorPush();
       }, onError: (_) {});
     } catch (_) {}
     try {
-      _tilt = accelerometerEventStream().listen((e) {
+      // 每 50 毫秒取樣；平滑係數換算成原本的反應速度（每 200 毫秒 0.1）
+      _tilt = accelerometerEventStream(samplingPeriod: const Duration(milliseconds: 50)).listen((e) {
         // 真的手機讀數一直在微微跳動；模擬器、少數裝置會一直送同一個固定值。
         // 讀數開始變動之後才跟著傾斜，否則保持預設的 3D 仰角（不要躺平成正上方）
         final first = _lastAccel;
@@ -163,8 +228,8 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
           _tiltLive = true;
         }
         final target = atan2(e.y, e.z).clamp(0.0, 80 * pi / 180);
-        _pitch += (target - _pitch) * 0.1;
-        _moveCamera();
+        _pitchSmooth += (target - _pitchSmooth) * 0.026;
+        if ((_pitchSmooth - _pitch).abs() >= 0.2 * pi / 180) _queueSensorPush();
       }, onError: (_) {});
     } catch (_) {}
   }
@@ -173,14 +238,14 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
   double get _zoom => 16 + log(_scale) / ln2;
   double get _tiltDeg => (_pitch * 180 / pi).clamp(0.0, 60.0);
 
-  /// 感測器一秒幾十次：最多每 60 毫秒動一次鏡頭
-  void _moveCamera({bool force = false}) {
+  /// 定位、縮放：最多每 60 毫秒動一次鏡頭（羅盤、傾斜由 _pushSensors 節流）
+  void _moveCamera({bool force = false, int duration = 100}) {
     final c = _c, t = _target;
     if (c == null || t == null || _flying || !_motion) return;
     final now = DateTime.now();
     if (!force && now.difference(_lastMove).inMilliseconds < 60) return;
     _lastMove = now;
-    c.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: t, zoom: _zoom, tilt: _tiltDeg, bearing: _heading)), duration: const Duration(milliseconds: 100));
+    c.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: t, zoom: _zoom, tilt: _tiltDeg, bearing: _heading)), duration: Duration(milliseconds: duration));
   }
 
   /// 地圖中央（選集合點時用）
@@ -197,7 +262,7 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
     } catch (_) {}
     _flying = false;
     _scale = pow(2, 0.5).toDouble();
-    _pitch = 55 * pi / 180;
+    _pitch = _pitchSmooth = 55 * pi / 180;
   }
 
   void _backToMe() {
@@ -271,7 +336,7 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
       reduce ? await c.moveCamera(CameraUpdate.newCameraPosition(to)) : await c.animateCamera(CameraUpdate.newCameraPosition(to), duration: const Duration(milliseconds: 2600));
     } catch (_) {}
     // 讓仰角從鏡頭的 50° 平順接回感測器
-    _pitch = 50 * pi / 180;
+    _pitch = _pitchSmooth = 50 * pi / 180;
     _flying = false;
   }
 

@@ -8,19 +8,28 @@ import 'package:flutter/scheduler.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../l10n.dart';
+import '../map/tour_map.dart';
 import '../ui/night.dart';
 import 'aiya_store.dart';
 
 const _site = 'https://tourchip.web.app';
 
 /// 打開艾婭（首頁、團的畫面右上角）
-Future<void> openAiya(BuildContext context) => Navigator.of(context).push(PageRouteBuilder(
-      opaque: false,
-      barrierColor: const Color(0xE6070B1F),
+/// 不透明的頁面：淡入結束後，底下的 3D 地圖就停止繪製；聊天期間地圖的羅盤、傾斜、定位也暫停（省電、不發燙）。
+/// 回報給同團的位置（TourService）不暫停，團員和領隊照樣看得到你。
+Future<void> openAiya(BuildContext context) async {
+  TourMapState.paused.value = true;
+  try {
+    await Navigator.of(context).push(PageRouteBuilder(
+      opaque: true,
       transitionDuration: const Duration(milliseconds: 350),
       pageBuilder: (_, _, _) => const AiyaScreen(),
       transitionsBuilder: (_, anim, _, child) => FadeTransition(opacity: anim, child: child),
     ));
+  } finally {
+    TourMapState.paused.value = false;
+  }
+}
 
 /// 右上角的艾婭按鈕（金色小光點）
 class AiyaButton extends StatelessWidget {
@@ -673,7 +682,7 @@ class _AiyaScreenState extends State<AiyaScreen> with SingleTickerProviderStateM
     final inCall = call != AiyaCallState.idle;
 
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: const Color(0xFF070B1F),
       resizeToAvoidBottomInset: false,
       body: Stack(children: [
         Positioned.fill(child: IgnorePointer(child: DecoratedBox(decoration: BoxDecoration(gradient: RadialGradient(center: const Alignment(0, -0.45), radius: 0.8, colors: [const Color(0x33FFC861), const Color(0x228E2DE2), Night.night900.withValues(alpha: 0)]))))),
@@ -722,7 +731,23 @@ class _AiyaScreenState extends State<AiyaScreen> with SingleTickerProviderStateM
               child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
                 ConstrainedBox(
                   constraints: BoxConstraints(maxHeight: (size.height - keyboard) * 0.34),
-                  child: ListView.builder(controller: _scroll, shrinkWrap: true, itemCount: _msgs.length, itemBuilder: (context, i) => _bubble(_msgs[i])),
+                  // 上面還有被捲走的對話時，頂部淡出，不會在艾婭下方切出一條硬邊；捲到最上面就不淡
+                  child: AnimatedBuilder(
+                    animation: _scroll,
+                    builder: (context, list) {
+                      final fade = _scroll.hasClients ? _scroll.position.pixels.clamp(0.0, 56.0) : 0.0;
+                      return ShaderMask(
+                        blendMode: BlendMode.dstIn,
+                        shaderCallback: (r) => LinearGradient(
+                          begin: Alignment.topCenter, end: Alignment.bottomCenter,
+                          colors: const [Color(0x00FFFFFF), Color(0xFFFFFFFF)],
+                          stops: [0, r.height > 0 ? (fade / r.height).clamp(0.0, 1.0) : 0],
+                        ).createShader(r),
+                        child: list,
+                      );
+                    },
+                    child: ListView.builder(controller: _scroll, shrinkWrap: true, itemCount: _msgs.length, itemBuilder: (context, i) => _bubble(_msgs[i])),
+                  ),
                 ),
                 const SizedBox(height: Night.space2),
                 if (call == AiyaCallState.live)
