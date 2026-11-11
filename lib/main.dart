@@ -20,6 +20,7 @@ import 'screens/home_screen.dart';
 import 'screens/intro_screen.dart';
 import 'screens/join.dart';
 import 'screens/social.dart';
+import 'screens/thanks.dart';
 import 'tour/install_link.dart';
 import 'tour/profile.dart';
 import 'tour/service.dart';
@@ -107,6 +108,7 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
     TourService.createAndroidChannel();
     TourService.incomingCall.addListener(_onIncomingCall);
     TourService.incomingRoll.addListener(_onIncomingRoll);
+    TourService.askThanks.addListener(_onAskThanks);
     TourService.openChat.addListener(_onOpenChat);
     PassStore.notice.addListener(_onPassNotice);
     PassStore.load();
@@ -120,6 +122,7 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     TourService.incomingCall.removeListener(_onIncomingCall);
     TourService.incomingRoll.removeListener(_onIncomingRoll);
+    TourService.askThanks.removeListener(_onAskThanks);
     TourService.openChat.removeListener(_onOpenChat);
     PassStore.notice.removeListener(_onPassNotice);
     _linkSub?.cancel();
@@ -155,6 +158,8 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
     void opened(RemoteMessage m) {
       TourService.onPush(m.data);
       if ('${m.data['type']}' == 'tgroup_msg' && '${m.data['from'] ?? ''}'.isNotEmpty) TourService.openChat.value = '${m.data['from']}';
+      // 最後一天的送花提醒：打開送花面板
+      if ('${m.data['type']}' == 'tgroup_thanks') TourService.askThanks.value = true;
     }
     FirebaseMessaging.onMessageOpenedApp.listen(opened);
     FirebaseMessaging.instance.getInitialMessage().then((m) { if (m != null) opened(m); });
@@ -231,6 +236,16 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
     TourService.openChat.value = null;
     if (!mounted || TourService.current.value == null) return;
     await openChat(context, uid);
+  }
+
+  /// 點了最後一天的送花提醒：等團的資料讀進來，打開送花面板
+  Future<void> _onAskThanks() async {
+    if (!TourService.askThanks.value || !mounted) return;
+    TourService.askThanks.value = false;
+    await TourService.refresh();
+    final g = TourService.current.value;
+    if (!mounted || _overlayOpen || g == null || !g.thanksOpen) return;
+    await thankFromGroup(context, g);
   }
 
   void _onPassNotice() {

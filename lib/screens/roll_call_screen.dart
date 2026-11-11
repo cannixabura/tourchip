@@ -78,7 +78,7 @@ class _RollCallScreenState extends State<RollCallScreen> {
     );
   }
 
-  Widget _row(TourGroup g, TourMember m, {required String status, required Color color, bool urgent = false, bool canPing = false}) {
+  Widget _row(TourGroup g, TourMember m, {required String status, required Color color, bool urgent = false, bool canPing = false, Widget? extra}) {
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -88,9 +88,10 @@ class _RollCallScreenState extends State<RollCallScreen> {
             child: Text('${m.no}', style: const TextStyle(color: Night.ink, fontWeight: FontWeight.w600))),
         const SizedBox(width: 12),
         Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text([if (m.label.isNotEmpty) m.label, if (m.sub != null) g.subName(m.sub)].join(' · ').ifEmpty(tx('${m.no} 號', 'No. ${m.no}')), style: const TextStyle(color: Night.ink, fontSize: 15)),
+          Text([if (m.label.isNotEmpty) m.label, if (m.sub != null) g.subName(m.sub), if (m.room.isNotEmpty) tx('${m.room} 房', 'Rm ${m.room}')].join(' · ').ifEmpty(tx('${m.no} 號', 'No. ${m.no}')), style: const TextStyle(color: Night.ink, fontSize: 15)),
           Text(status, style: Night.caption.copyWith(color: color)),
         ])),
+        ?extra,
         if (canPing)
           OutlinedButton(
             onPressed: _busy ? null : () => _do('ping', {'uid': m.uid}),
@@ -154,14 +155,26 @@ class _RollCallScreenState extends State<RollCallScreen> {
     return Column(children: [
       _summary(tx('到了', 'Here'), g.here, g.rollTotal,
           [('', Night.moodCalm, g.here / t), ('', const Color(0xFFFFD166), g.late / t), ('', Night.danger, g.help / t)],
-          tx('到了 ${g.here} · 還要 5 分鐘 ${g.late} · 需要幫忙 ${g.help} · 沒回應 $none', 'Here ${g.here} · 5 min ${g.late} · Help ${g.help} · No answer $none')),
+          tx('到了 ${g.here} · 還要 5 分鐘 ${g.late} · 需要幫忙 ${g.help} · 沒回應 $none\n看到沒回應的人，按右邊的勾幫他點到。', 'Here ${g.here} · 5 min ${g.late} · Help ${g.help} · No answer $none\nSee someone who hasn\'t answered? Tap the check to mark them here.')),
       Expanded(child: ListView(padding: const EdgeInsets.symmetric(horizontal: Night.space4), children: [
         for (final m in g.rollRoster)
           _row(g, m,
-              status: switch (m.state) { 'here' => tx('到了', 'Here'), '5min' => tx('還要 5 分鐘', '5 more min'), 'help' => tx('需要幫忙', 'Needs help'), _ => tx('沒回應', 'No answer') },
+              status: m.marked
+                  ? tx('到了（領隊點到）', 'Here (marked by leader)')
+                  : switch (m.state) { 'here' => tx('到了', 'Here'), '5min' => tx('還要 5 分鐘', '5 more min'), 'help' => tx('需要幫忙', 'Needs help'), _ => tx('沒回應', 'No answer') },
               color: switch (m.state) { 'here' => Night.moodCalm, '5min' => const Color(0xFFFFD166), 'help' => Night.danger, _ => Night.inkMuted },
               urgent: m.state == 'help',
-              canPing: m.state == 'none'),
+              canPing: m.state == 'none',
+              // 手動點名：沒手機、沒電、沒網路的人，領隊看到人就幫他按「到了」；按錯可以取消
+              extra: m.marked
+                  ? TextButton(onPressed: _busy ? null : () => _do('mark', {'rollId': g.rollId, 'uid': m.uid, 'on': false}), child: Text(tx('取消', 'Undo'), style: const TextStyle(color: Night.inkMuted)))
+                  : m.state != 'here'
+                      ? IconButton(
+                          tooltip: tx('看到人了，幫他點到', 'Mark as here'),
+                          onPressed: _busy ? null : () => _do('mark', {'rollId': g.rollId, 'uid': m.uid}),
+                          icon: const Icon(Icons.how_to_reg_outlined, color: Night.moodCalm),
+                        )
+                      : null),
       ])),
       Padding(
         padding: const EdgeInsets.all(Night.space4),

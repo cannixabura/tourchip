@@ -14,6 +14,7 @@ import '../tour/service.dart';
 import '../tour/zones.dart';
 import '../translate.dart';
 import '../ui/night.dart';
+import 'help_card.dart';
 import 'join.dart';
 
 /// 團員的集合卡片：當地時間、倒數、距離與方向、「收到」。設計稿：團員收到集合
@@ -347,6 +348,8 @@ Future<void> askLost(BuildContext context, TourGroup g) async {
   if (!context.mounted) return;
   showGlassToast(context, r['success'] == true ? tx('已通知領隊，請待在原地。', 'Your leader was notified. Please stay where you are.') : tourError('${r['code']}'),
       danger: r['success'] != true, icon: Icons.location_on_outlined);
+  // 位置傳出去了：接著打開求助卡，可以拿給當地人看、撥給領隊
+  if (r['success'] == true && context.mounted) await openHelpCard(context, TourService.current.value ?? g);
 }
 
 /// 團主、共同團主：有團員迷路或需要幫忙 → 音效＋震動＋全螢幕提醒

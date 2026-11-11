@@ -18,7 +18,7 @@ String tourContext() {
   final b = StringBuffer()
     ..writeln('Group: ${g.name}')
     ..writeln('Dates: ${g.startDate} – ${g.endDate} (${g.days} days), group time zone ${g.tz}');
-  if (g.role.isNotEmpty) b.writeln('My role: ${g.role}${g.myNo != null ? ', no. ${g.myNo}' : ''}${g.mySub != null ? ', ${g.subName(g.mySub)}' : ''}');
+  if (g.role.isNotEmpty) b.writeln('My role: ${g.role}${g.myNo != null ? ', no. ${g.myNo}' : ''}${g.mySub != null ? ', ${g.subName(g.mySub)}' : ''}${g.myRoom.isNotEmpty ? ', room ${g.myRoom}' : ''}');
   final c = g.call;
   if (c != null) b.writeln('Current meeting call: ${c.place} at ${md(c.at, c.tz)} ${hm(c.at, c.tz)} local time (${zoneChip(c.at, c.tz)})${c.sub != null ? ' for ${g.subName(c.sub)}' : ''}');
   final now = DateTime.now().millisecondsSinceEpoch;
@@ -31,7 +31,8 @@ String tourContext() {
     }
   }
   for (final d in g.dayCards.take(3)) {
-    final hotel = d.hotel?.name ?? '';
+    final h = d.hotel;
+    final hotel = h == null ? '' : [h.name, if (h.breakfast.isNotEmpty) 'breakfast ${h.breakfast}', if (h.wifi.isNotEmpty) 'Wi-Fi ${h.wifi}'].where((x) => x.isNotEmpty).join(', ');
     if (d.note.isEmpty && hotel.isEmpty) continue;
     b.writeln('Day ${d.date}: ${d.note}${hotel.isNotEmpty ? ' Hotel: $hotel' : ''}');
   }

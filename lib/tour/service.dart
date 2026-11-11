@@ -26,6 +26,10 @@ const linkHost = 'tourchip.web.app';
 class TourService {
   TourService._();
   static final current = ValueNotifier<TourGroup?>(null);
+  /// 剛解散的團（3 天內、還有領隊沒送花）：首頁問一次要不要送花
+  static final ended = ValueNotifier<EndedGroup?>(null);
+  /// 收到最後一天的送花提醒：打開送花面板（main.dart 監聽）
+  static final askThanks = ValueNotifier<bool>(false);
   /// 第一次從伺服器拿到狀態之前是 false（首頁先顯示讀取中，避免閃一下首頁）
   static final loaded = ValueNotifier<bool>(false);
   /// 前景收到集合呼叫：要跳出的全螢幕卡片（main.dart 監聽）
@@ -49,7 +53,10 @@ class TourService {
           .timeout(const Duration(seconds: 20));
       final data = jsonDecode(r.body);
       if (data is! Map<String, dynamic>) return _failed(action);
-      if (data.containsKey('group')) _apply(data['group']);
+      if (data.containsKey('group')) {
+        _apply(data['group']);
+        ended.value = data['group'] == null && data['ended'] is Map ? EndedGroup.fromJson(data['ended']) : null;
+      }
       if (action == 'status' && data.containsKey('profile')) ProfileStore.apply(data['profile']);
       if (action == 'status') loaded.value = true;
       return data;
@@ -192,6 +199,12 @@ String tourError(String code) => switch (code) {
       'paid_full' => tx('這個團已滿 100 人。', 'This group is full (100).'),
       'qr' => tx('這個 QR code 已經換新，請向領隊要新的。', 'This QR code was replaced. Ask your leader for the new one.'),
       'invite' => tx('邀請碼不對，或領隊已經換新了。請再確認一次。', 'That invite code is wrong or was replaced. Please check it.'),
+      'not_yet' => tx('最後一天才能送花喔。', 'You can send flowers from the last day.'),
+      'already' => tx('你已經送過花了，謝謝你！', 'You already sent a flower. Thank you!'),
+      'ai' => tx('艾婭現在沒辦法整理，請稍後再試。', 'AIYA can\'t read it right now. Try again later.'),
+      'ai_limit' => tx('這一團的艾婭匯入次數用完了。', 'No AIYA imports left for this group.'),
+      'ai_empty' => tx('請貼上行程或分房表的文字。', 'Paste the itinerary or rooming list text.'),
+      'ai_long' => tx('文字太長了，請分成幾段匯入。', 'The text is too long. Import it in parts.'),
       'invite_rate' => tx('輸錯太多次了，請一小時後再試，或改用掃 QR code 入團。', 'Too many wrong tries. Try again in an hour, or scan the QR code.'),
       'ended' || 'not_found' || 'no_group' => tx('這個團已經結束了。', 'This group has ended.'),
       'filtered' => tx('內容有不適合的字，請換個說法。', 'Please rephrase that.'),

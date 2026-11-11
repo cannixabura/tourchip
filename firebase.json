@@ -15,6 +15,10 @@
       {
         "source": "/v/**",
         "destination": "/v.html"
+      },
+      {
+        "source": "/l/**",
+        "destination": "/l.html"
       }
     ],
     "headers": [

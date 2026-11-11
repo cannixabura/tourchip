@@ -11,6 +11,7 @@ import '../tour/service.dart';
 import '../ui/avatar.dart';
 import '../ui/night.dart';
 import 'join.dart';
+import 'thanks.dart';
 import 'pass_screen.dart';
 import 'social.dart';
 
@@ -81,6 +82,12 @@ class _SettingsBodyState extends State<_SettingsBody> {
               subtitle: p.name.isEmpty ? tx('大頭貼與暱稱，領隊點名時看得到', 'Photo and nickname your leader sees') : p.name,
               onTap: () => editProfile(context),
             ),
+          ),
+          _Row(
+            icon: Icons.local_florist_outlined,
+            title: tx('我的名片與感謝', 'My card and thanks'),
+            subtitle: tx('帶團收到的花與感謝；可以開公開名片', 'Flowers and thanks from your trips; optional public card'),
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const LeaderCardScreen())),
           ),
           ValueListenableBuilder<TourGroup?>(
             valueListenable: TourService.current,

@@ -104,6 +104,8 @@ class HotelTile extends StatelessWidget {
           const SizedBox(height: 4),
           SelectableText(hotel.addr, style: Night.body.copyWith(color: Night.ink)),
         ],
+        if (hotel.breakfast.isNotEmpty) _HotelLine(Icons.free_breakfast_outlined, tx('早餐', 'Breakfast'), hotel.breakfast),
+        if (hotel.wifi.isNotEmpty) _HotelLine(Icons.wifi, 'Wi-Fi', hotel.wifi, copy: true),
         const SizedBox(height: 8),
         Wrap(spacing: 8, runSpacing: 8, children: [
           _Chip(tx('給司機看', 'Show driver'), Icons.local_taxi_outlined, () => showDriverCard(context, hotel)),
@@ -111,6 +113,35 @@ class HotelTile extends StatelessWidget {
           if (hotel.phone.isNotEmpty) _Chip(hotel.phone, Icons.call_outlined, () => callPhone(context, hotel.phone)),
         ]),
       ]),
+    );
+  }
+}
+
+/// 飯店的一行資訊（早餐、Wi-Fi）；Wi-Fi 可以點一下複製
+class _HotelLine extends StatelessWidget {
+  final IconData icon;
+  final String label, value;
+  final bool copy;
+  const _HotelLine(this.icon, this.label, this.value, {this.copy = false});
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: copy
+          ? () {
+              Clipboard.setData(ClipboardData(text: value));
+              showGlassToast(context, tx('已複製', 'Copied'), icon: Icons.copy_outlined);
+            }
+          : null,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 6),
+        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Icon(icon, size: 16, color: Night.inkMuted),
+          const SizedBox(width: 6),
+          Text('$label  ', style: Night.caption.copyWith(color: Night.inkMuted)),
+          Expanded(child: Text(value, style: Night.body.copyWith(color: Night.ink))),
+          if (copy) const Icon(Icons.copy_outlined, size: 14, color: Night.inkFaint),
+        ]),
+      ),
     );
   }
 }
@@ -173,6 +204,8 @@ class _DayEditorState extends State<DayEditor> {
   late final _hName = TextEditingController(text: _card?.hotel?.name ?? '');
   late final _hAddr = TextEditingController(text: _card?.hotel?.addr ?? '');
   late final _hPhone = TextEditingController(text: _card?.hotel?.phone ?? '');
+  late final _hWifi = TextEditingController(text: _card?.hotel?.wifi ?? '');
+  late final _hBreakfast = TextEditingController(text: _card?.hotel?.breakfast ?? '');
   late double? _lat = _card?.hotel?.lat, _lng = _card?.hotel?.lng;
   final List<_LinkRow> _links = [];
   bool _busy = false;
@@ -187,7 +220,7 @@ class _DayEditorState extends State<DayEditor> {
 
   @override
   void dispose() {
-    for (final c in [_note, _hName, _hAddr, _hPhone]) {
+    for (final c in [_note, _hName, _hAddr, _hPhone, _hWifi, _hBreakfast]) {
       c.dispose();
     }
     for (final l in _links) {
@@ -212,7 +245,7 @@ class _DayEditorState extends State<DayEditor> {
     final r = await TourService.call('day_set', {
       'date': ymd(widget.day),
       'note': _note.text,
-      'hotel': {'name': _hName.text, 'addr': _hAddr.text, 'phone': _hPhone.text, 'lat': _lat, 'lng': _lng},
+      'hotel': {'name': _hName.text, 'addr': _hAddr.text, 'phone': _hPhone.text, 'lat': _lat, 'lng': _lng, 'wifi': _hWifi.text, 'breakfast': _hBreakfast.text},
       'links': [
         for (final l in _links)
           if (l.url.text.trim().isNotEmpty) {'title': l.title.text, 'url': l.url.text.trim()}
@@ -264,6 +297,7 @@ class _DayEditorState extends State<DayEditor> {
                 label: Text(tx('沿用前一晚：${prev.name}', 'Same as before: ${prev.name}')),
                 onPressed: () => setState(() {
                   _hName.text = prev.name; _hAddr.text = prev.addr; _hPhone.text = prev.phone; _lat = prev.lat; _lng = prev.lng;
+                  _hWifi.text = prev.wifi; _hBreakfast.text = prev.breakfast;
                 }),
               ),
             ),
@@ -271,6 +305,10 @@ class _DayEditorState extends State<DayEditor> {
           TextField(controller: _hAddr, maxLength: 200, minLines: 1, maxLines: 3, style: const TextStyle(color: Night.ink),
               decoration: InputDecoration(labelText: tx('地址（當地語言，給司機看）', 'Address (local language, for drivers)'))),
           TextField(controller: _hPhone, maxLength: 25, keyboardType: TextInputType.phone, style: const TextStyle(color: Night.ink), decoration: InputDecoration(labelText: tx('電話', 'Phone'))),
+          TextField(controller: _hBreakfast, maxLength: 60, style: const TextStyle(color: Night.ink),
+              decoration: InputDecoration(labelText: tx('早餐時間（例如：6:30–9:30 2 樓餐廳）', 'Breakfast (e.g. 6:30–9:30, 2F restaurant)'))),
+          TextField(controller: _hWifi, maxLength: 80, style: const TextStyle(color: Night.ink),
+              decoration: InputDecoration(labelText: tx('Wi-Fi 名稱與密碼', 'Wi-Fi name and password'), hintText: tx('例如：HotelGuest / 12345678', 'e.g. HotelGuest / 12345678'))),
           ListTile(
             contentPadding: EdgeInsets.zero,
             title: Text(tx('在地圖上的位置（導航用，可以不選）', 'Location on map (for directions, optional)'), style: Night.caption.copyWith(color: Night.inkMuted)),

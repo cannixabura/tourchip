@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import '../aiya/aiya_screen.dart';
 import '../l10n.dart';
 import '../map/tour_map.dart';
+import '../tour/model.dart';
 import '../tour/profile.dart';
+import '../tour/service.dart';
 import '../ui/avatar.dart';
 import '../ui/night.dart';
 import 'create_screen.dart';
 import 'join.dart';
 import 'settings_screen.dart';
+import 'thanks.dart';
 
 /// 首頁（不在任何團裡時）：和城市低語一樣先是 3D 夜光地圖（進場鏡頭從城市高空俯衝下來，
 /// 之後跟著手機的羅盤與傾斜轉動、兩指縮放），鏡頭到位後下方才出現「開一個團」「掃碼入團」。
@@ -62,6 +65,13 @@ class _HomeScreenState extends State<HomeScreen> {
               child: IgnorePointer(
                 ignoring: !_shown,
                 child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                  // 剛解散的團：問一次要不要送花給領隊
+                  ValueListenableBuilder<EndedGroup?>(
+                    valueListenable: TourService.ended,
+                    builder: (context, e, _) => e == null || e.unsent.isEmpty
+                        ? const SizedBox.shrink()
+                        : Padding(padding: const EdgeInsets.only(bottom: Night.space3), child: EndedThanksCard(ended: e)),
+                  ),
                   Row(children: [
                     Expanded(
                       child: NightButton(tx('開一個團', 'Start a group'), icon: Icons.flag_outlined, expand: true,

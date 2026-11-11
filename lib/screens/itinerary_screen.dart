@@ -8,6 +8,7 @@ import '../tour/nav.dart';
 import '../tour/service.dart';
 import '../tour/zones.dart';
 import '../ui/night.dart';
+import 'ai_import_screen.dart';
 import 'create_screen.dart';
 import 'day_screen.dart';
 import 'gather_screen.dart';
@@ -61,6 +62,7 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
             title: Text(tx('行程表', 'Itinerary'), style: Night.title),
             actions: [
               if (g.isHost) IconButton(tooltip: tx('出發日與天數', 'Dates'), icon: const Icon(Icons.date_range_outlined), onPressed: () => editTrip(context, g)),
+              if (g.isStaff) IconButton(tooltip: tx('艾婭匯入', 'Import with AIYA'), icon: const Icon(Icons.auto_awesome), onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => AiImportScreen(group: g)))),
               if (g.isStaff) TextButton(onPressed: () => _edit(context, g, days.isEmpty ? null : days[day]), child: Text(tx('新增集合點', 'Add stop'))),
             ],
           ),

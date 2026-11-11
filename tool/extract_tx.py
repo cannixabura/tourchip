@@ -31,7 +31,8 @@ def unescape(t):
 pairs = {}
 for f in sorted(pathlib.Path('lib').rglob('*.dart')):
     s = f.read_text(encoding='utf-8')
-    for m in re.finditer(r'\btx\(\s*', s):
+    # tx('中文', 'English')，以及求助卡用的 txIn(語言, '中文', 'English')
+    for m in re.finditer(r'\btx(?:In\(\s*[A-Za-z_]\w*\s*,\s*|\(\s*)', s):
         i = m.end()
         try:
             if s[i] not in "'\"": continue

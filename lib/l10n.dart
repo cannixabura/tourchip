@@ -93,6 +93,14 @@ String tx(String zh, String en) => switch (lang) {
       final l => _lookup(l, zh, en),
     };
 
+/// 指定語言的介面文字（求助卡用當地語言給當地人看）
+String txIn(String l, String zh, String en) => switch (l) {
+      'zh-Hant' => zh,
+      'zh-Hans' => ChineseConverter.toSimplified(zh),
+      'en' => en,
+      _ => _lookup(l, zh, en),
+    };
+
 /// 送給伺服器的語言（Accept-Language），讓錯誤訊息與推播用同一種語言
 String get langTag => lang;
 

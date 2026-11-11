@@ -607,3 +607,86 @@ Google 地圖	Google マップ	Google 지도	Google Maps	Google Maps	Google Maps
 加入「{g.name}」：點這個連結 {g.qr}\n還沒裝「旅行團」App 會先帶你去下載，裝好打開就會入團；也可以在 App 裡按「輸入邀請碼入團」，輸入 {formatInvite(g.invite!)}	TourChipで「{0}」に参加：{1}\nアプリがない場合はダウンロードページが開き、インストール後に開くと参加できます。アプリの「招待コードで参加」から {2} を入力することもできます	TourChip에서 "{0}"에 참가하세요: {1}\n앱이 없으면 다운로드로 안내되고, 설치 후 열면 참가돼요. 앱에서 "초대 코드로 참가"를 눌러 {2}을(를) 입력해도 돼요	Sertai "{0}" di TourChip: {1}\nBelum ada aplikasi? Pautan ini membawa anda memuat turunnya, dan anda akan menyertai apabila membukanya. Atau ketik "Sertai dengan kod jemputan" dalam aplikasi dan masukkan {2}	Gabung ke "{0}" di TourChip: {1}\nBelum punya aplikasinya? Tautan ini akan membawamu mengunduhnya, dan kamu akan bergabung saat membukanya. Atau ketuk "Gabung dengan kode undangan" di aplikasi lalu masukkan {2}	Tham gia "{0}" trên TourChip: {1}\nChưa có ứng dụng? Liên kết sẽ đưa bạn đi tải, mở ứng dụng là vào đoàn. Hoặc chạm "Tham gia bằng mã mời" trong ứng dụng và nhập {2}	เข้าร่วม "{0}" บน TourChip: {1}\nยังไม่มีแอป? ลิงก์จะพาไปดาวน์โหลด เปิดแอปแล้วจะเข้าร่วมให้ หรือแตะ "เข้าร่วมด้วยรหัสเชิญ" ในแอปแล้วใส่ {2}
 邀請碼不對，或領隊已經換新了。請再確認一次。	招待コードが違うか、リーダーが新しくしました。もう一度確認してください。	초대 코드가 틀렸거나 리더가 새로 바꿨어요. 다시 확인해 주세요.	Kod jemputan salah atau telah ditukar oleh ketua. Sila semak semula.	Kode undangan salah atau sudah diganti pemimpin. Coba periksa lagi.	Mã mời không đúng hoặc trưởng đoàn đã đổi mã mới. Vui lòng kiểm tra lại.	รหัสเชิญไม่ถูกต้อง หรือหัวหน้ากลุ่มเปลี่ยนใหม่แล้ว โปรดตรวจสอบอีกครั้ง
 輸錯太多次了，請一小時後再試，或改用掃 QR code 入團。	間違いが多すぎます。1時間後にもう一度試すか、QRコードをスキャンして参加してください。	너무 많이 틀렸어요. 1시간 뒤에 다시 시도하거나 QR 코드를 스캔해 참가하세요.	Terlalu banyak cubaan salah. Cuba lagi selepas sejam, atau imbas kod QR.	Terlalu banyak salah. Coba lagi satu jam lagi, atau pindai kode QR.	Nhập sai quá nhiều lần. Hãy thử lại sau một giờ hoặc quét mã QR.	ใส่ผิดหลายครั้งเกินไป ลองใหม่ในอีกหนึ่งชั่วโมง หรือสแกน QR code แทน
+{s.no} 號	{0}番	{0}번	No. {0}	No. {0}	Số {0}	หมายเลข {0}
+艾婭沒有找到行程或分房資料，換一段文字試試。	AIYAは行程も部屋割りも見つけられませんでした。別の文章で試してください。	AIYA가 일정이나 객실 배정 정보를 찾지 못했어요. 다른 글로 해 보세요.	AIYA tidak menjumpai jadual atau senarai bilik. Cuba teks lain.	AIYA tidak menemukan jadwal atau daftar kamar. Coba teks lain.	AIYA không tìm thấy lịch trình hay danh sách phòng. Hãy thử đoạn văn khác.	AIYA ไม่พบกำหนดการหรือรายชื่อห้อง ลองใช้ข้อความอื่น
+已經存好了	保存しました	저장했어요	Disimpan	Tersimpan	Đã lưu	บันทึกแล้ว
+存好了，有 {fails} 項沒存成功，請再檢查一次。	保存しましたが、{0}件は保存できませんでした。確認してください。	저장했지만 {0}개는 저장하지 못했어요. 다시 확인해 주세요.	Disimpan, tetapi {0} item gagal. Sila semak.	Tersimpan, tapi {0} item gagal. Coba periksa lagi.	Đã lưu, nhưng {0} mục bị lỗi. Vui lòng kiểm tra lại.	บันทึกแล้ว แต่มี {0} รายการไม่สำเร็จ โปรดตรวจสอบ
+艾婭匯入	AIYAで取り込む	AIYA로 가져오기	Import dengan AIYA	Impor dengan AIYA	Nhập bằng AIYA	นำเข้าด้วย AIYA
+貼上旅行社給的行程表或分房表，艾婭會整理出每天的飯店（Wi-Fi、早餐）、集合時間地點和房號。存之前你可以先檢查、取消不要的。	旅行会社の行程表や部屋割り表を貼り付けると、AIYAが毎日のホテル（Wi-Fi、朝食）、集合時間と場所、部屋番号を整理します。保存する前に確認して、不要なものを外せます。	여행사 일정표나 객실 배정표를 붙여 넣으면 AIYA가 날마다의 호텔(Wi-Fi, 조식), 집합 시간과 장소, 객실 번호를 정리해요. 저장하기 전에 확인하고 필요 없는 건 뺄 수 있어요.	Tampal jadual atau senarai bilik daripada agensi. AIYA akan mengeluarkan hotel setiap hari (Wi-Fi, sarapan), masa dan tempat berkumpul, serta nombor bilik. Anda boleh semak semuanya sebelum simpan.	Tempel jadwal atau daftar kamar dari agen. AIYA akan merangkum hotel tiap hari (Wi-Fi, sarapan), waktu dan tempat kumpul, serta nomor kamar. Kamu bisa memeriksa semuanya sebelum menyimpan.	Dán lịch trình hoặc danh sách phòng từ công ty du lịch. AIYA sẽ tổng hợp khách sạn mỗi ngày (Wi-Fi, bữa sáng), giờ và điểm tập trung, số phòng. Bạn có thể kiểm tra trước khi lưu.	วางกำหนดการหรือรายชื่อห้องจากบริษัททัวร์ AIYA จะสรุปโรงแรมแต่ละวัน (Wi-Fi อาหารเช้า) เวลาและจุดนัดพบ และหมายเลขห้อง ตรวจสอบได้ก่อนบันทึก
+這一團還可以用 {g.aiLeft} 次。艾婭是 AI，可能會出錯，請檢查後再存。	このグループはあと{0}回使えます。AIYAはAIなので間違えることがあります。確認してから保存してください。	이 그룹은 {0}번 더 쓸 수 있어요. AIYA는 AI라서 틀릴 수 있으니 확인 후 저장하세요.	Tinggal {0} import untuk kumpulan ini. AIYA ialah AI dan boleh tersilap, jadi semak sebelum simpan.	Sisa {0} impor untuk grup ini. AIYA adalah AI dan bisa keliru, jadi periksa sebelum menyimpan.	Đoàn này còn {0} lần nhập. AIYA là AI và có thể sai, hãy kiểm tra trước khi lưu.	กลุ่มนี้ใช้ได้อีก {0} ครั้ง AIYA เป็น AI อาจผิดพลาดได้ โปรดตรวจสอบก่อนบันทึก
+例如：\n第一天 07:30 桃園機場第二航廈集合…\n住宿：札幌 JR Inn（早餐 6:30–9:30）\n分房：王小明 1203、李美華 1205	例：\n1日目 07:30 桃園空港第2ターミナル集合…\nホテル：JRイン札幌（朝食 6:30–9:30）\n部屋割り：王 1203、李 1205	예:\n1일차 07:30 타오위안공항 2터미널 집합…\n숙소: JR 인 삿포로 (조식 6:30–9:30)\n객실: 왕 1203, 이 1205	cth.\nHari 1 07:30 berkumpul di Lapangan Terbang Taoyuan T2…\nHotel: JR Inn Sapporo (sarapan 6:30–9:30)\nBilik: Wang 1203, Lee 1205	mis.\nHari 1 07:30 kumpul di Bandara Taoyuan T2…\nHotel: JR Inn Sapporo (sarapan 6:30–9:30)\nKamar: Wang 1203, Lee 1205	vd.\nNgày 1 07:30 tập trung ở sân bay Đào Viên nhà ga 2…\nKhách sạn: JR Inn Sapporo (ăn sáng 6:30–9:30)\nPhòng: Wang 1203, Lee 1205	เช่น\nวันที่ 1 07:30 นัดที่สนามบินเถาหยวน อาคาร 2…\nโรงแรม: JR Inn Sapporo (อาหารเช้า 6:30–9:30)\nห้อง: Wang 1203, Lee 1205
+艾婭整理中…	AIYAが整理中…	AIYA가 정리하는 중…	AIYA sedang membaca…	AIYA sedang membaca…	AIYA đang đọc…	AIYA กำลังอ่าน…
+請艾婭整理	AIYAに整理してもらう	AIYA에게 정리 맡기기	Minta AIYA	Minta AIYA	Nhờ AIYA	ให้ AIYA จัดการ
+勾選要存的項目。集合點會加進行程表，每日資訊會和原本的合併。	保存する項目にチェックしてください。集合場所は行程表に追加され、毎日の情報は今の内容と合わせます。	저장할 항목을 체크하세요. 집합 장소는 일정에 추가되고, 날마다의 정보는 기존 내용과 합쳐져요.	Tandakan yang mahu disimpan. Tempat berkumpul ditambah ke jadual; info harian digabungkan dengan yang sedia ada.	Centang yang ingin disimpan. Titik kumpul ditambahkan ke jadwal; info harian digabung dengan yang sudah ada.	Đánh dấu mục cần lưu. Điểm tập trung được thêm vào lịch trình; thông tin mỗi ngày được gộp với nội dung hiện có.	เลือกรายการที่จะบันทึก จุดนัดพบจะเพิ่มลงกำหนดการ ข้อมูลรายวันจะรวมกับของเดิม
+每日資訊	毎日の情報	날마다의 정보	Info harian	Info harian	Thông tin mỗi ngày	ข้อมูลรายวัน
+早餐 {d.card.hotel!.breakfast}	朝食 {0}	조식 {0}	Sarapan {0}	Sarapan {0}	Ăn sáng {0}	อาหารเช้า {0}
+分房（對到團員才會存；對不到的請自己選）	部屋割り（メンバーと一致したものだけ保存。一致しない場合は選んでください）	객실 배정 (멤버와 맞는 것만 저장돼요. 안 맞으면 직접 고르세요)	Bilik (disimpan hanya jika padan dengan ahli; pilih jika tidak padan)	Kamar (disimpan hanya jika cocok dengan anggota; pilih jika tidak cocok)	Phòng (chỉ lưu khi khớp với thành viên; tự chọn nếu không khớp)	ห้อง (บันทึกเฉพาะที่ตรงกับสมาชิก ถ้าไม่ตรงให้เลือกเอง)
+{x.room} 房	{0}号室	{0}호	Bilik {0}	Kamar {0}	Phòng {0}	ห้อง {0}
+選團員	メンバーを選ぶ	멤버 선택	Pilih ahli	Pilih anggota	Chọn thành viên	เลือกสมาชิก
+不套用	使わない	적용 안 함	Langkau	Lewati	Bỏ qua	ข้าม
+重新貼	やり直す	다시 붙여넣기	Mula semula	Ulangi	Dán lại	เริ่มใหม่
+存起來	保存	저장	Simpan	Simpan	Lưu	บันทึก
+早餐	朝食	조식	Sarapan	Sarapan	Ăn sáng	อาหารเช้า
+已複製	コピーしました	복사했어요	Disalin	Disalin	Đã sao chép	คัดลอกแล้ว
+早餐時間（例如：6:30–9:30 2 樓餐廳）	朝食（例：6:30–9:30 2階レストラン）	조식 시간 (예: 6:30–9:30 2층 레스토랑)	Sarapan (cth. 6:30–9:30, restoran tingkat 2)	Sarapan (mis. 6:30–9:30, restoran lantai 2)	Bữa sáng (vd. 6:30–9:30, nhà hàng tầng 2)	อาหารเช้า (เช่น 6:30–9:30 ห้องอาหารชั้น 2)
+Wi-Fi 名稱與密碼	Wi-Fiの名前とパスワード	Wi-Fi 이름과 비밀번호	Nama dan kata laluan Wi-Fi	Nama dan kata sandi Wi-Fi	Tên và mật khẩu Wi-Fi	ชื่อและรหัสผ่าน Wi-Fi
+例如：HotelGuest / 12345678	例：HotelGuest / 12345678	예: HotelGuest / 12345678	cth. HotelGuest / 12345678	mis. HotelGuest / 12345678	vd. HotelGuest / 12345678	เช่น HotelGuest / 12345678
+我和旅行團走散了，需要幫忙。	ツアーの団体とはぐれてしまいました。助けてください。	여행 단체와 떨어졌어요. 도움이 필요해요.	Saya terpisah daripada kumpulan pelancongan saya dan perlukan bantuan.	Saya terpisah dari rombongan tur saya dan butuh bantuan.	Tôi bị lạc khỏi đoàn du lịch và cần giúp đỡ.	ฉันพลัดหลงกับกลุ่มทัวร์ ต้องการความช่วยเหลือ
+團名：{g.name}	団体名：{0}	단체 이름: {0}	Kumpulan: {0}	Rombongan: {0}	Đoàn: {0}	กลุ่ม: {0}
+我是 {g.myNo} 號團員	私はメンバー{0}番です	저는 {0}번 멤버예요	Saya ahli No. {0}	Saya anggota No. {0}	Tôi là thành viên số {0}	ฉันคือสมาชิกหมายเลข {0}
+請幫我打電話給領隊：{phone}	添乗員に電話してください：{0}	인솔자에게 전화해 주세요: {0}	Tolong telefon ketua rombongan saya: {0}	Tolong telepon pemimpin tur saya: {0}	Vui lòng gọi cho trưởng đoàn của tôi: {0}	กรุณาโทรหาหัวหน้าทัวร์ของฉัน: {0}
+我住的飯店：{hotel.name}	泊まっているホテル：{0}	제가 묵는 호텔: {0}	Hotel saya: {0}	Hotel saya: {0}	Khách sạn của tôi: {0}	โรงแรมที่ฉันพัก: {0}
+求助卡	ヘルプカード	도움 카드	Kad bantuan	Kartu bantuan	Thẻ cầu cứu	การ์ดขอความช่วยเหลือ
+拿給當地人看，請他幫你打電話給領隊。	近くの人に見せて、添乗員に電話してもらいましょう。	근처 사람에게 보여 주고 인솔자에게 전화해 달라고 하세요.	Tunjukkan kepada orang berdekatan dan minta mereka telefon ketua anda.	Tunjukkan ke orang di dekatmu dan minta mereka menelepon pemimpinmu.	Đưa cho người gần đó xem và nhờ họ gọi cho trưởng đoàn.	ยื่นให้คนแถวนั้นดู แล้วขอให้ช่วยโทรหาหัวหน้าทัวร์
+請幫幫我	助けてください	도와주세요	Tolong saya	Tolong saya	Xin hãy giúp tôi	กรุณาช่วยฉันด้วย
+（領隊還沒填電話）	（添乗員の電話番号は未登録です）	(인솔자 전화번호가 아직 없어요)	(Nombor telefon ketua belum diisi)	(Nomor telepon pemimpin belum diisi)	(Trưởng đoàn chưa điền số điện thoại)	(หัวหน้าทัวร์ยังไม่ได้ใส่เบอร์โทร)
+上面寫的是：	カードの内容：	카드 내용:	Kad ini menyatakan:	Isi kartu:	Trên thẻ ghi:	การ์ดเขียนว่า:
+撥給領隊 {phone}	添乗員に電話 {0}	인솔자에게 전화 {0}	Telefon ketua {0}	Telepon pemimpin {0}	Gọi trưởng đoàn {0}	โทรหาหัวหน้าทัวร์ {0}
+坐計程車回飯店：給司機看	タクシーでホテルへ：運転手に見せる	택시로 호텔 가기: 기사님께 보여주기	Teksi ke hotel: tunjuk kepada pemandu	Taksi ke hotel: tunjukkan ke sopir	Đi taxi về khách sạn: đưa tài xế xem	นั่งแท็กซี่กลับโรงแรม: ให้คนขับดู
+有危險請直接撥打當地緊急電話：	危険なときは現地の緊急番号へ：	위험하면 현지 긴급 번호로 전화하세요:	Dalam bahaya? Hubungi talian kecemasan tempatan:	Dalam bahaya? Hubungi nomor darurat setempat:	Gặp nguy hiểm? Gọi số khẩn cấp địa phương:	ถ้าอันตราย โทรเบอร์ฉุกเฉินท้องถิ่น:
+報警 {emergency.police}	警察 {0}	경찰 {0}	Polis {0}	Polisi {0}	Cảnh sát {0}	ตำรวจ {0}
+救護車 {emergency.ambulance}	救急車 {0}	구급차 {0}	Ambulans {0}	Ambulans {0}	Cấp cứu {0}	รถพยาบาล {0}
+也可以在團裡按「我迷路了」，把位置傳給領隊。	グループ画面の「迷子になった」で位置を添乗員に送ることもできます。	그룹에서 "길을 잃었어요"를 눌러 위치를 인솔자에게 보낼 수도 있어요.	Anda juga boleh ketik "Saya sesat" untuk hantar lokasi kepada ketua.	Kamu juga bisa ketuk "Saya tersesat" untuk mengirim lokasi ke pemimpin.	Bạn cũng có thể chạm "Tôi bị lạc" để gửi vị trí cho trưởng đoàn.	แตะ "ฉันหลงทาง" เพื่อส่งตำแหน่งให้หัวหน้าทัวร์ได้ด้วย
+我的房號	部屋番号	내 객실	Bilik saya	Kamar saya	Phòng của tôi	ห้องของฉัน
+我的車	私のバス	내 차량	Bas saya	Bus saya	Xe của tôi	รถของฉัน
+送花給領隊	リーダーに花を贈る	리더에게 꽃 보내기	Hantar bunga kepada ketua	Kirim bunga ke pemimpin	Tặng hoa cho trưởng đoàn	ส่งดอกไม้ให้หัวหน้าทัวร์
+{g.staffRooms[s.uid]} 房	{0}号室	{0}호	Bilik {0}	Kamar {0}	Phòng {0}	ห้อง {0}
+房號	部屋番号	객실 번호	Bilik	Kamar	Phòng	ห้อง
+{m.room} 房	{0}号室	{0}호	Bilik {0}	Kamar {0}	Phòng {0}	ห้อง {0}
+寫備註（例如姓名）	メモを書く（名前など）	메모 쓰기 (이름 등)	Tambah nota (cth. nama)	Tambah catatan (mis. nama)	Ghi chú (vd. tên)	เพิ่มบันทึก (เช่น ชื่อ)
+設定房號	部屋番号を設定	객실 번호 설정	Tetapkan bilik	Atur kamar	Đặt số phòng	ตั้งหมายเลขห้อง
+房號：{m.room}	部屋番号：{0}	객실: {0}	Bilik: {0}	Kamar: {0}	Phòng: {0}	ห้อง: {0}
+{who} 的房號	{0}の部屋番号	{0}의 객실	Bilik untuk {0}	Kamar untuk {0}	Phòng của {0}	ห้องของ {0}
+團員自己看得到；每晚換房就到這裡改。	メンバー本人も見られます。部屋が変わったらここで変更してください。	멤버 본인도 볼 수 있어요. 객실이 바뀌면 여기서 고치세요.	Ahli boleh lihat bilik sendiri. Tukar di sini apabila bilik berubah.	Anggota bisa melihat kamarnya sendiri. Ubah di sini saat kamar berganti.	Thành viên tự xem được phòng của mình. Đổi ở đây khi đổi phòng.	สมาชิกดูห้องของตัวเองได้ เปลี่ยนห้องเมื่อไหร่ให้แก้ที่นี่
+例如：1203	例：1203	예: 1203	cth. 1203	mis. 1203	vd. 1203	เช่น 1203
+到了 {g.here} · 還要 5 分鐘 {g.late} · 需要幫忙 {g.help} · 沒回應 {none}\n看到沒回應的人，按右邊的勾幫他點到。	到着 {0} · あと5分 {1} · 助けが必要 {2} · 未回答 {3}\n未回答の人を見つけたら、右のチェックで到着にできます。	도착 {0} · 5분 더 {1} · 도움 필요 {2} · 무응답 {3}\n응답 없는 사람을 보면 오른쪽 체크로 도착 처리하세요.	Sampai {0} · 5 minit {1} · Bantuan {2} · Tiada jawapan {3}\nNampak orang yang belum jawab? Ketik tanda semak untuk tandakan sampai.	Hadir {0} · 5 menit {1} · Bantuan {2} · Belum jawab {3}\nMelihat orang yang belum menjawab? Ketuk centang untuk menandai hadir.	Đã đến {0} · 5 phút nữa {1} · Cần giúp {2} · Chưa trả lời {3}\nThấy người chưa trả lời? Chạm dấu tích để điểm danh giúp.	มาถึง {0} · อีก 5 นาที {1} · ต้องการช่วย {2} · ยังไม่ตอบ {3}\nเห็นคนที่ยังไม่ตอบ? แตะเครื่องหมายถูกเพื่อเช็กชื่อให้
+到了（領隊點到）	到着（リーダーが確認）	도착 (리더가 확인)	Sampai (ditanda oleh ketua)	Hadir (ditandai pemimpin)	Đã đến (trưởng đoàn điểm danh)	มาถึง (หัวหน้าทัวร์เช็กให้)
+看到人了，幫他點到	到着にする	도착으로 표시	Tandakan sampai	Tandai hadir	Điểm danh đã đến	เช็กว่ามาแล้ว
+我的名片與感謝	私の名刺と感謝	내 명함과 감사 인사	Kad dan ucapan terima kasih saya	Kartu dan ucapan terima kasih saya	Danh thiếp và lời cảm ơn	นามบัตรและคำขอบคุณของฉัน
+帶團收到的花與感謝；可以開公開名片	ツアーで届いた花と感謝。公開名刺も作れます	투어에서 받은 꽃과 감사 인사. 공개 명함도 만들 수 있어요	Bunga dan ucapan daripada lawatan anda; kad awam pilihan	Bunga dan ucapan dari tur; kartu publik opsional	Hoa và lời cảm ơn từ các chuyến đi; có thể mở danh thiếp công khai	ดอกไม้และคำขอบคุณจากทริป เปิดนามบัตรสาธารณะได้
+送一朵花 🌸	花を贈る 🌸	꽃 보내기 🌸	Hantar sekuntum bunga 🌸	Kirim setangkai bunga 🌸	Tặng một bông hoa 🌸	ส่งดอกไม้ 🌸
+謝謝「{groupName}」的領隊。對方只會看到花和你寫的話，不會知道是誰送的。	「{0}」のリーダーにお礼を。相手に見えるのは花とあなたのことばだけで、誰が贈ったかはわかりません。	"{0}"의 리더에게 감사를 전하세요. 상대는 꽃과 메시지만 보고, 누가 보냈는지는 몰라요.	Ucapkan terima kasih kepada ketua "{0}". Mereka nampak bunga dan kata-kata anda, bukan siapa yang hantar.	Ucapkan terima kasih ke pemimpin "{0}". Mereka melihat bunga dan pesanmu, bukan siapa pengirimnya.	Cảm ơn trưởng đoàn của "{0}". Họ chỉ thấy hoa và lời của bạn, không biết ai gửi.	ขอบคุณหัวหน้าทัวร์ของ "{0}" เขาจะเห็นแค่ดอกไม้และข้อความ ไม่รู้ว่าใครส่ง
+想說的話（可以不寫）	ひとこと（なくても大丈夫）	하고 싶은 말 (안 써도 돼요)	Beberapa patah kata (pilihan)	Beberapa kata (opsional)	Đôi lời (không bắt buộc)	ข้อความ (ไม่ใส่ก็ได้)
+送出中…	送信中…	보내는 중…	Menghantar…	Mengirim…	Đang gửi…	กำลังส่ง…
+送出	送る	보내기	Hantar	Kirim	Gửi	ส่ง
+花送出了，謝謝你！	花を贈りました。ありがとう！	꽃을 보냈어요. 고마워요!	Bunga dihantar. Terima kasih!	Bunga terkirim. Terima kasih!	Đã tặng hoa. Cảm ơn bạn!	ส่งดอกไม้แล้ว ขอบคุณ!
+你已經送過花了，謝謝你！	もう花を贈りました。ありがとう！	이미 꽃을 보냈어요. 고마워요!	Anda sudah hantar bunga. Terima kasih!	Kamu sudah mengirim bunga. Terima kasih!	Bạn đã tặng hoa rồi. Cảm ơn bạn!	คุณส่งดอกไม้แล้ว ขอบคุณ!
+「{ended.name}」已經結束了。想謝謝領隊嗎？	「{0}」は終了しました。リーダーにお礼をしますか？	"{0}"이(가) 끝났어요. 리더에게 감사를 전할까요?	"{0}" telah tamat. Mahu berterima kasih kepada ketua?	"{0}" sudah selesai. Mau berterima kasih ke pemimpin?	"{0}" đã kết thúc. Muốn cảm ơn trưởng đoàn không?	"{0}" จบแล้ว อยากขอบคุณหัวหน้าทัวร์ไหม?
+送花	花を贈る	꽃 보내기	Hantar	Kirim	Tặng hoa	ส่งดอกไม้
+團員送你的花	メンバーからの花	멤버가 보낸 꽃	Bunga daripada ahli	Bunga dari anggota	Hoa thành viên tặng bạn	ดอกไม้จากสมาชิก
+公開名片網頁	公開名刺ページ	공개 명함 페이지	Halaman kad awam	Halaman kartu publik	Trang danh thiếp công khai	หน้านามบัตรสาธารณะ
+給旅行社或客人看：你的暱稱、一句介紹、花的數量、你挑選公開的感謝。不會顯示是誰送的。	旅行会社やお客さま向け：ニックネーム、ひとこと紹介、花の数、選んで公開した感謝。贈った人は表示されません。	여행사나 손님에게 보여 줘요: 닉네임, 한 줄 소개, 꽃 개수, 공개로 고른 감사 인사. 보낸 사람은 표시되지 않아요.	Untuk agensi atau pelanggan: nama panggilan, pengenalan ringkas, bilangan bunga dan ucapan yang anda pilih. Penghantar tidak ditunjukkan.	Untuk agen atau tamu: nama panggilan, perkenalan singkat, jumlah bunga, dan ucapan yang kamu pilih. Pengirim tidak ditampilkan.	Cho công ty du lịch hoặc khách xem: biệt danh, một câu giới thiệu, số hoa và lời cảm ơn bạn chọn. Không hiện người gửi.	ให้บริษัททัวร์หรือลูกค้าดู: ชื่อเล่น คำแนะนำสั้นๆ จำนวนดอกไม้ และคำขอบคุณที่คุณเลือก ไม่แสดงผู้ส่ง
+一句介紹	ひとこと紹介	한 줄 소개	Pengenalan ringkas	Perkenalan singkat	Một câu giới thiệu	แนะนำสั้นๆ
+例如：帶團 10 年，日本、韓國線	例：添乗歴10年、日本・韓国方面	예: 인솔 10년, 일본·한국 담당	cth. 10 tahun memimpin lawatan ke Jepun dan Korea	mis. 10 tahun memimpin tur Jepang dan Korea	vd. 10 năm dẫn tour Nhật Bản, Hàn Quốc	เช่น นำทัวร์ 10 ปี สายญี่ปุ่น เกาหลี
+儲存介紹	紹介を保存	소개 저장	Simpan pengenalan	Simpan perkenalan	Lưu giới thiệu	บันทึกคำแนะนำ
+複製網址	リンクをコピー	링크 복사	Salin pautan	Salin tautan	Sao chép liên kết	คัดลอกลิงก์
+分享	共有	공유	Kongsi	Bagikan	Chia sẻ	แชร์
+收到的感謝	届いた感謝	받은 감사 인사	Ucapan diterima	Ucapan diterima	Lời cảm ơn đã nhận	คำขอบคุณที่ได้รับ
+還沒有。帶團最後一天，團員會收到提醒，可以送你一朵花。	まだありません。ツアー最終日、メンバーに花を贈れるお知らせが届きます。	아직 없어요. 투어 마지막 날 멤버에게 꽃을 보낼 수 있다는 알림이 가요.	Belum ada. Pada hari terakhir lawatan, ahli diingatkan bahawa mereka boleh hantar bunga.	Belum ada. Di hari terakhir tur, anggota diingatkan bahwa mereka bisa mengirim bunga.	Chưa có. Ngày cuối chuyến đi, thành viên sẽ được nhắc có thể tặng hoa cho bạn.	ยังไม่มี วันสุดท้ายของทริป สมาชิกจะได้รับการแจ้งเตือนให้ส่งดอกไม้ได้
+公開	公開	공개	Awam	Publik	Công khai	สาธารณะ
+刪除這則感謝？	この感謝を削除しますか？	이 감사 인사를 삭제할까요?	Padam ucapan ini?	Hapus ucapan ini?	Xóa lời cảm ơn này?	ลบคำขอบคุณนี้?
+最後一天才能送花喔。	花は最終日から贈れます。	꽃은 마지막 날부터 보낼 수 있어요.	Bunga boleh dihantar mulai hari terakhir.	Bunga bisa dikirim mulai hari terakhir.	Từ ngày cuối mới tặng hoa được.	ส่งดอกไม้ได้ตั้งแต่วันสุดท้าย
+艾婭現在沒辦法整理，請稍後再試。	AIYAは今整理できません。あとでもう一度試してください。	AIYA가 지금은 정리할 수 없어요. 잠시 후 다시 해 보세요.	AIYA tidak dapat membacanya sekarang. Cuba lagi nanti.	AIYA tidak bisa membacanya sekarang. Coba lagi nanti.	AIYA hiện chưa đọc được. Vui lòng thử lại sau.	ตอนนี้ AIYA อ่านไม่ได้ ลองใหม่ภายหลัง
+這一團的艾婭匯入次數用完了。	このグループのAIYA取り込み回数を使い切りました。	이 그룹의 AIYA 가져오기 횟수를 다 썼어요.	Tiada lagi import AIYA untuk kumpulan ini.	Tidak ada sisa impor AIYA untuk grup ini.	Đoàn này đã hết lượt nhập bằng AIYA.	กลุ่มนี้ใช้สิทธิ์นำเข้าด้วย AIYA หมดแล้ว
+請貼上行程或分房表的文字。	行程表か部屋割り表の文章を貼り付けてください。	일정표나 객실 배정표 글을 붙여 넣어 주세요.	Tampal teks jadual atau senarai bilik.	Tempel teks jadwal atau daftar kamar.	Hãy dán nội dung lịch trình hoặc danh sách phòng.	วางข้อความกำหนดการหรือรายชื่อห้อง
+文字太長了，請分成幾段匯入。	文章が長すぎます。何回かに分けて取り込んでください。	글이 너무 길어요. 여러 번 나눠서 가져오세요.	Teks terlalu panjang. Import secara berperingkat.	Teksnya terlalu panjang. Impor sebagian-sebagian.	Văn bản quá dài. Hãy chia ra nhập nhiều lần.	ข้อความยาวเกินไป แบ่งนำเข้าเป็นหลายครั้ง

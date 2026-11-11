@@ -7,6 +7,8 @@ import '../tour/service.dart';
 import '../tour/zones.dart';
 import '../translate.dart';
 import '../ui/night.dart';
+import 'help_card.dart';
+import 'thanks.dart';
 import 'day_screen.dart';
 
 /// 團體資訊：我坐的車、今晚的飯店、緊急聯絡（領隊、旅行社、當地報警與救護）、我的資料。
@@ -67,6 +69,37 @@ class InfoScreen extends StatelessWidget {
           appBar: AppBar(backgroundColor: Night.night900, foregroundColor: Night.ink, title: Text(tx('團體資訊', 'Group info'), style: Night.title)),
           body: SafeArea(
             child: ListView(padding: const EdgeInsets.all(Night.space4), children: [
+              // ---- 我的房號、我的車（領隊設定） ----
+              if (g.myRoom.isNotEmpty || (!g.isStaff && g.mySub != null))
+                Container(
+                  margin: const EdgeInsets.only(bottom: Night.space3),
+                  padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 8),
+                  decoration: BoxDecoration(color: g.tint.withValues(alpha: 0.16), borderRadius: BorderRadius.circular(Night.radiusMd), border: Border.all(color: g.tint.withValues(alpha: 0.5))),
+                  child: Row(children: [
+                    if (g.myRoom.isNotEmpty)
+                      Expanded(child: Column(children: [
+                        Text(tx('我的房號', 'My room'), style: Night.caption),
+                        Text(g.myRoom, style: const TextStyle(color: Night.ink, fontSize: 28, fontWeight: FontWeight.w700)),
+                      ])),
+                    if (!g.isStaff && g.mySub != null)
+                      Expanded(child: Column(children: [
+                        Text(tx('我的車', 'My bus'), style: Night.caption),
+                        Text(g.subName(g.mySub), style: const TextStyle(color: Night.ink, fontSize: 22, fontWeight: FontWeight.w700), textAlign: TextAlign.center),
+                      ])),
+                  ]),
+                ),
+              // ---- 求助卡、送花 ----
+              if (!g.isStaff)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: Night.space3),
+                  child: Row(children: [
+                    Expanded(child: NightButton(tx('求助卡', 'Help card'), kind: NightButtonKind.ghost, icon: Icons.contact_emergency_outlined, onPressed: () => openHelpCard(context, g))),
+                    if (g.thanksOpen) ...[
+                      const SizedBox(width: 8),
+                      Expanded(child: NightButton(tx('送花給領隊', 'Thank your leader'), icon: Icons.local_florist_outlined, onPressed: () => thankFromGroup(context, g))),
+                    ],
+                  ]),
+                ),
               // ---- 車輛 ----
               section(tx('車輛', 'Bus'), Icons.directions_bus_outlined, [
                 if (buses.isEmpty)

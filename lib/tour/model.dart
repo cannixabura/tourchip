@@ -25,10 +25,14 @@ class TourMember {
   final String avatar;
   /// 團員自己填的資料（只有團主與共同團主拿得到）
   final MemberData? data;
-  TourMember(this.uid, this.no, this.name, this.note, this.sub, this.state, {this.avatar = '', this.data});
+  /// 房號（領隊設定）
+  final String room;
+  /// 點名：領隊幫他按的「到了」
+  final bool marked;
+  TourMember(this.uid, this.no, this.name, this.note, this.sub, this.state, {this.avatar = '', this.data, this.room = '', this.marked = false});
   factory TourMember.fromJson(Map j, {String stateKey = ''}) =>
       TourMember(_str(j['uid']), _int(j['no']) ?? 0, _str(j['name']), _str(j['note']), _int(j['sub']), stateKey.isEmpty ? '' : _str(j[stateKey]),
-          avatar: _str(j['avatar']), data: MemberData.fromJson(j['data']));
+          avatar: _str(j['avatar']), data: MemberData.fromJson(j['data']), room: _str(j['room']), marked: j['marked'] == true);
   /// 名單上顯示的稱呼：備註優先，其次暱稱
   String get label => note.isNotEmpty ? note : (name.isNotEmpty ? name : '');
 }
@@ -38,6 +42,39 @@ class TourStaff {
   final int no;
   final String avatar;
   TourStaff(this.uid, this.no, this.name, this.role, {this.avatar = ''});
+  factory TourStaff.fromJson(Map s) => TourStaff(_str(s['uid']), _int(s['no']) ?? 0, _str(s['name']), _str(s['role']), avatar: _str(s['avatar']));
+}
+
+/// 剛解散的團（3 天內）：團員還能送花給領隊
+class EndedGroup {
+  final String code, name, color;
+  final List<TourStaff> staff;
+  final List<String> sent;
+  EndedGroup.fromJson(Map j)
+      : code = _str(j['code']), name = _str(j['name']), color = _str(j['color']),
+        staff = [for (final s in (j['staff'] as List? ?? const [])) TourStaff.fromJson(s as Map)],
+        sent = [for (final u in (j['sent'] as List? ?? const [])) '$u'];
+  List<TourStaff> get unsent => staff.where((s) => !sent.contains(s.uid)).toList();
+}
+
+/// 領隊收到的感謝
+class ThankNote {
+  final String id, group, text;
+  final int at;
+  final bool pub;
+  ThankNote.fromJson(Map j) : id = _str(j['id']), group = _str(j['group']), text = _str(j['text']), at = _int(j['at']) ?? 0, pub = j['pub'] == true;
+}
+
+/// 領隊名片：公開開關、一句介紹、公開網址、花的數量與感謝
+class LeaderCard {
+  final bool pub;
+  final String intro;
+  final String? link;
+  final int flowers;
+  final List<ThankNote> thanks;
+  LeaderCard.fromJson(Map j)
+      : pub = (j['card'] as Map?)?['pub'] == true, intro = _str((j['card'] as Map?)?['intro']), link = (j['card'] as Map?)?['link'] as String?,
+        flowers = _int(j['flowers']) ?? 0, thanks = [for (final t in (j['thanks'] as List? ?? const [])) ThankNote.fromJson(t as Map)];
 }
 
 class TourLost {
@@ -123,13 +160,15 @@ class MemberData {
   bool get isEmpty => diet.isEmpty && health.isEmpty && contact.isEmpty;
 }
 
-/// 每日資訊卡的飯店
+/// 每日資訊卡的飯店（Wi-Fi、早餐時間由領隊填）
 class TourHotel {
-  final String name, addr, phone;
+  final String name, addr, phone, wifi, breakfast;
   final double? lat, lng;
-  const TourHotel(this.name, this.addr, this.phone, this.lat, this.lng);
-  static TourHotel? fromJson(Object? j) => j is Map ? TourHotel(_str(j['name']), _str(j['addr']), _str(j['phone']), _dbl(j['lat']), _dbl(j['lng'])) : null;
-  Map<String, dynamic> toJson() => {'name': name, 'addr': addr, 'phone': phone, 'lat': lat, 'lng': lng};
+  const TourHotel(this.name, this.addr, this.phone, this.lat, this.lng, {this.wifi = '', this.breakfast = ''});
+  static TourHotel? fromJson(Object? j) => j is Map
+      ? TourHotel(_str(j['name']), _str(j['addr']), _str(j['phone']), _dbl(j['lat']), _dbl(j['lng']), wifi: _str(j['wifi']), breakfast: _str(j['breakfast']))
+      : null;
+  Map<String, dynamic> toJson() => {'name': name, 'addr': addr, 'phone': phone, 'lat': lat, 'lng': lng, 'wifi': wifi, 'breakfast': breakfast};
   bool get hasCoord => lat != null && lng != null;
 }
 
@@ -200,6 +239,15 @@ class TourGroup {
   final String myBubble;
   /// 分享位置：同意過（已滿 18 歲或家長同意）、開著
   final bool shareConsent, shareOn;
+  /// 我的房號（領隊設定）
+  final String myRoom;
+  /// 送花感謝：現在可以送（最後一天起）、我已經送過的領隊 uid
+  final bool thanksOpen;
+  final List<String> thanksSent;
+  /// 艾婭匯入還剩幾次（團主與共同團主）
+  final int aiLeft;
+  /// 團主、共同團主的房號（團主與共同團主看得到）
+  final Map<String, String> staffRooms;
 
   TourGroup.fromJson(Map<String, dynamic> j)
       : code = _str(j['code']), name = _str(j['name']), color = _str(j['color']), role = _str(j['role']), hostName = _str(j['hostName']),
@@ -249,7 +297,15 @@ class TourGroup {
         blocked = [for (final b in (j['blocked'] as List? ?? const [])) '$b'],
         myBubble = _str(j['myBubble']),
         shareConsent = (j['share'] as Map?)?['consent'] == true,
-        shareOn = (j['share'] as Map?)?['on'] == true;
+        shareOn = (j['share'] as Map?)?['on'] == true,
+        myRoom = _str(j['myRoom']),
+        thanksOpen = (j['thanks'] as Map?)?['open'] == true,
+        thanksSent = [for (final u in ((j['thanks'] as Map?)?['sent'] as List? ?? const [])) '$u'],
+        aiLeft = _int(j['aiLeft']) ?? 0,
+        staffRooms = {for (final e in ((j['staffRooms'] as Map?) ?? const {}).entries) '${e.key}': '${e.value}'};
+
+  /// 還沒送過花的領隊（團主、共同團主，不含自己）
+  List<TourStaff> thankable(String myUid) => staff.where((s) => s.uid != myUid && !thanksSent.contains(s.uid)).toList();
 
   /// 怎麼稱呼某個人：暱稱，沒有就「3 號」；團主、共同團主加身分
   String whoLabel(String uid) {

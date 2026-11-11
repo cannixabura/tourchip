@@ -36,10 +36,13 @@ class MembersScreen extends StatelessWidget {
                   contentPadding: EdgeInsets.zero,
                   leading: s.avatar.isNotEmpty ? Avatar(s.avatar, size: 40, ring: g.tint) : CircleAvatar(backgroundColor: g.tint.withValues(alpha: 0.3), child: Icon(s.role == 'host' ? Icons.flag : Icons.flag_outlined, color: Night.ink, size: 18)),
                   title: Text(s.name.isEmpty ? (s.role == 'host' ? tx('團主', 'Leader') : tx('共同團主', 'Co-leader')) : s.name, style: const TextStyle(color: Night.ink)),
-                  subtitle: Text(s.role == 'host' ? tx('團主', 'Leader') : tx('共同團主', 'Co-leader'), style: Night.caption),
+                  subtitle: Text([
+                    s.role == 'host' ? tx('團主', 'Leader') : tx('共同團主', 'Co-leader'),
+                    if ((g.staffRooms[s.uid] ?? '').isNotEmpty) tx('${g.staffRooms[s.uid]} 房', 'Room ${g.staffRooms[s.uid]}'),
+                  ].join(' · '), style: Night.caption),
                   trailing: g.isHost && s.role == 'cohost'
                       ? TextButton(onPressed: () => TourService.call('cohost_remove', {'uid': s.uid}), child: Text(tx('改回團員', 'Make member')))
-                      : null,
+                      : IconButton(tooltip: tx('房號', 'Room'), icon: const Icon(Icons.meeting_room_outlined, color: Night.inkMuted), onPressed: () => _editRoom(context, s.uid, tx('${s.no} 號', 'No. ${s.no}'), g.staffRooms[s.uid] ?? '')),
                 ),
               const SizedBox(height: Night.space4),
               Text(tx('團員', 'Members'), style: Night.caption),
@@ -52,6 +55,7 @@ class MembersScreen extends StatelessWidget {
                   title: Text(m.label.isEmpty ? tx('${m.no} 號', 'No. ${m.no}') : m.label, style: const TextStyle(color: Night.ink)),
                   subtitle: Text([
                     m.sub == null ? tx('未分組', 'No sub-group') : g.subName(m.sub),
+                    if (m.room.isNotEmpty) tx('${m.room} 房', 'Room ${m.room}'),
                     if (m.data?.diet.isNotEmpty == true) m.data!.diet,
                     if (m.data?.health.isNotEmpty == true) tx('有健康備註', 'Health note'),
                   ].join(' · '), style: Night.caption, maxLines: 1, overflow: TextOverflow.ellipsis),
@@ -73,7 +77,10 @@ class MembersScreen extends StatelessWidget {
         _DataBox(m.data!),
       ],
       const SizedBox(height: Night.space4),
-      NightButton(tx('寫備註（例如姓名、房號）', 'Add a note (name, room)'), kind: NightButtonKind.ghost, icon: Icons.edit_outlined, onPressed: () { Navigator.pop(ctx); _editNote(context, m); }),
+      NightButton(tx('寫備註（例如姓名）', 'Add a note (e.g. name)'), kind: NightButtonKind.ghost, icon: Icons.edit_outlined, onPressed: () { Navigator.pop(ctx); _editNote(context, m); }),
+      const SizedBox(height: Night.space2),
+      NightButton(m.room.isEmpty ? tx('設定房號', 'Set room') : tx('房號：${m.room}', 'Room: ${m.room}'), kind: NightButtonKind.ghost, icon: Icons.meeting_room_outlined,
+          onPressed: () { Navigator.pop(ctx); _editRoom(context, m.uid, tx('${m.no} 號 ${m.label}', 'No. ${m.no} ${m.label}'), m.room); }),
       if (g.subs.isNotEmpty) ...[
         const SizedBox(height: Night.space2),
         NightButton(tx('換分組', 'Change sub-group'), kind: NightButtonKind.ghost, icon: Icons.directions_bus_outlined, onPressed: () { Navigator.pop(ctx); _assign(context, g, m); }),
@@ -137,6 +144,22 @@ class MembersScreen extends StatelessWidget {
       TextField(controller: ctl, maxLength: 20, autofocus: true, style: const TextStyle(color: Night.ink), decoration: InputDecoration(hintText: tx('例如：王小明 302 房', 'e.g. Wang, room 302'))),
       NightButton(tx('儲存', 'Save'), onPressed: () async {
         final r = await TourService.call('note', {'uid': m.uid, 'note': ctl.text});
+        if (!ctx.mounted) return;
+        if (r['success'] == true) { Navigator.pop(ctx); } else { showGlassToast(ctx, tourError('${r['code']}'), danger: true); }
+      }),
+    ]));
+  }
+
+  /// 房號：團員會在「車輛・飯店・緊急」看到自己的房號
+  void _editRoom(BuildContext context, String uid, String who, String room) {
+    final ctl = TextEditingController(text: room);
+    showPanel(context, (ctx, _) => Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      Text(tx('$who 的房號', 'Room for $who'), style: Night.title, textAlign: TextAlign.center),
+      Text(tx('團員自己看得到；每晚換房就到這裡改。', 'Members can see their own room. Change it here when rooms change.'), style: Night.caption, textAlign: TextAlign.center),
+      const SizedBox(height: Night.space3),
+      TextField(controller: ctl, maxLength: 10, autofocus: true, style: const TextStyle(color: Night.ink, fontSize: 22), textAlign: TextAlign.center, decoration: InputDecoration(hintText: tx('例如：1203', 'e.g. 1203'))),
+      NightButton(tx('儲存', 'Save'), onPressed: () async {
+        final r = await TourService.call('room', {'uid': uid, 'room': ctl.text});
         if (!ctx.mounted) return;
         if (r['success'] == true) { Navigator.pop(ctx); } else { showGlassToast(ctx, tourError('${r['code']}'), danger: true); }
       }),
