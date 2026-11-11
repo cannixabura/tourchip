@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '../l10n.dart';
@@ -10,13 +11,7 @@ Future<void> openTourLink(BuildContext context, TourLink link) async {
   switch (link) {
     case JoinLink(:final code, :final version):
       final r = await TourService.call('join', {'code': code, 'v': version});
-      if (!context.mounted) return;
-      if (r['success'] == true) {
-        final g = TourService.current.value;
-        showGlassToast(context, tx('已加入「${g?.name ?? ''}」，你是 ${g?.myNo ?? 0} 號', 'Joined "${g?.name ?? ''}". You are No. ${g?.myNo ?? 0}'), icon: Icons.flag_outlined);
-      } else {
-        showGlassToast(context, tourError('${r['code']}'), danger: true, icon: Icons.error_outline);
-      }
+      if (context.mounted) _showJoinResult(context, r);
     case VoucherLink(:final code):
       final g = TourService.current.value;
       if (g == null || !g.isHost) {
@@ -31,6 +26,64 @@ Future<void> openTourLink(BuildContext context, TourLink link) async {
       showGlassToast(context, r['success'] == true ? done : tourError('${r['code']}'),
           danger: r['success'] != true, icon: r['success'] == true ? Icons.workspace_premium_outlined : Icons.error_outline);
   }
+}
+
+void _showJoinResult(BuildContext context, Map r) {
+  if (r['success'] == true) {
+    final g = TourService.current.value;
+    showGlassToast(context, tx('已加入「${g?.name ?? ''}」，你是 ${g?.myNo ?? 0} 號', 'Joined "${g?.name ?? ''}". You are No. ${g?.myNo ?? 0}'), icon: Icons.flag_outlined);
+  } else {
+    showGlassToast(context, tourError('${r['code']}'), danger: true, icon: Icons.error_outline);
+  }
+}
+
+/// 邀請碼顯示成「1234 5678」
+String formatInvite(String inv) => inv.length == 8 ? '${inv.substring(0, 4)} ${inv.substring(4)}' : inv;
+
+/// 已經裝好 App：輸入領隊給的 8 位數邀請碼入團
+Future<void> enterInviteAndJoin(BuildContext context) async {
+  final ctl = TextEditingController();
+  var busy = false;
+  String? error;
+  final joined = await showPanel<Map>(context, (ctx, setS) {
+    Future<void> submit() async {
+      final inv = ctl.text.replaceAll(RegExp(r'\D'), '');
+      if (inv.length != 8 || busy) {
+        setS(() => error = tx('邀請碼是 8 位數字', 'The invite code has 8 digits'));
+        return;
+      }
+      setS(() { busy = true; error = null; });
+      final r = await TourService.call('join', {'invite': inv});
+      if (!ctx.mounted) return;
+      if (r['success'] == true) {
+        Navigator.pop(ctx, r);
+      } else {
+        setS(() { busy = false; error = tourError('${r['code']}'); });
+      }
+    }
+
+    return Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      SheetTitle(tx('輸入邀請碼', 'Enter invite code'), closeTooltip: tx('關閉', 'Close')),
+      const SizedBox(height: Night.space2),
+      Text(tx('向領隊要 8 位數的邀請碼，入團 QR code 下面就有。', 'Ask your leader for the 8-digit code. It\'s under the join QR code.'), style: Night.body, textAlign: TextAlign.center),
+      const SizedBox(height: Night.space4),
+      TextField(
+        controller: ctl,
+        autofocus: true,
+        keyboardType: TextInputType.number,
+        textAlign: TextAlign.center,
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(8)],
+        style: const TextStyle(color: Night.ink, fontSize: 30, letterSpacing: 8, fontFeatures: [FontFeature.tabularFigures()]),
+        decoration: InputDecoration(hintText: '00000000', hintStyle: TextStyle(color: Night.inkMuted.withValues(alpha: 0.35)), errorText: error, errorMaxLines: 3),
+        onChanged: (_) { if (error != null) setS(() => error = null); },
+        onSubmitted: (_) => submit(),
+      ),
+      const SizedBox(height: Night.space4),
+      NightButton(busy ? tx('加入中…', 'Joining…') : tx('入團', 'Join'), icon: Icons.flag_outlined, onPressed: busy ? null : submit),
+    ]);
+  });
+  ctl.dispose();
+  if (joined != null && context.mounted) _showJoinResult(context, joined);
 }
 
 /// App 內掃 QR code：入團或團購券

@@ -16,7 +16,9 @@ body{margin:0;min-height:100vh;display:grid;place-items:center;background:radial
 .card{width:100%;max-width:420px;background:rgba(26,31,74,.72);border:1px solid var(--line);border-radius:24px;padding:28px 22px;text-align:center}
 h1{font-size:26px;margin:4px 0}
 h1 b{background:linear-gradient(90deg,#b44cff,#4fc3f7);-webkit-background-clip:text;background-clip:text;color:transparent}
-.code{font-size:28px;letter-spacing:5px;margin:14px 0}
+.code{font-size:30px;letter-spacing:5px;margin:4px 0 14px;font-variant-numeric:tabular-nums}
+.label{margin:16px 0 0;font-size:13px;color:var(--faint)}
+[hidden]{display:none!important}
 p{color:var(--muted);margin:6px 0}
 a.btn{display:block;margin-top:12px;padding:14px;border-radius:999px;text-decoration:none;color:#fff;font-weight:600;background:linear-gradient(90deg,#8e2de2,#2a63d4)}
 a.ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
@@ -28,17 +30,43 @@ footer{margin-top:18px;font-size:12px;color:var(--faint)}footer a{color:var(--mu
 <main class="card" data-title="g_title">
   <h1 data-t="g_h" data-t-html>加入<b>旅行</b>團</h1>
   <p data-t="g_1">這是一個私人的團，只有拿到領隊分享的人才能加入。</p>
+  <p class="label" id="invLabel" data-t="g_inv" hidden>邀請碼</p>
   <div class="code" id="code">— — — —</div>
   <a class="btn" id="open" data-t="g_open" href="#">打開旅行團加入</a>
-  <a class="btn ghost" data-t="ios" href="https://apps.apple.com/app/id6832215611">App Store 下載</a>
-  <a class="btn ghost" data-t="android" href="https://play.google.com/store/apps/details?id=com.softchip.tourchip">Google Play 下載</a>
-  <p style="margin-top:16px" data-t="g_2">已經安裝 App：用手機相機掃 QR code 會直接打開；也可以在 App 裡按「掃碼入團」。</p>
+  <a class="btn ghost" id="ios" data-t="ios" href="https://apps.apple.com/app/id6832215611">App Store 下載</a>
+  <a class="btn ghost" id="android" data-t="android" href="https://play.google.com/store/apps/details?id=com.softchip.tourchip">Google Play 下載</a>
+  <p style="margin-top:16px" data-t="g_3">還沒裝 App：按上面的下載按鈕，裝好打開就會自動加入這一團（iPhone 打開時請按「允許貼上」）。沒有自動加入的話，在 App 裡按「輸入邀請碼入團」，輸入上面的數字。</p>
+  <p data-t="g_2">已經安裝 App：用手機相機掃 QR code 會直接打開；也可以在 App 裡按「掃碼入團」或「輸入邀請碼入團」。</p>
 </main>
 <script src="/i18n.js"></script>
 <script>
-// 團代碼只顯示在這一頁，不傳到任何地方
+// 團代碼、邀請碼只顯示在這一頁，不傳到我們的伺服器；下載按鈕把入團資訊交給商店／剪貼簿，
+// 裝好 App 第一次打開時自動入團（Android：Google Play 安裝來源；iPhone：剪貼簿）
 const m = location.pathname.match(/\/g\/([A-HJ-NP-Z2-9]{8})/i);
-if (m) { document.getElementById('code').textContent = m[1].toUpperCase(); document.getElementById('open').href = location.href; }
+if (m) {
+  const code = m[1].toUpperCase();
+  const q = new URLSearchParams(location.search);
+  const v = /^\d{1,6}$/.test(q.get('v') || '') ? q.get('v') : '1';
+  const inv = /^\d{8}$/.test(q.get('i') || '') ? q.get('i') : null;
+  const link = 'https://tourchip.web.app/g/' + code + '?v=' + v + (inv ? '&i=' + inv : '');
+  document.getElementById('code').textContent = inv ? inv.slice(0, 4) + ' ' + inv.slice(4) : code;
+  if (inv) document.getElementById('invLabel').hidden = false;
+  document.getElementById('open').href = link;
+  const play = document.getElementById('android');
+  play.href = 'https://play.google.com/store/apps/details?id=com.softchip.tourchip&referrer=' + encodeURIComponent('tg=' + code + '&v=' + v);
+  const ios = document.getElementById('ios');
+  ios.addEventListener('click', function (e) {
+    // 先把入團連結複製起來，再去 App Store（複製失敗也照樣去下載）
+    if (!navigator.clipboard || !navigator.clipboard.writeText) return;
+    e.preventDefault();
+    const go = function () { location.href = ios.href; };
+    navigator.clipboard.writeText(link).then(go, go);
+  });
+  // 只顯示這支手機用得到的商店
+  const ua = navigator.userAgent || '';
+  if (/android/i.test(ua)) ios.hidden = true;
+  else if (/iphone|ipad|ipod|macintosh/i.test(ua) && 'ontouchend' in document) play.hidden = true;
+}
 </script>
 </body>
 </html>

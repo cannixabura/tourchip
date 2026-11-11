@@ -20,6 +20,7 @@ import 'screens/home_screen.dart';
 import 'screens/intro_screen.dart';
 import 'screens/join.dart';
 import 'screens/social.dart';
+import 'tour/install_link.dart';
 import 'tour/profile.dart';
 import 'tour/service.dart';
 import 'tour/zones.dart';
@@ -186,7 +187,21 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
       if (link == null || !mounted) return;
       openTourLink(context, link);
     }
-    links.getInitialLink().then(handle).catchError((_) {});
+    links.getInitialLink().then((uri) async {
+      if (uri != null) {
+        await markInstallLinkChecked();
+        handle(uri);
+        return;
+      }
+      // 新安裝後第一次打開：從入團網頁過來的就自動入團
+      final link = await takeInstallLink();
+      if (link == null) return;
+      for (var i = 0; i < 50 && !TourService.loaded.value; i++) {
+        await Future.delayed(const Duration(milliseconds: 300));
+      }
+      if (!mounted || TourService.current.value != null) return;
+      openTourLink(context, link);
+    }).catchError((_) {});
     _linkSub = links.uriLinkStream.listen(handle, onError: (_) {});
   }
 

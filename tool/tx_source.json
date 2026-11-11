@@ -916,6 +916,10 @@
 "en": "Scan to join"
 },
 {
+"zh": "輸入邀請碼入團",
+"en": "Join with invite code"
+},
+{
 "zh": "設定你的暱稱",
 "en": "Set your nickname"
 },
@@ -1288,10 +1292,6 @@
 "en": "Use this spot"
 },
 {
-"zh": "已加入「{g?.name ?? ''}」，你是 {g?.myNo ?? 0} 號",
-"en": "Joined \"{g?.name ?? ''}\". You are No. {g?.myNo ?? 0}"
-},
-{
 "zh": "團購券要由團主在開團後掃描使用。",
 "en": "The group leader scans the voucher after creating a group."
 },
@@ -1310,6 +1310,30 @@
 {
 "zh": "這一團已升級，最多 100 人。",
 "en": "Upgraded. Up to 100 people."
+},
+{
+"zh": "已加入「{g?.name ?? ''}」，你是 {g?.myNo ?? 0} 號",
+"en": "Joined \"{g?.name ?? ''}\". You are No. {g?.myNo ?? 0}"
+},
+{
+"zh": "邀請碼是 8 位數字",
+"en": "The invite code has 8 digits"
+},
+{
+"zh": "輸入邀請碼",
+"en": "Enter invite code"
+},
+{
+"zh": "向領隊要 8 位數的邀請碼，入團 QR code 下面就有。",
+"en": "Ask your leader for the 8-digit code. It's under the join QR code."
+},
+{
+"zh": "加入中…",
+"en": "Joining…"
+},
+{
+"zh": "入團",
+"en": "Join"
 },
 {
 "zh": "這不是旅行團的 QR code。",
@@ -1576,8 +1600,12 @@
 "en": "Only leaders can see the join QR code"
 },
 {
-"zh": "團員用旅行團 App 掃描就能入團",
-"en": "Members scan this with TourChip to join"
+"zh": "邀請碼",
+"en": "Invite code"
+},
+{
+"zh": "團員用手機相機或旅行團 App 掃描就能入團；已經裝好 App 的人，也可以按「輸入邀請碼入團」輸入上面的數字。",
+"en": "Members scan with the camera or TourChip to join. If they already have the app, they can tap \"Join with invite code\" and enter the number above."
 },
 {
 "zh": "已入團",
@@ -1604,8 +1632,8 @@
 "en": "New QR code"
 },
 {
-"zh": "換新後，舊的 QR code 和連結立刻失效。已經入團的人不受影響。",
-"en": "The old QR code and link stop working. Members who joined stay in."
+"zh": "換新後，舊的 QR code、連結和邀請碼立刻失效。已經入團的人不受影響。",
+"en": "The old QR code, link and invite code stop working. Members who joined stay in."
 },
 {
 "zh": "換新",
@@ -1618,6 +1646,10 @@
 {
 "zh": "加入「{g.name}」：先安裝「旅行團」App，再點這個連結 {g.qr}",
 "en": "Join \"{g.name}\" on TourChip: {g.qr}"
+},
+{
+"zh": "加入「{g.name}」：點這個連結 {g.qr}\n還沒裝「旅行團」App 會先帶你去下載，裝好打開就會入團；也可以在 App 裡按「輸入邀請碼入團」，輸入 {formatInvite(g.invite!)}",
+"en": "Join \"{g.name}\" on TourChip: {g.qr}\nNo app yet? The link takes you to download it, and you'll join when you open it. Or tap \"Join with invite code\" in the app and enter {formatInvite(g.invite!)}"
 },
 {
 "zh": "集合狀態",
@@ -2142,6 +2174,14 @@
 {
 "zh": "這個 QR code 已經換新，請向領隊要新的。",
 "en": "This QR code was replaced. Ask your leader for the new one."
+},
+{
+"zh": "邀請碼不對，或領隊已經換新了。請再確認一次。",
+"en": "That invite code is wrong or was replaced. Please check it."
+},
+{
+"zh": "輸錯太多次了，請一小時後再試，或改用掃 QR code 入團。",
+"en": "Too many wrong tries. Try again in an hour, or scan the QR code."
 },
 {
 "zh": "這個團已經結束了。",

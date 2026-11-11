@@ -72,7 +72,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: _SolidGhost(child: NightButton(tx('掃碼入團', 'Scan to join'), icon: Icons.qr_code_scanner, kind: NightButtonKind.ghost, expand: true, onPressed: () => scanAndOpen(context))),
                     ),
                   ]),
-                  const SizedBox(height: Night.space3),
+                  Center(
+                    child: TextButton.icon(
+                      onPressed: () => enterInviteAndJoin(context),
+                      icon: const Icon(Icons.dialpad, size: 18, color: Night.inkMuted),
+                      label: Text(tx('輸入邀請碼入團', 'Join with invite code'), style: const TextStyle(color: Night.inkMuted, fontSize: 14)),
+                    ),
+                  ),
                   const _ProfileBar(),
                 ]),
               ),

@@ -61,9 +61,13 @@ class _QrScreenState extends State<QrScreen> {
                 ),
               ),
               const SizedBox(height: Night.space3),
-              Center(child: SelectableText(g.code, style: const TextStyle(color: Night.ink, fontSize: 22, letterSpacing: 4))),
+              if (g.invite != null) ...[
+                Center(child: Text(tx('邀請碼', 'Invite code'), style: Night.caption.copyWith(color: Night.inkMuted))),
+                Center(child: SelectableText(formatInvite(g.invite!), style: const TextStyle(color: Night.ink, fontSize: 30, letterSpacing: 4, fontWeight: FontWeight.w600))),
+              ] else
+                Center(child: SelectableText(g.code, style: const TextStyle(color: Night.ink, fontSize: 22, letterSpacing: 4))),
               const SizedBox(height: Night.space2),
-              Text(tx('團員用旅行團 App 掃描就能入團', 'Members scan this with TourChip to join'), style: Night.body, textAlign: TextAlign.center),
+              Text(tx('團員用手機相機或旅行團 App 掃描就能入團；已經裝好 App 的人，也可以按「輸入邀請碼入團」輸入上面的數字。', 'Members scan with the camera or TourChip to join. If they already have the app, they can tap "Join with invite code" and enter the number above.'), style: Night.body, textAlign: TextAlign.center),
               const SizedBox(height: Night.space4),
               GlassCard(
                 padding: const EdgeInsets.symmetric(vertical: 14),
@@ -81,12 +85,14 @@ class _QrScreenState extends State<QrScreen> {
               const SizedBox(height: Night.space4),
               Row(children: [
                 Expanded(child: NightButton(tx('換新 QR code', 'New QR code'), kind: NightButtonKind.ghost, onPressed: () async {
-                  final ok = await confirmSheet(context, tx('換新後，舊的 QR code 和連結立刻失效。已經入團的人不受影響。', 'The old QR code and link stop working. Members who joined stay in.'), action: tx('換新', 'Replace'));
+                  final ok = await confirmSheet(context, tx('換新後，舊的 QR code、連結和邀請碼立刻失效。已經入團的人不受影響。', 'The old QR code, link and invite code stop working. Members who joined stay in.'), action: tx('換新', 'Replace'));
                   if (ok == true) await TourService.call('rotate_qr');
                 })),
                 const SizedBox(width: 12),
                 Expanded(child: NightButton(tx('分享入團連結', 'Share link'), onPressed: () => SharePlus.instance.share(ShareParams(
-                  text: tx('加入「${g.name}」：先安裝「旅行團」App，再點這個連結 ${g.qr}', 'Join "${g.name}" on TourChip: ${g.qr}'),
+                  text: g.invite == null
+                      ? tx('加入「${g.name}」：先安裝「旅行團」App，再點這個連結 ${g.qr}', 'Join "${g.name}" on TourChip: ${g.qr}')
+                      : tx('加入「${g.name}」：點這個連結 ${g.qr}\n還沒裝「旅行團」App 會先帶你去下載，裝好打開就會入團；也可以在 App 裡按「輸入邀請碼入團」，輸入 ${formatInvite(g.invite!)}', 'Join "${g.name}" on TourChip: ${g.qr}\nNo app yet? The link takes you to download it, and you\'ll join when you open it. Or tap "Join with invite code" in the app and enter ${formatInvite(g.invite!)}'),
                 )))),
               ]),
             ]),

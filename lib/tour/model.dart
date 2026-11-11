@@ -181,6 +181,8 @@ class TourGroup {
   final int? myNo, mySub;
   final bool paid, lostSent;
   final String? qr;
+  /// 8 位數邀請碼（只有團主與共同團主拿得到）
+  final String? invite;
   final List<String> subs;
   final List<TourStaff> staff;
   final TourCall? call;
@@ -210,6 +212,7 @@ class TourGroup {
         myData = MemberData.fromJson(j['myData']),
         myNo = _int(j['myNo']), mySub = _int(j['mySub']), paid = j['paid'] == true, lostSent = j['lostSent'] == true,
         qr = j['qr'] as String?,
+        invite = j['invite'] as String?,
         subs = [for (final s in (j['subs'] as List? ?? const [])) '$s'],
         staff = [for (final s in (j['staff'] as List? ?? const [])) TourStaff(_str(s['uid']), _int(s['no']) ?? 0, _str(s['name']), _str(s['role']), avatar: _str(s['avatar']))],
         call = j['call'] is Map
