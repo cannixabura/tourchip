@@ -10,6 +10,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../l10n.dart';
@@ -43,12 +44,21 @@ class TourService {
   static DateTime _posSentAt = DateTime.fromMillisecondsSinceEpoch(0);
   static Position? _posSent;
 
+  /// App 的 build 號：伺服器用來判斷這支手機有沒有新功能（例如送花提醒只發給有送花功能的版本）
+  static String? _build;
+  static Future<String> _appBuild() async {
+    if (_build != null) return _build!;
+    try { _build = (await PackageInfo.fromPlatform()).buildNumber; } catch (_) { _build = ''; }
+    return _build!;
+  }
+
   static Future<Map<String, dynamic>> call(String action, [Map<String, dynamic> body = const {}]) async {
     try {
       final token = await FirebaseAuth.instance.currentUser?.getIdToken();
+      final build = await _appBuild();
       final r = await http
           .post(Uri.parse(_url),
-              headers: {'Content-Type': 'application/json', 'Accept-Language': langTag, if (token != null) 'Authorization': 'Bearer $token'},
+              headers: {'Content-Type': 'application/json', 'Accept-Language': langTag, if (token != null) 'Authorization': 'Bearer $token', if (build.isNotEmpty) 'X-App-Build': build},
               body: jsonEncode({'action': action, ...body}))
           .timeout(const Duration(seconds: 20));
       final data = jsonDecode(r.body);

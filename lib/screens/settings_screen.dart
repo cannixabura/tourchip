@@ -6,14 +6,15 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../l10n.dart';
 import '../tour/model.dart';
+import '../tour/nav.dart';
 import '../tour/profile.dart';
 import '../tour/service.dart';
 import '../ui/avatar.dart';
 import '../ui/night.dart';
 import 'join.dart';
-import 'thanks.dart';
 import 'pass_screen.dart';
 import 'social.dart';
+import 'thanks.dart';
 
 const _site = 'https://tourchip.web.app';
 const _contact = 'service.softchip@gmail.com';
@@ -88,6 +89,20 @@ class _SettingsBodyState extends State<_SettingsBody> {
             title: tx('我的名片與感謝', 'My card and thanks'),
             subtitle: tx('帶團收到的花與感謝；可以開公開名片', 'Flowers and thanks from your trips; optional public card'),
             onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const LeaderCardScreen())),
+          ),
+          // 城市低語（限 18 歲以上）：只給團主、共同團主看（團員可能未成年）；只打開商店頁，不傳任何帳號或團的資料
+          ValueListenableBuilder<TourGroup?>(
+            valueListenable: TourService.current,
+            builder: (context, g, _) => g?.isStaff != true
+                ? const SizedBox.shrink()
+                : _Row(
+                    icon: Icons.nightlife_outlined,
+                    title: tx('想認識在地人？', 'Want to meet locals?'),
+                    subtitle: tx('試試我們的另一個 App「城市低語」（限 18 歲以上）', 'Try our other app, Mood Whisper (18+ only)'),
+                    onTap: () => openLink(context, Platform.isIOS
+                        ? 'https://apps.apple.com/app/id6820145668'
+                        : 'https://play.google.com/store/apps/details?id=com.softchip.moodwhisper'),
+                  ),
           ),
           ValueListenableBuilder<TourGroup?>(
             valueListenable: TourService.current,
