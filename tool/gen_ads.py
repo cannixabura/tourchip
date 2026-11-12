@@ -3,7 +3,7 @@
 # 圖片放在官網 hosting/ads/ 底下（部署後是公開網址，給自動貼文抓圖）
 #   post_XX_4x5.jpg   1080×1350（FB／IG 貼文／Threads／X）
 #   post_XX_9x16.jpg  1080×1920（IG／FB 限時動態、Reels、YouTube Shorts 封面）
-# 繁中讀 posts.json → hosting/ads/zh/；英文 posts_en.json → hosting/ads/en/；日文 posts_ja.json → hosting/ads/ja/；韓文 posts_ko.json → hosting/ads/ko/；越南、泰、馬來、印尼文 posts_{vi,th,ms,id}.json → hosting/ads/{vi,th,ms,id}/（各用該語言的徽章與底部文字）
+# 繁中讀 posts.json → hosting/ads/zh/；英文 posts_en.json → hosting/ads/en/；日文 posts_ja.json → hosting/ads/ja/；韓文 posts_ko.json → hosting/ads/ko/；越南、泰、馬來、印尼、葡萄牙文 posts_{vi,th,ms,id,pt}.json → hosting/ads/{vi,th,ms,id,pt}/（各用該語言的徽章與底部文字）
 # 執行：python3 tool/gen_ads.py（全部語言）、python3 tool/gen_ads.py ja（只產生日文）
 import glob, json, os, sys
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
@@ -27,6 +27,8 @@ LANGS = {
            'name': 'TourChip', 'tag': 'Ahli sentiasa percuma · Tanpa daftar'},
     'id': {'posts': 'posts_id.json', 'out': 'id', 'badge': 'app_store_badge_id-id.png',
            'name': 'TourChip', 'tag': 'Anggota selalu gratis · Tanpa daftar'},
+    'pt': {'posts': 'posts_pt.json', 'out': 'pt', 'badge': 'app_store_badge_pt-br.png',
+           'name': 'TourChip', 'tag': 'Sempre grátis para membros · Sem cadastro'},
 }
 ICON = os.path.join(ROOT, 'assets/icon/app_icon.png')
 
@@ -47,7 +49,7 @@ CUR_LANG = 'zh'
 # 韓文用 Apple SD Gothic Neo（Regular 0、Medium 2、SemiBold 4）
 KO = '/System/Library/Fonts/AppleSDGothicNeo.ttc'
 KO_IDX = {'regular': 0, 'medium': 2, 'semibold': 4}
-# 越南文、馬來文、印尼文用 Helvetica Neue（PingFang 沒有越南文的聲調字母）；泰文用 Sukhumvit Set
+# 越南文、馬來文、印尼文、葡萄牙文用 Helvetica Neue（PingFang 沒有越南文的聲調字母）；泰文用 Sukhumvit Set
 LATIN = '/System/Library/Fonts/HelveticaNeue.ttc'
 LATIN_IDX = {'regular': 0, 'medium': 10, 'semibold': 1}
 # 泰文用 Sukhumvit Set，但 PIL 沒有 raqm 時聲調符號位置會錯，所以交給 macOS CoreText 排（tool/render_text.swift）
@@ -81,7 +83,7 @@ def tdraw(target, xy, s, f, fill):
     color.putalpha(img.getchannel('A').point(lambda v: v * a // 255))
     target.alpha_composite(color, (max(0, round(xy[0] - pad)), max(0, round(xy[1] - pad))))
 def font(size, weight='regular'):
-    if CUR_LANG in ('vi', 'ms', 'id'): return ImageFont.truetype(LATIN, size, index=LATIN_IDX[weight])
+    if CUR_LANG in ('vi', 'ms', 'id', 'pt'): return ImageFont.truetype(LATIN, size, index=LATIN_IDX[weight])
     if CUR_LANG == 'th': return CTFont(THAI_PS[weight], size)
     if CUR_LANG == 'ja': return ImageFont.truetype(JA[weight], size, index=0)
     if CUR_LANG == 'ko': return ImageFont.truetype(KO, size, index=KO_IDX[weight])
