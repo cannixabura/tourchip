@@ -15,3 +15,4 @@ android/key.properties
 
 # Firebase Hosting 部署快取
 .firebase/
+tool/.build/
