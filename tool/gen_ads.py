@@ -1,19 +1,22 @@
 # 廣告貼文圖：讀 marketing/ads/posts.json，用 assets/images/intro_XX.webp 當底圖，
 # 疊上標題、副標、App 圖示與 Apple 官方「App Store 下載」徽章，輸出兩種尺寸：
+# 圖片放在官網 hosting/ads/ 底下（部署後是公開網址，給自動貼文抓圖）
 #   post_XX_4x5.jpg   1080×1350（FB／IG 貼文／Threads／X）
 #   post_XX_9x16.jpg  1080×1920（IG／FB 限時動態、Reels、YouTube Shorts 封面）
-# 繁中讀 posts.json → images/；英文讀 posts_en.json → images_en/（英文徽章、底部英文字）
-# 執行：python3 tool/gen_ads.py（兩種都產生）、python3 tool/gen_ads.py en（只產生英文）
+# 繁中讀 posts.json → hosting/ads/zh/；英文 posts_en.json → hosting/ads/en/；日文 posts_ja.json → hosting/ads/ja/（各用該語言的徽章與底部文字）
+# 執行：python3 tool/gen_ads.py（全部語言）、python3 tool/gen_ads.py ja（只產生日文）
 import glob, json, os, sys
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ADS = os.path.join(ROOT, 'marketing/ads')
 LANGS = {
-    'zh': {'posts': 'posts.json', 'out': 'images', 'badge': 'app_store_badge_zh-tw.png',
+    'zh': {'posts': 'posts.json', 'out': 'zh', 'badge': 'app_store_badge_zh-tw.png',
            'name': '旅行團 TourChip', 'tag': '團員永遠免費・不用註冊'},
-    'en': {'posts': 'posts_en.json', 'out': 'images_en', 'badge': 'app_store_badge_en-us.png',
+    'en': {'posts': 'posts_en.json', 'out': 'en', 'badge': 'app_store_badge_en-us.png',
            'name': 'TourChip', 'tag': 'Always free for members · No sign-up'},
+    'ja': {'posts': 'posts_ja.json', 'out': 'ja', 'badge': 'app_store_badge_ja-jp.png',
+           'name': 'TourChip', 'tag': 'メンバーはずっと無料・登録不要'},
 }
 ICON = os.path.join(ROOT, 'assets/icon/app_icon.png')
 
@@ -26,7 +29,14 @@ def find_font():
 
 FONT = find_font()
 TC = {'regular': 2, 'medium': 6, 'semibold': 10}
-def font(size, weight='regular'): return ImageFont.truetype(FONT, size, index=TC[weight])
+# 日文用ヒラギノ角ゴシック（用 PingFang TC 的話，日文漢字會是中文字形）
+JA = {'regular': '/System/Library/Fonts/ヒラギノ角ゴシック W3.ttc',
+      'medium': '/System/Library/Fonts/ヒラギノ角ゴシック W5.ttc',
+      'semibold': '/System/Library/Fonts/ヒラギノ角ゴシック W6.ttc'}
+CUR_LANG = 'zh'
+def font(size, weight='regular'):
+    if CUR_LANG == 'ja': return ImageFont.truetype(JA[weight], size, index=0)
+    return ImageFont.truetype(FONT, size, index=TC[weight])
 
 INK = (243, 240, 255)
 MUTED = (215, 210, 240)
@@ -116,9 +126,11 @@ def make(post, w, h, path, L):
     img.convert('RGB').save(path, quality=90, optimize=True, progressive=True)
 
 def main():
+    global CUR_LANG
     for lang in sys.argv[1:] or list(LANGS):
         L = LANGS[lang]
-        out = os.path.join(ADS, L['out'])
+        CUR_LANG = lang
+        out = os.path.join(ROOT, 'hosting/ads', L['out'])  # 放在官網，自動貼文用 https://tourchip.web.app/ads/<語言>/post_XX_4x5.jpg
         os.makedirs(out, exist_ok=True)
         posts = json.load(open(os.path.join(ADS, L['posts']), encoding='utf-8'))
         for p in posts:
