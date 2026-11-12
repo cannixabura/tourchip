@@ -84,6 +84,9 @@
 		9E0C2A413697707CCE8FCA34 /* id */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = id; path = "id.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		390D415D1385A36ECD7467D4 /* vi */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = vi; path = "vi.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		7D6DCDBA8618B1F8414749FB /* th */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = th; path = "th.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		A080C0ADD2ACC9F5BDE2279A /* pt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = pt; path = "pt.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		10A3AFB161FD792F2D52ECB9 /* es */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = es; path = "es.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		740841E5E03B5661209558A1 /* hi */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = hi; path = "hi.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -264,6 +267,9 @@
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				hi,
+				es,
+				pt,
 				th,
 				vi,
 				id,
@@ -475,6 +481,9 @@
 		BE40AAA4EEF6B392B4472F05 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
+				740841E5E03B5661209558A1 /* hi */,
+				10A3AFB161FD792F2D52ECB9 /* es */,
+				A080C0ADD2ACC9F5BDE2279A /* pt */,
 				7D6DCDBA8618B1F8414749FB /* th */,
 				390D415D1385A36ECD7467D4 /* vi */,
 				9E0C2A413697707CCE8FCA34 /* id */,

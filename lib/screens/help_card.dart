@@ -17,6 +17,9 @@ String localLangFor(String tz) {
   if (tz == 'Asia/Ho_Chi_Minh' || tz == 'Asia/Saigon') return 'vi';
   if (tz == 'Asia/Kuala_Lumpur' || tz == 'Asia/Kuching') return 'ms';
   if (const ['Asia/Jakarta', 'Asia/Pontianak', 'Asia/Makassar', 'Asia/Jayapura'].contains(tz)) return 'id';
+  if (const ['Asia/Kolkata', 'Asia/Calcutta'].contains(tz)) return 'hi';
+  if (tz.startsWith('America/Sao_Paulo') || const ['Europe/Lisbon', 'America/Bahia', 'America/Fortaleza', 'America/Recife', 'America/Manaus', 'America/Belem'].contains(tz)) return 'pt';
+  if (const ['Europe/Madrid', 'Atlantic/Canary', 'America/Mexico_City', 'America/Cancun', 'America/Monterrey', 'America/Tijuana', 'America/Bogota', 'America/Lima', 'America/Santiago', 'America/Caracas', 'America/Guayaquil', 'America/La_Paz', 'America/Montevideo', 'America/Asuncion', 'America/Panama', 'America/Costa_Rica', 'America/Guatemala', 'America/Havana', 'America/Santo_Domingo', 'America/Puerto_Rico'].contains(tz) || tz.startsWith('America/Argentina/')) return 'es';
   return 'en';
 }
 

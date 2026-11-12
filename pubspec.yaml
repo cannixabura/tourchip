@@ -1,7 +1,7 @@
 name: tourchip
 description: "旅行團 TourChip：給領隊、導遊的帶團工具（集合、點名、3D 集合點光柱）"
 publish_to: 'none'
-version: 1.0.1+9
+version: 1.0.2+10
 
 environment:
   sdk: ^3.13.4

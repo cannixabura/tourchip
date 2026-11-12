@@ -1,0 +1,6 @@
+/* App name and permission descriptions (Info.plist translations) */
+"CFBundleDisplayName" = "Tour en grupo";
+"NSLocationWhenInUseUsageDescription" = "TourChip usa tu ubicación mientras usas la app para mostrar la distancia y la dirección al punto de encuentro. Si aceptas compartirla, las personas de tu grupo (incluido el líder) verán tu ubicación en el mapa. Puedes desactivarlo en Ajustes cuando quieras.";
+"NSCameraUsageDescription" = "Escanea el código QR de tu líder para unirte o un cupón de grupo.";
+"NSPhotoLibraryUsageDescription" = "Elige una foto de tu biblioteca como foto de perfil.";
+"NSMicrophoneUsageDescription" = "Habla por voz con AIYA, la asistente de IA. Tu voz se envía en tiempo real a OpenAI solo durante la llamada y no se graba.";

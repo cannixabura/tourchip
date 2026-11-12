@@ -33,12 +33,19 @@ T = {
            'เลือกรูปจากคลังภาพเป็นรูปโปรไฟล์'),
 }
 
+# 葡萄牙、西班牙、印地：譯文在 tool/i18n/infoplist_extra.json
+import json as _json
+for _l, _v in _json.load(open('tool/i18n/infoplist_extra.json', encoding='utf-8')).items():
+    T[_l] = ('TourChip', _v['loc'], _v['cam'], _v['photo'])
+
 def esc(s): return s.replace('\\', '\\\\').replace('"', '\\"')
 
 root = pathlib.Path('ios/Runner')
 for lang, (name, loc, cam, photo) in T.items():
     d = root / f'{lang}.lproj'
     d.mkdir(exist_ok=True)
+    if (d / 'InfoPlist.strings').exists():
+        continue  # 已存在的檔案有手動改過的名稱與麥克風說明，不要覆寫
     (d / 'InfoPlist.strings').write_text(
         '/* App name and permission descriptions (Info.plist translations) */\n'
         f'"CFBundleDisplayName" = "{esc(name)}";\n'
@@ -63,7 +70,7 @@ p.write_text(s, encoding='utf-8')
 # Info.plist：CFBundleLocalizations 列出全部語言（App Store 顯示支援的語言）
 ip = root / 'Info.plist'
 x = ip.read_text(encoding='utf-8')
-langs = ['en', 'zh-Hant', 'zh-Hans', 'ja', 'ko', 'ms', 'id', 'vi', 'th']
+langs = ['en', 'zh-Hant', 'zh-Hans', 'ja', 'ko', 'ms', 'id', 'vi', 'th', 'pt', 'es', 'hi']
 arr = '<key>CFBundleLocalizations</key>\n\t<array>\n' + ''.join(f'\t\t<string>{l}</string>\n' for l in langs) + '\t</array>'
 x = re.sub(r'<key>CFBundleLocalizations</key>\s*<array>.*?</array>', arr, x, count=1, flags=re.S)
 ip.write_text(x, encoding='utf-8')

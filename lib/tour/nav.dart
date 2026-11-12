@@ -98,6 +98,13 @@ EmergencyNumbers? emergencyFor(String tz) {
   if (t == 'Pacific/Auckland') return EmergencyNumbers(tx('紐西蘭', 'New Zealand'), '111', '111');
   if (t == 'Europe/London') return EmergencyNumbers(tx('英國', 'UK'), '999', '999', extraLabel: tx('也可以撥', 'Also'), extra: '112');
   if (t.startsWith('Europe/') && t != 'Europe/Moscow' && t != 'Europe/Istanbul') return EmergencyNumbers(tx('歐洲', 'Europe'), '112', '112');
+  if (t == 'Asia/Kolkata' || t == 'Asia/Calcutta') return EmergencyNumbers(tx('印度', 'India'), '112', '112');
+  if (['America/Sao_Paulo', 'America/Bahia', 'America/Fortaleza', 'America/Recife', 'America/Manaus', 'America/Belem'].contains(t)) return EmergencyNumbers(tx('巴西', 'Brazil'), '190', '192');
+  if (['America/Mexico_City', 'America/Cancun', 'America/Monterrey', 'America/Tijuana'].contains(t)) return EmergencyNumbers(tx('墨西哥', 'Mexico'), '911', '911');
+  if (t == 'America/Bogota') return EmergencyNumbers(tx('哥倫比亞', 'Colombia'), '123', '123');
+  if (t == 'America/Lima') return EmergencyNumbers(tx('秘魯', 'Peru'), '105', '106');
+  if (t == 'America/Santiago') return EmergencyNumbers(tx('智利', 'Chile'), '133', '131');
+  if (t.startsWith('America/Argentina/')) return EmergencyNumbers(tx('阿根廷', 'Argentina'), '911', '107');
   if (['America/New_York', 'America/Chicago', 'America/Denver', 'America/Los_Angeles', 'America/Phoenix', 'America/Anchorage', 'Pacific/Honolulu', 'America/Toronto', 'America/Vancouver'].contains(t)) {
     return EmergencyNumbers(tx('美國／加拿大', 'US / Canada'), us.police, us.ambulance);
   }

@@ -75,7 +75,7 @@ String zoneName(String zone) {
 /// 「京都 UTC+9」
 String zoneChip(int ms, String zone) => '${zoneName(zone)} ${utcLabel(ms, zone)}';
 
-/// 行程表、集合時可選的時區：台灣旅行團常去的地方（出境、入境都有）
+/// 行程表、集合時可選的時區：旅行團常去的地方（出境、入境都有）
 const commonZones = <(String, String, String)>[
   ('Asia/Taipei', '台北', 'Taipei'),
   ('Asia/Tokyo', '東京・京都・大阪', 'Tokyo / Kyoto / Osaka'),
@@ -101,4 +101,11 @@ const commonZones = <(String, String, String)>[
   ('America/Los_Angeles', '洛杉磯・舊金山', 'Los Angeles / San Francisco'),
   ('America/Vancouver', '溫哥華', 'Vancouver'),
   ('America/New_York', '紐約', 'New York'),
+  ('Asia/Kolkata', '德里・孟買', 'Delhi / Mumbai'),
+  ('Europe/Madrid', '馬德里・巴塞隆納', 'Madrid / Barcelona'),
+  ('Europe/Lisbon', '里斯本', 'Lisbon'),
+  ('America/Mexico_City', '墨西哥城', 'Mexico City'),
+  ('America/Bogota', '波哥大・利馬', 'Bogotá / Lima'),
+  ('America/Sao_Paulo', '聖保羅・里約', 'São Paulo / Rio'),
+  ('America/Argentina/Buenos_Aires', '布宜諾斯艾利斯', 'Buenos Aires'),
 ];

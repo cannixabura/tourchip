@@ -1,4 +1,4 @@
-// 官網頁面的多語言：依瀏覽器語言顯示（繁中、簡中、英、日、韓、馬來、印尼、越南、泰），其他語言用英文。
+// 官網頁面的多語言：依瀏覽器語言顯示（繁中、簡中、英、日、韓、馬來、印尼、越南、泰、葡萄牙、西班牙、印地），其他語言用英文。
 // 頁面上 data-t="key" 的元素會換成對應文字；data-t-html 允許 HTML 標記；data-ta 翻譯屬性；
 // select[data-lang] 是手動切換語言的選單（記在 localStorage）；網址 ?lang=xx 也可以指定語言。
 (function () {
@@ -182,6 +182,90 @@
       v_h: 'คูปอง <b>Tour</b>Chip',
       v_1: 'คูปองจากบริษัททัวร์ (บัตรเพิ่มจำนวนคนหรือบัตรเพิ่มวัน) หลังสร้างกลุ่มแล้ว หัวหน้าสแกนที่ "บัตร → สแกนคูปอง"',
       v_open: 'เปิด TourChip เพื่อใช้'
+    },
+    pt: {
+      home_title: 'TourChip · Encontros e chamadas para viagens em grupo',
+      home_h: '<b>Tour</b>Chip',
+      home_1: 'Escaneie para entrar. Todos ouvem a convocação.',
+      home_2: 'Ferramenta para líderes de grupo e guias: convocações, chamada, um feixe de luz 3D no ponto de encontro, veja seu grupo no mapa e “Estou perdido”.',
+      home_3: 'Grátis até 20 pessoas · Sempre grátis para membros',
+      privacy: 'Privacidade',
+      terms: 'Termos',
+      ios: 'Baixar na App Store',
+      android: 'Disponível no Google Play',
+      g_title: 'Entrar no grupo · TourChip',
+      g_h: 'Entre em um grupo do <b>Tour</b>Chip',
+      g_1: 'Este é um grupo privado. Só quem tem o link do líder pode entrar.',
+      g_open: 'Abrir o TourChip para entrar',
+      g_2: 'Já tem o app? Escanear o QR code com a câmera abre o app. Você também pode tocar em “Escanear para entrar” ou “Entrar com código de convite” no app.',
+      g_inv: 'Código de convite',
+      g_3: 'Ainda não tem o app? Toque em um botão de download acima, abra o app e escaneie este QR code de novo para entrar. A versão mais recente entra automaticamente (no iPhone, toque em “Permitir Colar”), ou toque em “Entrar com código de convite” e digite o número acima.',
+      l_title: 'Líder de grupo · TourChip',
+      l_kicker: 'TourChip · Cartão do líder',
+      l_flowers: 'flores dos membros',
+      l_empty: 'Nenhum agradecimento público ainda.',
+      l_missing: 'Este cartão não foi encontrado ou o líder o deixou privado.',
+      l_more: 'Sobre o app TourChip',
+      v_title: 'Voucher do TourChip',
+      v_h: 'Voucher do <b>Tour</b>Chip',
+      v_1: 'Um voucher da sua agência (passe de 100 pessoas ou passe de dias). Depois de criar o grupo, o líder o escaneia em “Passes → Escanear voucher”.',
+      v_open: 'Abrir o TourChip para usar'
+    },
+    es: {
+      home_title: 'TourChip · Reuniones y pase de lista para viajes en grupo',
+      home_h: '<b>Tour</b>Chip',
+      home_1: 'Escanea para unirte. Todos oyen la llamada de reunión.',
+      home_2: 'Una herramienta para líderes y guías de grupo: llamadas de reunión, pase de lista, un haz de luz 3D en el punto de encuentro, ver a tu grupo en el mapa y “Me perdí”.',
+      home_3: 'Gratis hasta 20 personas · Siempre gratis para los miembros',
+      privacy: 'Privacidad',
+      terms: 'Términos',
+      ios: 'Descargar en App Store',
+      android: 'Disponible en Google Play',
+      g_title: 'Unirse a un grupo · TourChip',
+      g_h: 'Únete a un grupo de <b>Tour</b>Chip',
+      g_1: 'Es un grupo privado. Solo pueden unirse quienes tengan el enlace del líder.',
+      g_open: 'Abrir TourChip para unirte',
+      g_2: '¿Ya la tienes instalada? Al escanear el código QR con la cámara se abre la app. También puedes tocar “Escanear para unirse” o “Unirse con código de invitación” en la app.',
+      g_inv: 'Código de invitación',
+      g_3: '¿Aún no tienes la app? Toca un botón de descarga de arriba, abre la app y vuelve a escanear este código QR para unirte. La versión más reciente te une automáticamente (en iPhone, toca “Permitir pegar”), o puedes tocar “Unirse con código de invitación” e introducir el número de arriba.',
+      l_title: 'Líder de grupo · TourChip',
+      l_kicker: 'TourChip · Tarjeta de líder',
+      l_flowers: 'flores de los miembros',
+      l_empty: 'Aún no hay agradecimientos públicos.',
+      l_missing: 'No se encontró esta tarjeta, o el líder la hizo privada.',
+      l_more: 'Sobre la app TourChip',
+      v_title: 'Cupón de TourChip',
+      v_h: 'Cupón de <b>Tour</b>Chip',
+      v_1: 'Un cupón de tu agencia (pase de personas o pase de días). Después de crear un grupo, el líder lo escanea en “Pases → Escanear cupón”.',
+      v_open: 'Abrir TourChip para usarlo'
+    },
+    hi: {
+      home_title: 'TourChip · ग्रुप यात्राओं के लिए इकट्ठा होना और हाज़िरी',
+      home_h: '<b>Tour</b>Chip',
+      home_1: 'स्कैन करके जुड़ें। इकट्ठा होने की कॉल सबको सुनाई देती है।',
+      home_2: 'टूर लीडर और गाइड के लिए ग्रुप टूल: इकट्ठा होने की कॉल, हाज़िरी, मिलने की जगह पर 3D रोशनी का खंभा, मैप पर अपना ग्रुप देखें, और "मुझे रास्ता नहीं मिल रहा"।',
+      home_3: '20 लोगों तक मुफ़्त · सदस्यों के लिए हमेशा मुफ़्त',
+      privacy: 'प्राइवेसी',
+      terms: 'शर्तें',
+      ios: 'App Store से डाउनलोड करें',
+      android: 'Google Play पर पाएँ',
+      g_title: 'ग्रुप से जुड़ें · TourChip',
+      g_h: '<b>Tour</b>Chip ग्रुप से जुड़ें',
+      g_1: 'यह एक प्राइवेट ग्रुप है। सिर्फ़ लीडर के लिंक वाले लोग ही जुड़ सकते हैं।',
+      g_open: 'जुड़ने के लिए TourChip खोलें',
+      g_2: 'ऐप पहले से है? कैमरे से QR कोड स्कैन करने पर ऐप खुल जाता है। आप ऐप में "स्कैन करके जुड़ें" या "इनवाइट कोड से जुड़ें" भी दबा सकते हैं।',
+      g_inv: 'इनवाइट कोड',
+      g_3: 'ऐप नहीं है? ऊपर डाउनलोड बटन दबाएँ, ऐप खोलें, फिर जुड़ने के लिए यह QR कोड दोबारा स्कैन करें। नए वर्ज़न में आप अपने आप जुड़ जाते हैं (iPhone पर "पेस्ट की अनुमति दें" दबाएँ), या "इनवाइट कोड से जुड़ें" दबाकर ऊपर का नंबर डालें।',
+      l_title: 'टूर लीडर · TourChip',
+      l_kicker: 'TourChip · टूर लीडर कार्ड',
+      l_flowers: 'सदस्यों से मिले फूल',
+      l_empty: 'अभी कोई पब्लिक धन्यवाद नहीं।',
+      l_missing: 'यह कार्ड नहीं मिला, या लीडर ने इसे प्राइवेट कर दिया है।',
+      l_more: 'TourChip ऐप के बारे में',
+      v_title: 'TourChip वाउचर',
+      v_h: '<b>Tour</b>Chip वाउचर',
+      v_1: 'आपकी एजेंसी का वाउचर (ग्रुप-साइज़ पास या डे पास)। ग्रुप शुरू करने के बाद लीडर इसे "पास → वाउचर स्कैन करें" में स्कैन करते हैं।',
+      v_open: 'इस्तेमाल करने के लिए TourChip खोलें'
     }
   };
 
@@ -189,7 +273,7 @@
   var X = window.TC_I18N || {};
   for (var L in X) { if (!T[L]) T[L] = {}; for (var k in X[L]) T[L][k] = X[L][k]; }
 
-  var NAMES = { 'zh-Hant': '繁體中文', 'zh-Hans': '简体中文', en: 'English', ja: '日本語', ko: '한국어', ms: 'Bahasa Melayu', id: 'Bahasa Indonesia', vi: 'Tiếng Việt', th: 'ไทย' };
+  var NAMES = { 'zh-Hant': '繁體中文', 'zh-Hans': '简体中文', en: 'English', ja: '日本語', ko: '한국어', ms: 'Bahasa Melayu', id: 'Bahasa Indonesia', vi: 'Tiếng Việt', th: 'ไทย', pt: 'Português', es: 'Español', hi: 'हिन्दी' };
 
   function norm(tag) {
     tag = String(tag || '').toLowerCase().replace(/_/g, '-');

@@ -6,14 +6,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'l10n_table.dart';
 import 'translate.dart' show ChineseConverter;
 
-/// 介面文字：9 種語言（繁中、簡中、英、日、韓、馬來、印尼、越南、泰）。
+/// 介面文字：12 種語言（繁中、簡中、英、日、韓、馬來、印尼、越南、泰、葡萄牙、西班牙、印地）。
 /// 程式裡一律寫 tx(中文, English)：
 /// - 繁中用第一個參數、英文用第二個
 /// - 簡中由繁中用 OpenCC 對照表轉換
 /// - 其他語言查 l10n_table.dart（tool/i18n/ui.tsv 產生）；帶變數的句子用英文句比對出變數再填進譯文
 /// - 查不到的一律用英文
 
-const supportedLangs = ['zh-Hant', 'zh-Hans', 'en', 'ja', 'ko', 'ms', 'id', 'vi', 'th'];
+const supportedLangs = ['zh-Hant', 'zh-Hans', 'en', 'ja', 'ko', 'ms', 'id', 'vi', 'th', 'pt', 'es', 'hi'];
 
 const langNames = {
   'zh-Hant': '繁體中文',
@@ -25,6 +25,9 @@ const langNames = {
   'id': 'Bahasa Indonesia',
   'vi': 'Tiếng Việt',
   'th': 'ไทย',
+  'pt': 'Português',
+  'es': 'Español',
+  'hi': 'हिन्दी',
 };
 
 /// 'system'（跟隨手機）或 supportedLangs 其中之一
@@ -84,6 +87,7 @@ const appLocales = [
   Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant', countryCode: 'TW'),
   Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'),
   Locale('en'), Locale('ja'), Locale('ko'), Locale('ms'), Locale('id'), Locale('vi'), Locale('th'),
+  Locale('pt'), Locale('es'), Locale('hi'),
 ];
 
 String tx(String zh, String en) => switch (lang) {
@@ -118,13 +122,16 @@ String weekdayShort(int weekday) {
     'id': ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'],
     'vi': ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'],
     'th': ['จ.', 'อ.', 'พ.', 'พฤ.', 'ศ.', 'ส.', 'อา.'],
+    'pt': ['seg', 'ter', 'qua', 'qui', 'sex', 'sáb', 'dom'],
+    'es': ['lun', 'mar', 'mié', 'jue', 'vie', 'sáb', 'dom'],
+    'hi': ['सोम', 'मंगल', 'बुध', 'गुरु', 'शुक्र', 'शनि', 'रवि'],
   };
   return (w[isZh ? 'zh' : lang] ?? w['en']!)[weekday - 1];
 }
 
 // ───────── 翻譯表查詢 ─────────
 
-const _col = {'ja': 2, 'ko': 3, 'ms': 4, 'id': 5, 'vi': 6, 'th': 7};
+const _col = {'ja': 2, 'ko': 3, 'ms': 4, 'id': 5, 'vi': 6, 'th': 7, 'pt': 8, 'es': 9, 'hi': 10};
 Map<String, List<String>>? _literal;
 List<(RegExp, RegExp, List<String>)>? _templates;
 final Map<String, String> _cache = {};
