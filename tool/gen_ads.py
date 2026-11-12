@@ -2,13 +2,19 @@
 # 疊上標題、副標、App 圖示與 Apple 官方「App Store 下載」徽章，輸出兩種尺寸：
 #   post_XX_4x5.jpg   1080×1350（FB／IG 貼文／Threads／X）
 #   post_XX_9x16.jpg  1080×1920（IG／FB 限時動態、Reels、YouTube Shorts 封面）
-# 執行：python3 tool/gen_ads.py
-import glob, json, os
+# 繁中讀 posts.json → images/；英文讀 posts_en.json → images_en/（英文徽章、底部英文字）
+# 執行：python3 tool/gen_ads.py（兩種都產生）、python3 tool/gen_ads.py en（只產生英文）
+import glob, json, os, sys
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT = os.path.join(ROOT, 'marketing/ads/images')
-BADGE = os.path.join(ROOT, 'marketing/ads/assets/app_store_badge_zh-tw.png')
+ADS = os.path.join(ROOT, 'marketing/ads')
+LANGS = {
+    'zh': {'posts': 'posts.json', 'out': 'images', 'badge': 'app_store_badge_zh-tw.png',
+           'name': '旅行團 TourChip', 'tag': '團員永遠免費・不用註冊'},
+    'en': {'posts': 'posts_en.json', 'out': 'images_en', 'badge': 'app_store_badge_en-us.png',
+           'name': 'TourChip', 'tag': 'Always free for members · No sign-up'},
+}
 ICON = os.path.join(ROOT, 'assets/icon/app_icon.png')
 
 def find_font():
@@ -38,7 +44,7 @@ def gradient(w, h, top_h, bottom_h):
     g = Image.new('L', (1, h), 0)
     for y in range(h):
         a = 0
-        if y < top_h: a = int(200 * (1 - y / top_h) ** 1.4)
+        if y < top_h: a = int(225 * (1 - y / top_h) ** 1.2)
         if y > h - bottom_h: a = max(a, int(235 * ((y - (h - bottom_h)) / bottom_h) ** 1.2))
         g.putpixel((0, y), a)
     return g.resize((w, h))
@@ -59,7 +65,7 @@ def rounded(img, r):
     ImageDraw.Draw(m).rounded_rectangle((0, 0, img.width - 1, img.height - 1), r, fill=255)
     img = img.convert('RGBA'); img.putalpha(m); return img
 
-def make(post, w, h, path):
+def make(post, w, h, path, L):
     base = Image.open(os.path.join(ROOT, 'assets/images', post['image'] + '.webp')).convert('RGB')
     tall = h / w > 1.6
     anchor = post.get('crop', 'top')
@@ -82,9 +88,10 @@ def make(post, w, h, path):
     longest = max(d.textlength(l, font=font(hs, 'semibold')) for l in lines)
     if longest > w - 120: hs = int(hs * (w - 120) / longest)
     y = text_block(d, layer, lines, font(hs, 'semibold'), w / 2, int(h * (0.135 if tall else 0.06)), INK + (255,), glow)
-    y += 10
-    sf = font(40 if tall else 36, 'medium')
-    if d.textlength(post['sub'], font=sf) > w - 100: sf = font(32, 'medium')
+    y += 16
+    ss = 40 if tall else 36
+    while ss > 26 and d.textlength(post['sub'], font=font(ss, 'medium')) > w - 100: ss -= 2
+    sf = font(ss, 'medium')
     text_block(d, layer, [post['sub']], sf, w / 2, y, MUTED + (255,))
     img = Image.alpha_composite(img, glow.filter(ImageFilter.GaussianBlur(18)))
     img = Image.alpha_composite(img, layer)
@@ -97,9 +104,9 @@ def make(post, w, h, path):
     img.alpha_composite(icon, (pad, by))
     d = ImageDraw.Draw(img)
     tx = pad + icon_s + 26
-    d.text((tx, by + 8), '旅行團 TourChip', font=font(44 if tall else 40, 'semibold'), fill=INK)
-    d.text((tx, by + icon_s - 46), '團員永遠免費・不用註冊', font=font(30 if tall else 28), fill=MUTED)
-    badge = Image.open(BADGE).convert('RGBA')
+    d.text((tx, by + 8), L['name'], font=font(44 if tall else 40, 'semibold'), fill=INK)
+    d.text((tx, by + icon_s - 46), L['tag'], font=font(30 if tall else 28), fill=MUTED)
+    badge = Image.open(os.path.join(ADS, 'assets', L['badge'])).convert('RGBA')
     bh = 104 if tall else 92
     badge = badge.resize((round(badge.width * bh / badge.height), bh), Image.LANCZOS)
     if tall:  # 直式：徽章放在名稱下方置中，比較好點
@@ -109,13 +116,16 @@ def make(post, w, h, path):
     img.convert('RGB').save(path, quality=90, optimize=True, progressive=True)
 
 def main():
-    os.makedirs(OUT, exist_ok=True)
-    posts = json.load(open(os.path.join(ROOT, 'marketing/ads/posts.json'), encoding='utf-8'))
-    for p in posts:
-        n = f"{p['id']:02d}"
-        make(p, 1080, 1350, os.path.join(OUT, f'post_{n}_4x5.jpg'))
-        make(p, 1080, 1920, os.path.join(OUT, f'post_{n}_9x16.jpg'))
-    print(len(posts), 'posts →', OUT)
+    for lang in sys.argv[1:] or list(LANGS):
+        L = LANGS[lang]
+        out = os.path.join(ADS, L['out'])
+        os.makedirs(out, exist_ok=True)
+        posts = json.load(open(os.path.join(ADS, L['posts']), encoding='utf-8'))
+        for p in posts:
+            n = f"{p['id']:02d}"
+            make(p, 1080, 1350, os.path.join(out, f'post_{n}_4x5.jpg'), L)
+            make(p, 1080, 1920, os.path.join(out, f'post_{n}_9x16.jpg'), L)
+        print(lang, len(posts), 'posts →', out)
 
 if __name__ == '__main__':
     main()
