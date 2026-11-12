@@ -3,7 +3,7 @@
 # 圖片放在官網 hosting/ads/ 底下（部署後是公開網址，給自動貼文抓圖）
 #   post_XX_4x5.jpg   1080×1350（FB／IG 貼文／Threads／X）
 #   post_XX_9x16.jpg  1080×1920（IG／FB 限時動態、Reels、YouTube Shorts 封面）
-# 繁中讀 posts.json → hosting/ads/zh/；英文 posts_en.json → hosting/ads/en/；日文 posts_ja.json → hosting/ads/ja/（各用該語言的徽章與底部文字）
+# 繁中讀 posts.json → hosting/ads/zh/；英文 posts_en.json → hosting/ads/en/；日文 posts_ja.json → hosting/ads/ja/；韓文 posts_ko.json → hosting/ads/ko/（各用該語言的徽章與底部文字）
 # 執行：python3 tool/gen_ads.py（全部語言）、python3 tool/gen_ads.py ja（只產生日文）
 import glob, json, os, sys
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
@@ -17,6 +17,8 @@ LANGS = {
            'name': 'TourChip', 'tag': 'Always free for members · No sign-up'},
     'ja': {'posts': 'posts_ja.json', 'out': 'ja', 'badge': 'app_store_badge_ja-jp.png',
            'name': 'TourChip', 'tag': 'メンバーはずっと無料・登録不要'},
+    'ko': {'posts': 'posts_ko.json', 'out': 'ko', 'badge': 'app_store_badge_ko-kr.png',
+           'name': 'TourChip', 'tag': '멤버는 항상 무료 · 회원가입 필요 없음'},
 }
 ICON = os.path.join(ROOT, 'assets/icon/app_icon.png')
 
@@ -34,8 +36,12 @@ JA = {'regular': '/System/Library/Fonts/ヒラギノ角ゴシック W3.ttc',
       'medium': '/System/Library/Fonts/ヒラギノ角ゴシック W5.ttc',
       'semibold': '/System/Library/Fonts/ヒラギノ角ゴシック W6.ttc'}
 CUR_LANG = 'zh'
+# 韓文用 Apple SD Gothic Neo（Regular 0、Medium 2、SemiBold 4）
+KO = '/System/Library/Fonts/AppleSDGothicNeo.ttc'
+KO_IDX = {'regular': 0, 'medium': 2, 'semibold': 4}
 def font(size, weight='regular'):
     if CUR_LANG == 'ja': return ImageFont.truetype(JA[weight], size, index=0)
+    if CUR_LANG == 'ko': return ImageFont.truetype(KO, size, index=KO_IDX[weight])
     return ImageFont.truetype(FONT, size, index=TC[weight])
 
 INK = (243, 240, 255)
