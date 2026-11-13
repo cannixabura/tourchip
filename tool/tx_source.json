@@ -4,12 +4,24 @@
 "en": "AIYA, AI assistant"
 },
 {
+"zh": "{(m / 60).ceil()} 小時",
+"en": "{(m / 60).ceil()} h"
+},
+{
+"zh": "{m} 分鐘",
+"en": "{m} min"
+},
+{
 "zh": "艾婭今天累了，明天再來找她吧。",
 "en": "AIYA is resting today. See you tomorrow."
 },
 {
 "zh": "今天聊了很多了，明天再來找艾婭吧。",
 "en": "You've talked a lot today. Come back tomorrow."
+},
+{
+"zh": "嗨，我是艾婭，這趟旅程的 AI 小助理。入團第一天免費，{_trialLeftText()}內可以聊 {_freeLeft} 次，行程、集合時間、當地的事都可以問我。",
+"en": "Hi, I'm AIYA, your AI travel helper. Your first day in the group is free: {_freeLeft} chats in the next {_trialLeftText()}. Ask me about the itinerary, meeting times or anything local."
 },
 {
 "zh": "嗨，我是艾婭，這趟旅程的 AI 小助理。行程、集合時間、當地的事，都可以問我。",
@@ -202,6 +214,10 @@
 {
 "zh": "艾婭之友 · 今天還有 {_freeLeft} 次",
 "en": "Friend · {_freeLeft} left today"
+},
+{
+"zh": "入團第一天免費 · 還有 {_freeLeft} 次 · 剩 {_trialLeftText()}",
+"en": "First day free · {_freeLeft} left · {_trialLeftText()} to go"
 },
 {
 "zh": "今天免費 {_freeLeft} 次",
@@ -2128,6 +2144,10 @@
 "en": "You agree to AI data processing the first time. Every group feature works without AIYA."
 },
 {
+"zh": "入團第一天免費：第一次入團（或開團）起 24 小時內，可以和艾婭聊 30 次，不扣每天的免費次數。",
+"en": "Your first day is free: for 24 hours after you first join (or create) a group, you get 30 chats with AIYA that don't count toward the daily free chats."
+},
+{
 "zh": "每天有 3 次免費文字聊天；想多聊可以買時光包，或訂閱艾婭之友（每天 20 次、每月送 60 分鐘語音通話）。",
 "en": "You get 3 free text chats a day. For more, buy a time pack or subscribe to AIYA Friend (20 chats a day and 60 call minutes a month)."
 },
@@ -2442,6 +2462,34 @@
 {
 "zh": "歐洲",
 "en": "Europe"
+},
+{
+"zh": "印度",
+"en": "India"
+},
+{
+"zh": "巴西",
+"en": "Brazil"
+},
+{
+"zh": "墨西哥",
+"en": "Mexico"
+},
+{
+"zh": "哥倫比亞",
+"en": "Colombia"
+},
+{
+"zh": "秘魯",
+"en": "Peru"
+},
+{
+"zh": "智利",
+"en": "Chile"
+},
+{
+"zh": "阿根廷",
+"en": "Argentina"
 },
 {
 "zh": "美國／加拿大",

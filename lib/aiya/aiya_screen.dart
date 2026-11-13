@@ -97,6 +97,8 @@ class _AiyaScreenState extends State<AiyaScreen> with SingleTickerProviderStateM
   DateTime? _endsAt;
   int _turnsLeft = 0;
   int _freeLeft = 0, _credits = 0;
+  /// 入團第一天免費的結束時間（毫秒）；0 = 不在試用中
+  int _trialEndsAt = 0;
   bool _sending = false, _ended = false, _opening = true;
   bool _voiceConsented = false;
   int _callSecondsLeft = 0;
@@ -188,6 +190,7 @@ class _AiyaScreenState extends State<AiyaScreen> with SingleTickerProviderStateM
   void _applyStatus(Map<String, dynamic> s) {
     AiyaStore.applyStatus(s);
     if (s['freeLeft'] is num) _freeLeft = (s['freeLeft'] as num).toInt();
+    if (s['trial'] is bool) _trialEndsAt = s['trial'] == true ? ((s['trialEndsAt'] as num?)?.toInt() ?? 0) : 0;
     if (s['credits'] is num) _credits = (s['credits'] as num).toInt();
     if (s['callSecondsLeft'] is num) _callSecondsLeft = (s['callSecondsLeft'] as num).toInt();
     if (s['voiceConsented'] is bool) _voiceConsented = s['voiceConsented'] as bool;
@@ -198,6 +201,14 @@ class _AiyaScreenState extends State<AiyaScreen> with SingleTickerProviderStateM
       _endsAt = DateTime.now().add(Duration(milliseconds: (session['remainingMs'] as num?)?.toInt() ?? 0));
     }
     if (mounted) setState(() {});
+  }
+
+  bool get _inTrial => _trialEndsAt > DateTime.now().millisecondsSinceEpoch;
+
+  /// 試用剩下的時間：「5 小時」「40 分鐘」
+  String _trialLeftText() {
+    final m = ((_trialEndsAt - DateTime.now().millisecondsSinceEpoch) / 60000).ceil().clamp(1, 24 * 60);
+    return m >= 60 ? tx('${(m / 60).ceil()} 小時', '${(m / 60).ceil()} h') : tx('$m 分鐘', '$m min');
   }
 
   Future<void> _open({bool greet = true}) async {
@@ -226,7 +237,11 @@ class _AiyaScreenState extends State<AiyaScreen> with SingleTickerProviderStateM
     await Future.delayed(const Duration(milliseconds: 1800));
     if (!mounted) return;
     if (greet && (r['resumed'] != true || _msgs.isEmpty)) {
-      _speak(tx('嗨，我是艾婭，這趟旅程的 AI 小助理。行程、集合時間、當地的事，都可以問我。', 'Hi, I\'m AIYA, your AI travel helper. Ask me about the itinerary, meeting times or anything local.'), 'smile', talkClip: 'hello');
+      _speak(
+        _inTrial
+            ? tx('嗨，我是艾婭，這趟旅程的 AI 小助理。入團第一天免費，${_trialLeftText()}內可以聊 $_freeLeft 次，行程、集合時間、當地的事都可以問我。', 'Hi, I\'m AIYA, your AI travel helper. Your first day in the group is free: $_freeLeft chats in the next ${_trialLeftText()}. Ask me about the itinerary, meeting times or anything local.')
+            : tx('嗨，我是艾婭，這趟旅程的 AI 小助理。行程、集合時間、當地的事，都可以問我。', 'Hi, I\'m AIYA, your AI travel helper. Ask me about the itinerary, meeting times or anything local.'),
+        'smile', talkClip: 'hello');
     }
   }
 
@@ -760,7 +775,9 @@ class _AiyaScreenState extends State<AiyaScreen> with SingleTickerProviderStateM
                 Wrap(alignment: WrapAlignment.center, crossAxisAlignment: WrapCrossAlignment.center, spacing: Night.space2, runSpacing: Night.space1, children: [
                   Text(
                     [
-                      if (AiyaStore.isFriend) tx('艾婭之友 · 今天還有 $_freeLeft 次', 'Friend · $_freeLeft left today') else if (_freeLeft > 0) tx('今天免費 $_freeLeft 次', '$_freeLeft free today'),
+                      if (AiyaStore.isFriend) tx('艾婭之友 · 今天還有 $_freeLeft 次', 'Friend · $_freeLeft left today')
+                      else if (_inTrial) tx('入團第一天免費 · 還有 $_freeLeft 次 · 剩 ${_trialLeftText()}', 'First day free · $_freeLeft left · ${_trialLeftText()} to go')
+                      else if (_freeLeft > 0) tx('今天免費 $_freeLeft 次', '$_freeLeft free today'),
                       if (_credits > 0) tx('時光包 $_credits 次', '$_credits in packs'),
                       if (_callSecondsLeft >= 60 && !inCall) tx('通話 ${_callSecondsLeft ~/ 60} 分鐘', '${_callSecondsLeft ~/ 60} min of calls'),
                     ].join('  ·  '),
