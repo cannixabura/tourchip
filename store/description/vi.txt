@@ -1,0 +1,35 @@
+Đừng để ai bị lạc khi đi đoàn. TourChip là công cụ cho trưởng đoàn, hướng dẫn viên, giáo viên và người tổ chức câu lạc bộ: tạo đoàn, thành viên tham gia bằng cách quét mã QR. Không cần kết bạn, không cần số điện thoại.
+
+LỜI GỌI TẬP TRUNG AI CŨNG NGHE
+Kéo lá cờ đến điểm tập trung và chọn giờ. Mọi điện thoại trong đoàn phát âm báo riêng, kể cả ở chế độ Tập trung. Ai chưa bấm "Đã nhận" sẽ được nhắc mỗi phút, tối đa 3 lần. Có thể gọi một nhóm hoặc chỉ một người.
+
+ĐIỂM HẸN LÀ LÁ CỜ TRÊN BẢN ĐỒ
+Thành viên thấy bản đồ đêm 3D xoay theo điện thoại. Lá cờ màu của đoàn đứng giữa các tòa nhà; chạm vào để xem giờ địa phương, đếm ngược, khoảng cách, hướng và chỉ đường đi bộ.
+
+ĐIỂM DANH
+Thành viên trả lời "Tôi đến rồi", "Thêm 5 phút" hoặc "Cần giúp đỡ". Người cần giúp hiện đầu tiên và trưởng đoàn được báo.
+
+THẤY CẢ ĐOÀN TRÊN BẢN ĐỒ
+Sau khi đồng ý chia sẻ, người cùng đoàn thấy ảnh của nhau trên bản đồ 3D và có thể đăng bong bóng. Nhấn giữ ảnh để nhắn tin, người nhận được thông báo ngay. Tin nhắn, thông báo và bong bóng có thể dịch bằng một lần chạm (dịch trên điện thoại). Chỉ người cùng đoàn thấy bạn; tắt bất cứ lúc nào trong Cài đặt. Vị trí bị xóa khi bạn rời đoàn hoặc đoàn kết thúc.
+
+TÔI BỊ LẠC
+Một lần chạm gửi vị trí hiện tại cho trưởng đoàn dưới dạng chấm đỏ kèm số của bạn. Tự xóa sau 30 phút.
+
+THÔNG BÁO VÀ LỊCH TRÌNH
+Gửi thông báo cho cả đoàn hoặc một nhóm. Giờ trong lịch trình luôn theo múi giờ địa phương của từng điểm hẹn.
+
+AIYA, TRỢ LÝ DU LỊCH AI
+Chạm vào chân dung AIYA để hỏi về lịch trình, giờ tập trung hay đi lại, bằng chữ hoặc gọi thoại. AIYA chỉ đọc lịch trình trưởng đoàn đã đăng và không bao giờ thấy vị trí của ai. 24 giờ đầu kể từ lần đầu vào (hoặc tạo) đoàn được miễn phí 30 lượt, sau đó mỗi ngày 3 lượt trò chuyện bằng chữ miễn phí; gói thời gian và gói thời gian gọi là tùy chọn, còn AIYA Friend là gói đăng ký tháng tự gia hạn (20 lượt mỗi ngày và 60 phút gọi mỗi tháng).
+
+AN TOÀN
+- Không cần tài khoản, không thu số điện thoại, email hay tên thật
+- Tin nhắn được lọc, có thể chặn và báo cáo
+- Thành viên dưới 18 tuổi cần cha mẹ hoặc người giám hộ đồng ý trước khi chia sẻ vị trí hay nhắn tin
+- Đoàn kết thúc lúc 23:59 ngày cuối và mọi thứ bị xóa
+
+GIÁ
+Miễn phí đến 20 người và 3 ngày, thành viên luôn miễn phí. Trưởng đoàn có thể mua vé số người (tối đa 100 người) hoặc vé ngày (thêm 7 ngày mỗi vé, tối đa 30), đều là mua một lần. Công ty du lịch có thể mua trước và gửi cho trưởng đoàn dưới dạng mã QR. AIYA Friend tự gia hạn hằng tháng cho đến khi bị hủy trong cài đặt tài khoản Apple ít nhất 24 giờ trước kỳ gia hạn.
+
+Quyền riêng tư: https://tourchip.web.app/privacy
+Điều khoản: https://tourchip.web.app/terms
+Liên hệ: service.softchip@gmail.com

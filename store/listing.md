@@ -1,5 +1,7 @@
 # 旅行團 TourChip 商店文案
 
+> 完整說明以 `store/description/` 為準（這份的完整說明已過時）。
+
 ## 繁體中文
 
 **App 名稱**：旅行團 TourChip－帶團集合點名（App Store）／旅行團 TourChip－帶團集合點名（Play，30 字內）
