@@ -112,6 +112,14 @@
 "en": "This chat has ended."
 },
 {
+"zh": "這張照片讀不到，換一張試試。",
+"en": "Couldn't read that photo. Try another one."
+},
+{
+"zh": "這次聊天的照片已經傳滿 5 張，下次聊天再拍。",
+"en": "You've sent 5 photos in this chat. Start a new chat to send more."
+},
+{
 "zh": "艾婭時光包",
 "en": "AIYA time packs"
 },
@@ -192,6 +200,42 @@
 "en": "Manage subscription"
 },
 {
+"zh": "拍照問艾婭",
+"en": "Ask about a photo"
+},
+{
+"zh": "拍景點聽故事、拍菜單幫你翻譯，招牌、告示也看得懂。",
+"en": "Snap a sight for its story, a menu to translate, or a sign to read."
+},
+{
+"zh": "拍照",
+"en": "Take a photo"
+},
+{
+"zh": "從相簿選",
+"en": "Choose from library"
+},
+{
+"zh": "照片會送給艾婭看",
+"en": "Your photo goes to AIYA"
+},
+{
+"zh": "照片會傳到 Anthropic（美國）讓艾婭辨識，只用在這一次回答，我們不會存下來。請不要拍別人的臉、證件或個人資料。",
+"en": "The photo is sent to Anthropic (US) so AIYA can read it. It is used only for this answer and we don't keep it. Please avoid other people's faces, IDs or personal details."
+},
+{
+"zh": "知道了",
+"en": "OK"
+},
+{
+"zh": "打不開相機或相簿，請到手機設定允許旅行團使用。",
+"en": "Couldn't open the camera or library. Allow access in your phone's Settings."
+},
+{
+"zh": "這張照片太大了，換一張試試。",
+"en": "That photo is too large. Try another one."
+},
+{
 "zh": "檢舉這句回覆",
 "en": "Report this reply"
 },
@@ -260,6 +304,10 @@
 "en": "Send"
 },
 {
+"zh": "分享給同伴",
+"en": "Share"
+},
+{
 "zh": "先不要",
 "en": "Not now"
 },
@@ -282,6 +330,46 @@
 {
 "zh": "同意並通話",
 "en": "Agree and call"
+},
+{
+"zh": "今天的景點介紹已經聽滿了，明天再來。",
+"en": "That's all the sight intros for today. More tomorrow."
+},
+{
+"zh": "艾婭現在有點忙，等一下再試。",
+"en": "AIYA is busy right now. Try again soon."
+},
+{
+"zh": "艾婭對這裡不太熟，有問題可以直接問她。",
+"en": "AIYA doesn't know much about this spot. Ask her anything."
+},
+{
+"zh": "「{s.place}」就在附近，要聽艾婭介紹嗎？",
+"en": "{s.place} is nearby. Hear AIYA's intro?"
+},
+{
+"zh": "聽介紹",
+"en": "Listen"
+},
+{
+"zh": "不用了",
+"en": "No thanks"
+},
+{
+"zh": "艾婭是 AI，可能會出錯。",
+"en": "AIYA is an AI and can be wrong."
+},
+{
+"zh": "停止",
+"en": "Stop"
+},
+{
+"zh": "念給我聽",
+"en": "Read it to me"
+},
+{
+"zh": "問艾婭更多",
+"en": "Ask AIYA more"
 },
 {
 "zh": "現在無法購買，請稍後再試。",
@@ -558,10 +646,6 @@
 {
 "zh": "打開點名名單看看是誰。",
 "en": "Open the roll call to see who."
-},
-{
-"zh": "知道了",
-"en": "OK"
 },
 {
 "zh": "{_subs.length + 1} 號車",
@@ -1976,6 +2060,14 @@
 "en": "Off: your group cannot see your location"
 },
 {
+"zh": "靠近景點時艾婭提醒",
+"en": "AIYA at nearby sights"
+},
+{
+"zh": "走到行程上的景點附近，問你要不要聽一分鐘介紹",
+"en": "Near a sight on the itinerary, AIYA offers a one-minute intro"
+},
+{
 "zh": "語言",
 "en": "Language"
 },
@@ -2146,6 +2238,14 @@
 {
 "zh": "入團第一天免費：第一次入團（或開團）起 24 小時內，可以和艾婭聊 30 次，不扣每天的免費次數。",
 "en": "Your first day is free: for 24 hours after you first join (or create) a group, you get 30 chats with AIYA that don't count toward the daily free chats."
+},
+{
+"zh": "按輸入框左邊的相機可以拍照問艾婭：拍景點聽故事、拍菜單幫你翻譯並標出豬肉、牛肉、酒和常見過敏原，招牌、告示也看得懂；一次聊天最多 5 張，照片不會存下來。",
+"en": "Tap the camera next to the text box to ask about a photo: a sight for its story, a menu translated with pork, beef, alcohol and common allergens marked, or a sign. Up to 5 photos per chat; photos are not kept."
+},
+{
+"zh": "走到行程上的景點附近，地圖上方會問你要不要聽艾婭的一分鐘介紹，可以念給你聽，不扣聊天次數；設定裡可以關掉。",
+"en": "Near a sight on the itinerary, AIYA offers a one-minute intro at the top of the map, read aloud if you like. It doesn't use your chats, and you can turn it off in Settings."
 },
 {
 "zh": "每天有 3 次免費文字聊天；想多聊可以買時光包，或訂閱艾婭之友（每天 20 次、每月送 60 分鐘語音通話）。",

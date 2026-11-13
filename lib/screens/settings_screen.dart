@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../aiya/aiya_spots.dart';
 import '../l10n.dart';
 import '../tour/model.dart';
 import '../tour/nav.dart';
@@ -124,6 +125,16 @@ class _SettingsBodyState extends State<_SettingsBody> {
                       if (r['success'] != true && context.mounted) showGlassToast(context, tourError('${r['code']}'), danger: true);
                     },
                   ),
+          ),
+          ValueListenableBuilder<bool>(
+            valueListenable: AiyaSpots.on,
+            builder: (context, on, _) => _SwitchRow(
+              icon: Icons.auto_awesome_outlined,
+              title: tx('靠近景點時艾婭提醒', 'AIYA at nearby sights'),
+              subtitle: tx('走到行程上的景點附近，問你要不要聽一分鐘介紹', 'Near a sight on the itinerary, AIYA offers a one-minute intro'),
+              value: on,
+              onChanged: AiyaSpots.setOn,
+            ),
           ),
           _Row(
             icon: Icons.translate,
@@ -416,6 +427,8 @@ class HelpScreen extends StatelessWidget {
           tx('點右上角的艾婭頭像，可以問行程、集合時間、當地交通和注意事項；艾婭會參考領隊公布的行程，不會看到任何人的位置。', 'Tap AIYA\'s portrait at the top to ask about the itinerary, meetup times, getting around and tips. AIYA reads the itinerary your leader posted and never sees anyone\'s location.'),
           tx('第一次使用要先同意 AI 資料處理；不用艾婭也能正常使用所有帶團功能。', 'You agree to AI data processing the first time. Every group feature works without AIYA.'),
           tx('入團第一天免費：第一次入團（或開團）起 24 小時內，可以和艾婭聊 30 次，不扣每天的免費次數。', 'Your first day is free: for 24 hours after you first join (or create) a group, you get 30 chats with AIYA that don\'t count toward the daily free chats.'),
+          tx('按輸入框左邊的相機可以拍照問艾婭：拍景點聽故事、拍菜單幫你翻譯並標出豬肉、牛肉、酒和常見過敏原，招牌、告示也看得懂；一次聊天最多 5 張，照片不會存下來。', 'Tap the camera next to the text box to ask about a photo: a sight for its story, a menu translated with pork, beef, alcohol and common allergens marked, or a sign. Up to 5 photos per chat; photos are not kept.'),
+          tx('走到行程上的景點附近，地圖上方會問你要不要聽艾婭的一分鐘介紹，可以念給你聽，不扣聊天次數；設定裡可以關掉。', 'Near a sight on the itinerary, AIYA offers a one-minute intro at the top of the map, read aloud if you like. It doesn\'t use your chats, and you can turn it off in Settings.'),
           tx('每天有 3 次免費文字聊天；想多聊可以買時光包，或訂閱艾婭之友（每天 20 次、每月送 60 分鐘語音通話）。', 'You get 3 free text chats a day. For more, buy a time pack or subscribe to AIYA Friend (20 chats a day and 60 call minutes a month).'),
           tx('語音通話依秒數計時，先扣艾婭之友的贈送時間，再扣通話時間包；通話前會請你同意聲音送去處理，我們不錄音。', 'Voice calls are charged by the second, first from AIYA Friend minutes, then from call time packs. You agree before your first call; calls are not recorded.'),
           tx('艾婭是 AI，可能會出錯；集合時間和地點請以領隊說的為準。', 'AIYA is an AI and can be wrong. Always follow your leader for meetup times and places.'),

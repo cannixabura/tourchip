@@ -1,22 +1,22 @@
 {
   "pt": {
     "loc": "O TourChip usa sua localização enquanto você usa o app para mostrar a distância e a direção até o ponto de encontro. Se você aceitar compartilhar, as pessoas do seu grupo (inclusive o líder) veem sua localização no mapa. Você pode desativar isso em Configurações a qualquer momento.",
-    "cam": "Escaneie o QR code de entrada do líder ou um voucher de grupo.",
-    "photo": "Escolha uma foto da sua biblioteca para usar como foto de perfil.",
+    "cam": "Escaneie o QR code de entrada do líder ou um voucher de grupo, ou tire uma foto para perguntar à AIYA, a assistente de IA, sobre um ponto turístico, cardápio ou placa.",
+    "photo": "Escolha uma foto da sua biblioteca como foto de perfil ou para mostrar à AIYA, a assistente de IA.",
     "name": "Excursão",
     "mic": "Converse por voz com a AIYA, a assistente de IA. Sua voz é enviada em tempo real à OpenAI só durante a chamada e não é gravada."
   },
   "es": {
     "loc": "TourChip usa tu ubicación mientras usas la app para mostrar la distancia y la dirección al punto de encuentro. Si aceptas compartirla, las personas de tu grupo (incluido el líder) verán tu ubicación en el mapa. Puedes desactivarlo en Ajustes cuando quieras.",
-    "cam": "Escanea el código QR de tu líder para unirte o un cupón de grupo.",
-    "photo": "Elige una foto de tu biblioteca como foto de perfil.",
+    "cam": "Escanea el código QR de tu líder para unirte o un cupón de grupo, o toma una foto para preguntarle a AIYA, la asistente de IA, por un lugar, un menú o un letrero.",
+    "photo": "Elige una foto de tu biblioteca como foto de perfil o para mostrársela a AIYA, la asistente de IA.",
     "name": "Tour en grupo",
     "mic": "Habla por voz con AIYA, la asistente de IA. Tu voz se envía en tiempo real a OpenAI solo durante la llamada y no se graba."
   },
   "hi": {
     "loc": "ऐप इस्तेमाल करते समय TourChip आपकी लोकेशन लेता है, ताकि मिलने की जगह की दूरी और दिशा दिखा सके। अगर आप शेयर करने की सहमति देते हैं, तो आपके ग्रुप के लोग (लीडर समेत) आपकी लोकेशन मैप पर देखते हैं। आप इसे कभी भी सेटिंग्स में बंद कर सकते हैं।",
-    "cam": "अपने लीडर का जुड़ने वाला QR कोड या ग्रुप वाउचर स्कैन करें।",
-    "photo": "अपनी प्रोफ़ाइल फ़ोटो के लिए लाइब्रेरी से फ़ोटो चुनें।",
+    "cam": "लीडर का जॉइन QR कोड या ग्रुप वाउचर स्कैन करें, या फ़ोटो लेकर AI असिस्टेंट AIYA से किसी जगह, मेन्यू या साइनबोर्ड के बारे में पूछें।",
+    "photo": "लाइब्रेरी से फ़ोटो चुनकर प्रोफ़ाइल फ़ोटो बनाएँ या AI असिस्टेंट AIYA को दिखाएँ।",
     "name": "टूर ग्रुप",
     "mic": "AI असिस्टेंट AIYA से आवाज़ में बात करें। आपकी आवाज़ सिर्फ़ कॉल के दौरान रियल-टाइम में OpenAI को भेजी जाती है और रिकॉर्ड नहीं होती।"
   }

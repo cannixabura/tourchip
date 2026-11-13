@@ -11,6 +11,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'aiya/aiya_spots.dart';
 import 'aiya/aiya_store.dart';
 import 'firebase_options.dart';
 import 'l10n.dart';
@@ -53,6 +54,7 @@ Future<void> main() async {
   } catch (_) {}
   PassStore.init();
   AiyaStore.init();
+  unawaited(AiyaSpots.load());
   initUnread();
   runApp(const TourChipApp());
 }

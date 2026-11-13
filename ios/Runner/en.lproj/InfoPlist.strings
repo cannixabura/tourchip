@@ -1,6 +1,6 @@
 /* Permission descriptions and app name (Info.plist translations) */
 "CFBundleDisplayName" = "Tour Group";
 "NSLocationWhenInUseUsageDescription" = "TourChip uses your location while you use the app to show the distance and direction to the meeting point. If you agree to share, people in your group (including leaders) see your location on the map. You can turn this off in Settings any time.";
-"NSCameraUsageDescription" = "Scan your tour leader's join QR code or a group pass.";
-"NSPhotoLibraryUsageDescription" = "Choose a photo from your library as your avatar.";
+"NSCameraUsageDescription" = "Scan your tour leader's join QR code or a group pass, or take a photo to ask AIYA, the AI assistant, about a sight, menu or sign.";
+"NSPhotoLibraryUsageDescription" = "Choose a photo from your library as your avatar or to show AIYA, the AI assistant.";
 "NSMicrophoneUsageDescription" = "Talk with AIYA, the AI assistant, by voice. Your voice is sent live to OpenAI only during a call and is not recorded.";

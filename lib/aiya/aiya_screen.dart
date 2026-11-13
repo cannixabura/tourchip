@@ -1,10 +1,15 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
+import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:aiya/aiya.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../l10n.dart';
@@ -70,7 +75,9 @@ class _Msg {
   final bool mine;
   String text;
   final bool system; // 提示（不是艾婭說的，不能檢舉）
-  _Msg(this.text, {this.mine = false, this.system = false});
+  final Uint8List? image; // 自己傳的照片（只留在這支手機的畫面上）
+  bool photoReply = false; // 艾婭回答照片的那一則：下面有「分享」
+  _Msg(this.text, {this.mine = false, this.system = false, this.image});
 }
 
 class AiyaScreen extends StatefulWidget {
@@ -445,7 +452,7 @@ class _AiyaScreenState extends State<AiyaScreen> with SingleTickerProviderStateM
     return line;
   }
 
-  void _speak(String text, String expression, {String? talkClip}) {
+  _Msg _speak(String text, String expression, {String? talkClip}) {
     _typer?.cancel();
     _anim.setExpr(expression);
     _video.play(talkClip ?? aiyaTalkClips[_rnd.nextInt(aiyaTalkClips.length)], _anim.time);
@@ -466,23 +473,24 @@ class _AiyaScreenState extends State<AiyaScreen> with SingleTickerProviderStateM
       i++;
       _scrollDown();
     });
+    return msg;
   }
 
-  Future<void> _send() async {
+  Future<void> _send({Uint8List? image}) async {
     final text = _input.text.trim();
-    if (text.isEmpty || _sending || _ended) return;
+    if ((text.isEmpty && image == null) || _sending || _ended) return;
     if (_sessionId == null) {
       await _open(greet: false);
       if (!mounted || _sessionId == null) return;
     }
     _input.clear();
-    setState(() { _msgs.add(_Msg(text, mine: true)); _sending = true; });
+    setState(() { _msgs.add(_Msg(text, mine: true, image: image)); _sending = true; });
     _scrollDown();
     _anim.setExpr('think');
     _video.play('think', _anim.time, loop: true);
     _LiveLine? live;
     var r = <String, dynamic>{'success': false, 'code': 'busy'};
-    await for (final e in aiyaApi.say({'sessionId': _sessionId, 'text': text})) {
+    await for (final e in aiyaApi.say({'sessionId': _sessionId, 'text': text, if (image != null) 'image': base64Encode(image)})) {
       if (!mounted) return;
       if (e['t'] == 'delta') {
         live ??= _startLive();
@@ -502,8 +510,9 @@ class _AiyaScreenState extends State<AiyaScreen> with SingleTickerProviderStateM
     if (r['success'] == true) {
       if (live != null) {
         live.finish('${r['reply']}', '${r['expression']}');
+        live.msg.photoReply = image != null;
       } else {
-        _speak('${r['reply']}', '${r['expression']}');
+        _speak('${r['reply']}', '${r['expression']}').photoReply = image != null;
       }
       if (_turnsLeft <= 0) Future.delayed(const Duration(seconds: 6), _finish);
       return;
@@ -514,6 +523,8 @@ class _AiyaScreenState extends State<AiyaScreen> with SingleTickerProviderStateM
       case 'filtered': _system(tx('這句有不能傳的字或聯絡方式，換個說法試試。', 'That has words or contact details that aren\'t allowed. Try another way.'));
       case 'refused': _speak(tx('這個我不太方便聊，換個話題好嗎？', 'I can\'t really talk about that. How about something else?'), 'worry');
       case 'ended': _ended = true; _system(tx('這次的聊天已經結束。', 'This chat has ended.'));
+      case 'bad_photo': _system(tx('這張照片讀不到，換一張試試。', 'Couldn\'t read that photo. Try another one.'));
+      case 'photo_max': _system(tx('這次聊天的照片已經傳滿 5 張，下次聊天再拍。', 'You\'ve sent 5 photos in this chat. Start a new chat to send more.'));
       default: _speak(_busyText(), 'shy');
     }
   }
@@ -658,6 +669,55 @@ class _AiyaScreenState extends State<AiyaScreen> with SingleTickerProviderStateM
     );
   }
 
+  /// 拍照問艾婭：景點、菜單、招牌都可以。第一次先說明照片會送去哪裡
+  Future<void> _pickPhoto() async {
+    if (_sending || _ended || _opening) return;
+    final source = await showModalBottomSheet<ImageSource>(
+      context: context, backgroundColor: Colors.transparent,
+      builder: (ctx) => _sheet(Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Text(tx('拍照問艾婭', 'Ask AIYA about a photo'), style: Night.title, textAlign: TextAlign.center),
+        const SizedBox(height: Night.space2),
+        Text(tx('拍景點聽故事、拍菜單幫你翻譯，招牌、告示也看得懂。', 'Snap a sight for its story, a menu to translate, or a sign to read.'), style: Night.caption, textAlign: TextAlign.center),
+        const SizedBox(height: Night.space4),
+        NightButton(tx('拍照', 'Take a photo'), icon: Icons.photo_camera_outlined, onPressed: () => Navigator.pop(ctx, ImageSource.camera)),
+        const SizedBox(height: Night.space2),
+        NightButton(tx('從相簿選', 'Choose from library'), kind: NightButtonKind.ghost, icon: Icons.photo_library_outlined, onPressed: () => Navigator.pop(ctx, ImageSource.gallery)),
+      ])),
+    );
+    if (source == null || !mounted) return;
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.getBool('aiya_photo_ok') != true) {
+      if (!mounted) return;
+      final ok = await showModalBottomSheet<bool>(
+        context: context, backgroundColor: Colors.transparent,
+        builder: (ctx) => _consentSheet(ctx,
+          icon: Icons.photo_camera_outlined,
+          title: tx('照片會送給艾婭看', 'Your photo goes to AIYA'),
+          body: tx('照片會傳到 Anthropic（美國）讓艾婭辨識，只用在這一次回答，我們不會存下來。請不要拍別人的臉、證件或個人資料。',
+              'The photo is sent to Anthropic (US) so AIYA can read it. It is used only for this answer and we don\'t keep it. Please avoid other people\'s faces, IDs or personal details.'),
+          agree: tx('知道了', 'Got it'),
+        ),
+      );
+      if (ok != true) return;
+      await prefs.setBool('aiya_photo_ok', true);
+    }
+    XFile? x;
+    try {
+      x = await ImagePicker().pickImage(source: source, maxWidth: 1280, maxHeight: 1280, imageQuality: 70);
+    } catch (_) {
+      if (mounted) _system(tx('打不開相機或相簿，請到手機設定允許旅行團使用。', 'Couldn\'t open the camera or library. Allow access in your phone\'s Settings.'));
+      return;
+    }
+    if (x == null || !mounted) return;
+    final bytes = await x.readAsBytes();
+    if (!mounted) return;
+    if (bytes.length > 1400 * 1024) {
+      _system(tx('這張照片太大了，換一張試試。', 'That photo is too large. Try another one.'));
+      return;
+    }
+    await _send(image: bytes);
+  }
+
   void _report(_Msg m) {
     showModalBottomSheet(
       context: context, backgroundColor: Colors.transparent,
@@ -789,6 +849,15 @@ class _AiyaScreenState extends State<AiyaScreen> with SingleTickerProviderStateM
                 const SizedBox(height: Night.space2),
                 // 輸入列：沒打字時右邊是藍色語音鍵；通話中變成「靜音」＋「✕ 結束通話」
                 Row(children: [
+                  if (!inCall) ...[
+                    IconButton.outlined(
+                      tooltip: tx('拍照問艾婭', 'Ask about a photo'),
+                      onPressed: _ended || _opening || _sending ? null : _pickPhoto,
+                      style: IconButton.styleFrom(side: const BorderSide(color: Night.glassLine), minimumSize: const Size(44, 44)),
+                      icon: const Icon(Icons.photo_camera_outlined, color: Night.ink),
+                    ),
+                    const SizedBox(width: Night.space2),
+                  ],
                   Expanded(
                     child: TextField(
                       controller: _input,
@@ -861,11 +930,25 @@ class _AiyaScreenState extends State<AiyaScreen> with SingleTickerProviderStateM
         borderRadius: BorderRadius.circular(Night.radiusMd),
         border: m.mine || m.system ? null : Border.all(color: const Color(0x66FFC861)),
       ),
-      child: Text(m.text, style: TextStyle(color: m.system ? Night.inkMuted : Night.ink, fontSize: 15, height: 1.45)),
+      child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.end, children: [
+        if (m.image != null)
+          ClipRRect(borderRadius: BorderRadius.circular(Night.radiusSm), child: Image.memory(m.image!, width: 180, fit: BoxFit.cover, gaplessPlayback: true)),
+        if (m.image != null && m.text.isNotEmpty) const SizedBox(height: 6),
+        if (m.text.isNotEmpty || m.image == null)
+          Text(m.text, style: TextStyle(color: m.system ? Night.inkMuted : Night.ink, fontSize: 15, height: 1.45)),
+      ]),
     );
+    if (m.mine || m.system) return Align(alignment: m.system ? Alignment.center : Alignment.centerRight, child: bubble);
     return Align(
-      alignment: m.system ? Alignment.center : (m.mine ? Alignment.centerRight : Alignment.centerLeft),
-      child: m.mine || m.system ? bubble : GestureDetector(onLongPress: () => _report(m), child: bubble),
+      alignment: Alignment.centerLeft,
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
+        GestureDetector(onLongPress: () => _report(m), child: bubble),
+        if (m.photoReply && m.text.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(left: 4, bottom: 4),
+            child: _chip(tx('分享給同伴', 'Share'), () => SharePlus.instance.share(ShareParams(text: m.text))),
+          ),
+      ]),
     );
   }
 }

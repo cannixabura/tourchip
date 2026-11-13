@@ -1,6 +1,6 @@
 /* App name and permission descriptions (Info.plist translations) */
 "CFBundleDisplayName" = "Tour Group";
 "NSLocationWhenInUseUsageDescription" = "TourChip menggunakan lokasi anda semasa aplikasi digunakan untuk menunjukkan jarak dan arah ke tempat berkumpul. Jika anda bersetuju berkongsi, orang dalam kumpulan anda (termasuk ketua) melihat lokasi anda pada peta. Anda boleh mematikannya dalam Tetapan bila-bila masa.";
-"NSCameraUsageDescription" = "Imbas kod QR untuk sertai daripada ketua anda atau baucar kumpulan.";
-"NSPhotoLibraryUsageDescription" = "Pilih foto daripada pustaka sebagai foto profil anda.";
+"NSCameraUsageDescription" = "Imbas kod QR untuk sertai daripada ketua anda atau baucar kumpulan, atau ambil foto untuk bertanya AIYA, pembantu AI, tentang tempat menarik, menu atau papan tanda.";
+"NSPhotoLibraryUsageDescription" = "Pilih foto daripada pustaka sebagai foto profil anda atau untuk ditunjukkan kepada AIYA, pembantu AI.";
 "NSMicrophoneUsageDescription" = "Bercakap dengan AIYA, pembantu AI, melalui suara. Suara anda hanya dihantar terus ke OpenAI semasa panggilan dan tidak dirakam.";

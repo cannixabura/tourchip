@@ -1,6 +1,6 @@
 /* App name and permission descriptions (Info.plist translations) */
 "CFBundleDisplayName" = "旅行团";
 "NSLocationWhenInUseUsageDescription" = "旅行团会在你使用 App 时取得位置，算出到集合点的距离与方向；你同意分享后，同一团的人（含领队）会在地图上看到你的位置，可以随时在设置关闭。";
-"NSCameraUsageDescription" = "扫描领队的入团二维码或团购券。";
-"NSPhotoLibraryUsageDescription" = "从相册选一张照片当你的头像。";
+"NSCameraUsageDescription" = "扫描领队的入团二维码或团购券，或拍照问 AI 小助理艾娅（景点、菜单、招牌）。";
+"NSPhotoLibraryUsageDescription" = "从相册选照片当你的头像，或拿给 AI 小助理艾娅看。";
 "NSMicrophoneUsageDescription" = "用语音和 AI 小助理艾娅通话。只有通话时你的声音会即时送到 OpenAI 处理，我们不录音。";

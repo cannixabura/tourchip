@@ -1,6 +1,6 @@
 /* App name and permission descriptions (Info.plist translations) */
 "CFBundleDisplayName" = "टूर ग्रुप";
 "NSLocationWhenInUseUsageDescription" = "ऐप इस्तेमाल करते समय TourChip आपकी लोकेशन लेता है, ताकि मिलने की जगह की दूरी और दिशा दिखा सके। अगर आप शेयर करने की सहमति देते हैं, तो आपके ग्रुप के लोग (लीडर समेत) आपकी लोकेशन मैप पर देखते हैं। आप इसे कभी भी सेटिंग्स में बंद कर सकते हैं।";
-"NSCameraUsageDescription" = "अपने लीडर का जुड़ने वाला QR कोड या ग्रुप वाउचर स्कैन करें।";
-"NSPhotoLibraryUsageDescription" = "अपनी प्रोफ़ाइल फ़ोटो के लिए लाइब्रेरी से फ़ोटो चुनें।";
+"NSCameraUsageDescription" = "लीडर का जॉइन QR कोड या ग्रुप वाउचर स्कैन करें, या फ़ोटो लेकर AI असिस्टेंट AIYA से किसी जगह, मेन्यू या साइनबोर्ड के बारे में पूछें।";
+"NSPhotoLibraryUsageDescription" = "लाइब्रेरी से फ़ोटो चुनकर प्रोफ़ाइल फ़ोटो बनाएँ या AI असिस्टेंट AIYA को दिखाएँ।";
 "NSMicrophoneUsageDescription" = "AI असिस्टेंट AIYA से आवाज़ में बात करें। आपकी आवाज़ सिर्फ़ कॉल के दौरान रियल-टाइम में OpenAI को भेजी जाती है और रिकॉर्ड नहीं होती।";

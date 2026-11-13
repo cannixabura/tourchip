@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../aiya/aiya_screen.dart';
+import '../aiya/aiya_spots.dart';
 import '../l10n.dart';
 import '../map/tour_map.dart';
 import '../tour/model.dart';
@@ -63,6 +64,8 @@ class _GroupScreenState extends State<GroupScreen> {
           body: Stack(children: [
             Positioned.fill(child: TourMap(key: _map, group: g, onPersonLongPress: (p) => openChat(context, p.uid), onPersonTap: (p) => showPerson(context, p), onFlagTap: () => showCallInfo(context))),
             Positioned(left: Night.space4, right: Night.space4, top: MediaQuery.of(context).padding.top + Night.space2, child: _TopBar(g: g)),
+            // 靠近行程表上的景點：艾婭問要不要聽介紹
+            Positioned(left: Night.space4, right: Night.space4, top: MediaQuery.of(context).padding.top + Night.space2 + 52 + Night.space2, child: AiyaSpotPrompt(g: g)),
             Positioned(
               left: 0, right: 0, bottom: 0,
               child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
