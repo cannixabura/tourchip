@@ -1,0 +1,35 @@
+Never lose anyone on a group trip. TourChip is a group tool for tour leaders, guides, teachers and club organizers: start a group, and members join by scanning a QR code. No friend requests, no phone numbers.
+
+MEETUPS THAT EVERY PHONE HEARS
+Drag the flag to the meeting point and pick a time. Every phone in the group plays a dedicated sound, even in Focus mode. Anyone who hasn't tapped "Got it" is reminded every minute, up to 3 times. Call one sub-group, or ping a single person.
+
+THE MEETING POINT IS A FLAG ON THE MAP
+Members see a glowing 3D night map that turns with their phone. The meetup flag stands among the buildings in your group color; tap it for local time, countdown, distance, direction and walking directions.
+
+ROLL CALL
+Members answer "I'm here", "5 more minutes" or "I need help". Those who need help are listed first, and leaders are alerted.
+
+SEE YOUR GROUP ON THE MAP
+After agreeing to share, people in the same group see each other's photos on the 3D map and can post bubbles. Long-press a photo to send a message with an instant notification. Only your group can see you; turn sharing off any time in Settings. Locations are deleted when you leave or the group ends.
+
+I'M LOST
+One tap sends your current location to your leaders as a red dot with your number. It is deleted after 30 minutes.
+
+NOTICES AND ITINERARY
+Post notices to everyone or a sub-group. Itinerary times always use each meetup's local time zone.
+
+AIYA, YOUR AI TRAVEL HELPER
+Tap AIYA's portrait to ask about the itinerary, meetup times or getting around, by text or by voice call. AIYA only reads the itinerary your leader posted and never sees anyone's location. 30 free chats in your first 24 hours after first joining or starting a group, then 3 free text chats a day; time packs and call time packs are optional, and AIYA Friend is an auto-renewing monthly subscription with 20 chats a day and 60 call minutes a month.
+
+SAFETY
+- No account, no phone number, email or real name
+- Messages are filtered, and you can block and report
+- Members under 18 need a parent or guardian's consent to share location or message
+- The group ends at 23:59 on the last day and everything is deleted
+
+PRICING
+Free for up to 20 people and 3 days, and always free for members. Leaders can buy a group-size pass (up to 100 people) or day passes (7 more days each, up to 30), both one-time purchases. Agencies can buy them in advance and hand them to leaders as QR codes. AIYA Friend renews monthly until cancelled in Google Play → Payments & subscriptions → Subscriptions.
+
+Privacy: https://tourchip.web.app/privacy
+Terms: https://tourchip.web.app/terms
+Contact: service.softchip@gmail.com

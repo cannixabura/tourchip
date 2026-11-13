@@ -1,0 +1,35 @@
+Que nadie se pierda en un viaje en grupo. TourChip es una herramienta para líderes de grupo, guías, docentes y organizadores de clubes: crea un grupo y los miembros se unen escaneando un código QR. Sin solicitudes de amistad ni números de teléfono.
+
+REUNIONES QUE SUENAN EN TODOS LOS TELÉFONOS
+Arrastra el haz de luz al punto de encuentro y elige la hora. Todos los teléfonos del grupo reproducen un sonido exclusivo, incluso en modo Concentración. A quien no haya tocado "Entendido" se le recuerda cada minuto, hasta 3 veces. Llama a un solo subgrupo o a una sola persona.
+
+EL PUNTO DE ENCUENTRO ES UN HAZ DE LUZ
+Los miembros ven un mapa nocturno 3D luminoso que gira con su teléfono. La reunión se alza entre los edificios como un haz de luz, con hora local, cuenta atrás, distancia y dirección.
+
+PASE DE LISTA
+Los miembros responden "Ya llegué", "5 minutos más" o "Necesito ayuda". Quienes necesitan ayuda aparecen primero y los líderes reciben una alerta.
+
+VE A TU GRUPO EN EL MAPA
+Si aceptan compartir, las personas del mismo grupo ven sus fotos en el mapa 3D y pueden publicar burbujas. Mantén pulsada una foto para enviar un mensaje con notificación al instante. Solo tu grupo te ve; desactiva el uso compartido cuando quieras en Ajustes. Las ubicaciones se borran cuando sales o el grupo termina.
+
+ME PERDÍ
+Un toque envía tu ubicación actual a los líderes como un punto rojo con tu número. Se borra a los 30 minutos.
+
+AVISOS E ITINERARIO
+Publica avisos para todos o para un subgrupo. Las horas del itinerario usan siempre la zona horaria local de cada reunión.
+
+AIYA, TU ASISTENTE DE VIAJE CON IA
+Toca el retrato de AIYA para preguntar por el itinerario, las horas de reunión o cómo moverte, por texto o por llamada de voz. AIYA solo lee el itinerario que publicó tu líder y nunca ve la ubicación de nadie. 30 chats gratis durante las primeras 24 horas después de unirte (o crear) un grupo por primera vez, después 3 chats de texto gratis al día; los paquetes de tiempo y de llamada son opcionales, y Amigo de AIYA es una suscripción mensual con renovación automática (20 chats al día y 60 minutos de llamada al mes).
+
+SEGURIDAD
+- Sin cuenta, sin número de teléfono, correo ni nombre real
+- Los mensajes se filtran, y puedes bloquear y denunciar
+- Los miembros menores de 18 necesitan el consentimiento de su madre, padre o tutor para compartir la ubicación o enviar mensajes
+- El grupo termina a las 23:59 del último día y se borra todo
+
+PRECIOS
+Gratis hasta 20 personas y 3 días, y siempre gratis para los miembros. El líder puede comprar un pase de personas (hasta 100 personas) o pases de días (7 días más cada uno, hasta 30), ambos de compra única. Las agencias pueden comprarlos por adelantado y entregarlos a los líderes como códigos QR. Amigo de AIYA se renueva cada mes hasta que lo canceles en Google Play → Pagos y suscripciones → Suscripciones.
+
+Privacidad: https://tourchip.web.app/privacy
+Términos: https://tourchip.web.app/terms
+Contacto: service.softchip@gmail.com

@@ -1,0 +1,35 @@
+Jangan sampai ada yang tersesat saat tur grup. TourChip adalah alat grup untuk tour leader, pemandu wisata, guru, dan pengurus komunitas: buat grup, dan anggota bergabung dengan memindai kode QR. Tanpa tambah teman, tanpa nomor telepon.
+
+PANGGILAN KUMPUL YANG DIDENGAR SEMUA
+Seret bendera ke titik kumpul dan pilih waktu. Setiap ponsel di grup membunyikan nada khusus, bahkan dalam mode Fokus. Yang belum mengetuk "Oke" diingatkan setiap menit, hingga 3 kali. Panggil satu subgrup, atau satu orang saja.
+
+TITIK KUMPUL ADALAH BENDERA DI PETA
+Anggota melihat peta malam 3D yang berputar mengikuti ponsel. Bendera berwarna grup berdiri di antara gedung; ketuk untuk waktu setempat, hitung mundur, jarak, arah, dan petunjuk jalan kaki.
+
+ABSEN
+Anggota menjawab "Saya sudah sampai", "5 menit lagi" atau "Butuh bantuan". Yang butuh bantuan tampil paling atas dan pemimpin diberi tahu.
+
+LIHAT GRUP DI PETA
+Setelah setuju berbagi, orang di grup yang sama saling melihat foto di peta 3D dan bisa mengirim gelembung. Tekan lama foto untuk mengirim pesan dengan notifikasi instan. Pesan, pengumuman, dan gelembung bisa diterjemahkan dengan satu ketukan (diterjemahkan di ponsel). Hanya grupmu yang bisa melihatmu; matikan kapan saja di Pengaturan. Lokasi dihapus saat kamu keluar atau grup berakhir.
+
+SAYA TERSESAT
+Satu ketukan mengirim lokasimu ke pemimpin sebagai titik merah dengan nomormu. Dihapus setelah 30 menit.
+
+PENGUMUMAN DAN JADWAL
+Kirim pengumuman ke semua atau satu subgrup. Waktu jadwal selalu mengikuti zona waktu setempat tiap titik kumpul.
+
+AIYA, ASISTEN PERJALANAN AI
+Ketuk potret AIYA untuk bertanya soal jadwal, waktu kumpul, atau transportasi, lewat teks atau panggilan suara. AIYA hanya membaca jadwal dari pemimpin dan tidak pernah melihat lokasi siapa pun. 30 obrolan gratis dalam 24 jam pertama sejak pertama kali bergabung (atau membuat) grup, lalu 3 obrolan teks gratis per hari; paket waktu dan paket waktu panggilan bersifat opsional, dan AIYA Friend adalah langganan bulanan perpanjangan otomatis (20 obrolan per hari dan 60 menit panggilan per bulan).
+
+KEAMANAN
+- Tanpa akun, tanpa nomor telepon, email, atau nama asli
+- Pesan difilter, dan kamu bisa memblokir serta melaporkan
+- Anggota di bawah 18 tahun perlu izin orang tua atau wali untuk berbagi lokasi atau mengirim pesan
+- Grup berakhir pukul 23:59 di hari terakhir dan semuanya dihapus
+
+HARGA
+Gratis hingga 20 orang dan 3 hari, dan selalu gratis untuk anggota. Pemimpin bisa membeli pass ukuran grup (hingga 100 orang) atau pass hari (tambah 7 hari per pass, hingga 30), keduanya pembelian sekali. Agen bisa membelinya lebih dulu dan memberikannya ke pemimpin sebagai kode QR. AIYA Friend diperpanjang setiap bulan hingga dibatalkan di Google Play → Pembayaran & langganan → Langganan.
+
+Privasi: https://tourchip.web.app/privacy
+Ketentuan: https://tourchip.web.app/terms
+Kontak: service.softchip@gmail.com

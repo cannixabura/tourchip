@@ -1,0 +1,35 @@
+Jangan biar sesiapa sesat dalam lawatan berkumpulan. TourChip ialah alat kumpulan untuk ketua rombongan, pemandu pelancong, guru dan penganjur kelab: mulakan kumpulan, dan ahli sertai dengan mengimbas kod QR. Tiada permintaan rakan, tiada nombor telefon.
+
+PANGGILAN BERKUMPUL YANG DIDENGAR SEMUA
+Seret bendera ke tempat berkumpul dan pilih masa. Setiap telefon dalam kumpulan berbunyi dengan nada khas, walaupun dalam mod Fokus. Sesiapa yang belum mengetik "Faham" diingatkan setiap minit, sehingga 3 kali. Panggil satu subkumpulan, atau seorang sahaja.
+
+TEMPAT BERKUMPUL IALAH BENDERA DI PETA
+Ahli melihat peta malam 3D yang berpusing mengikut telefon. Bendera berwarna kumpulan berdiri di antara bangunan; ketik untuk masa tempatan, kiraan detik, jarak, arah dan petunjuk berjalan kaki.
+
+PANGGILAN NAMA
+Ahli menjawab "Saya sudah sampai", "Lagi 5 minit" atau "Perlukan bantuan". Yang perlukan bantuan disenaraikan dahulu dan ketua dimaklumkan.
+
+LIHAT KUMPULAN PADA PETA
+Selepas bersetuju berkongsi, orang dalam kumpulan yang sama melihat foto satu sama lain pada peta 3D dan boleh hantar gelembung. Tekan lama foto untuk hantar mesej dengan pemberitahuan segera. Mesej, notis dan gelembung boleh diterjemah dengan satu ketikan (terjemahan di telefon). Hanya kumpulan anda yang boleh melihat anda; matikan bila-bila masa dalam Tetapan. Lokasi dipadam apabila anda keluar atau kumpulan tamat.
+
+SAYA SESAT
+Satu ketikan menghantar lokasi semasa anda kepada ketua sebagai titik merah dengan nombor anda. Ia dipadam selepas 30 minit.
+
+NOTIS DAN JADUAL
+Hantar notis kepada semua atau satu kumpulan kecil. Waktu jadual sentiasa mengikut zon waktu tempatan setiap tempat berkumpul.
+
+AIYA, PEMBANTU PERJALANAN AI
+Ketik potret AIYA untuk bertanya tentang jadual, masa berkumpul atau pengangkutan, melalui teks atau panggilan suara. AIYA hanya membaca jadual yang disiarkan ketua dan tidak pernah melihat lokasi sesiapa. 30 sembang percuma dalam 24 jam pertama selepas kali pertama menyertai (atau membuka) kumpulan, kemudian 3 sembang teks percuma sehari; pek masa dan pek masa panggilan adalah pilihan, dan AIYA Friend ialah langganan bulanan yang diperbaharui automatik (20 sembang sehari dan 60 minit panggilan sebulan).
+
+KESELAMATAN
+- Tiada akaun, tiada nombor telefon, e-mel atau nama sebenar
+- Mesej ditapis, dan anda boleh sekat serta lapor
+- Ahli bawah 18 tahun perlukan persetujuan ibu bapa atau penjaga untuk berkongsi lokasi atau hantar mesej
+- Kumpulan tamat pada 23:59 hari terakhir dan semuanya dipadam
+
+HARGA
+Percuma sehingga 20 orang dan 3 hari, dan sentiasa percuma untuk ahli. Ketua boleh membeli pas saiz kumpulan (sehingga 100 orang) atau pas hari (7 hari tambahan setiap satu, sehingga 30), kedua-duanya pembelian sekali. Agensi boleh membelinya lebih awal dan memberikannya kepada ketua sebagai kod QR. AIYA Friend diperbaharui setiap bulan sehingga dibatalkan dalam Google Play → Pembayaran & langganan → Langganan.
+
+Privasi: https://tourchip.web.app/privacy
+Terma: https://tourchip.web.app/terms
+Hubungi: service.softchip@gmail.com
