@@ -6,4 +6,4 @@
 - pt、es、hi：1.0.2 的描述沒有艾婭段落，這裡補上艾婭段落，收費段改成人數券、天數券與艾婭之友自動續訂說明。
 - **還沒貼到 App Store Connect**：已上架版本的描述不能改，要在建立下一個版本（build 11）時貼上。
 - 檔名對應 ASC 語系：zh-Hant＝繁體中文、zh-Hans＝簡體中文、en＝英文（美國、加拿大）、ja、ko、vi、th、id、ms、pt＝葡萄牙文（巴西）、es＝西班牙文（墨西哥、西班牙）、hi＝北印度文。
-- Play 的完整說明收費段要把「Apple 帳號設定」改成 Google Play 的訂閱管理。
+- Play 版在 `play/<Play 語系>.txt`（收費段的取消方式改成 Google Play →「付款和訂閱」）；2026-11-13 已貼到 Play Console 14 個語系並儲存草稿，尚未在「發布總覽」送審。
