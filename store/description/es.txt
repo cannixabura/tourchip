@@ -1,10 +1,10 @@
 Que nadie se pierda en un viaje en grupo. TourChip es una herramienta para líderes de grupo, guías, docentes y organizadores de clubes: crea un grupo y los miembros se unen escaneando un código QR. Sin solicitudes de amistad ni números de teléfono.
 
 REUNIONES QUE SUENAN EN TODOS LOS TELÉFONOS
-Arrastra el haz de luz al punto de encuentro y elige la hora. Todos los teléfonos del grupo reproducen un sonido exclusivo, incluso en modo Concentración. A quien no haya tocado "Entendido" se le recuerda cada minuto, hasta 3 veces. Llama a un solo subgrupo o a una sola persona.
+Arrastra la bandera al punto de encuentro y elige la hora. Todos los teléfonos del grupo reproducen un sonido exclusivo, incluso en modo Concentración. A quien no haya tocado "Entendido" se le recuerda cada minuto, hasta 3 veces. Llama a un solo subgrupo o a una sola persona.
 
-EL PUNTO DE ENCUENTRO ES UN HAZ DE LUZ
-Los miembros ven un mapa nocturno 3D luminoso que gira con su teléfono. La reunión se alza entre los edificios como un haz de luz, con hora local, cuenta atrás, distancia y dirección.
+EL PUNTO DE ENCUENTRO ES UNA BANDERA EN EL MAPA
+Los miembros ven un mapa nocturno 3D luminoso que gira con su teléfono. La bandera de la reunión se alza entre los edificios con el color de tu grupo; tócala para ver la hora local, la cuenta atrás, la distancia, la dirección y cómo llegar a pie.
 
 PASE DE LISTA
 Los miembros responden "Ya llegué", "5 minutos más" o "Necesito ayuda". Quienes necesitan ayuda aparecen primero y los líderes reciben una alerta.
