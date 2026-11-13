@@ -3,7 +3,7 @@
 # 圖片放在官網 hosting/ads/ 底下（部署後是公開網址，給自動貼文抓圖）
 #   post_XX_4x5.jpg   1080×1350（FB／IG 貼文／Threads／X）
 #   post_XX_9x16.jpg  1080×1920（IG／FB 限時動態、Reels、YouTube Shorts 封面）
-# 繁中讀 posts.json → hosting/ads/zh/；英文 posts_en.json → hosting/ads/en/；日文 posts_ja.json → hosting/ads/ja/；韓文 posts_ko.json → hosting/ads/ko/；越南、泰、馬來、印尼、葡萄牙文 posts_{vi,th,ms,id,pt}.json → hosting/ads/{vi,th,ms,id,pt}/（各用該語言的徽章與底部文字）
+# 繁中讀 posts.json → hosting/ads/zh/；英文 posts_en.json → hosting/ads/en/；日文 posts_ja.json → hosting/ads/ja/；韓文 posts_ko.json → hosting/ads/ko/；越南、泰、馬來、印尼、葡萄牙、西班牙、印地文 posts_{vi,th,ms,id,pt,es,hi}.json → hosting/ads/{…}/；簡體中文 posts_zh_hans.json → hosting/ads/zh-hans/（各用該語言的徽章與底部文字）
 # 執行：python3 tool/gen_ads.py（全部語言）、python3 tool/gen_ads.py ja（只產生日文）
 import glob, json, os, sys
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
@@ -29,6 +29,13 @@ LANGS = {
            'name': 'TourChip', 'tag': 'Anggota selalu gratis · Tanpa daftar'},
     'pt': {'posts': 'posts_pt.json', 'out': 'pt', 'badge': 'app_store_badge_pt-br.png',
            'name': 'TourChip', 'tag': 'Sempre grátis para membros · Sem cadastro'},
+    'es': {'posts': 'posts_es.json', 'out': 'es', 'badge': 'app_store_badge_es-mx.png',
+           'name': 'TourChip', 'tag': 'Siempre gratis para miembros · Sin registro'},
+    # Apple 沒有印地文徽章，用英文版
+    'hi': {'posts': 'posts_hi.json', 'out': 'hi', 'badge': 'app_store_badge_en-us.png',
+           'name': 'TourChip', 'tag': 'सदस्यों के लिए हमेशा मुफ़्त · साइन-अप नहीं'},
+    'zh-hans': {'posts': 'posts_zh_hans.json', 'out': 'zh-hans', 'badge': 'app_store_badge_zh-cn.png',
+           'name': '旅行团 TourChip', 'tag': '团员永远免费・不用注册'},
 }
 ICON = os.path.join(ROOT, 'assets/icon/app_icon.png')
 
@@ -41,6 +48,7 @@ def find_font():
 
 FONT = find_font()
 TC = {'regular': 2, 'medium': 6, 'semibold': 10}
+SC = {'regular': 3, 'medium': 7, 'semibold': 11}  # 簡體中文用 PingFang SC
 # 日文用ヒラギノ角ゴシック（用 PingFang TC 的話，日文漢字會是中文字形）
 JA = {'regular': '/System/Library/Fonts/ヒラギノ角ゴシック W3.ttc',
       'medium': '/System/Library/Fonts/ヒラギノ角ゴシック W5.ttc',
@@ -54,6 +62,8 @@ LATIN = '/System/Library/Fonts/HelveticaNeue.ttc'
 LATIN_IDX = {'regular': 0, 'medium': 10, 'semibold': 1}
 # 泰文用 Sukhumvit Set，但 PIL 沒有 raqm 時聲調符號位置會錯，所以交給 macOS CoreText 排（tool/render_text.swift）
 THAI_PS = {'regular': 'SukhumvitSet-Text', 'medium': 'SukhumvitSet-Medium', 'semibold': 'SukhumvitSet-SemiBold'}
+# 印地文（天城文）的連字和母音符號也要 CoreText 排
+HINDI_PS = {'regular': 'KohinoorDevanagari-Regular', 'medium': 'KohinoorDevanagari-Medium', 'semibold': 'KohinoorDevanagari-Semibold'}
 class CTFont:
     def __init__(self, name, size): self.name, self.size = name, size
 RENDER = os.path.join(ROOT, 'tool/.build/render_text')
@@ -83,8 +93,10 @@ def tdraw(target, xy, s, f, fill):
     color.putalpha(img.getchannel('A').point(lambda v: v * a // 255))
     target.alpha_composite(color, (max(0, round(xy[0] - pad)), max(0, round(xy[1] - pad))))
 def font(size, weight='regular'):
-    if CUR_LANG in ('vi', 'ms', 'id', 'pt'): return ImageFont.truetype(LATIN, size, index=LATIN_IDX[weight])
+    if CUR_LANG in ('vi', 'ms', 'id', 'pt', 'es'): return ImageFont.truetype(LATIN, size, index=LATIN_IDX[weight])
     if CUR_LANG == 'th': return CTFont(THAI_PS[weight], size)
+    if CUR_LANG == 'hi': return CTFont(HINDI_PS[weight], size)
+    if CUR_LANG == 'zh-hans': return ImageFont.truetype(FONT, size, index=SC[weight])
     if CUR_LANG == 'ja': return ImageFont.truetype(JA[weight], size, index=0)
     if CUR_LANG == 'ko': return ImageFont.truetype(KO, size, index=KO_IDX[weight])
     return ImageFont.truetype(FONT, size, index=TC[weight])
@@ -144,7 +156,7 @@ def make(post, w, h, path, L):
     layer = Image.new('RGBA', (w, h), (0, 0, 0, 0))
     glow = Image.new('RGBA', (w, h), (0, 0, 0, 0))
     d = ImageDraw.Draw(layer)
-    lines = [l.rstrip('，、') for l in post['headline'].split('\n')]  # 行尾標點會讓置中看起來偏左
+    lines = [l.rstrip('，、,') for l in post['headline'].split('\n')]  # 行尾標點會讓置中看起來偏左
     hs = 92 if tall else 84
     longest = max(tlen(d, l, font(hs, 'semibold')) for l in lines)
     if longest > w - 120: hs = int(hs * (w - 120) / longest)
