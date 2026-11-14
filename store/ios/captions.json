@@ -1,0 +1,410 @@
+{
+ "zh-Hans": {
+  "1": [
+   "集合点是一面旗",
+   "3D 地图跟着手机转，抬头就知道往哪走。"
+  ],
+  "2": [
+   "每部手机都会响",
+   "专注模式也会送达；没按“收到”每分钟再提醒。"
+  ],
+  "3": [
+   "团员在哪，一眼就看到",
+   "只有同团的人看得到，还能发气泡。"
+  ],
+  "4": [
+   "长按头像发消息",
+   "对方立刻收到通知，可以屏蔽、举报。"
+  ],
+  "5": [
+   "扫一下就入团",
+   "不用加好友、不用留电话。"
+  ],
+  "6": [
+   "谁收到了，领队都知道",
+   "集合、点名、公告、行程表一次搞定。"
+  ],
+  "7": [
+   "拍菜单，艾娅帮你翻译",
+   "标出猪肉、牛肉、酒和过敏原，景点、招牌也看得懂。"
+  ],
+  "8": [
+   "走到景点，艾娅讲故事",
+   "行程上的景点一分钟介绍，还能念给你听。"
+  ]
+ },
+ "ja": {
+  "1": [
+   "集合場所は一本の旗",
+   "3D地図がスマホの向きに合わせて回ります。"
+  ],
+  "2": [
+   "全員のスマホが鳴る",
+   "集中モードでも届き、「了解」を押すまで毎分お知らせ。"
+  ],
+  "3": [
+   "メンバーの居場所がひと目で",
+   "同じグループの人だけに見え、吹き出しも出せます。"
+  ],
+  "4": [
+   "アイコン長押しでメッセージ",
+   "相手にすぐ通知。ブロック・通報もできます。"
+  ],
+  "5": [
+   "スキャンするだけで参加",
+   "友だち追加も電話番号も不要。"
+  ],
+  "6": [
+   "誰が受け取ったか、リーダーにはわかる",
+   "集合・点呼・お知らせ・旅程表をひとつに。"
+  ],
+  "7": [
+   "メニューを撮れば、AIYAが翻訳",
+   "豚肉・牛肉・お酒・アレルゲンを表示。観光地や看板もわかります。"
+  ],
+  "8": [
+   "観光地に着いたら、AIYAが案内",
+   "行程の観光地を1分で紹介、読み上げもできます。"
+  ]
+ },
+ "ko": {
+  "1": [
+   "집합 장소는 깃발 하나",
+   "3D 지도가 휴대폰 방향에 따라 돌아요."
+  ],
+  "2": [
+   "모두의 휴대폰이 울려요",
+   "집중 모드에서도 전달되고, \"확인\"을 누를 때까지 매분 알려요."
+  ],
+  "3": [
+   "멤버 위치를 한눈에",
+   "같은 그룹만 볼 수 있고, 말풍선도 띄울 수 있어요."
+  ],
+  "4": [
+   "프로필을 길게 눌러 메시지",
+   "상대에게 바로 알림. 차단·신고도 돼요."
+  ],
+  "5": [
+   "스캔하면 바로 참가",
+   "친구 추가도 전화번호도 필요 없어요."
+  ],
+  "6": [
+   "누가 받았는지 리더는 알아요",
+   "집합·출석 확인·공지·일정표를 한곳에서."
+  ],
+  "7": [
+   "메뉴를 찍으면 AIYA가 번역",
+   "돼지고기·소고기·술·알레르기 성분 표시. 명소와 간판도 읽어요."
+  ],
+  "8": [
+   "명소에 가면 AIYA가 이야기해요",
+   "일정의 명소를 1분 소개, 읽어 주기도 해요."
+  ]
+ },
+ "ms": {
+  "1": [
+   "Tempat berkumpul ialah bendera",
+   "Peta 3D berpusing mengikut telefon anda."
+  ],
+  "2": [
+   "Setiap telefon berbunyi",
+   "Sampai walaupun dalam mod Fokus; diingatkan setiap minit hingga \"Diterima\"."
+  ],
+  "3": [
+   "Lihat kumpulan sekilas",
+   "Hanya kumpulan anda nampak anda. Hantar gelembung."
+  ],
+  "4": [
+   "Tekan lama untuk mesej",
+   "Pemberitahuan serta-merta. Sekat dan lapor bila-bila masa."
+  ],
+  "5": [
+   "Imbas untuk sertai",
+   "Tiada permintaan rakan, tiada nombor telefon."
+  ],
+  "6": [
+   "Tahu siapa sudah terima",
+   "Berkumpul, panggilan nama, notis dan jadual di satu tempat."
+  ],
+  "7": [
+   "Ambil foto menu, AIYA terjemah",
+   "Babi, daging lembu, alkohol dan alergen ditanda. Tempat menarik dan papan tanda juga."
+  ],
+  "8": [
+   "Dekat tempat menarik, AIYA bercerita",
+   "Pengenalan seminit untuk setiap hentian, boleh dibacakan."
+  ]
+ },
+ "id": {
+  "1": [
+   "Titik kumpul adalah bendera",
+   "Peta 3D berputar mengikuti ponsel Anda."
+  ],
+  "2": [
+   "Semua ponsel berbunyi",
+   "Tetap sampai dalam mode Fokus; diingatkan tiap menit sampai \"Siap\"."
+  ],
+  "3": [
+   "Lihat grup sekilas",
+   "Hanya grup Anda yang melihat Anda. Pasang gelembung."
+  ],
+  "4": [
+   "Tekan lama untuk kirim pesan",
+   "Notifikasi langsung. Blokir dan laporkan kapan saja."
+  ],
+  "5": [
+   "Pindai untuk bergabung",
+   "Tanpa tambah teman, tanpa nomor telepon."
+  ],
+  "6": [
+   "Tahu siapa yang sudah menerima",
+   "Kumpul, absen, pengumuman dan jadwal di satu tempat."
+  ],
+  "7": [
+   "Foto menu, AIYA menerjemahkan",
+   "Babi, sapi, alkohol dan alergen ditandai. Tempat wisata dan papan tanda juga."
+  ],
+  "8": [
+   "Di dekat tempat wisata, AIYA bercerita",
+   "Perkenalan satu menit untuk tiap tempat, bisa dibacakan."
+  ]
+ },
+ "vi": {
+  "1": [
+   "Điểm hẹn là một lá cờ",
+   "Bản đồ 3D xoay theo điện thoại của bạn."
+  ],
+  "2": [
+   "Mọi điện thoại đều reo",
+   "Vẫn đến khi bật chế độ Tập trung; nhắc mỗi phút đến khi bấm \"Đã nhận\"."
+  ],
+  "3": [
+   "Thấy cả đoàn trong nháy mắt",
+   "Chỉ người cùng đoàn thấy bạn. Đăng bong bóng."
+  ],
+  "4": [
+   "Nhấn giữ để nhắn tin",
+   "Thông báo ngay lập tức. Chặn và báo cáo bất cứ lúc nào."
+  ],
+  "5": [
+   "Quét để tham gia",
+   "Không kết bạn, không số điện thoại."
+  ],
+  "6": [
+   "Biết ai đã nhận",
+   "Tập trung, điểm danh, thông báo và lịch trình ở một nơi."
+  ],
+  "7": [
+   "Chụp thực đơn, AIYA dịch giúp",
+   "Đánh dấu thịt heo, bò, rượu và chất gây dị ứng. Địa danh, biển hiệu cũng đọc được."
+  ],
+  "8": [
+   "Đến địa danh, AIYA kể chuyện",
+   "Giới thiệu 1 phút cho từng điểm, có thể đọc to."
+  ]
+ },
+ "th": {
+  "1": [
+   "จุดนัดพบคือธงหนึ่งผืน",
+   "แผนที่ 3D หมุนตามโทรศัพท์ของคุณ"
+  ],
+  "2": [
+   "ทุกเครื่องดังพร้อมกัน",
+   "ส่งถึงแม้ในโหมดโฟกัส เตือนทุกนาทีจนกว่าจะกด \"รับทราบ\""
+  ],
+  "3": [
+   "เห็นทั้งกลุ่มในพริบตา",
+   "เฉพาะคนในกลุ่มเท่านั้นที่เห็น และโพสต์บับเบิลได้"
+  ],
+  "4": [
+   "กดค้างที่รูปเพื่อส่งข้อความ",
+   "อีกฝ่ายได้รับแจ้งทันที บล็อกและรายงานได้"
+  ],
+  "5": [
+   "สแกนก็เข้าร่วมได้",
+   "ไม่ต้องเพิ่มเพื่อน ไม่ต้องให้เบอร์โทร"
+  ],
+  "6": [
+   "หัวหน้ารู้ว่าใครรับทราบแล้ว",
+   "รวมตัว เช็กชื่อ ประกาศ และกำหนดการในที่เดียว"
+  ],
+  "7": [
+   "ถ่ายเมนู AIYA แปลให้",
+   "บอกหมู เนื้อวัว แอลกอฮอล์ และสารก่อภูมิแพ้ สถานที่และป้ายก็อ่านได้"
+  ],
+  "8": [
+   "ถึงสถานที่ AIYA เล่าเรื่อง",
+   "แนะนำ 1 นาทีทุกจุดในกำหนดการ อ่านออกเสียงได้"
+  ]
+ },
+ "pt": {
+  "1": [
+   "O encontro é uma bandeira",
+   "O mapa 3D gira com o celular."
+  ],
+  "2": [
+   "Todos os celulares tocam",
+   "Chega até no modo Foco; lembretes a cada minuto até “Recebido”."
+  ],
+  "3": [
+   "Veja seu grupo de relance",
+   "Só seu grupo vê você. Publique um balão."
+  ],
+  "4": [
+   "Toque e segure para mandar mensagem",
+   "Notificação na hora. Bloqueie e denuncie quando quiser."
+  ],
+  "5": [
+   "Escaneie para entrar",
+   "Sem pedidos de amizade, sem número de telefone."
+  ],
+  "6": [
+   "Saiba quem recebeu",
+   "Encontros, chamada, avisos e roteiro num só lugar."
+  ],
+  "7": [
+   "Fotografe o cardápio, a AIYA traduz",
+   "Porco, carne bovina, álcool e alérgenos marcados. Lugares e placas também."
+  ],
+  "8": [
+   "Perto de um lugar, a AIYA conta a história",
+   "Uma apresentação de um minuto para cada parada, lida em voz alta se quiser."
+  ]
+ },
+ "es": {
+  "1": [
+   "La reunión es una bandera",
+   "El mapa 3D gira con tu teléfono."
+  ],
+  "2": [
+   "Suenan todos los teléfonos",
+   "Llega incluso en modo Concentración; se repite cada minuto hasta tocar “Entendido”."
+  ],
+  "3": [
+   "Ve a tu grupo de un vistazo",
+   "Solo tu grupo te ve. Publica una burbuja."
+  ],
+  "4": [
+   "Mantén pulsado para escribir",
+   "Notificación al instante. Bloquea y denuncia cuando quieras."
+  ],
+  "5": [
+   "Escanea para unirte",
+   "Sin solicitudes de amistad ni números de teléfono."
+  ],
+  "6": [
+   "Sabe quién recibió la llamada",
+   "Reuniones, pase de lista, avisos e itinerario en un solo lugar."
+  ],
+  "7": [
+   "Fotografía el menú, AIYA lo traduce",
+   "Cerdo, res, alcohol y alérgenos marcados. Lugares y letreros también."
+  ],
+  "8": [
+   "Cerca de un lugar, AIYA cuenta su historia",
+   "Una presentación de un minuto para cada parada, en voz alta si quieres."
+  ]
+ },
+ "hi": {
+  "1": [
+   "मिलने की जगह एक झंडा है",
+   "3D मैप आपके फ़ोन के साथ घूमता है।"
+  ],
+  "2": [
+   "हर फ़ोन बजता है",
+   "फ़ोकस मोड में भी पहुँचता है; \"मिल गया\" दबाने तक हर मिनट याद दिलाता है।"
+  ],
+  "3": [
+   "एक नज़र में अपना ग्रुप",
+   "सिर्फ़ आपका ग्रुप आपको देखता है। बबल पोस्ट करें।"
+  ],
+  "4": [
+   "मैसेज के लिए देर तक दबाएँ",
+   "तुरंत नोटिफ़िकेशन। कभी भी ब्लॉक और रिपोर्ट करें।"
+  ],
+  "5": [
+   "स्कैन करके जुड़ें",
+   "न फ़्रेंड रिक्वेस्ट, न फ़ोन नंबर।"
+  ],
+  "6": [
+   "किसे कॉल मिली, पता रहे",
+   "इकट्ठा होना, हाज़िरी, सूचनाएँ और यात्रा कार्यक्रम एक जगह।"
+  ],
+  "7": [
+   "मेन्यू की फ़ोटो लें, AIYA अनुवाद करे",
+   "पोर्क, बीफ़, शराब और एलर्जी वाली चीज़ें बताती है। जगहें और साइनबोर्ड भी।"
+  ],
+  "8": [
+   "जगह के पास पहुँचें, AIYA कहानी सुनाए",
+   "हर पड़ाव का एक मिनट का परिचय, चाहें तो पढ़कर सुनाए।"
+  ]
+ },
+ "en": {
+  "1": [
+   "The meetup is a flag",
+   "The 3D map turns with your phone."
+  ],
+  "2": [
+   "Every phone rings",
+   "Delivered even in Focus mode; reminded every minute until \"Got it\"."
+  ],
+  "3": [
+   "See your group at a glance",
+   "Only your group sees you. Post a bubble."
+  ],
+  "4": [
+   "Long-press to message",
+   "Instant notification. Block and report any time."
+  ],
+  "5": [
+   "Scan to join",
+   "No friend requests, no phone numbers."
+  ],
+  "6": [
+   "Know who got the call",
+   "Meetups, roll call, notices and itinerary in one place."
+  ],
+  "7": [
+   "Snap a menu, AIYA translates",
+   "Pork, beef, alcohol and allergens marked. Sights and signs too."
+  ],
+  "8": [
+   "Near a sight, AIYA tells its story",
+   "A one-minute intro for each stop, read aloud if you like."
+  ]
+ },
+ "zh-Hant": {
+  "1": [
+   "集合點是一面旗",
+   "3D 地圖跟著手機轉，抬頭就知道往哪走。"
+  ],
+  "2": [
+   "每支手機都會響",
+   "專注模式也會送達；沒按「收到」每分鐘再提醒。"
+  ],
+  "3": [
+   "團員在哪，一眼就看到",
+   "只有同團的人看得到，還能發氣泡。"
+  ],
+  "4": [
+   "長按大頭貼傳訊息",
+   "對方立刻收到通知，可以封鎖、檢舉。"
+  ],
+  "5": [
+   "掃一下就入團",
+   "不用加好友、不用留電話。"
+  ],
+  "6": [
+   "誰收到了，領隊都知道",
+   "集合、點名、公告、行程表一次搞定。"
+  ],
+  "7": [
+   "拍菜單，艾婭幫你翻譯",
+   "標出豬肉、牛肉、酒和過敏原，景點、招牌也看得懂。"
+  ],
+  "8": [
+   "走到景點，艾婭說故事",
+   "行程上的景點一分鐘介紹，還能念給你聽。"
+  ]
+ }
+}
