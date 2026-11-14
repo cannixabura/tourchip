@@ -91,19 +91,37 @@ class _SettingsBodyState extends State<_SettingsBody> {
             subtitle: tx('帶團收到的花與感謝；可以開公開名片', 'Flowers and thanks from your trips; optional public card'),
             onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const LeaderCardScreen())),
           ),
-          // 城市低語（限 18 歲以上）：只給團主、共同團主看（團員可能未成年）；只打開商店頁，不傳任何帳號或團的資料
-          ValueListenableBuilder<TourGroup?>(
-            valueListenable: TourService.current,
-            builder: (context, g, _) => g?.isStaff != true
-                ? const SizedBox.shrink()
-                : _Row(
-                    icon: Icons.nightlife_outlined,
-                    title: tx('想認識在地人？', 'Want to meet locals?'),
-                    subtitle: tx('試試我們的另一個 App「城市低語」（限 18 歲以上）', 'Try our other app, Mood Whisper (18+ only)'),
-                    onTap: () => openLink(context, Platform.isIOS
-                        ? 'https://apps.apple.com/app/id6820145668'
-                        : 'https://play.google.com/store/apps/details?id=com.softchip.moodwhisper'),
-                  ),
+          // 城市低語的介紹卡（所有人都看得到；年齡由 App Store、Google Play 與城市低語自己把關）。只打開商店頁，不傳任何帳號或團的資料
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: Night.space2, vertical: Night.space2),
+            child: Material(
+              color: Colors.white.withValues(alpha: 0.06),
+              borderRadius: BorderRadius.circular(14),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(14),
+                onTap: () => openLink(context, Platform.isIOS
+                    ? 'https://apps.apple.com/app/id6820145668'
+                    : 'https://play.google.com/store/apps/details?id=com.softchip.moodwhisper'),
+                child: Padding(
+                  padding: const EdgeInsets.all(Night.space3),
+                  child: Row(children: [
+                    const Icon(Icons.nightlife_outlined, color: Night.ink, size: 26),
+                    const SizedBox(width: Night.space3),
+                    Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                      Text(tx('想認識在地人？', 'Want to meet locals?'), style: Night.caption.copyWith(color: Night.ink, fontWeight: FontWeight.w600)),
+                      const SizedBox(height: 2),
+                      Text(tx('「城市低語」是我們的另一個 App：在夜光城市地圖上留下此刻的心情，和附近的人打招呼。限 18 歲以上。',
+                          'Mood Whisper is our other app: share your mood on a glowing city map and say hi to people nearby. 18+ only.'),
+                          style: Night.caption.copyWith(fontSize: 12)),
+                      const SizedBox(height: 4),
+                      Text(Platform.isIOS ? tx('去 App Store 看看', 'See it on the App Store') : tx('去 Google Play 看看', 'See it on Google Play'),
+                          style: Night.caption.copyWith(fontSize: 12, decoration: TextDecoration.underline)),
+                    ])),
+                    const Icon(Icons.open_in_new, color: Night.ink, size: 16),
+                  ]),
+                ),
+              ),
+            ),
           ),
           ValueListenableBuilder<TourGroup?>(
             valueListenable: TourService.current,
