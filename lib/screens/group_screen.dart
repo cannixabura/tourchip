@@ -376,7 +376,8 @@ class _MemberPanel extends StatelessWidget {
         Expanded(child: NightButton(g.lostSent ? tx('已通知領隊', 'Leader notified') : tx('我迷路了', 'I\'m lost'), kind: NightButtonKind.danger, onPressed: () => askLost(context, g))),
       ]),
       const SizedBox(height: Night.space1),
-      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      // 越南文、泰文、馬來文等字比較長：放不下時換行，不會被切掉
+      Wrap(alignment: WrapAlignment.center, children: [
         TextButton(style: TextButton.styleFrom(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap), onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ItineraryScreen())), child: Text(tx('行程表', 'Itinerary'))),
         TextButton(style: TextButton.styleFrom(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap), onPressed: () => showAnnouncements(context, g), child: Text(tx('公告（${g.announcements.length}）', 'Notices (${g.announcements.length})'))),
         TextButton(style: TextButton.styleFrom(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap), onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const InfoScreen())), child: Text(tx('車輛・飯店・緊急', 'Bus · Hotel · SOS'))),

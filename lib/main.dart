@@ -11,8 +11,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'aiya/aiya_screen.dart';
 import 'aiya/aiya_spots.dart';
 import 'aiya/aiya_store.dart';
+import 'demo.dart';
 import 'firebase_options.dart';
 import 'l10n.dart';
 import 'screens/call_overlay.dart';
@@ -20,6 +22,7 @@ import 'screens/group_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/intro_screen.dart';
 import 'screens/join.dart';
+import 'screens/qr_screen.dart';
 import 'screens/social.dart';
 import 'screens/thanks.dart';
 import 'tour/install_link.dart';
@@ -47,6 +50,9 @@ Future<void> main() async {
   FirebaseMessaging.onBackgroundMessage(_onBackgroundMessage);
   await initZones();
   await initLang();
+  // 商店截圖模式（只在 debug 版）：換成指定語言
+  await Demo.load();
+  if (Demo.on) await setLang('${Demo.cfg!['lang']}');
   await ProfileStore.init();
   // 不需要帳號：和城市低語一樣用匿名登入；這支 App 的身分和城市低語各自獨立，彼此不相認
   try {
@@ -100,7 +106,7 @@ class RootGate extends StatefulWidget {
 class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
   StreamSubscription<Uri>? _linkSub;
   bool _overlayOpen = false;
-  bool _introDone = false; // 每次打開 App 都先看導覽（和城市低語一樣），略過或看完才進首頁／團
+  bool _introDone = Demo.on; // 每次打開 App 都先看導覽（和城市低語一樣），略過或看完才進首頁／團（截圖模式跳過）
 
   @override
   void initState() {
@@ -117,6 +123,30 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
     AiyaStore.load();
     _initPush();
     _listenLinks();
+    if (Demo.on) Future.delayed(const Duration(seconds: 4), _demoShot);
+  }
+
+  /// 截圖模式：打開要截圖的畫面（1、2、3、6 只要團的資料就會顯示）
+  Future<void> _demoShot() async {
+    if (!mounted) return;
+    switch (Demo.shot) {
+      case 2:
+        final c = TourService.current.value?.call;
+        if (c != null && !_overlayOpen) {
+          _overlayOpen = true;
+          showCallOverlay(context, c).whenComplete(() => _overlayOpen = false);
+        }
+      case 4:
+        TourService.openChat.value = '${Demo.cfg!['chatWith']}';
+      case 5:
+        await Navigator.of(context).push(MaterialPageRoute(builder: (_) => const QrScreen()));
+      case 7:
+        await openAiya(context);
+      case 8:
+        final s = (Demo.cfg!['spot'] as Map).cast<String, dynamic>();
+        final r = await aiyaCall('spot', s);
+        if (mounted && r['success'] == true) await showSpotIntro(context, '${r['title']}', '${r['intro']}');
+    }
   }
 
   @override

@@ -13,6 +13,7 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../demo.dart';
 import '../l10n.dart';
 import 'model.dart';
 import 'profile.dart';
@@ -53,6 +54,15 @@ class TourService {
   }
 
   static Future<Map<String, dynamic>> call(String action, [Map<String, dynamic> body = const {}]) async {
+    // 商店截圖模式（只在 debug 版）：團的狀態用範例資料，其他動作都不送
+    if (Demo.on) {
+      if (action != 'status') return {'success': true};
+      final d = Demo.status();
+      _apply(d['group']);
+      ProfileStore.apply(d['profile']);
+      loaded.value = true;
+      return d;
+    }
     try {
       final token = await FirebaseAuth.instance.currentUser?.getIdToken();
       final build = await _appBuild();
