@@ -85,6 +85,13 @@ class _AiyaSpotPromptState extends State<AiyaSpotPrompt> {
     TourMapState.paused.addListener(_sync);
   }
 
+  /// 團的資料更新（例如領隊剛新增景點）：重新決定要不要聽位置，並用最後一次的位置再比一次
+  @override
+  void didUpdateWidget(AiyaSpotPrompt old) {
+    super.didUpdateWidget(old);
+    _sync().then((_) => _check());
+  }
+
   @override
   void dispose() {
     AiyaSpots.on.removeListener(_sync);
@@ -107,10 +114,19 @@ class _AiyaSpotPromptState extends State<AiyaSpotPrompt> {
     if (perm != LocationPermission.whileInUse && perm != LocationPermission.always) return;
     if (!mounted || _sub != null) return;
     _sub = Geolocator.getPositionStream(locationSettings: const LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 25)).listen((p) {
-      if (!mounted || _loading) return;
-      final s = AiyaSpots.nearest(widget.g, p.latitude, p.longitude);
-      if (s?.id != _stop?.id) setState(() => _stop = s);
+      _last = p;
+      _check();
     }, onError: (_) {});
+  }
+
+  /// 最後一次的位置（站著不動時位置串流不會再送，景點變了要用它重新比）
+  Position? _last;
+
+  void _check() {
+    final p = _last;
+    if (!mounted || _loading || p == null || _sub == null) return;
+    final s = AiyaSpots.nearest(widget.g, p.latitude, p.longitude);
+    if (s?.id != _stop?.id) setState(() => _stop = s);
   }
 
   Future<void> _dismiss() async {
