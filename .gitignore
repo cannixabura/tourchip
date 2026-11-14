@@ -16,3 +16,6 @@ android/key.properties
 # Firebase Hosting 部署快取
 .firebase/
 tool/.build/
+
+# 展示影片（太大，不進 git；用 tool/gen_video.py 重新產生）
+store/video/*/*.mp4

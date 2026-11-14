@@ -98,12 +98,12 @@ def group(lang, c, shot):
     call = dict(id='c1', atIn=1800, tz=c['tz'], place=c['place'], lat=mlat, lng=mlng)
     if shot == 1:
         g['call'] = dict(call, mine='ack')
-    elif shot == 2:
+    elif shot in (2, 9):
         g['call'] = dict(call)
-    elif shot == 4:
+    if shot in (4, 9):
         g['messages'] = [dict(id='m1', **{'from': uid['C']}, to='$ME', text=c['chat'][0], atIn=-120, mine=False),
                          dict(id='m2', **{'from': '$ME'}, to=uid['C'], text=c['chat'][1], atIn=-60, mine=True)]
-    elif shot == 6:
+    if shot == 6:
         g['call'] = dict(call, mine=None)
         rows = [dict(uid=uid[k], no=i, name=n[i], avatar=av[i], state=s) for (k, i, r), s in zip(who[1:], ['ack', 'ack', 'seen'])]
         g['callRoster'] = dict(rows=rows, acked=2, total=3)
@@ -114,15 +114,17 @@ for lang, c in L.items():
     avatars(lang, c['names'])
     d = f'{OUT}/{lang}'
     os.makedirs(d, exist_ok=True)
-    for shot in range(1, 9):
+    for shot in range(1, 10):
         cfg = dict(lang=lang, shot=shot, group=group(lang, c, shot),
                    profile=dict(name=c['names'][0 if shot in (5, 6) else 1],
                                 avatar=f'{SITE}/{lang}/{"a" if shot in (5, 6) else "b"}.png'))
-        if shot == 4:
+        if shot in (4, 9):
             cfg['chatWith'] = 'u_chloe'
-        if shot == 7:
+        if shot in (7, 9):
             cfg['aiyaImage'] = c['menu']
-        if shot == 8:
+        if shot == 9:
+            cfg['newUser'] = True
+        if shot in (8, 9):
             cfg['spot'] = dict(place=c['spotName'], **c['spot'])
         json.dump(cfg, open(f'{d}/{shot}.json', 'w', encoding='utf-8'), ensure_ascii=False)
     print(lang, 'ok')

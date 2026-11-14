@@ -56,6 +56,8 @@ Future<void> main() async {
   await ProfileStore.init();
   // 不需要帳號：和城市低語一樣用匿名登入；這支 App 的身分和城市低語各自獨立，彼此不相認
   try {
+    // 展示影片（debug）：每次換一個新的匿名帳號，艾婭有自己的免費次數
+    if (Demo.on && Demo.cfg!['newUser'] == true) await FirebaseAuth.instance.signOut();
     if (FirebaseAuth.instance.currentUser == null) await FirebaseAuth.instance.signInAnonymously();
   } catch (_) {}
   PassStore.init();
@@ -123,7 +125,49 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
     AiyaStore.load();
     _initPush();
     _listenLinks();
-    if (Demo.on) Future.delayed(const Duration(seconds: 4), _demoShot);
+    if (Demo.tour) {
+      Future.delayed(const Duration(milliseconds: 6000), _demoTour); // 等地圖圖磚載入
+    } else if (Demo.on) {
+      Future.delayed(const Duration(seconds: 4), _demoShot);
+    }
+  }
+
+  /// 展示影片：導覽 → 團的地圖 → 集合卡 → 私訊 → 艾婭拍菜單 → 景點介紹 → 回到地圖
+  Future<void> _demoTour() async {
+    Future<void> wait(int ms) => Future.delayed(Duration(milliseconds: ms));
+    if (!mounted) return;
+    Demo.mark('map');
+    await wait(5500);
+    final g = TourService.current.value;
+    if (!mounted || g?.call == null) return;
+    Demo.mark('call');
+    _overlayOpen = true;
+    final overlay = showCallOverlay(context, g!.call!).whenComplete(() => _overlayOpen = false);
+    await wait(8500);
+    if (mounted) Navigator.of(context).maybePop();
+    await overlay;
+    await wait(1200);
+    if (!mounted) return;
+    Demo.mark('chat');
+    final chat = openChat(context, '${Demo.cfg!['chatWith']}');
+    await wait(4500);
+    if (mounted) Navigator.of(context).maybePop();
+    await chat;
+    await wait(1000);
+    if (!mounted) return;
+    Demo.mark('aiya');
+    await openAiya(context); // 艾婭畫面在展示模式會自己傳照片、等回覆、然後關掉
+    await wait(800);
+    if (!mounted) return;
+    final s = (Demo.cfg!['spot'] as Map).cast<String, dynamic>();
+    final r = await aiyaCall('spot', s);
+    if (!mounted || r['success'] != true) return;
+    Demo.mark('spot');
+    final intro = showSpotIntro(context, '${r['title']}', '${r['intro']}');
+    await wait(7500);
+    if (mounted) Navigator.of(context).maybePop();
+    await intro;
+    Demo.mark('end');
   }
 
   /// 截圖模式：打開要截圖的畫面（1、2、3、6 只要團的資料就會顯示）

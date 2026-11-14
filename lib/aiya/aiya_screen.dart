@@ -176,7 +176,9 @@ class _AiyaScreenState extends State<AiyaScreen> with SingleTickerProviderStateM
     final status = await aiyaCall('status');
     if (!mounted) return;
     _applyStatus(status);
-    if (status['consented'] != true) {
+    if (status['consented'] != true && Demo.on) {
+      await aiyaCall('consent');
+    } else if (status['consented'] != true) {
       final agreed = await askAiyaConsent(context);
       if (!mounted) return;
       if (!agreed) { Navigator.of(context).pop(); return; }
@@ -198,6 +200,14 @@ class _AiyaScreenState extends State<AiyaScreen> with SingleTickerProviderStateM
         await Future.delayed(const Duration(milliseconds: 300));
       }
       await Future.delayed(const Duration(seconds: 1));
+      if (Demo.tour) {
+        // 展示影片：回覆打完後停一下再慢慢捲回照片，讓人看清楚，然後關掉
+        await Future.delayed(const Duration(milliseconds: 2500));
+        if (mounted && _scroll.hasClients) await _scroll.animateTo(150.0.clamp(0.0, _scroll.position.maxScrollExtent), duration: const Duration(milliseconds: 1600), curve: Curves.easeInOut);
+        await Future.delayed(const Duration(milliseconds: 2500));
+        if (mounted) Navigator.of(context).pop();
+        return;
+      }
       if (mounted && _scroll.hasClients) _scroll.jumpTo(150.0.clamp(0.0, _scroll.position.maxScrollExtent));
       return;
     }
@@ -451,7 +461,7 @@ class _AiyaScreenState extends State<AiyaScreen> with SingleTickerProviderStateM
     _video.play(aiyaTalkClips[_rnd.nextInt(aiyaTalkClips.length)], _anim.time);
     final line = _LiveLine(_Msg(''));
     setState(() => _msgs.add(line.msg));
-    _typer = Timer.periodic(const Duration(milliseconds: 90), (t) {
+    _typer = Timer.periodic(Duration(milliseconds: Demo.tour ? 22 : 90), (t) {
       if (!mounted) { t.cancel(); return; }
       final chars = line.target.characters.toList();
       if (line.shown >= chars.length) {
@@ -480,7 +490,7 @@ class _AiyaScreenState extends State<AiyaScreen> with SingleTickerProviderStateM
     setState(() => _msgs.add(msg));
     final chars = text.characters.toList();
     var i = 0;
-    _typer = Timer.periodic(const Duration(milliseconds: 90), (t) {
+    _typer = Timer.periodic(Duration(milliseconds: Demo.tour ? 22 : 90), (t) {
       if (!mounted) { t.cancel(); return; }
       if (i >= chars.length) {
         t.cancel();

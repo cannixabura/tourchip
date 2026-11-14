@@ -14,6 +14,17 @@ class Demo {
   static Map<String, dynamic>? cfg;
   static bool get on => cfg != null;
   static int get shot => (cfg?['shot'] as num?)?.toInt() ?? 0;
+  /// 9 = 展示影片：自動走完整個流程
+  static bool get tour => shot == 9;
+  static final _marks = <String, int>{};
+
+  /// 影片的場景時間點（毫秒，系統時間），寫到 Documents/timeline.json 給合成字幕用
+  static void mark(String name) {
+    _marks[name] = DateTime.now().millisecondsSinceEpoch;
+    try {
+      File('$_dir/timeline.json').writeAsStringSync(jsonEncode(_marks));
+    } catch (_) {}
+  }
 
   static String _dir = '';
 

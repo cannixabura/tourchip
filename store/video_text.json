@@ -1,0 +1,62 @@
+{
+ "zh-Hant": {
+  "hero_h": "<em>集合時，</em><br>每支手機都會響",
+  "cta_h": "下一趟，一個都不走散",
+  "hero_free": "20 人、3 天以內免費 · 團員永遠免費 · 不需要註冊帳號"
+ },
+ "zh-Hans": {
+  "hero_h": "<em>集合时，</em><br>每部手机都会响",
+  "cta_h": "下一趟，一个都不走散",
+  "hero_free": "20 人、3 天以内免费 · 团员永远免费 · 不需要注册账号"
+ },
+ "en": {
+  "hero_h": "<em>Meetup time?</em><br>Every phone rings.",
+  "cta_h": "On your next trip, nobody gets left behind",
+  "hero_free": "Free for up to 20 people and 3 days · Always free for members · No account needed"
+ },
+ "ja": {
+  "hero_h": "<em>集合の時間、</em><br>全員のスマホが鳴る",
+  "cta_h": "次の旅行は、誰もはぐれない",
+  "hero_free": "20人・3日まで無料 · メンバーはずっと無料 · アカウント登録不要"
+ },
+ "ko": {
+  "hero_h": "<em>집합 시간,</em><br>모두의 휴대폰이 울려요",
+  "cta_h": "다음 여행은 아무도 잃어버리지 않게",
+  "hero_free": "20명·3일까지 무료 · 멤버는 항상 무료 · 회원가입 필요 없음"
+ },
+ "ms": {
+  "hero_h": "<em>Masa berkumpul?</em><br>Setiap telefon berbunyi.",
+  "cta_h": "Lawatan seterusnya, tiada siapa tertinggal",
+  "hero_free": "Percuma sehingga 20 orang dan 3 hari · Ahli sentiasa percuma · Tiada akaun diperlukan"
+ },
+ "id": {
+  "hero_h": "<em>Waktunya kumpul?</em><br>Semua ponsel berbunyi.",
+  "cta_h": "Perjalanan berikutnya, tak ada yang tertinggal",
+  "hero_free": "Gratis hingga 20 orang dan 3 hari · Anggota selalu gratis · Tanpa akun"
+ },
+ "vi": {
+  "hero_h": "<em>Đến giờ tập trung?</em><br>Mọi điện thoại đều reo.",
+  "cta_h": "Chuyến đi tới, không ai bị bỏ lại",
+  "hero_free": "Miễn phí đến 20 người và 3 ngày · Thành viên luôn miễn phí · Không cần tài khoản"
+ },
+ "th": {
+  "hero_h": "<em>ถึงเวลารวมตัว</em><br>ทุกเครื่องดังพร้อมกัน",
+  "cta_h": "ทริปหน้า ไม่มีใครหลงกลุ่ม",
+  "hero_free": "ฟรีสูงสุด 20 คนและ 3 วัน · สมาชิกฟรีตลอด · ไม่ต้องสมัครบัญชี"
+ },
+ "pt": {
+  "hero_h": "<em>Hora do encontro?</em><br>Todos os celulares tocam.",
+  "cta_h": "Na próxima viagem, ninguém fica para trás",
+  "hero_free": "Grátis para até 20 pessoas e 3 dias · Sempre grátis para membros · Sem cadastro"
+ },
+ "es": {
+  "hero_h": "<em>¿Hora de reunirse?</em><br>Suenan todos los teléfonos.",
+  "cta_h": "En tu próximo viaje, nadie se queda atrás",
+  "hero_free": "Gratis hasta 20 personas y 3 días · Siempre gratis para los miembros · Sin cuenta"
+ },
+ "hi": {
+  "hero_h": "<em>इकट्ठा होने का समय?</em><br>हर फ़ोन बजेगा।",
+  "cta_h": "अगली यात्रा में कोई पीछे नहीं छूटेगा",
+  "hero_free": "20 लोग और 3 दिन तक मुफ़्त · सदस्यों के लिए हमेशा मुफ़्त · अकाउंट की ज़रूरत नहीं"
+ }
+}
