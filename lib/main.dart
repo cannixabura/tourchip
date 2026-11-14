@@ -9,6 +9,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'aiya/aiya_screen.dart';
@@ -120,6 +121,7 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
     TourService.incomingRoll.addListener(_onIncomingRoll);
     TourService.askThanks.addListener(_onAskThanks);
     TourService.openChat.addListener(_onOpenChat);
+    TourService.arrivedNow.addListener(_onArrived);
     PassStore.notice.addListener(_onPassNotice);
     PassStore.load();
     AiyaStore.load();
@@ -198,6 +200,7 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     TourService.incomingCall.removeListener(_onIncomingCall);
     TourService.incomingRoll.removeListener(_onIncomingRoll);
+    TourService.arrivedNow.removeListener(_onArrived);
     TourService.askThanks.removeListener(_onAskThanks);
     TourService.openChat.removeListener(_onOpenChat);
     PassStore.notice.removeListener(_onPassNotice);
@@ -249,6 +252,12 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
         return;
       }
       if (type == 'tgroup_call' || type == 'tgroup_roll') return; // 由 _apply 跳出全螢幕卡片
+      // 脫隊預警（自己）：震動提醒跟上隊伍
+      if (type == 'tgroup_far_self') {
+        buzz();
+        if (m.notification != null && mounted) showGlassToast(context, m.notification!.body ?? '', icon: Icons.directions_walk, danger: true);
+        return;
+      }
       if ((type == 'tgroup_lost' || type == 'tgroup_help') && mounted && !_overlayOpen) {
         _overlayOpen = true;
         showLeaderAlert(context, lost: type == 'tgroup_lost').whenComplete(() => _overlayOpen = false);
@@ -322,6 +331,14 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
     final g = TourService.current.value;
     if (!mounted || _overlayOpen || g == null || !g.thanksOpen) return;
     await thankFromGroup(context, g);
+  }
+
+  /// 到點自動點到了
+  void _onArrived() {
+    if (!TourService.arrivedNow.value || !mounted) return;
+    TourService.arrivedNow.value = false;
+    HapticFeedback.mediumImpact();
+    showGlassToast(context, tx('到集合點了，已經自動幫你點到', 'You\'re at the meeting point. Checked in automatically.'), icon: Icons.where_to_vote_outlined);
   }
 
   void _onPassNotice() {

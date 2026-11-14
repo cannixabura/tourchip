@@ -1,3 +1,4 @@
+import ActivityKit
 import Flutter
 import NaturalLanguage
 import SwiftUI
@@ -15,6 +16,24 @@ import UIKit
 
   func didInitializeImplicitFlutterEngine(_ engineBridge: FlutterImplicitEngineBridge) {
     GeneratedPluginRegistrant.register(with: engineBridge.pluginRegistry)
+
+    // 鎖定畫面的集合倒數（Live Activity，見 TourLive）：Dart 端 tourchip/live（lib/tour/live_countdown.dart）
+    if let registrar = engineBridge.pluginRegistry.registrar(forPlugin: "TourChipLive") {
+      let channel = FlutterMethodChannel(name: "tourchip/live", binaryMessenger: registrar.messenger())
+      channel.setMethodCallHandler { call, result in
+        let args = call.arguments as? [String: Any] ?? [:]
+        switch call.method {
+        case "start":
+          GatherLive.start(args)
+          result(nil)
+        case "end":
+          GatherLive.end()
+          result(nil)
+        default:
+          result(FlutterMethodNotImplemented)
+        }
+      }
+    }
 
     // 訊息、公告、氣泡的「翻譯」：Dart 端 tourchip/translate（Android 用 ML Kit，見 Translator.kt）。
     // 完全在手機上進行，內容不會上傳。
@@ -133,5 +152,36 @@ struct TranslationHost: View {
       .translationTask(translator.configuration) { session in
         await translator.run(session)
       }
+  }
+}
+
+/// 集合倒數的即時動態：同時只留一個；集合時間過 30 分鐘系統自動收起
+enum GatherLive {
+  static func start(_ args: [String: Any]) {
+    guard ActivityAuthorizationInfo().areActivitiesEnabled else { NSLog("GatherLive disabled"); return }
+    let at = Date(timeIntervalSince1970: (args["at"] as? Double ?? Double(args["at"] as? Int ?? 0)) / 1000)
+    let state = GatherAttributes.ContentState(at: at, title: args["title"] as? String ?? "", place: args["place"] as? String ?? "")
+    let attrs = GatherAttributes(group: args["group"] as? String ?? "", color: args["color"] as? Int ?? 0xB44CFF, nowText: args["now"] as? String ?? "")
+    let stale = at.addingTimeInterval(30 * 60)
+    Task {
+      // 同一團、同樣的外觀：更新內容就好；否則結束舊的再開新的
+      let current = Activity<GatherAttributes>.activities
+      if let a = current.first, current.count == 1, a.attributes.group == attrs.group, a.attributes.color == attrs.color, a.attributes.nowText == attrs.nowText {
+        await a.update(ActivityContent(state: state, staleDate: stale))
+        return
+      }
+      for a in current { await a.end(nil, dismissalPolicy: .immediate) }
+      do {
+        _ = try Activity.request(attributes: attrs, content: ActivityContent(state: state, staleDate: stale), pushType: nil)
+      } catch {
+        NSLog("GatherLive request failed: \(error)")
+      }
+    }
+  }
+
+  static func end() {
+    Task {
+      for a in Activity<GatherAttributes>.activities { await a.end(nil, dismissalPolicy: .immediate) }
+    }
   }
 }

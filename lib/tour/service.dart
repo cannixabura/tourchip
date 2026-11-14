@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart' show WidgetsBinding, AppLifecycleState;
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geolocator/geolocator.dart';
@@ -15,6 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../demo.dart';
 import '../l10n.dart';
+import 'live_countdown.dart';
 import 'model.dart';
 import 'profile.dart';
 
@@ -41,6 +43,11 @@ class TourService {
   static Timer? _poll;
   /// 點了私訊通知：要打開和誰的對話（main.dart 監聽）
   static final openChat = ValueNotifier<String?>(null);
+  /// 到點自動點到了：顯示一句提示（main.dart 監聽）
+  static final arrivedNow = ValueNotifier<bool>(false);
+  static StreamSubscription<Position>? _arriveSub;
+  static String? _arriveSent;
+  static DateTime _arriveRetry = DateTime.fromMillisecondsSinceEpoch(0);
   static StreamSubscription<Position>? _posSub;
   static DateTime _posSentAt = DateTime.fromMillisecondsSinceEpoch(0);
   static Position? _posSent;
@@ -109,6 +116,12 @@ class TourService {
       incomingRoll.value = after.rollId;
     }
     after != null && after.shareOn ? _startPos() : _stopPos();
+    // 團員：這次集合剛被自動點到
+    if (after != null && !after.isStaff && after.call != null && after.call!.here && before?.call?.id == after.call!.id && before?.call?.here == false) {
+      arrivedNow.value = true;
+    }
+    _watchArrive(after);
+    LiveCountdown.sync(after);
     _schedulePoll();
   }
 
@@ -138,6 +151,54 @@ class TourService {
     _posSent = null;
   }
 
+  /// 到點自動點名：團員有集合、集合前 30 分鐘起、App 開著時看自己的位置；
+  /// 走進集合點 30 公尺內（加上 GPS 誤差，最多 25 公尺）就告訴伺服器「到了」。不存位置、不必開分享，也不會為此跳出權限詢問。
+  static Future<void> _watchArrive(TourGroup? g) async {
+    final c = g?.call;
+    final fg = WidgetsBinding.instance.lifecycleState == AppLifecycleState.resumed;
+    final need = g != null && !g.isStaff && c != null && !c.here && _arriveSent != c.id && fg &&
+        DateTime.now().millisecondsSinceEpoch >= c.at - 30 * 60000 && !Demo.on;
+    if (!need) {
+      _stopArrive();
+      return;
+    }
+    if (_arriveSub != null) return;
+    try {
+      final perm = await Geolocator.checkPermission();
+      if (perm != LocationPermission.whileInUse && perm != LocationPermission.always) return;
+    } catch (_) {
+      return;
+    }
+    if (_arriveSub != null) return;
+    _arriveSub = Geolocator.getPositionStream(locationSettings: const LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 5))
+        .listen(_checkArrive, onError: (_) {});
+  }
+
+  static void _stopArrive() {
+    _arriveSub?.cancel();
+    _arriveSub = null;
+  }
+
+  static Future<void> _checkArrive(Position p) async {
+    final c = current.value?.call;
+    if (c == null || c.here || _arriveSent == c.id || DateTime.now().isBefore(_arriveRetry)) return;
+    final d = Geolocator.distanceBetween(p.latitude, p.longitude, c.lat, c.lng);
+    if (d > 30 + p.accuracy.clamp(0, 25)) return;
+    _arriveSent = c.id;
+    final r = await call('arrive', {'callId': c.id, 'lat': p.latitude, 'lng': p.longitude});
+    if (r['success'] == true) {
+      _stopArrive();
+    } else if (r['code'] != 'ended') {
+      // 伺服器覺得還太遠或連不上：20 秒後再試
+      _arriveSent = null;
+      _arriveRetry = DateTime.now().add(const Duration(seconds: 20));
+    }
+  }
+
+  /// 我會晚到：晚 3／5／10 分鐘，原因 toilet／pay／way（可以不選）
+  static Future<Map<String, dynamic>> sendLate(String callId, int mins, String why) =>
+      call('late', {'callId': callId, 'mins': mins, if (why.isNotEmpty) 'why': why});
+
   /// 分享位置的開關；第一次打開要帶 consent（已滿 18 歲或家長／監護人同意）
   static Future<Map<String, dynamic>> setShare(bool on, {bool consent = false}) async {
     final r = await call('share', {'on': on, if (consent) 'consent': true});
@@ -157,6 +218,7 @@ class TourService {
   static void pause() {
     _poll?.cancel();
     _stopPos(); // App 到背景就不再回報位置
+    _stopArrive();
   }
 
   /// 收到推播（前景）：重新整理；集合呼叫與點名會由 _apply 跳出卡片

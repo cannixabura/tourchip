@@ -64,7 +64,8 @@ class _CallCardState extends State<CallCard> {
     final pos = _pos;
     final dist = pos == null ? null : Geolocator.distanceBetween(pos.latitude, pos.longitude, c.lat, c.lng);
     final bearing = pos == null ? null : Geolocator.bearingBetween(pos.latitude, pos.longitude, c.lat, c.lng);
-    final acked = (TourService.current.value?.call?.mine ?? c.mine) == 'ack';
+    final live = TourService.current.value?.call?.id == c.id ? TourService.current.value!.call : c;
+    final acked = (live?.mine ?? c.mine) == 'ack';
     final left = Duration(milliseconds: max(0, c.at - DateTime.now().millisecondsSinceEpoch));
     return Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       // 時區放在標題同一行，面板裡的卡片才不會太高
@@ -110,13 +111,30 @@ class _CallCardState extends State<CallCard> {
       SizedBox(height: widget.big ? Night.space2 : 4),
       if (!widget.ack)
         const SizedBox.shrink()
-      else if (acked)
-        Text(tx('已收到，領隊看得到', 'Got it. Your leader can see that.'), style: const TextStyle(color: Night.moodCalm, fontSize: 15), textAlign: TextAlign.center)
-      else
-        NightButton(tx('收到', 'Got it'), icon: Icons.check, onPressed: () {
-          HapticFeedback.heavyImpact();
-          TourService.call('ack', {'callId': c.id});
-        }),
+      else if (live?.here == true)
+        // 到點自動點名：走進集合點附近就算到了
+        Text(tx('你已經到集合點了，領隊看得到 ✓', 'You\'re at the meeting point. Your leader can see that ✓'), style: const TextStyle(color: Night.moodCalm, fontSize: 15), textAlign: TextAlign.center)
+      else ...[
+        if (live?.late != null)
+          Text(tx('已告訴領隊：${live!.late!.label}', 'Told your leader: ${live.late!.label}'), style: const TextStyle(color: Color(0xFFFFD166), fontSize: 15), textAlign: TextAlign.center)
+        else if (acked)
+          Text(tx('已收到，領隊看得到', 'Got it. Your leader can see that.'), style: const TextStyle(color: Night.moodCalm, fontSize: 15), textAlign: TextAlign.center)
+        else
+          NightButton(tx('收到', 'Got it'), icon: Icons.check, onPressed: () {
+            HapticFeedback.heavyImpact();
+            TourService.call('ack', {'callId': c.id});
+          }),
+        // 我會晚到：不用打字、不用找領隊電話
+        Align(
+          alignment: Alignment.center,
+          child: TextButton.icon(
+            style: TextButton.styleFrom(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+            icon: const Icon(Icons.schedule, size: 18, color: Color(0xFFFFD166)),
+            label: Text(live?.late != null ? tx('改晚到的時間', 'Change how late') : tx('我會晚到', 'I\'ll be late'), style: const TextStyle(color: Color(0xFFFFD166))),
+            onPressed: () => showLateSheet(context, c.id, live?.late),
+          ),
+        ),
+      ],
       // 隱私說明只放在全螢幕卡片，面板裡省下一行
       if (widget.big) ...[
         const SizedBox(height: Night.space2),
@@ -124,6 +142,43 @@ class _CallCardState extends State<CallCard> {
       ],
     ]);
   }
+}
+
+/// 我會晚到：晚 3／5／10 分鐘，可以附原因；領隊名單上直接顯示，也會收到通知
+Future<void> showLateSheet(BuildContext context, String callId, TourLate? was) {
+  var mins = was?.mins ?? 5;
+  var why = was?.why ?? '';
+  var busy = false;
+  Widget chip(String label, bool on, VoidCallback tap) => ChoiceChip(
+        label: Text(label), selected: on, onSelected: (_) => tap(),
+        selectedColor: Night.deepViolet, backgroundColor: Night.night600, labelStyle: TextStyle(color: on ? Night.onDeep : Night.ink),
+      );
+  return showPanel(context, (ctx, setS) => Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+    Text(tx('我會晚到', 'I\'ll be late'), style: Night.title, textAlign: TextAlign.center),
+    const SizedBox(height: Night.space2),
+    Text(tx('領隊會在名單上看到，不用再打電話。', 'Your leader sees it on the list. No need to call.'), style: Night.caption, textAlign: TextAlign.center),
+    const SizedBox(height: Night.space3),
+    Text(tx('會晚幾分鐘', 'How late'), style: Night.caption.copyWith(color: Night.inkMuted)),
+    const SizedBox(height: 6),
+    Wrap(spacing: 8, runSpacing: 8, children: [
+      for (final m in const [3, 5, 10]) chip(tx('$m 分鐘', '$m min'), mins == m, () => setS(() => mins = m)),
+    ]),
+    const SizedBox(height: Night.space3),
+    Text(tx('原因（可以不選）', 'Why (optional)'), style: Night.caption.copyWith(color: Night.inkMuted)),
+    const SizedBox(height: 6),
+    Wrap(spacing: 8, runSpacing: 8, children: [
+      for (final w in const ['toilet', 'pay', 'way']) chip(lateWhyText(w), why == w, () => setS(() => why = why == w ? '' : w)),
+    ]),
+    const SizedBox(height: Night.space4),
+    NightButton(tx('告訴領隊', 'Tell my leader'), icon: Icons.send, onPressed: busy ? null : () async {
+      setS(() => busy = true);
+      HapticFeedback.mediumImpact();
+      final r = await TourService.sendLate(callId, mins, why);
+      if (!ctx.mounted) return;
+      setS(() => busy = false);
+      if (r['success'] == true) { Navigator.pop(ctx); } else { showGlassToast(ctx, tourError('${r['code']}'), danger: true); }
+    }),
+  ]));
 }
 
 /// 點名的三個大按鈕：我到了、還要 5 分鐘、需要幫忙

@@ -104,22 +104,34 @@ class _RollCallScreenState extends State<RollCallScreen> {
 
   Widget _callView(TourGroup g) {
     final c = g.call!;
-    final seen = g.callRoster.where((m) => m.state == 'seen').length;
-    final none = g.callRoster.where((m) => m.state == 'none').length;
+    final seen = g.callRoster.where((m) => m.state == 'seen' && !m.arrived && m.late == null).length;
+    final none = g.callRoster.where((m) => m.state == 'none' && !m.arrived && m.late == null).length;
     final t = g.callTotal == 0 ? 1 : g.callTotal;
+    final ackOnly = g.callRoster.where((m) => m.state == 'ack' && !m.arrived && m.late == null).length;
     return Column(children: [
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: Night.space4),
         child: Text('${hm(c.at, c.tz)} · ${zoneChip(c.at, c.tz)} · ${c.place}${c.sub != null ? ' · ${g.subName(c.sub)}' : ''}', style: Night.caption.copyWith(color: Night.inkMuted)),
       ),
-      _summary(tx('收到', 'Got it'), g.acked, g.callTotal, [(tx('收到', 'ok'), Night.moodCalm, g.acked / t), ('', const Color(0xFFFFD166), seen / t)],
-          tx('收到 ${g.acked} · 打開了沒回 $seen · 沒反應 $none · 倒數 ${countdown(c.at)}', 'Got it ${g.acked} · Seen $seen · No response $none · ${countdown(c.at)}')),
+      // 到點自動點名：走進集合點附近的人自動打勾；說了會晚到的另外標出
+      _summary(tx('已到', 'Here'), g.arrived, g.callTotal,
+          [('', Night.moodCalm, g.arrived / t), ('', Night.auroraBlue, ackOnly / t), ('', const Color(0xFFFFD166), g.callLate / t)],
+          tx('已到 ${g.arrived} · 收到 $ackOnly · 會晚到 ${g.callLate} · 打開了沒回 $seen · 沒反應 $none · 倒數 ${countdown(c.at)}\n走到集合點附近的人會自動打勾。',
+              'Here ${g.arrived} · Got it $ackOnly · Late ${g.callLate} · Seen $seen · No response $none · ${countdown(c.at)}\nPeople who reach the meeting point are checked in automatically.')),
       Expanded(child: ListView(padding: const EdgeInsets.symmetric(horizontal: Night.space4), children: [
         for (final m in g.callRoster)
           _row(g, m,
-              status: switch (m.state) { 'ack' => tx('收到', 'Got it'), 'seen' => tx('打開了，還沒回', 'Seen, no reply'), _ => tx('沒反應', 'No response') },
-              color: switch (m.state) { 'ack' => Night.moodCalm, 'seen' => const Color(0xFFFFD166), _ => Night.inkMuted },
-              canPing: m.state != 'ack'),
+              status: m.arrived
+                  ? tx('已到（自動）', 'Here (auto)')
+                  : m.late != null
+                      ? m.late!.label
+                      : switch (m.state) { 'ack' => tx('收到', 'Got it'), 'seen' => tx('打開了，還沒回', 'Seen, no reply'), _ => tx('沒反應', 'No response') },
+              color: m.arrived
+                  ? Night.moodCalm
+                  : m.late != null
+                      ? const Color(0xFFFFD166)
+                      : switch (m.state) { 'ack' => Night.auroraBlue, 'seen' => const Color(0xFFFFD166), _ => Night.inkMuted },
+              canPing: !m.arrived && m.state != 'ack' && m.late == null),
       ])),
       Padding(
         padding: const EdgeInsets.all(Night.space4),
@@ -161,6 +173,8 @@ class _RollCallScreenState extends State<RollCallScreen> {
           _row(g, m,
               status: m.marked
                   ? tx('到了（領隊點到）', 'Here (marked by leader)')
+                  : m.arrived
+                  ? tx('到了（自動）', 'Here (auto)')
                   : switch (m.state) { 'here' => tx('到了', 'Here'), '5min' => tx('還要 5 分鐘', '5 more min'), 'help' => tx('需要幫忙', 'Needs help'), _ => tx('沒回應', 'No answer') },
               color: switch (m.state) { 'here' => Night.moodCalm, '5min' => const Color(0xFFFFD166), 'help' => Night.danger, _ => Night.inkMuted },
               urgent: m.state == 'help',

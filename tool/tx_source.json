@@ -412,6 +412,10 @@
 "en": "TourChip"
 },
 {
+"zh": "到集合點了，已經自動幫你點到",
+"en": "You're at the meeting point. Checked in automatically."
+},
+{
 "zh": "{p.no} 號",
 "en": "No. {p.no}"
 },
@@ -564,6 +568,14 @@
 "en": "Walk me there with Maps"
 },
 {
+"zh": "你已經到集合點了，領隊看得到 ✓",
+"en": "You're at the meeting point. Your leader can see that ✓"
+},
+{
+"zh": "已告訴領隊：{live!.late!.label}",
+"en": "Told your leader: {live.late!.label}"
+},
+{
 "zh": "已收到，領隊看得到",
 "en": "Got it. Your leader can see that."
 },
@@ -572,8 +584,32 @@
 "en": "Got it"
 },
 {
+"zh": "改晚到的時間",
+"en": "Change how late"
+},
+{
+"zh": "我會晚到",
+"en": "I'll be late"
+},
+{
 "zh": "距離和方向在你的手機上計算，不會傳給任何人",
 "en": "Distance and direction are worked out on your phone and never sent"
+},
+{
+"zh": "領隊會在名單上看到，不用再打電話。",
+"en": "Your leader sees it on the list. No need to call."
+},
+{
+"zh": "會晚幾分鐘",
+"en": "How late"
+},
+{
+"zh": "原因（可以不選）",
+"en": "Why (optional)"
+},
+{
+"zh": "告訴領隊",
+"en": "Tell my leader"
 },
 {
 "zh": "我到了",
@@ -992,6 +1028,10 @@
 "en": "Here {g.here}/{g.rollTotal}"
 },
 {
+"zh": "已到 {g.arrived}／{g.callTotal}",
+"en": "Here {g.arrived}/{g.callTotal}"
+},
+{
 "zh": "收到 {g.acked}／{g.callTotal}",
 "en": "Got it {g.acked}/{g.callTotal}"
 },
@@ -1018,6 +1058,10 @@
 {
 "zh": "找到了",
 "en": "Found"
+},
+{
+"zh": "{f.no} 號 {f.label} 落後約 {f.d} 公尺 · {_ago(f.since)}",
+"en": "No. {f.no} is {f.d} m behind · {_ago(f.since)}"
 },
 {
 "zh": "點名",
@@ -1976,8 +2020,16 @@
 "en": "Ping"
 },
 {
-"zh": "收到 {g.acked} · 打開了沒回 {seen} · 沒反應 {none} · 倒數 {countdown(c.at)}",
-"en": "Got it {g.acked} · Seen {seen} · No response {none} · {countdown(c.at)}"
+"zh": "已到",
+"en": "Here"
+},
+{
+"zh": "已到 {g.arrived} · 收到 {ackOnly} · 會晚到 {g.callLate} · 打開了沒回 {seen} · 沒反應 {none} · 倒數 {countdown(c.at)}\n走到集合點附近的人會自動打勾。",
+"en": "Here {g.arrived} · Got it {ackOnly} · Late {g.callLate} · Seen {seen} · No response {none} · {countdown(c.at)}\nPeople who reach the meeting point are checked in automatically."
+},
+{
+"zh": "已到（自動）",
+"en": "Here (auto)"
 },
 {
 "zh": "打開了，還沒回",
@@ -2010,6 +2062,10 @@
 {
 "zh": "到了（領隊點到）",
 "en": "Here (marked by leader)"
+},
+{
+"zh": "到了（自動）",
+"en": "Here (auto)"
 },
 {
 "zh": "沒回應",
@@ -2462,6 +2518,38 @@
 {
 "zh": "刪除這則感謝？",
 "en": "Delete this thank-you?"
+},
+{
+"zh": "打開 App 看集合點",
+"en": "Open the app to see where"
+},
+{
+"zh": "現在集合",
+"en": "Gather now"
+},
+{
+"zh": "集合倒數",
+"en": "Gather countdown"
+},
+{
+"zh": "鎖定畫面上的集合時間與倒數",
+"en": "Meeting time and countdown on the lock screen"
+},
+{
+"zh": "會晚 {mins} 分鐘",
+"en": "{mins} min late"
+},
+{
+"zh": "在排廁所",
+"en": "In line for the restroom"
+},
+{
+"zh": "在結帳",
+"en": "Paying at the checkout"
+},
+{
+"zh": "在路上了",
+"en": "On the way"
 },
 {
 "zh": "已離團",

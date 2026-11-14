@@ -1,0 +1,2 @@
+// TourLive 擴充：版本號跟著 Flutter（pubspec 的 version）
+#include "../Flutter/Generated.xcconfig"

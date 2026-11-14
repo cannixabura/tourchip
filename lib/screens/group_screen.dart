@@ -255,8 +255,15 @@ class _StaffPanel extends StatelessWidget {
     String? clock;
     if (call != null) {
       head = '${hm(call.at, call.tz)} ${tx('集合', 'gather')} · ${zoneName(call.tz).split('・').first}${call.sub != null ? ' · ${g.subName(call.sub)}' : ''}';
-      big = roll ? tx('到了 ${g.here}／${g.rollTotal}', 'Here ${g.here}/${g.rollTotal}') : tx('收到 ${g.acked}／${g.callTotal}', 'Got it ${g.acked}/${g.callTotal}');
-      progress = roll ? (g.rollTotal == 0 ? 0 : g.here / g.rollTotal) : (g.callTotal == 0 ? 0 : g.acked / g.callTotal);
+      // 有人到集合點（自動點到）之後改看「已到」
+      big = roll
+          ? tx('到了 ${g.here}／${g.rollTotal}', 'Here ${g.here}/${g.rollTotal}')
+          : g.arrived > 0
+              ? tx('已到 ${g.arrived}／${g.callTotal}', 'Here ${g.arrived}/${g.callTotal}')
+              : tx('收到 ${g.acked}／${g.callTotal}', 'Got it ${g.acked}/${g.callTotal}');
+      progress = roll
+          ? (g.rollTotal == 0 ? 0 : g.here / g.rollTotal)
+          : (g.callTotal == 0 ? 0 : (g.arrived > 0 ? g.arrived : g.acked) / g.callTotal);
       clock = countdown(call.at);
     } else if (roll) {
       head = tx('點名中', 'Roll call');
@@ -302,6 +309,34 @@ class _StaffPanel extends StatelessWidget {
                     const SizedBox(width: 6),
                     Expanded(child: Text(tx('${l.no} 號 ${l.note.isNotEmpty ? l.note : l.name} 迷路了 · ${_ago(l.at)}', 'No. ${l.no} is lost · ${_ago(l.at)}'), style: const TextStyle(color: Night.danger, fontSize: 13), overflow: TextOverflow.ellipsis)),
                     TextButton(onPressed: () => TourService.call('found', {'uid': l.uid}), child: Text(tx('找到了', 'Found'))),
+                  ]),
+                ),
+              ),
+            ),
+          ),
+      ],
+      // 脫隊預警：大家跟著領隊走時，有人落後太遠
+      if (g.far.isNotEmpty) ...[
+        const SizedBox(height: Night.space3),
+        for (final f in g.far.take(2))
+          Padding(
+            padding: const EdgeInsets.only(bottom: 6),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(99),
+                onTap: () {
+                  final p = g.people.where((x) => x.uid == f.uid).firstOrNull;
+                  if (p != null) map.currentState?.flyTo(p.lat, p.lng);
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(99), border: Border.all(color: const Color(0xFFFF9F45))),
+                  child: Row(children: [
+                    const Icon(Icons.directions_walk, color: Color(0xFFFF9F45), size: 18),
+                    const SizedBox(width: 6),
+                    Expanded(child: Text(tx('${f.no} 號 ${f.label} 落後約 ${f.d} 公尺 · ${_ago(f.since)}', 'No. ${f.no} is ${f.d} m behind · ${_ago(f.since)}'),
+                        style: const TextStyle(color: Color(0xFFFF9F45), fontSize: 13), overflow: TextOverflow.ellipsis)),
                   ]),
                 ),
               ),

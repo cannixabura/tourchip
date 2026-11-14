@@ -29,10 +29,16 @@ class TourMember {
   final String room;
   /// 點名：領隊幫他按的「到了」
   final bool marked;
-  TourMember(this.uid, this.no, this.name, this.note, this.sub, this.state, {this.avatar = '', this.data, this.room = '', this.marked = false});
+  /// 集合：到點自動點到；點名：因為集合時自動點到而算到了
+  final bool arrived;
+  /// 集合：團員說「我會晚到」
+  final TourLate? late;
+  TourMember(this.uid, this.no, this.name, this.note, this.sub, this.state,
+      {this.avatar = '', this.data, this.room = '', this.marked = false, this.arrived = false, this.late});
   factory TourMember.fromJson(Map j, {String stateKey = ''}) =>
       TourMember(_str(j['uid']), _int(j['no']) ?? 0, _str(j['name']), _str(j['note']), _int(j['sub']), stateKey.isEmpty ? '' : _str(j[stateKey]),
-          avatar: _str(j['avatar']), data: MemberData.fromJson(j['data']), room: _str(j['room']), marked: j['marked'] == true);
+          avatar: _str(j['avatar']), data: MemberData.fromJson(j['data']), room: _str(j['room']), marked: j['marked'] == true,
+          arrived: j['arrived'] == true || j['auto'] == true, late: TourLate.fromJson(j['late']));
   /// 名單上顯示的稱呼：備註優先，其次暱稱
   String get label => note.isNotEmpty ? note : (name.isNotEmpty ? name : '');
 }
@@ -77,6 +83,33 @@ class LeaderCard {
         flowers = _int(j['flowers']) ?? 0, thanks = [for (final t in (j['thanks'] as List? ?? const [])) ThankNote.fromJson(t as Map)];
 }
 
+/// 我會晚到：晚幾分鐘、原因（toilet／pay／way，可以沒有）
+class TourLate {
+  final int mins;
+  final String why;
+  const TourLate(this.mins, this.why);
+  static TourLate? fromJson(Object? j) => j is Map && _int(j['mins']) != null ? TourLate(_int(j['mins'])!, _str(j['why'])) : null;
+  String get whyText => lateWhyText(why);
+  /// 「會晚 5 分鐘 · 在排廁所」
+  String get label => [tx('會晚 $mins 分鐘', '$mins min late'), if (why.isNotEmpty) whyText].join(' · ');
+}
+
+String lateWhyText(String why) => switch (why) {
+      'toilet' => tx('在排廁所', 'In line for the restroom'),
+      'pay' => tx('在結帳', 'Paying at the checkout'),
+      'way' => tx('在路上了', 'On the way'),
+      _ => '',
+    };
+
+/// 脫隊預警：離大家（領隊）太遠的團員
+class TourFar {
+  final String uid, name, note;
+  final int no, d, since;
+  const TourFar(this.uid, this.no, this.name, this.note, this.d, this.since);
+  factory TourFar.fromJson(Map j) => TourFar(_str(j['uid']), _int(j['no']) ?? 0, _str(j['name']), _str(j['note']), _int(j['d']) ?? 0, _int(j['since']) ?? 0);
+  String get label => note.isNotEmpty ? note : name;
+}
+
 class TourLost {
   final String uid, name, note;
   final int no, at;
@@ -90,7 +123,11 @@ class TourCall {
   final double lat, lng;
   final int? sub;
   final String? mine; // seen / ack
-  TourCall(this.id, this.at, this.tz, this.place, this.lat, this.lng, this.sub, this.mine);
+  /// 我已經到集合點（自動點到）
+  final bool here;
+  /// 我說了會晚到
+  final TourLate? late;
+  TourCall(this.id, this.at, this.tz, this.place, this.lat, this.lng, this.sub, this.mine, {this.here = false, this.late});
 }
 
 class TourAnnouncement {
@@ -229,6 +266,10 @@ class TourGroup {
   final int? rollSub;
   final List<TourMember> members, callRoster, rollRoster;
   final int acked, callTotal, here, late, help, rollTotal;
+  /// 集合：自動點到幾人、說會晚到幾人
+  final int arrived, callLate;
+  /// 脫隊預警（團主與共同團主）
+  final List<TourFar> far;
   final List<TourLost> lost;
   final List<TourAnnouncement> announcements;
   final List<TourStop> stops;
@@ -265,7 +306,8 @@ class TourGroup {
         staff = [for (final s in (j['staff'] as List? ?? const [])) TourStaff(_str(s['uid']), _int(s['no']) ?? 0, _str(s['name']), _str(s['role']), avatar: _str(s['avatar']))],
         call = j['call'] is Map
             ? TourCall(_str(j['call']['id']), _int(j['call']['at']) ?? 0, _str(j['call']['tz']), _str(j['call']['place']),
-                _dbl(j['call']['lat']) ?? 0, _dbl(j['call']['lng']) ?? 0, _int(j['call']['sub']), j['call']['mine'] as String?)
+                _dbl(j['call']['lat']) ?? 0, _dbl(j['call']['lng']) ?? 0, _int(j['call']['sub']), j['call']['mine'] as String?,
+                here: j['call']['here'] == true, late: TourLate.fromJson(j['call']['late']))
             : null,
         rollId = j['roll'] is Map ? _str(j['roll']['id']) : null,
         rollMine = j['roll'] is Map ? j['roll']['mine'] as String? : null,
@@ -275,6 +317,9 @@ class TourGroup {
         rollRoster = [for (final m in ((j['rollRoster'] as Map?)?['rows'] as List? ?? const [])) TourMember.fromJson(m, stateKey: 'answer')],
         acked = _int((j['callRoster'] as Map?)?['acked']) ?? 0,
         callTotal = _int((j['callRoster'] as Map?)?['total']) ?? 0,
+        arrived = _int((j['callRoster'] as Map?)?['arrived']) ?? 0,
+        callLate = _int((j['callRoster'] as Map?)?['late']) ?? 0,
+        far = [for (final f in (j['far'] as List? ?? const [])) TourFar.fromJson(f as Map)],
         here = _int((j['rollRoster'] as Map?)?['here']) ?? 0,
         late = _int((j['rollRoster'] as Map?)?['late']) ?? 0,
         help = _int((j['rollRoster'] as Map?)?['help']) ?? 0,
