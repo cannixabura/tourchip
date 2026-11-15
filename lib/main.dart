@@ -18,6 +18,7 @@ import 'aiya/aiya_store.dart';
 import 'demo.dart';
 import 'firebase_options.dart';
 import 'l10n.dart';
+import 'screens/ai_import_screen.dart';
 import 'screens/call_overlay.dart';
 import 'screens/group_screen.dart';
 import 'screens/home_screen.dart';
@@ -195,6 +196,9 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
         await Navigator.of(context).push(MaterialPageRoute(builder: (_) => const QrScreen()));
       case 7:
         await openAiya(context);
+      case 10:
+        final g = TourService.current.value;
+        if (g != null) await Navigator.of(context).push(MaterialPageRoute(builder: (_) => AiImportScreen(group: g)));
       case 8:
         final s = (Demo.cfg!['spot'] as Map).cast<String, dynamic>();
         final r = await aiyaCall('spot', s);

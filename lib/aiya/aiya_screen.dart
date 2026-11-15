@@ -42,7 +42,7 @@ class AiyaButton extends StatelessWidget {
   const AiyaButton({super.key});
   @override
   Widget build(BuildContext context) => IconButton(
-        tooltip: tx('艾婭 AI 小助理', 'AIYA, AI assistant'),
+        tooltip: tx('艾婭 AI', 'AIYA AI'),
         // 去背的艾婭頭像（頭冠到肩膀，下緣淡出），不加圓框，半透明
         icon: const Opacity(
           opacity: 0.45,

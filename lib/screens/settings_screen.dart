@@ -441,6 +441,7 @@ class HelpScreen extends StatelessWidget {
           tx('同意分享後，同一團的人（含領隊）會在 3D 地圖上看到彼此的大頭貼和位置；不在團裡的人看不到任何人。', 'After you agree to share, everyone in your group, including leaders, sees each other on the 3D map. People outside the group see no one.'),
           tx('在團裡時位置會持續更新（App 在背景也是），用來提醒脫隊、到集合點自動點名；退團或團解散就刪除。隨時可以在設定關掉。', 'While you are in a group, your location keeps updating, even in the background, for stray alerts and auto check-in. It is deleted when you leave or the group ends. Turn it off any time in Settings.'),
           tx('未滿 18 歲要先取得家長或監護人同意才能分享。', 'Under 18? Ask a parent or guardian before sharing.'),
+          tx('地圖下方的面板往下滑（或點上面的短橫線）可以收起來，看更多 3D 地圖；往上滑或點一下就打開。新的集合或點名來了會自動打開。', 'Swipe the panel under the map down (or tap the bar at its top) to fold it and see more of the 3D map. Swipe up or tap to open it. It opens by itself when a new meetup or roll call arrives.'),
         ]),
         block(Icons.chat_bubble_outline, tx('氣泡與訊息', 'Bubbles and messages'), [
           tx('在地圖下方「發一個氣泡」，同團的人會在你的大頭貼上方看到（最多 20 字）。', 'Tap "Post a bubble" below the map. Your group sees it above your photo (up to 20 characters).'),
@@ -468,7 +469,7 @@ class HelpScreen extends StatelessWidget {
           tx('按「我迷路了」會把你現在的位置傳給團主與共同團主，地圖上出現紅點與團號，30 分鐘後自動刪除。', 'Tapping "I\'m lost" sends your current location to the leaders as a red dot with your number. It is deleted after 30 minutes.'),
           tx('「求助卡」可以拿給當地人看：用當地語言寫著你和旅行團走散了、請打給領隊，以及今晚住的飯店。在「車輛・飯店・緊急」裡打開。', 'Show the "Help card" to a local: it says in their language that you got separated from your tour, asks them to call your leader, and shows tonight\'s hotel. Open it from "Bus · Hotel · SOS".'),
         ]),
-        block(Icons.auto_awesome_outlined, tx('艾婭 AI 小助理', 'AIYA, AI assistant'), [
+        block(Icons.auto_awesome_outlined, tx('艾婭 AI', 'AIYA AI'), [
           tx('點右上角的艾婭頭像，可以問行程、集合時間、當地交通和注意事項；艾婭會參考領隊公布的行程，不會看到任何人的位置。', 'Tap AIYA\'s portrait at the top to ask about the itinerary, meetup times, getting around and tips. AIYA reads the itinerary your leader posted and never sees anyone\'s location.'),
           tx('第一次使用要先同意 AI 資料處理；不用艾婭也能正常使用所有帶團功能。', 'You agree to AI data processing the first time. Every group feature works without AIYA.'),
           tx('入團第一天免費：第一次入團（或開團）起 24 小時內，可以和艾婭聊 30 次，不扣每天的免費次數。', 'Your first day is free: for 24 hours after you first join (or create) a group, you get 30 chats with AIYA that don\'t count toward the daily free chats.'),

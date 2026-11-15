@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../demo.dart';
+
 import '../l10n.dart';
 import '../tour/model.dart';
 import '../tour/service.dart';
@@ -28,6 +30,17 @@ class _AiImportScreenState extends State<AiImportScreen> {
   List<_Room> _rooms = [];
 
   TourGroup get g => TourService.current.value ?? widget.group;
+
+  @override
+  void initState() {
+    super.initState();
+    // 截圖：貼好範例文字、直接整理
+    final Object? demo = Demo.on ? (Demo.cfg?['importText']) : null;
+    if (demo is String) {
+      _text.text = demo;
+      WidgetsBinding.instance.addPostFrameCallback((_) => _ask());
+    }
+  }
 
   @override
   void dispose() {

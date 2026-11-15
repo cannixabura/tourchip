@@ -1,7 +1,7 @@
 [
 {
-"zh": "艾婭 AI 小助理",
-"en": "AIYA, AI assistant"
+"zh": "艾婭 AI",
+"en": "AIYA AI"
 },
 {
 "zh": "{(m / 60).ceil()} 小時",
@@ -596,6 +596,22 @@
 "en": "Distance and direction are worked out on your phone and never sent"
 },
 {
+"zh": "已到集合點 ✓",
+"en": "At the meeting point ✓"
+},
+{
+"zh": "已收到 ✓",
+"en": "Got it ✓"
+},
+{
+"zh": "帶我走過去",
+"en": "Walk there"
+},
+{
+"zh": "改晚到時間",
+"en": "Change"
+},
+{
 "zh": "領隊會在名單上看到，不用再打電話。",
 "en": "Your leader sees it on the list. No need to call."
 },
@@ -896,10 +912,6 @@
 "en": "Show driver"
 },
 {
-"zh": "帶我走過去",
-"en": "Walk there"
-},
-{
 "zh": "已複製",
 "en": "Copied"
 },
@@ -1048,6 +1060,10 @@
 "en": "Day {day}"
 },
 {
+"zh": "{g.myNo} 號",
+"en": "No. {g.myNo}"
+},
+{
 "zh": "入團 QR code",
 "en": "Join QR code"
 },
@@ -1108,6 +1124,14 @@
 "en": "Leave"
 },
 {
+"zh": "打開面板",
+"en": "Expand panel"
+},
+{
+"zh": "收起面板",
+"en": "Collapse panel"
+},
+{
 "zh": "集合",
 "en": "Gather"
 },
@@ -1140,6 +1164,10 @@
 "en": "No gather call right now"
 },
 {
+"zh": "{g.lost.length} 人迷路",
+"en": "{g.lost.length} lost"
+},
+{
 "zh": "{l.no} 號 {l.note.isNotEmpty ? l.note : l.name} 迷路了 · {_ago(l.at)}",
 "en": "No. {l.no} is lost · {_ago(l.at)}"
 },
@@ -1168,10 +1196,6 @@
 "en": "Info"
 },
 {
-"zh": "同意分享的團員會出現在地圖上；長按大頭貼可以傳訊息。按「我迷路了」的人會另外以紅點標出。",
-"en": "Members who share appear on the map. Long-press a photo to message them. Anyone who taps \"I'm lost\" also shows as a red dot."
-},
-{
 "zh": "剛剛",
 "en": "just now"
 },
@@ -1180,24 +1204,16 @@
 "en": "{m}m ago"
 },
 {
-"zh": "你是 {g.myNo ?? '-'} 號",
-"en": "You are No. {g.myNo ?? '-'}"
+"zh": "{hm(call.at, call.tz)} 集合",
+"en": "Gather at {hm(call.at, call.tz)}"
 },
 {
 "zh": "領隊在點名",
 "en": "Roll call"
 },
 {
-"zh": "領隊想問你：{g.pollsToVote.first.q}",
-"en": "Your leader asks: {g.pollsToVote.first.q}"
-},
-{
 "zh": "下一個集合：{md(next.at, next.tz)} {hm(next.at, next.tz)} {next.place}",
 "en": "Next: {md(next.at, next.tz)} {hm(next.at, next.tz)} {next.place}"
-},
-{
-"zh": "舉起團旗",
-"en": "Raise flag"
 },
 {
 "zh": "已通知領隊",
@@ -1208,12 +1224,20 @@
 "en": "I'm lost"
 },
 {
+"zh": "領隊想問你：{poll.q}",
+"en": "Your leader asks: {poll.q}"
+},
+{
+"zh": "舉起團旗",
+"en": "Raise flag"
+},
+{
 "zh": "行程表",
 "en": "Itinerary"
 },
 {
-"zh": "公告（{g.announcements.length}）",
-"en": "Notices ({g.announcements.length})"
+"zh": "公告 {g.announcements.length}",
+"en": "Notices {g.announcements.length}"
 },
 {
 "zh": "車輛・飯店・緊急",
@@ -2426,6 +2450,10 @@
 {
 "zh": "未滿 18 歲要先取得家長或監護人同意才能分享。",
 "en": "Under 18? Ask a parent or guardian before sharing."
+},
+{
+"zh": "地圖下方的面板往下滑（或點上面的短橫線）可以收起來，看更多 3D 地圖；往上滑或點一下就打開。新的集合或點名來了會自動打開。",
+"en": "Swipe the panel under the map down (or tap the bar at its top) to fold it and see more of the 3D map. Swipe up or tap to open it. It opens by itself when a new meetup or roll call arrives."
 },
 {
 "zh": "氣泡與訊息",

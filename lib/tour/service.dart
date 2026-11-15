@@ -95,6 +95,8 @@ class TourService {
   static Future<Map<String, dynamic>> call(String action, [Map<String, dynamic> body = const {}]) async {
     // 商店截圖模式（只在 debug 版）：團的狀態用範例資料，其他動作都不送
     if (Demo.on) {
+      // 截圖：艾婭匯入的範例結果
+      if (action == 'ai_import') return {'success': true, 'import': Demo.cfg?['import'] ?? const {}};
       if (action != 'status') return {'success': true};
       final d = Demo.status();
       _apply(d['group']);

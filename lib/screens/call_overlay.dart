@@ -67,6 +67,7 @@ class _CallCardState extends State<CallCard> {
     final live = TourService.current.value?.call?.id == c.id ? TourService.current.value!.call : c;
     final acked = (live?.mine ?? c.mine) == 'ack';
     final left = Duration(milliseconds: max(0, c.at - DateTime.now().millisecondsSinceEpoch));
+    if (!widget.big) return _panel(c, live, acked, left, dist, bearing, pos);
     return Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       // 時區放在標題同一行，面板裡的卡片才不會太高
       Row(crossAxisAlignment: CrossAxisAlignment.baseline, textBaseline: TextBaseline.alphabetic, children: [
@@ -140,6 +141,73 @@ class _CallCardState extends State<CallCard> {
         const SizedBox(height: Night.space2),
         Text(tx('距離和方向在你的手機上計算，不會傳給任何人', 'Distance and direction are worked out on your phone and never sent'), style: Night.caption, textAlign: TextAlign.center),
       ],
+    ]);
+  }
+
+  /// 地圖下方面板裡的精簡版（不要擋住 3D 地圖）：
+  /// 第一行 倒數＋方向距離；第二行 集合時間・時區・集合點；第三行 收到（或狀態）、帶我走過去、我會晚到
+  Widget _panel(TourCall c, TourCall? live, bool acked, Duration left, double? dist, double? bearing, Position? pos) {
+    const late = Color(0xFFFFD166);
+    Widget link(IconData icon, String label, Color color, VoidCallback onTap) => TextButton.icon(
+          style: TextButton.styleFrom(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap, padding: const EdgeInsets.symmetric(horizontal: 8)),
+          icon: Icon(icon, size: 17, color: color),
+          label: Text(label, style: TextStyle(color: color, fontSize: 14)),
+          onPressed: onTap,
+        );
+    final here = live?.here == true;
+    final String? status = !widget.ack
+        ? null
+        : here
+            ? tx('已到集合點 ✓', 'At the meeting point ✓')
+            : live?.late != null
+                ? tx('已告訴領隊：${live!.late!.label}', 'Told your leader: ${live.late!.label}')
+                : acked
+                    ? tx('已收到 ✓', 'Got it ✓')
+                    : null;
+    final statusColor = here || (acked && live?.late == null) ? Night.moodCalm : late;
+    return Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      Row(children: [
+        Expanded(
+          child: Text(left.inSeconds > 0 ? '${left.inMinutes}:${two(left.inSeconds % 60)}' : tx('現在', 'Now'),
+              style: const TextStyle(color: Night.ink, fontSize: 30, height: 1.1, fontWeight: FontWeight.w600, fontFeatures: [FontFeature.tabularFigures()])),
+        ),
+        if (dist != null && bearing != null) ...[
+          Semantics(
+            label: tx('集合點的方向', 'Direction to the meeting point'),
+            child: Container(
+              width: 36, height: 36, decoration: const BoxDecoration(color: Night.night600, shape: BoxShape.circle),
+              child: Transform.rotate(angle: (bearing - (_heading ?? pos?.heading ?? 0)) * pi / 180, child: Icon(Icons.navigation, color: widget.g.tint, size: 20)),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(dist < 1000 ? '${dist.round()} m' : '${(dist / 1000).toStringAsFixed(1)} km', style: const TextStyle(color: Night.ink, fontSize: 17, height: 1.2, fontWeight: FontWeight.w600)),
+            Text(tx('步行約 ${max(1, (dist / 80).round())} 分鐘', 'about ${max(1, (dist / 80).round())} min walk'), style: Night.caption.copyWith(height: 1.2)),
+          ]),
+        ],
+      ]),
+      const SizedBox(height: 2),
+      // 集合時間（當地時間）與集合點名稱；集合點是領隊打的字，可以點一下翻譯
+      // 用兩段現有的翻譯拼起來（合成一句時，翻譯表會誤配到較短的「…時間」）
+      Text('${tx('${hm(c.at, c.tz)} 集合', 'Gather at ${hm(c.at, c.tz)}')} · ${tx('${zoneName(c.tz).split('・').first}時間', '${zoneName(c.tz).split(' / ').first} time')}',
+          style: Night.caption.copyWith(color: Night.inkMuted, height: 1.3), maxLines: 1, overflow: TextOverflow.ellipsis),
+      if (c.place.isNotEmpty) TranslatableText(c.place, compact: true, maxLines: 1, style: Night.body.copyWith(color: Night.ink, height: 1.35)),
+      const SizedBox(height: Night.space2),
+      if (widget.ack && status == null) ...[
+        NightButton(tx('收到', 'Got it'), icon: Icons.check, onPressed: () {
+          HapticFeedback.heavyImpact();
+          TourService.call('ack', {'callId': c.id});
+        }),
+        const SizedBox(height: 4),
+      ],
+      // 狀態、帶我走過去、我會晚到排成一行；字太長（越南文、泰文…）就換行，不會被切掉
+      Wrap(alignment: WrapAlignment.center, crossAxisAlignment: WrapCrossAlignment.center, spacing: 2, runSpacing: 0, children: [
+        if (status != null)
+          Padding(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8), child: Text(status, style: TextStyle(color: statusColor, fontSize: 14))),
+        link(Icons.directions_walk, tx('帶我走過去', 'Walk me there'), Night.auroraBlue, () => walkTo(context, c.lat, c.lng, label: c.place)),
+        if (widget.ack && !here)
+          link(Icons.schedule, live?.late != null ? tx('改晚到時間', 'Change') : tx('我會晚到', 'I\'ll be late'), late, () => showLateSheet(context, c.id, live?.late)),
+      ]),
     ]);
   }
 }

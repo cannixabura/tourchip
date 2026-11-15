@@ -127,8 +127,21 @@ class _TopBar extends StatelessWidget {
       child: Row(children: [
         Container(width: 10, height: 10, decoration: BoxDecoration(color: g.tint, shape: BoxShape.circle, boxShadow: [BoxShadow(color: g.tint, blurRadius: 8)])),
         const SizedBox(width: 10),
-        Expanded(child: Text(g.name, style: const TextStyle(color: Night.ink, fontSize: 15, fontWeight: FontWeight.w500), overflow: TextOverflow.ellipsis)),
-        Text(dayLabel(g), style: Night.caption.copyWith(color: Night.inkMuted)),
+        // 團員的團號放在團名後面（原本在面板第一行，移出來讓面板矮一點）
+        Expanded(
+          flex: 2,
+          child: Text.rich(
+            TextSpan(children: [
+              TextSpan(text: g.name),
+              if (!g.isStaff && g.myNo != null) TextSpan(text: '  ${tx('${g.myNo} 號', 'No. ${g.myNo}')}', style: const TextStyle(color: Night.inkMuted, fontSize: 13, fontWeight: FontWeight.w400)),
+            ]),
+            style: const TextStyle(color: Night.ink, fontSize: 15, fontWeight: FontWeight.w500),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        // 「第 2 天 · 東京／京都／大阪」在小螢幕、長字語言會太長：最多佔一部分寬度，放不下就省略
+        Flexible(child: Text(dayLabel(g), style: Night.caption.copyWith(color: Night.inkMuted), maxLines: 1, overflow: TextOverflow.ellipsis)),
         if (g.isStaff)
           IconButton(
             tooltip: tx('入團 QR code', 'Join QR code'),
@@ -206,25 +219,86 @@ String countdown(int at) {
   return '${left.inMinutes}:${two(left.inSeconds % 60)}';
 }
 
-class _Panel extends StatelessWidget {
+/// 面板收起來了沒（整個 App 共用；新的集合、點名、投票來了會自動打開）
+final panelFolded = ValueNotifier<bool>(false);
+
+class _Panel extends StatefulWidget {
   final List<Widget> children;
-  const _Panel({required this.children});
+  /// 收起來時只顯示這一行
+  final Widget mini;
+  /// 這個字串變了（新的集合、點名、要投的票…）就自動打開
+  final String openKey;
+  const _Panel({required this.children, required this.mini, required this.openKey});
+  @override
+  State<_Panel> createState() => _PanelState();
+}
+
+class _PanelState extends State<_Panel> {
+  @override
+  void didUpdateWidget(_Panel old) {
+    super.didUpdateWidget(old);
+    if (old.openKey != widget.openKey && widget.openKey.isNotEmpty) panelFolded.value = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     // 浮在地圖上的完整卡片：四邊都看得到；底下留空間給地圖出處標示（TourMap 畫在畫面最底下）
     final pb = MediaQuery.of(context).padding.bottom;
-    return Container(
-      margin: EdgeInsets.fromLTRB(Night.space4, 0, Night.space4, (pb < 12 ? 12.0 : pb) + 6),
-      padding: const EdgeInsets.fromLTRB(Night.space4, 16, Night.space4, Night.space4),
-      decoration: BoxDecoration(
-        color: Night.mapGlassPanel,
-        borderRadius: BorderRadius.circular(Night.radiusLg),
-        border: Border.all(color: Night.glassLine),
+    return ValueListenableBuilder<bool>(
+      valueListenable: panelFolded,
+      builder: (context, folded, _) => GestureDetector(
+        // 往下滑收起來、往上滑打開（讓出 3D 地圖）
+        onVerticalDragEnd: (d) {
+          final v = d.primaryVelocity ?? 0;
+          if (v > 150) panelFolded.value = true;
+          if (v < -150) panelFolded.value = false;
+        },
+        child: Container(
+          margin: EdgeInsets.fromLTRB(Night.space4, 0, Night.space4, (pb < 12 ? 12.0 : pb) + 6),
+          padding: EdgeInsets.fromLTRB(Night.space4, 0, Night.space4, folded ? Night.space2 : Night.space3),
+          decoration: BoxDecoration(
+            color: Night.mapGlassPanel,
+            borderRadius: BorderRadius.circular(Night.radiusLg),
+            border: Border.all(color: Night.glassLine),
+          ),
+          child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            // 把手：點一下收起來／打開
+            Semantics(
+              button: true,
+              label: folded ? tx('打開面板', 'Expand panel') : tx('收起面板', 'Collapse panel'),
+              child: InkWell(
+                onTap: () => panelFolded.value = !folded,
+                borderRadius: BorderRadius.circular(12),
+                child: SizedBox(
+                  height: 26,
+                  child: Center(child: Container(width: 36, height: 4, decoration: BoxDecoration(color: Night.inkFaint, borderRadius: BorderRadius.circular(2)))),
+                ),
+              ),
+            ),
+            AnimatedSize(
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeOut,
+              alignment: Alignment.bottomCenter,
+              child: folded
+                  ? InkWell(onTap: () => panelFolded.value = false, child: widget.mini)
+                  : Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: widget.children),
+            ),
+          ]),
+        ),
       ),
-      child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: children),
     );
   }
 }
+
+/// 收起來時的一行：左邊摘要，右邊可以放一個按鈕
+Widget _miniRow(String text, {Color? color, Widget? trailing}) => SizedBox(
+      height: 40,
+      child: Row(children: [
+        Expanded(child: Text(text, style: TextStyle(color: color ?? Night.ink, fontSize: 15, fontWeight: FontWeight.w600), maxLines: 1, overflow: TextOverflow.ellipsis)),
+        ?trailing,
+        const Icon(Icons.expand_less, color: Night.inkMuted, size: 22),
+      ]),
+    );
 
 class _ActionTile extends StatelessWidget {
   final String label;
@@ -290,7 +364,11 @@ class _StaffPanel extends StatelessWidget {
       head = '${tx('${g.count} 人', '${g.count} people')} · ${g.paid ? tx('上限 100 人', 'up to 100') : tx('20 人以內免費', 'free up to 20')}';
       big = tx('目前沒有集合', 'No gather call');
     }
-    return _Panel(children: [
+    final miniText = [big, ?clock, if (g.lost.isNotEmpty) tx('${g.lost.length} 人迷路', '${g.lost.length} lost')].join(' · ');
+    return _Panel(
+      openKey: [call?.id ?? '', g.rollId ?? '', g.lost.length, g.far.length, g.help].join('|'),
+      mini: _miniRow(miniText, color: g.lost.isNotEmpty ? Night.danger : null),
+      children: [
       Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
         Expanded(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -378,8 +456,6 @@ class _StaffPanel extends StatelessWidget {
         onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const TogetherScreen())),
         icon: const Icon(Icons.how_to_vote_outlined, size: 18), label: Text(togetherLabel(g)),
       )),
-      const SizedBox(height: Night.space1),
-      Text(tx('同意分享的團員會出現在地圖上；長按大頭貼可以傳訊息。按「我迷路了」的人會另外以紅點標出。', 'Members who share appear on the map. Long-press a photo to message them. Anyone who taps "I\'m lost" also shows as a red dot.'), style: Night.caption),
     ]);
   }
 }
@@ -401,23 +477,42 @@ class _MemberPanel extends StatelessWidget {
     final now = DateTime.now().millisecondsSinceEpoch;
     final next = g.stops.where((s) => s.at >= now).firstOrNull;
     final ann = g.announcements.firstOrNull;
-    return _Panel(children: [
-      Text([tx('你是 ${g.myNo ?? '-'} 號', 'You are No. ${g.myNo ?? '-'}'), if (g.mySub != null) g.subName(g.mySub)].join(' · '), style: Night.caption.copyWith(color: Night.inkMuted)),
-      const SizedBox(height: Night.space2),
+    final roll = g.rollId != null && g.rollMine == null;
+    final poll = g.pollsToVote.firstOrNull;
+    // 收起來時的一行：集合倒數與集合點，或點名、投票、下一個集合
+    final String mini;
+    if (call != null) {
+      mini = [countdown(call.at), tx('${hm(call.at, call.tz)} 集合', 'Gather at ${hm(call.at, call.tz)}'), if (call.place.isNotEmpty) call.place].join(' · ');
+    } else if (roll) {
+      mini = tx('領隊在點名', 'Roll call');
+    } else if (next != null) {
+      mini = tx('下一個集合：${md(next.at, next.tz)} ${hm(next.at, next.tz)} ${next.place}', 'Next: ${md(next.at, next.tz)} ${hm(next.at, next.tz)} ${next.place}');
+    } else {
+      mini = tx('目前沒有集合', 'No gather call right now');
+    }
+    return _Panel(
+      // 新的集合、點名、要投的票來了：自動打開（「收到」「我到了」要按得到）
+      openKey: [call?.id ?? '', if (roll) g.rollId, poll?.id ?? ''].join('|'),
+      mini: _miniRow(mini, trailing: TextButton(
+        style: TextButton.styleFrom(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap, foregroundColor: Night.danger),
+        onPressed: () => askLost(context, g),
+        child: Text(g.lostSent ? tx('已通知領隊', 'Leader notified') : tx('我迷路了', 'I\'m lost')),
+      )),
+      children: [
       if (call != null)
         CallCard(g: g, call: call)
       else ...[
-        if (g.rollId != null && g.rollMine == null) ...[
+        if (roll) ...[
           Text(tx('領隊在點名', 'Roll call'), style: Night.title.copyWith(color: g.tint)),
           const SizedBox(height: Night.space3),
           RollButtons(g: g),
-        ] else if (g.pollsToVote.isNotEmpty)
+        ] else if (poll != null)
           InkWell(
             onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const TogetherScreen())),
             child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Icon(Icons.how_to_vote_outlined, color: g.tint, size: 20),
               const SizedBox(width: 8),
-              Expanded(child: Text(tx('領隊想問你：${g.pollsToVote.first.q}', 'Your leader asks: ${g.pollsToVote.first.q}'), style: Night.body.copyWith(color: Night.ink), maxLines: 3, overflow: TextOverflow.ellipsis)),
+              Expanded(child: Text(tx('領隊想問你：${poll.q}', 'Your leader asks: ${poll.q}'), style: Night.body.copyWith(color: Night.ink), maxLines: 2, overflow: TextOverflow.ellipsis)),
               Icon(Icons.chevron_right, color: g.tint, size: 20),
             ]),
           )
@@ -427,34 +522,76 @@ class _MemberPanel extends StatelessWidget {
             child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Icon(Icons.campaign_outlined, color: g.tint, size: 20),
               const SizedBox(width: 8),
-              Expanded(child: TranslatableText(ann.text, compact: true, style: Night.body.copyWith(color: Night.ink), maxLines: 3)),
+              Expanded(child: TranslatableText(ann.text, compact: true, style: Night.body.copyWith(color: Night.ink), maxLines: 2)),
             ]),
           )
         else
           Text(tx('目前沒有集合', 'No gather call right now'), style: Night.title),
         if (next != null) ...[
-          const SizedBox(height: Night.space3),
-          Text(tx('下一個集合：${md(next.at, next.tz)} ${hm(next.at, next.tz)} ${next.place}', 'Next: ${md(next.at, next.tz)} ${hm(next.at, next.tz)} ${next.place}'), style: Night.caption.copyWith(color: Night.inkMuted)),
+          const SizedBox(height: Night.space2),
+          Text(tx('下一個集合：${md(next.at, next.tz)} ${hm(next.at, next.tz)} ${next.place}', 'Next: ${md(next.at, next.tz)} ${hm(next.at, next.tz)} ${next.place}'),
+              style: Night.caption.copyWith(color: Night.inkMuted), maxLines: 1, overflow: TextOverflow.ellipsis),
         ],
       ],
-      SizedBox(height: call != null ? Night.space3 : Night.space4),
+      SizedBox(height: call != null ? Night.space2 : Night.space3),
       Row(children: [
         Expanded(child: NightButton(tx('舉起團旗', 'Raise flag'), kind: NightButtonKind.ghost, onPressed: () => showFlag(context, g))),
         const SizedBox(width: 8),
         Expanded(child: NightButton(g.lostSent ? tx('已通知領隊', 'Leader notified') : tx('我迷路了', 'I\'m lost'), kind: NightButtonKind.danger, onPressed: () => askLost(context, g))),
       ]),
-      const SizedBox(height: Night.space1),
-      // 越南文、泰文、馬來文等字比較長：放不下時換行，不會被切掉
-      Wrap(alignment: WrapAlignment.center, children: [
-        TextButton(style: TextButton.styleFrom(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap), onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ItineraryScreen())), child: Text(tx('行程表', 'Itinerary'))),
-        TextButton(style: TextButton.styleFrom(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap), onPressed: () => showAnnouncements(context, g), child: Text(tx('公告（${g.announcements.length}）', 'Notices (${g.announcements.length})'))),
-        TextButton(style: TextButton.styleFrom(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap), onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const InfoScreen())), child: Text(tx('車輛・飯店・緊急', 'Bus · Hotel · SOS'))),
-        TextButton(style: TextButton.styleFrom(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap), onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const TogetherScreen())), child: Text(togetherLabel(g))),
+      const SizedBox(height: Night.space2),
+      // 其他頁面：排成一行，放不下就左右滑（原本兩行）
+      _LinkStrip(items: [
+        (Icons.event_note_outlined, tx('行程表', 'Itinerary'), () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ItineraryScreen()))),
+        (Icons.campaign_outlined, g.announcements.isEmpty ? tx('公告', 'Notices') : tx('公告 ${g.announcements.length}', 'Notices ${g.announcements.length}'), () => showAnnouncements(context, g)),
+        (Icons.directions_bus_outlined, tx('車輛・飯店・緊急', 'Bus · Hotel · SOS'), () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const InfoScreen()))),
+        (Icons.how_to_vote_outlined, togetherLabel(g), () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const TogetherScreen()))),
         // 最後一天：旅程回憶卡
-        if (g.thanksOpen)
-          TextButton(style: TextButton.styleFrom(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap), onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => MemoryCardScreen(memory: TripMemory.of(g)))), child: Text(tx('旅程回憶卡', 'Memory card'))),
+        if (g.thanksOpen) (Icons.auto_awesome_outlined, tx('旅程回憶卡', 'Memory card'), () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => MemoryCardScreen(memory: TripMemory.of(g))))),
       ]),
     ]);
+  }
+}
+
+/// 一行小按鈕（圖示＋字），放不下就左右滑；右邊淡出提示還有
+class _LinkStrip extends StatelessWidget {
+  final List<(IconData, String, VoidCallback)> items;
+  const _LinkStrip({required this.items});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 34,
+      child: ShaderMask(
+        shaderCallback: (r) => const LinearGradient(colors: [Colors.white, Colors.white, Colors.transparent], stops: [0, 0.9, 1]).createShader(r),
+        blendMode: BlendMode.dstIn,
+        child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.only(right: 24),
+          itemCount: items.length,
+          separatorBuilder: (_, _) => const SizedBox(width: 6),
+          itemBuilder: (_, i) {
+            final (icon, label, onTap) = items[i];
+            return Material(
+              color: Night.mapGlassTile,
+              borderRadius: BorderRadius.circular(999),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(999),
+                onTap: onTap,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(mainAxisSize: MainAxisSize.min, children: [
+                    Icon(icon, size: 16, color: Night.auroraBlue),
+                    const SizedBox(width: 5),
+                    Text(label, style: const TextStyle(color: Night.ink, fontSize: 13, fontWeight: FontWeight.w500)),
+                  ]),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
 }
 

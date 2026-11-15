@@ -326,7 +326,7 @@
     }
     // 截圖：每種語言用自己語言的 App 畫面（img/shots/<語言>），沒有的語言用英文
     var shots = document.querySelectorAll('img[data-shot]');
-    for (var m = 0; m < shots.length; m++) shots[m].src = '/img/shots/' + shotDir(lang) + '/' + shots[m].getAttribute('data-shot') + '.webp';
+    for (var m = 0; m < shots.length; m++) shots[m].src = '/img/shots/' + shotDir(lang) + '/' + shots[m].getAttribute('data-shot') + '.webp?v=20261116';
     var t = document.querySelector('[data-title]');
     if (window._zhTitle == null) window._zhTitle = document.title;
     if (t) { var tk = t.getAttribute('data-title'); document.title = d[tk] || (lang !== 'zh-Hant' && T.en[tk]) || window._zhTitle; }
