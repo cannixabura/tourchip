@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import '../demo.dart';
@@ -15,7 +16,9 @@ class LiveCountdown {
   LiveCountdown._();
   static const _ios = MethodChannel('tourchip/live');
   static const _androidId = 7301;
-  static String? _shown;
+  static String? _shown, _trying;
+  /// 這次啟動還沒清過：上次留下的即時動態（App 被關掉時集合已經結束）要收起來
+  static bool _swept = false;
   static bool _androidReady = false;
   static final _plugin = FlutterLocalNotificationsPlugin();
 
@@ -25,16 +28,19 @@ class LiveCountdown {
     final c = g?.call;
     if (g == null || c == null || c.here) return end();
     final key = '${c.id}|${c.at}|${c.place}|$langTag';
-    if (_shown == key) return;
-    _shown = key;
+    if (_shown == key || _trying == key) return;
+    // iOS 只能在前景開始即時動態；在背景收到的集合，等回到前景（resume 會再同步）再顯示
+    if (Platform.isIOS && WidgetsBinding.instance.lifecycleState != AppLifecycleState.resumed) return;
+    _trying = key;
     final title = tx('${hm(c.at, c.tz)} 集合', 'Gather at ${hm(c.at, c.tz)}');
     final place = c.place.isNotEmpty ? c.place : tx('打開 App 看集合點', 'Open the app to see where');
     try {
       if (Platform.isIOS) {
-        await _ios.invokeMethod('start', {
+        final ok = await _ios.invokeMethod<bool>('start', {
           'id': c.id, 'group': g.name, 'title': title, 'place': place, 'at': c.at,
           'color': g.tint.toARGB32() & 0xFFFFFF, 'now': tx('現在集合', 'Gather now'),
         });
+        if (ok == true) _shown = key;
       } else if (Platform.isAndroid) {
         await _initAndroid();
         final left = c.at + 30 * 60000 - DateTime.now().millisecondsSinceEpoch;
@@ -52,13 +58,18 @@ class LiveCountdown {
             visibility: NotificationVisibility.public,
           )),
         );
+        _shown = key;
       }
-    } catch (_) {}
+    } catch (_) {
+    } finally {
+      _trying = null;
+    }
   }
 
   static Future<void> end() async {
-    if (_shown == null) return;
+    if (_shown == null && _swept) return;
     _shown = null;
+    _swept = true;
     try {
       if (Platform.isIOS) {
         await _ios.invokeMethod('end');

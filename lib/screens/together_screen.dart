@@ -130,7 +130,7 @@ class _PollCardState extends State<_PollCard> {
               const SizedBox(height: 2),
               Text([
                 _ago(p.at),
-                if (p.sub != null) g.subName(p.sub),
+                if (p.sub != null && g.subName(p.sub).isNotEmpty) g.subName(p.sub),
                 if (p.multi) tx('可複選', 'Multiple choice'),
                 if (p.closed) tx('已結束', 'Closed'),
               ].join(' · '), style: Night.caption),

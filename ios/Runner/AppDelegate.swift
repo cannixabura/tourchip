@@ -24,8 +24,7 @@ import UIKit
         let args = call.arguments as? [String: Any] ?? [:]
         switch call.method {
         case "start":
-          GatherLive.start(args)
-          result(nil)
+          GatherLive.start(args) { ok in result(ok) }
         case "end":
           GatherLive.end()
           result(nil)
@@ -155,10 +154,12 @@ struct TranslationHost: View {
   }
 }
 
-/// 集合倒數的即時動態：同時只留一個；集合時間過 30 分鐘系統自動收起
+/// 集合倒數的即時動態：同時只留一個；集合時間過 30 分鐘變成過期（App 下次同步時收起）
 enum GatherLive {
-  static func start(_ args: [String: Any]) {
-    guard ActivityAuthorizationInfo().areActivitiesEnabled else { NSLog("GatherLive disabled"); return }
+  /// done(true)：已經顯示（新開或更新）；false：使用者關掉即時動態，或系統不讓開（例如 App 在背景）
+  static func start(_ args: [String: Any], done: @escaping (Bool) -> Void) {
+    let finish = { (ok: Bool) in DispatchQueue.main.async { done(ok) } }
+    guard ActivityAuthorizationInfo().areActivitiesEnabled else { NSLog("GatherLive disabled"); finish(false); return }
     let at = Date(timeIntervalSince1970: (args["at"] as? Double ?? Double(args["at"] as? Int ?? 0)) / 1000)
     let state = GatherAttributes.ContentState(at: at, title: args["title"] as? String ?? "", place: args["place"] as? String ?? "")
     let attrs = GatherAttributes(group: args["group"] as? String ?? "", color: args["color"] as? Int ?? 0xB44CFF, nowText: args["now"] as? String ?? "")
@@ -168,13 +169,16 @@ enum GatherLive {
       let current = Activity<GatherAttributes>.activities
       if let a = current.first, current.count == 1, a.attributes.group == attrs.group, a.attributes.color == attrs.color, a.attributes.nowText == attrs.nowText {
         await a.update(ActivityContent(state: state, staleDate: stale))
+        finish(true)
         return
       }
       for a in current { await a.end(nil, dismissalPolicy: .immediate) }
       do {
         _ = try Activity.request(attributes: attrs, content: ActivityContent(state: state, staleDate: stale), pushType: nil)
+        finish(true)
       } catch {
         NSLog("GatherLive request failed: \(error)")
+        finish(false)
       }
     }
   }

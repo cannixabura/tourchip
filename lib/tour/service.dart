@@ -144,7 +144,7 @@ class TourService {
       return;
     }
     if (_locSub != null) return;
-    _locSub = Geolocator.getPositionStream(locationSettings: _locSettings()).listen(_onFix, onError: (_) {});
+    _locSub = Geolocator.getPositionStream(locationSettings: _locSettings()).listen(_onFix, onError: (_) => _stopLoc()); // 權限被關掉或定位服務關閉：停掉，回到前景再重開
     // 先送一次目前位置：沒在移動時位置串流可能很久才有第一筆，團員會一直看不到你
     if (share) {
       Geolocator.getCurrentPosition(locationSettings: const LocationSettings(timeLimit: Duration(seconds: 10))).then((p) {
@@ -230,7 +230,7 @@ class TourService {
     final r = await call('arrive', {'callId': c.id, 'lat': p.latitude, 'lng': p.longitude});
     if (r['success'] == true) {
       _syncLoc(current.value); // 沒開分享的話就停止取得位置
-    } else if (r['code'] != 'ended') {
+    } else if (r['code'] != 'ended' && r['code'] != 'not_target' && r['code'] != 'bad_request') {
       // 伺服器覺得還太遠或連不上：20 秒後再試
       _arriveSent = null;
       _arriveRetry = DateTime.now().add(const Duration(seconds: 20));

@@ -68,6 +68,7 @@ class MemoryStore {
   MemoryStore._();
   static const _key = 'trip_memory';
   static String? _last;
+  static int _lastAt = 0;
   static final latest = ValueNotifier<TripMemory?>(null);
 
   static Future<void> load() async {
@@ -82,8 +83,11 @@ class MemoryStore {
   static Future<void> save(TourGroup g) async {
     final m = TripMemory.of(g);
     final raw = jsonEncode({...m.toJson(), 'savedAt': 0});
-    if (raw == _last) return;
+    // 內容沒變也每小時重寫一次 savedAt：14 天要從最後一次在團裡算起
+    final now = DateTime.now().millisecondsSinceEpoch;
+    if (raw == _last && now - _lastAt < 3600000) return;
     _last = raw;
+    _lastAt = now;
     latest.value = m;
     try {
       final p = await SharedPreferences.getInstance();

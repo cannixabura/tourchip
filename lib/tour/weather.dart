@@ -92,16 +92,18 @@ class Weather {
 
   /// 這一天在哪裡：當天第一個有座標的集合點；沒有就用前一個有座標的（晚上住的地方），再沒有就用之後第一個
   static TourStop? placeFor(List<TourStop> stops, DateTime day) {
-    bool same(TourStop s) {
+    // 只比當地的年月日（集合點時區），不和手機時區的時間比
+    int key(int y, int m, int d) => y * 10000 + m * 100 + d;
+    int dayOf(TourStop s) {
       final t = localAt(s.at, s.tz);
-      return t.year == day.year && t.month == day.month && t.day == day.day;
+      return key(t.year, t.month, t.day);
     }
+    final want = key(day.year, day.month, day.day);
     final withPos = stops.where((s) => s.lat != null && s.lng != null).toList()..sort((a, b) => a.at.compareTo(b.at));
-    final today = withPos.where(same).firstOrNull;
+    final today = withPos.where((s) => dayOf(s) == want).firstOrNull;
     if (today != null) return today;
-    final start = DateTime(day.year, day.month, day.day);
-    final before = withPos.where((s) => localAt(s.at, s.tz).isBefore(start)).lastOrNull;
-    return before ?? withPos.where((s) => localAt(s.at, s.tz).isAfter(start)).firstOrNull;
+    final before = withPos.where((s) => dayOf(s) < want).lastOrNull;
+    return before ?? withPos.where((s) => dayOf(s) > want).firstOrNull;
   }
 }
 
