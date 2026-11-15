@@ -210,7 +210,7 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) TourService.refresh();
+    if (state == AppLifecycleState.resumed) TourService.resume();
     if (state == AppLifecycleState.paused) TourService.pause();
   }
 

@@ -31,7 +31,7 @@ Future<bool> askShareConsent(BuildContext context) async {
       Text(tx('和團員互相看得到', 'See each other on the map'), style: Night.title, textAlign: TextAlign.center),
       const SizedBox(height: Night.space2),
       line(Icons.people_alt_outlined, tx('同一團的人（含領隊）會在 3D 地圖上看到你的大頭貼和位置，你也看得到他們。', 'Everyone in your group, including leaders, sees your photo and location on the 3D map, and you see theirs.')),
-      line(Icons.lock_outline, tx('只在 App 開著時更新；不在團裡的人看不到。退團或團解散，位置就刪除。', 'Updated only while the app is open. People outside the group never see it. Deleted when you leave or the group ends.')),
+      line(Icons.lock_outline, tx('在團裡時持續更新（App 在背景也是）；不在團裡的人看不到。退團或團解散，位置就刪除。', 'Keeps updating while you are in the group, even in the background. People outside the group never see it. Deleted when you leave or the group ends.')),
       line(Icons.chat_bubble_outline, tx('可以發氣泡、長按地圖上的人傳訊息。', 'Post a bubble, or long-press someone on the map to message them.')),
       line(Icons.toggle_off_outlined, tx('隨時可以在設定關掉分享。', 'Turn sharing off any time in Settings.')),
       const SizedBox(height: Night.space4),

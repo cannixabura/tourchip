@@ -5,6 +5,9 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!-- 艾婭語音通話（WebRTC） -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!-- 麥克風只給艾婭語音通話用；沒有麥克風的裝置也要能安裝 App -->

@@ -45,10 +45,11 @@ class TourService {
   static final openChat = ValueNotifier<String?>(null);
   /// 到點自動點到了：顯示一句提示（main.dart 監聽）
   static final arrivedNow = ValueNotifier<bool>(false);
-  static StreamSubscription<Position>? _arriveSub;
   static String? _arriveSent;
   static DateTime _arriveRetry = DateTime.fromMillisecondsSinceEpoch(0);
-  static StreamSubscription<Position>? _posSub;
+  static StreamSubscription<Position>? _locSub;
+  static Position? _lastFix;
+  static Timer? _bgTick;
   static DateTime _posSentAt = DateTime.fromMillisecondsSinceEpoch(0);
   static Position? _posSent;
 
@@ -115,68 +116,107 @@ class TourService {
     if (after != null && !after.isStaff && after.rollId != null && after.rollMine == null && before?.rollId != after.rollId) {
       incomingRoll.value = after.rollId;
     }
-    after != null && after.shareOn ? _startPos() : _stopPos();
     // 團員：這次集合剛被自動點到
     if (after != null && !after.isStaff && after.call != null && after.call!.here && before?.call?.id == after.call!.id && before?.call?.here == false) {
       arrivedNow.value = true;
     }
-    _watchArrive(after);
+    _syncLoc(after);
     LiveCountdown.sync(after);
     _schedulePoll();
   }
 
-  /// 同團互相看得到：App 開著、在團裡、開著分享時才回報位置（最多 15 秒一次；走超過 30 公尺會提早送）
-  static void _startPos() {
-    if (_posSub != null) return;
-    // 先送一次目前位置：沒在移動時位置串流可能很久才有第一筆，團員會一直看不到你
-    Geolocator.getCurrentPosition(locationSettings: const LocationSettings(timeLimit: Duration(seconds: 10))).then((p) {
-      if (_posSub == null || _posSent != null) return;
-      _posSentAt = DateTime.now();
-      _posSent = p;
-      call('pos', {'lat': p.latitude, 'lng': p.longitude});
-    }).catchError((_) {});
-    _posSub = Geolocator.getPositionStream(locationSettings: const LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 10)).listen((p) {
-      final since = DateTime.now().difference(_posSentAt).inSeconds;
-      final moved = _posSent == null ? 1e9 : Geolocator.distanceBetween(_posSent!.latitude, _posSent!.longitude, p.latitude, p.longitude);
-      if (since < 15 && !(moved > 30 && since >= 5)) return;
-      _posSentAt = DateTime.now();
-      _posSent = p;
-      call('pos', {'lat': p.latitude, 'lng': p.longitude});
-    }, onError: (_) {});
-  }
-
-  static void _stopPos() {
-    _posSub?.cancel();
-    _posSub = null;
-    _posSent = null;
-  }
-
-  /// 到點自動點名：團員有集合、集合前 30 分鐘起、App 開著時看自己的位置；
-  /// 走進集合點 30 公尺內（加上 GPS 誤差，最多 25 公尺）就告訴伺服器「到了」。不存位置、不必開分享，也不會為此跳出權限詢問。
-  static Future<void> _watchArrive(TourGroup? g) async {
-    final c = g?.call;
-    final fg = WidgetsBinding.instance.lifecycleState == AppLifecycleState.resumed;
-    final need = g != null && !g.isStaff && c != null && !c.here && _arriveSent != c.id && fg &&
-        DateTime.now().millisecondsSinceEpoch >= c.at - 30 * 60000 && !Demo.on;
-    if (!need) {
-      _stopArrive();
+  /// 位置：在團裡、開著分享（或團員集合前 30 分鐘起要自動點名）時取得位置。
+  /// 在 App 打開時開始，App 到背景也繼續（iOS 狀態列藍色指示、Android 常駐通知），脫隊預警與到點自動點名才有用。
+  /// 只用「使用 App 時」權限：背景沒辦法「開始」取得位置，所以都在前景時開始；退團、解散、關分享就停。
+  static Future<void> _syncLoc(TourGroup? g) async {
+    final share = g != null && g.shareOn;
+    if (!share && !_needArrive(g)) {
+      _stopLoc();
       return;
     }
-    if (_arriveSub != null) return;
+    if (_locSub != null || !_fg) return;
     try {
       final perm = await Geolocator.checkPermission();
       if (perm != LocationPermission.whileInUse && perm != LocationPermission.always) return;
     } catch (_) {
       return;
     }
-    if (_arriveSub != null) return;
-    _arriveSub = Geolocator.getPositionStream(locationSettings: const LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 5))
-        .listen(_checkArrive, onError: (_) {});
+    if (_locSub != null) return;
+    _locSub = Geolocator.getPositionStream(locationSettings: _locSettings()).listen(_onFix, onError: (_) {});
+    // 先送一次目前位置：沒在移動時位置串流可能很久才有第一筆，團員會一直看不到你
+    if (share) {
+      Geolocator.getCurrentPosition(locationSettings: const LocationSettings(timeLimit: Duration(seconds: 10))).then((p) {
+        if (_locSub == null || _posSent != null) return;
+        _lastFix = p;
+        _sendPos(p);
+      }).catchError((_) {});
+    }
   }
 
-  static void _stopArrive() {
-    _arriveSub?.cancel();
-    _arriveSub = null;
+  static LocationSettings _locSettings() {
+    if (Platform.isIOS) {
+      return AppleSettings(
+        accuracy: LocationAccuracy.high,
+        distanceFilter: 10,
+        activityType: ActivityType.otherNavigation,
+        pauseLocationUpdatesAutomatically: false, // 停下來就不再更新的話，之後走動也收不到
+        allowBackgroundLocationUpdates: true,
+        showBackgroundLocationIndicator: true,
+      );
+    }
+    if (Platform.isAndroid) {
+      return AndroidSettings(
+        accuracy: LocationAccuracy.high,
+        distanceFilter: 10,
+        intervalDuration: const Duration(seconds: 5),
+        foregroundNotificationConfig: ForegroundNotificationConfig(
+          notificationTitle: tx('旅行團進行中', 'Tour in progress'),
+          notificationText: tx('背景也會更新位置：脫隊提醒、到點自動點名', 'Updating your location for stray alerts and auto check-in'),
+          notificationChannelName: tx('團進行中的位置', 'Location during the tour'),
+          notificationIcon: const AndroidResource(name: 'ic_stat_flag'),
+          enableWakeLock: true,
+          setOngoing: true,
+        ),
+      );
+    }
+    return const LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 10);
+  }
+
+  static void _onFix(Position p) {
+    _lastFix = p;
+    if (_needArrive(current.value)) _checkArrive(p);
+    if (current.value?.shareOn != true) return;
+    // 前景：最多 15 秒一次，走超過 30 公尺提早送；背景：最多 60 秒一次，走超過 40 公尺提早送（省電、省流量）
+    final since = DateTime.now().difference(_posSentAt).inSeconds;
+    final moved = _posSent == null ? 1e9 : Geolocator.distanceBetween(_posSent!.latitude, _posSent!.longitude, p.latitude, p.longitude);
+    final fg = _fg;
+    if (since < (fg ? 15 : 60) && !(moved > (fg ? 30 : 40) && since >= (fg ? 5 : 15))) return;
+    _sendPos(p);
+  }
+
+  static void _sendPos(Position p) {
+    _posSentAt = DateTime.now();
+    _posSent = p;
+    call('pos', {'lat': p.latitude, 'lng': p.longitude});
+  }
+
+  static void _stopLoc() {
+    _locSub?.cancel();
+    _locSub = null;
+    _posSent = null;
+    _lastFix = null;
+    _bgTick?.cancel();
+    _bgTick = null;
+  }
+
+  static bool get _fg => WidgetsBinding.instance.lifecycleState == AppLifecycleState.resumed;
+
+  /// 到點自動點名：團員有集合、集合前 30 分鐘起看自己的位置（背景也看）；
+  /// 走進集合點 30 公尺內（加上 GPS 誤差，最多 25 公尺）就告訴伺服器「到了」。不存位置、不必開分享，也不會為此跳出權限詢問。
+  static bool _needArrive(TourGroup? g) {
+    final c = g?.call;
+    return g != null && !g.isStaff && c != null && !c.here && _arriveSent != c.id &&
+        DateTime.now().millisecondsSinceEpoch >= c.at - 30 * 60000 && !Demo.on;
   }
 
   static Future<void> _checkArrive(Position p) async {
@@ -187,7 +227,7 @@ class TourService {
     _arriveSent = c.id;
     final r = await call('arrive', {'callId': c.id, 'lat': p.latitude, 'lng': p.longitude});
     if (r['success'] == true) {
-      _stopArrive();
+      _syncLoc(current.value); // 沒開分享的話就停止取得位置
     } else if (r['code'] != 'ended') {
       // 伺服器覺得還太遠或連不上：20 秒後再試
       _arriveSent = null;
@@ -206,19 +246,40 @@ class TourService {
     return r;
   }
 
-  /// 在團裡時定期更新：有集合或點名時 10 秒一次，平常 15 秒（同團的人在地圖上移動）；App 在背景時暫停
+  /// 在團裡時定期更新：有集合或點名時 10 秒一次，平常 15 秒（同團的人在地圖上移動）；
+  /// App 在背景時改由 _bgTick 每分鐘一次
   static void _schedulePoll() {
     _poll?.cancel();
     final g = current.value;
-    if (g == null) return;
+    if (g == null || !_fg) return;
     _poll = Timer(Duration(seconds: g.call != null || g.rollId != null ? 10 : 15), refresh);
   }
 
   static Future<void> refresh() => call('status');
+
+  /// 回到前景
+  static Future<void> resume() {
+    _bgTick?.cancel();
+    _bgTick = null;
+    return refresh();
+  }
+
+  /// App 到背景：還在取得位置的話，每分鐘看一次團的狀態（新的集合、解散），
+  /// 沒走動也再送一次最後的位置，伺服器才知道你還在那裡（脫隊預警只看 2 分鐘內的位置）
   static void pause() {
     _poll?.cancel();
-    _stopPos(); // App 到背景就不再回報位置
-    _stopArrive();
+    _bgTick?.cancel();
+    _bgTick = null;
+    if (_locSub == null) return;
+    _bgTick = Timer.periodic(const Duration(seconds: 60), (_) async {
+      if (_fg) return;
+      await refresh();
+      final p = _lastFix;
+      if (p != null && _locSub != null && current.value?.shareOn == true &&
+          DateTime.now().difference(_posSentAt).inSeconds >= 50) {
+        _sendPos(p);
+      }
+    });
   }
 
   /// 收到推播（前景）：重新整理；集合呼叫與點名會由 _apply 跳出卡片

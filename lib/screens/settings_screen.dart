@@ -426,7 +426,7 @@ class HelpScreen extends StatelessWidget {
         ]),
         block(Icons.people_alt_outlined, tx('和團員互相看得到', 'See your group on the map'), [
           tx('同意分享後，同一團的人（含領隊）會在 3D 地圖上看到彼此的大頭貼和位置；不在團裡的人看不到任何人。', 'After you agree to share, everyone in your group, including leaders, sees each other on the 3D map. People outside the group see no one.'),
-          tx('位置只在 App 開著時更新；退團或團解散就刪除。隨時可以在設定關掉。', 'Location updates only while the app is open and is deleted when you leave or the group ends. Turn it off any time in Settings.'),
+          tx('在團裡時位置會持續更新（App 在背景也是），用來提醒脫隊、到集合點自動點名；退團或團解散就刪除。隨時可以在設定關掉。', 'While you are in a group, your location keeps updating, even in the background, for stray alerts and auto check-in. It is deleted when you leave or the group ends. Turn it off any time in Settings.'),
           tx('未滿 18 歲要先取得家長或監護人同意才能分享。', 'Under 18? Ask a parent or guardian before sharing.'),
         ]),
         block(Icons.chat_bubble_outline, tx('氣泡與訊息', 'Bubbles and messages'), [

@@ -22,9 +22,9 @@
 - 20 人以內免費，第 21 人起團主買 `tour_pass_7d`（消耗型，NT$290），上限 100 人
 - 團購券 = 同一個商品 `tour_pass_7d`，App 內購買，變成 QR code（`https://tourchip.web.app/v/<10 碼>`）發給領隊
 - 共同團主最多 2 位；團主才能升級、交棒、解散
-- **同團的人在 3D 地圖上互相看得到**（2026-11-08 改，取代原本「團員位置不給團主」）：入團時先同意（勾「已滿 18 歲或已取得家長／監護人同意」）才分享，同意後預設分享、設定裡可隨時關；只在 App 開著時更新；退團、被移出、解散就刪除；**沒入團的人看不到任何人**。「我迷路了」照舊另外傳一次、30 分鐘刪除
+- **同團的人在 3D 地圖上互相看得到**（2026-11-08 改，取代原本「團員位置不給團主」）：入團時先同意（勾「已滿 18 歲或已取得家長／監護人同意」）才分享，同意後預設分享、設定裡可隨時關；在團裡時 App 到背景也繼續更新（2026-11-15 改：iOS 用「使用 App 時」權限＋背景位置模式、狀態列藍色指示；Android 前景服務常駐通知；背景每分鐘最多送一次、沒走動也補送；只能在前景「開始」）；退團、被移出、解散就刪除；**沒入團的人看不到任何人**。「我迷路了」照舊另外傳一次、30 分鐘刪除
 - **氣泡與私訊**：每人一個氣泡（20 字）；長按地圖上的人傳私訊（同團任何人互傳，200 字），對方收到推播；有髒話過濾、封鎖（對方不知道）、檢舉；同樣要先同意；解散就刪除。Redis：`tgroup_share`、`tgroup_pos:`、`tgroup_bubble:`、`tgroup_msgs:`、`tgroup_blocks:`、`tgroup_reports`
-- **集合四件組**（2026-11-15，後端未部署、App 要 build 14）：到點自動點名（App 判斷 30 公尺＋誤差，伺服器 60 公尺，不存位置）、我會晚到（3／5／10 分鐘＋原因）、脫隊預警（只用 App 開著時的位置；大部分人在領隊 150 公尺內時，離領隊 >250 公尺持續 3 分鐘）、鎖定畫面倒數（iOS Live Activity 擴充 `ios/TourLive`、Android 常駐通知）。Redis：`tgroup_arrive:`、`tgroup_late:`、`tgroup_far:`、`tgroup_farchk:`
+- **集合四件組**（2026-11-15，後端未部署、App 要 build 14）：到點自動點名（App 判斷 30 公尺＋誤差，伺服器 60 公尺，不存位置）、我會晚到（3／5／10 分鐘＋原因）、脫隊預警（用 2 分鐘內的位置，背景也算；大部分人在領隊 150 公尺內時，離領隊 >250 公尺持續 3 分鐘）、鎖定畫面倒數（iOS Live Activity 擴充 `ios/TourLive`、Android 常駐通知）。Redis：`tgroup_arrive:`、`tgroup_late:`、`tgroup_far:`、`tgroup_farchk:`
 - 集合時間、行程表一律用「集合點的當地時區」；解散時間 = 結束日 23:59，以最後一個集合點的時區為準
 - 不需要帳號：Firebase 匿名登入，身分和城市低語各自獨立、彼此不相認
 - 開放未成年團員；分享位置、氣泡、私訊前要勾「已滿 18 歲或已取得家長／監護人同意」（App 內的同意流程）。年齡分級目標 12+（Apple 沒有 12+，用最接近的 13+；問卷的「傳訊和聊天」「使用者生成內容」要選「是」）
@@ -48,7 +48,7 @@
    - 把 `platform_assets/ios/group_call.caf` 加進 Runner target（集合專屬提示音）
 6. **Android 設定**（參考 `~/lbs_dating_app/android/app`）：
    - `applicationId = "com.softchip.tourchip"`，`compileSdk = 37`
-   - 權限：`INTERNET`、`ACCESS_FINE_LOCATION`、`ACCESS_COARSE_LOCATION`、`CAMERA`、`POST_NOTIFICATIONS`、`VIBRATE`
+   - 權限：`INTERNET`、`ACCESS_FINE_LOCATION`、`ACCESS_COARSE_LOCATION`、`CAMERA`、`POST_NOTIFICATIONS`、`VIBRATE`、`FOREGROUND_SERVICE`、`FOREGROUND_SERVICE_LOCATION`、`WAKE_LOCK`（背景位置；Play Console 要填前景服務聲明）
    - App Links：`<intent-filter android:autoVerify="true">`，`https://tourchip.web.app/g/` 與 `/v/`
    - `platform_assets/android/raw/` 的 `group_call.wav`、`keep.xml` 複製到 `android/app/src/main/res/raw/`
    - App 名稱：`values/strings.xml` TourChip、`values-zh/strings.xml` 旅行團

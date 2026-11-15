@@ -2252,8 +2252,8 @@
 "en": "After you agree to share, everyone in your group, including leaders, sees each other on the 3D map. People outside the group see no one."
 },
 {
-"zh": "位置只在 App 開著時更新；退團或團解散就刪除。隨時可以在設定關掉。",
-"en": "Location updates only while the app is open and is deleted when you leave or the group ends. Turn it off any time in Settings."
+"zh": "在團裡時位置會持續更新（App 在背景也是），用來提醒脫隊、到集合點自動點名；退團或團解散就刪除。隨時可以在設定關掉。",
+"en": "While you are in a group, your location keeps updating, even in the background, for stray alerts and auto check-in. It is deleted when you leave or the group ends. Turn it off any time in Settings."
 },
 {
 "zh": "未滿 18 歲要先取得家長或監護人同意才能分享。",
@@ -2344,8 +2344,8 @@
 "en": "Everyone in your group, including leaders, sees your photo and location on the 3D map, and you see theirs."
 },
 {
-"zh": "只在 App 開著時更新；不在團裡的人看不到。退團或團解散，位置就刪除。",
-"en": "Updated only while the app is open. People outside the group never see it. Deleted when you leave or the group ends."
+"zh": "在團裡時持續更新（App 在背景也是）；不在團裡的人看不到。退團或團解散，位置就刪除。",
+"en": "Keeps updating while you are in the group, even in the background. People outside the group never see it. Deleted when you leave or the group ends."
 },
 {
 "zh": "可以發氣泡、長按地圖上的人傳訊息。",
@@ -2690,6 +2690,18 @@
 {
 "zh": "美國／加拿大",
 "en": "US / Canada"
+},
+{
+"zh": "旅行團進行中",
+"en": "Tour in progress"
+},
+{
+"zh": "背景也會更新位置：脫隊提醒、到點自動點名",
+"en": "Updating your location for stray alerts and auto check-in"
+},
+{
+"zh": "團進行中的位置",
+"en": "Location during the tour"
 },
 {
 "zh": "集合與點名",
