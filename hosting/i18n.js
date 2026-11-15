@@ -285,8 +285,16 @@
     return T[p[0]] ? p[0] : null;
   }
 
+  // 首頁的各語言網址 /en/、/ja/ …（tool/gen_lang_pages.py 產生，分享預覽才會是該語言）；繁中是 /
+  function pathLang() {
+    var m = location.pathname.match(/^\/(zh-Hans|en|ja|ko|ms|id|vi|th|pt|es|hi)\/?$/);
+    return m ? m[1] : null;
+  }
+  function isHome() { return location.pathname === '/' || location.pathname === '/index.html' || !!pathLang(); }
+
   function pick() {
-    // 1. 網址 ?lang=ja  2. 上次手動選的語言  3. 瀏覽器語言  4. 英文
+    // 1. 網址 /ja/ 或 ?lang=ja  2. 上次手動選的語言  3. 瀏覽器語言  4. 英文
+    var pl = pathLang(); if (pl) return pl;
     try { var q = norm(new URLSearchParams(location.search).get('lang')); if (q) return q; } catch (e) {}
     try { var s = norm(localStorage.getItem('tc_lang')); if (s) return s; } catch (e) {}
     var list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || 'en'];
@@ -338,6 +346,10 @@
       current = e.target.value;
       try { localStorage.setItem('tc_lang', current); } catch (err) {}
       apply(current);
+      // 首頁：網址跟著換成該語言的網址，複製分享出去預覽就是這個語言
+      if (isHome() && history.replaceState) {
+        try { history.replaceState(null, '', (current === 'zh-Hant' ? '/' : '/' + current + '/') + location.search.replace(/([?&])lang=[^&]*&?/, '$1').replace(/[?&]$/, '') + location.hash); } catch (err) {}
+      }
     });
   }
 })();
