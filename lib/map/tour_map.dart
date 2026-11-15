@@ -161,7 +161,7 @@ class TourMapState extends State<TourMap> with SingleTickerProviderStateMixin {
 
   void _startPosition() {
     if (_position != null) return;
-    _position = Geolocator.getPositionStream(locationSettings: const LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 5)).listen((pos) {
+    _position = TourService.positions.listen((pos) {
       _me = LatLng(pos.latitude, pos.longitude);
       lastMe = _me;
       _moveCamera();

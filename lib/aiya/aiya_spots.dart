@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:geolocator/geolocator.dart';
+
+import '../tour/service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../l10n.dart';
@@ -113,7 +115,7 @@ class _AiyaSpotPromptState extends State<AiyaSpotPrompt> {
     final perm = await Geolocator.checkPermission();
     if (perm != LocationPermission.whileInUse && perm != LocationPermission.always) return;
     if (!mounted || _sub != null) return;
-    _sub = Geolocator.getPositionStream(locationSettings: const LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 25)).listen((p) {
+    _sub = TourService.positions.listen((p) {
       _last = p;
       _check();
     }, onError: (_) {});

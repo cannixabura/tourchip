@@ -49,7 +49,35 @@ class TourService {
   static final arrivedNow = ValueNotifier<bool>(false);
   static String? _arriveSent;
   static DateTime _arriveRetry = DateTime.fromMillisecondsSinceEpoch(0);
-  static StreamSubscription<Position>? _locSub;
+  /// 位置的唯一來源：Android 的 geolocator 同時只能有一個位置串流（第一個開的設定說了算），
+  /// 所以地圖、集合卡、艾婭景點都從 positions 聽；團裡要背景更新時（_bgWanted）換成前景服務的設定，
+  /// Android 才會開常駐通知、到背景繼續更新。
+  static final _hub = StreamController<Position>.broadcast(onListen: _syncPlat, onCancel: () => scheduleMicrotask(_syncPlat));
+  static Stream<Position> get positions => _hub.stream;
+  static StreamSubscription<Position>? _plat;
+  static bool _platBg = false, _bgWanted = false;
+  static bool get _tracking => _plat != null && _platBg;
+
+  static void _syncPlat() {
+    final want = _bgWanted || _hub.hasListener;
+    if (_plat != null && (!want || _platBg != _bgWanted)) {
+      _plat!.cancel();
+      _plat = null;
+    }
+    // 只有「使用 App 時」權限：背景沒辦法開始，等回到前景（resume）再開
+    if (!want || _plat != null || !_fg) return;
+    _platBg = _bgWanted;
+    _plat = Geolocator.getPositionStream(
+      locationSettings: _bgWanted ? _locSettings() : const LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 5),
+    ).listen((p) {
+      _hub.add(p);
+      if (_platBg) _onFix(p);
+    }, onError: (_) {
+      // 權限被關掉或定位服務關閉：停掉，回到前景再重開
+      _plat?.cancel();
+      _plat = null;
+    });
+  }
   static Position? _lastFix;
   static Timer? _bgTick;
   static DateTime _posSentAt = DateTime.fromMillisecondsSinceEpoch(0);
@@ -136,19 +164,20 @@ class TourService {
       _stopLoc();
       return;
     }
-    if (_locSub != null || !_fg) return;
+    if (_tracking || !_fg) return;
     try {
       final perm = await Geolocator.checkPermission();
       if (perm != LocationPermission.whileInUse && perm != LocationPermission.always) return;
     } catch (_) {
       return;
     }
-    if (_locSub != null) return;
-    _locSub = Geolocator.getPositionStream(locationSettings: _locSettings()).listen(_onFix, onError: (_) => _stopLoc()); // 權限被關掉或定位服務關閉：停掉，回到前景再重開
+    if (_tracking) return;
+    _bgWanted = true;
+    _syncPlat();
     // 先送一次目前位置：沒在移動時位置串流可能很久才有第一筆，團員會一直看不到你
     if (share) {
       Geolocator.getCurrentPosition(locationSettings: const LocationSettings(timeLimit: Duration(seconds: 10))).then((p) {
-        if (_locSub == null || _posSent != null) return;
+        if (!_tracking || _posSent != null) return;
         _lastFix = p;
         _sendPos(p);
       }).catchError((_) {});
@@ -203,8 +232,8 @@ class TourService {
   }
 
   static void _stopLoc() {
-    _locSub?.cancel();
-    _locSub = null;
+    _bgWanted = false;
+    _syncPlat();
     _posSent = null;
     _lastFix = null;
     _bgTick?.cancel();
@@ -263,6 +292,7 @@ class TourService {
   static Future<void> resume() {
     _bgTick?.cancel();
     _bgTick = null;
+    _syncPlat(); // 地圖等在背景時沒辦法開始的位置串流
     return refresh();
   }
 
@@ -272,12 +302,12 @@ class TourService {
     _poll?.cancel();
     _bgTick?.cancel();
     _bgTick = null;
-    if (_locSub == null) return;
+    if (!_tracking) return;
     _bgTick = Timer.periodic(const Duration(seconds: 60), (_) async {
       if (_fg) return;
       await refresh();
       final p = _lastFix;
-      if (p != null && _locSub != null && current.value?.shareOn == true &&
+      if (p != null && _tracking && current.value?.shareOn == true &&
           DateTime.now().difference(_posSentAt).inSeconds >= 50) {
         _sendPos(p);
       }

@@ -43,7 +43,7 @@ class _CallCardState extends State<CallCard> {
     _tick = Timer.periodic(const Duration(seconds: 1), (_) { if (mounted) setState(() {}); });
     ensureLocation().then((ok) {
       if (!ok || !mounted) return;
-      _sub = Geolocator.getPositionStream(locationSettings: const LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 5))
+      _sub = TourService.positions
           .listen((p) { if (mounted) setState(() => _pos = p); }, onError: (_) {});
     });
     _compass = FlutterCompass.events?.listen((e) { if (mounted && e.heading != null) setState(() => _heading = e.heading); });
