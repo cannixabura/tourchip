@@ -43,6 +43,8 @@ class TourService {
   static Timer? _poll;
   /// 點了私訊通知：要打開和誰的對話（main.dart 監聽）
   static final openChat = ValueNotifier<String?>(null);
+  /// 點了投票、揪伴的通知：打開「投票・揪伴」（main.dart 監聽）
+  static final openTogether = ValueNotifier<bool>(false);
   /// 到點自動點到了：顯示一句提示（main.dart 監聽）
   static final arrivedNow = ValueNotifier<bool>(false);
   static String? _arriveSent;
@@ -360,13 +362,14 @@ String tourError(String code) => switch (code) {
       'tz' => tx('時區不正確。', 'Invalid time zone.'),
       'empty' => tx('請輸入內容。', 'Please write something.'),
       'too_many' => tx('數量已達上限。', 'Limit reached.'),
+      'closed' => tx('這個投票已經結束了。', 'This poll is closed.'),
       'voucher_not_found' => tx('找不到這張團購券。', 'Voucher not found.'),
       'voucher_used' => tx('這張團購券已經用過了。', 'This voucher was already used.'),
       'voucher_expired' => tx('這張團購券已經過期。', 'This voucher has expired.'),
       'already_paid' => tx('這一團已經升級過了。', 'This group is already upgraded.'),
       'used' => tx('這筆購買已經用過了。', 'This purchase was already used.'),
       'not_sharing' => tx('你目前沒有分享位置。', 'Location sharing is off.'),
-      'need_consent' => tx('要先同意分享，才能發氣泡或傳訊息。', 'Please agree to sharing first.'),
+      'need_consent' => tx('要先同意分享，才能發氣泡、傳訊息或揪伴。', 'Please agree to sharing first.'),
       'too_fast' => tx('傳得太快了，休息一下再傳。', 'Slow down a little.'),
       _ => tx('連線不穩，請稍後再試。', 'Connection problem. Please try again.'),
     };

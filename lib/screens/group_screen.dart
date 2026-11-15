@@ -22,7 +22,9 @@ import 'pass_screen.dart';
 import 'qr_screen.dart';
 import 'roll_call_screen.dart';
 import 'settings_screen.dart';
+import 'memory_card.dart';
 import 'social.dart';
+import 'together_screen.dart';
 
 /// 在團裡的主畫面：3D 夜光地圖＋集合點光柱，下方是操作面板。
 /// 團主、共同團主看到集合、點名、公告、行程；團員看到集合卡片、團旗、我迷路了。設計稿：領隊 3D 地圖
@@ -153,6 +155,11 @@ class _TopBar extends StatelessWidget {
         style: Night.caption, textAlign: TextAlign.center,
       ),
       const SizedBox(height: Night.space4),
+      NightButton(tx('旅程回憶卡', 'Trip memory card'), kind: NightButtonKind.ghost, icon: Icons.auto_awesome_outlined, onPressed: () {
+        Navigator.pop(ctx);
+        Navigator.of(context).push(MaterialPageRoute(builder: (_) => MemoryCardScreen(memory: TripMemory.of(g))));
+      }),
+      const SizedBox(height: Night.space2),
       if (g.isStaff) ...[
         NightButton(tx('團員名單', 'Members'), kind: NightButtonKind.ghost, icon: Icons.people_outline, onPressed: () {
           Navigator.pop(ctx);
@@ -355,7 +362,13 @@ class _StaffPanel extends StatelessWidget {
         const SizedBox(width: 8),
         _ActionTile(tx('資訊', 'Info'), Icons.info_outline, () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const InfoScreen()))),
       ]),
-      const SizedBox(height: Night.space3),
+      const SizedBox(height: Night.space1),
+      Center(child: TextButton.icon(
+        style: TextButton.styleFrom(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+        onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const TogetherScreen())),
+        icon: const Icon(Icons.how_to_vote_outlined, size: 18), label: Text(togetherLabel(g)),
+      )),
+      const SizedBox(height: Night.space1),
       Text(tx('同意分享的團員會出現在地圖上；長按大頭貼可以傳訊息。按「我迷路了」的人會另外以紅點標出。', 'Members who share appear on the map. Long-press a photo to message them. Anyone who taps "I\'m lost" also shows as a red dot.'), style: Night.caption),
     ]);
   }
@@ -388,7 +401,17 @@ class _MemberPanel extends StatelessWidget {
           Text(tx('領隊在點名', 'Roll call'), style: Night.title.copyWith(color: g.tint)),
           const SizedBox(height: Night.space3),
           RollButtons(g: g),
-        ] else if (ann != null)
+        ] else if (g.pollsToVote.isNotEmpty)
+          InkWell(
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const TogetherScreen())),
+            child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Icon(Icons.how_to_vote_outlined, color: g.tint, size: 20),
+              const SizedBox(width: 8),
+              Expanded(child: Text(tx('領隊想問你：${g.pollsToVote.first.q}', 'Your leader asks: ${g.pollsToVote.first.q}'), style: Night.body.copyWith(color: Night.ink), maxLines: 3, overflow: TextOverflow.ellipsis)),
+              Icon(Icons.chevron_right, color: g.tint, size: 20),
+            ]),
+          )
+        else if (ann != null)
           InkWell(
             onTap: () => showAnnouncements(context, g),
             child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -416,6 +439,10 @@ class _MemberPanel extends StatelessWidget {
         TextButton(style: TextButton.styleFrom(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap), onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ItineraryScreen())), child: Text(tx('行程表', 'Itinerary'))),
         TextButton(style: TextButton.styleFrom(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap), onPressed: () => showAnnouncements(context, g), child: Text(tx('公告（${g.announcements.length}）', 'Notices (${g.announcements.length})'))),
         TextButton(style: TextButton.styleFrom(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap), onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const InfoScreen())), child: Text(tx('車輛・飯店・緊急', 'Bus · Hotel · SOS'))),
+        TextButton(style: TextButton.styleFrom(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap), onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const TogetherScreen())), child: Text(togetherLabel(g))),
+        // 最後一天：旅程回憶卡
+        if (g.thanksOpen)
+          TextButton(style: TextButton.styleFrom(visualDensity: VisualDensity.compact, tapTargetSize: MaterialTapTargetSize.shrinkWrap), onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => MemoryCardScreen(memory: TripMemory.of(g)))), child: Text(tx('旅程回憶卡', 'Memory card'))),
       ]),
     ]);
   }

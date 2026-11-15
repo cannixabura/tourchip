@@ -988,6 +988,10 @@
 "en": "Leader {g.hostName}"
 },
 {
+"zh": "旅程回憶卡",
+"en": "Trip memory card"
+},
+{
 "zh": "團員名單",
 "en": "Members"
 },
@@ -1098,6 +1102,10 @@
 {
 "zh": "領隊在點名",
 "en": "Roll call"
+},
+{
+"zh": "領隊想問你：{g.pollsToVote.first.q}",
+"en": "Your leader asks: {g.pollsToVote.first.q}"
 },
 {
 "zh": "下一個集合：{md(next.at, next.tz)} {hm(next.at, next.tz)} {next.place}",
@@ -1226,6 +1234,10 @@
 {
 "zh": "旅行團 · 掃一下入團，集合時每個人都收得到",
 "en": "TourChip · Scan to join, everyone hears the call"
+},
+{
+"zh": "「{m.name}」的旅程回憶卡",
+"en": "Memory card: \"{m.name}\""
 },
 {
 "zh": "掃碼入團",
@@ -1820,6 +1832,30 @@
 "en": "Emergency contact: {d.contact}"
 },
 {
+"zh": "「{m.name}」{m.days} 天的旅程回憶 · 旅行團 TourChip https://tourchip.web.app",
+"en": "\"{m.name}\": {m.days} days together · TourChip https://tourchip.web.app"
+},
+{
+"zh": "沒辦法產生圖片，請再試一次。",
+"en": "Couldn't create the image. Please try again."
+},
+{
+"zh": "分享回憶卡",
+"en": "Share card"
+},
+{
+"zh": "旅程回憶",
+"en": "TRIP MEMORY"
+},
+{
+"zh": "旅行團 TourChip",
+"en": "TourChip"
+},
+{
+"zh": "一起出發",
+"en": "Travel together"
+},
+{
 "zh": "團已滿 20 人",
 "en": "Group is full (20)"
 },
@@ -2409,7 +2445,7 @@
 },
 {
 "zh": "已收到檢舉，我們會盡快處理",
-"en": "Thanks. We'll review it soon."
+"en": "Report received. We will review it."
 },
 {
 "zh": "封鎖或檢舉",
@@ -2453,7 +2489,7 @@
 },
 {
 "zh": "送出",
-"en": "Send"
+"en": "Submit"
 },
 {
 "zh": "花送出了，謝謝你！",
@@ -2518,6 +2554,186 @@
 {
 "zh": "刪除這則感謝？",
 "en": "Delete this thank-you?"
+},
+{
+"zh": "投票・揪伴",
+"en": "Polls · Meetups"
+},
+{
+"zh": "投票",
+"en": "Polls"
+},
+{
+"zh": "發起投票",
+"en": "New poll"
+},
+{
+"zh": "問大家自費行程要不要參加、晚餐吃 A 還是 B，團員按一下就好，你直接看統計。",
+"en": "Ask about optional tours or dinner choices. Members tap once; you see the tally."
+},
+{
+"zh": "領隊發起投票時會出現在這裡。",
+"en": "Polls from your leader show up here."
+},
+{
+"zh": "揪伴",
+"en": "Meetups"
+},
+{
+"zh": "揪大家",
+"en": "Start a meetup"
+},
+{
+"zh": "自由活動想找人一起逛街、吃宵夜？發出後同團的人會收到通知，12 小時後自動消失。",
+"en": "Looking for company during free time? Your group gets notified. It disappears after 12 hours."
+},
+{
+"zh": "{hrs} 小時前",
+"en": "{hrs}h ago"
+},
+{
+"zh": "可複選",
+"en": "Multiple choice"
+},
+{
+"zh": "已結束",
+"en": "Closed"
+},
+{
+"zh": "刪除這個投票和所有人的選擇？",
+"en": "Delete this poll and all answers?"
+},
+{
+"zh": "重新開放",
+"en": "Reopen"
+},
+{
+"zh": "結束投票",
+"en": "Close poll"
+},
+{
+"zh": "{p.voters}／{p.total} 人已投",
+"en": "{p.voters}/{p.total} voted"
+},
+{
+"zh": "，點選項看是誰",
+"en": " · tap an option to see who"
+},
+{
+"zh": "{p.voters} 人已投",
+"en": "{p.voters} voted"
+},
+{
+"zh": "選好就送出，結果投完才看得到",
+"en": "Vote to see the results"
+},
+{
+"zh": "改選",
+"en": "Change"
+},
+{
+"zh": "{count} 票",
+"en": "{count}"
+},
+{
+"zh": "{names.length} 人",
+"en": "{names.length} people"
+},
+{
+"zh": "例如：明天要不要參加嵐山自費行程（¥3000）？",
+"en": "e.g. Join the optional Arashiyama tour tomorrow (¥3000)?"
+},
+{
+"zh": "選項 1，例如：要",
+"en": "Option 1, e.g. Yes"
+},
+{
+"zh": "選項 2，例如：不要",
+"en": "Option 2, e.g. No"
+},
+{
+"zh": "選項 {i + 1}",
+"en": "Option {i + 1}"
+},
+{
+"zh": "加一個選項",
+"en": "Add option"
+},
+{
+"zh": "可以複選",
+"en": "Allow multiple choices"
+},
+{
+"zh": "團員會收到通知。你看得到每個人選了什麼，團員只看到票數。",
+"en": "Members get notified. You see who chose what; members only see the totals."
+},
+{
+"zh": "發出投票",
+"en": "Send poll"
+},
+{
+"zh": "請填 2 到 6 個不一樣的選項。",
+"en": "Add 2–6 different options."
+},
+{
+"zh": "你",
+"en": "You"
+},
+{
+"zh": "{no} 號",
+"en": "No. {no}"
+},
+{
+"zh": "、",
+"en": ", "
+},
+{
+"zh": "{shown} 等 {j.count} 人",
+"en": "{shown} and others ({j.count})"
+},
+{
+"zh": "還沒有人",
+"en": "No one yet"
+},
+{
+"zh": "{j.count} 人也要去",
+"en": "{j.count} going"
+},
+{
+"zh": "{names} 也要去",
+"en": "{names} going"
+},
+{
+"zh": "不去了",
+"en": "Not going"
+},
+{
+"zh": "我也去",
+"en": "I'm in"
+},
+{
+"zh": "封鎖後你看不到他的揪伴、氣泡和訊息，他不會知道。",
+"en": "You won't see their meetups, bubble or messages. They won't be told."
+},
+{
+"zh": "已封鎖",
+"en": "Blocked"
+},
+{
+"zh": "同團的人會收到通知，按「我也去」你就知道誰要來。12 小時後自動消失。",
+"en": "Your group gets notified. You will see who taps \"I'm in\". It disappears after 12 hours."
+},
+{
+"zh": "例如：誰要一起去逛唐吉訶德？19:00 大廳見",
+"en": "e.g. Anyone up for Don Quijote? Lobby at 19:00"
+},
+{
+"zh": "你同時最多揪 3 個，先刪掉一個吧。",
+"en": "You can have up to 3 at a time. Delete one first."
+},
+{
+"zh": "投票・揪伴（{n}）",
+"en": "Polls · Meetups ({n})"
 },
 {
 "zh": "打開 App 看集合點",
@@ -2816,6 +3032,10 @@
 "en": "Limit reached."
 },
 {
+"zh": "這個投票已經結束了。",
+"en": "This poll is closed."
+},
+{
 "zh": "找不到這張團購券。",
 "en": "Voucher not found."
 },
@@ -2840,7 +3060,7 @@
 "en": "Location sharing is off."
 },
 {
-"zh": "要先同意分享，才能發氣泡或傳訊息。",
+"zh": "要先同意分享，才能發氣泡、傳訊息或揪伴。",
 "en": "Please agree to sharing first."
 },
 {
@@ -2858,6 +3078,78 @@
 {
 "zh": "團購券已經準備好，可以發給領隊了。",
 "en": "Your voucher is ready to share."
+},
+{
+"zh": "晴",
+"en": "Clear"
+},
+{
+"zh": "晴時多雲",
+"en": "Partly cloudy"
+},
+{
+"zh": "陰",
+"en": "Cloudy"
+},
+{
+"zh": "霧",
+"en": "Fog"
+},
+{
+"zh": "毛毛雨",
+"en": "Drizzle"
+},
+{
+"zh": "雨",
+"en": "Rain"
+},
+{
+"zh": "雪",
+"en": "Snow"
+},
+{
+"zh": "陣雨",
+"en": "Showers"
+},
+{
+"zh": "陣雪",
+"en": "Snow showers"
+},
+{
+"zh": "雷雨",
+"en": "Thunderstorm"
+},
+{
+"zh": "多雲",
+"en": "Cloudy"
+},
+{
+"zh": "記得帶傘",
+"en": "Bring an umbrella"
+},
+{
+"zh": "路面可能結冰，穿防滑的鞋",
+"en": "Roads may be icy; wear grippy shoes"
+},
+{
+"zh": "很冷，穿厚外套、戴手套",
+"en": "Very cold: heavy coat and gloves"
+},
+{
+"zh": "早晚涼，帶件外套",
+"en": "Cool mornings and evenings: bring a jacket"
+},
+{
+"zh": "很熱，防曬、多喝水",
+"en": "Hot: sunscreen and water"
+},
+{
+"zh": "降雨 {w.rain}%",
+"en": "Rain {w.rain}%"
+},
+{
+"zh": "{at.place}一帶的預報",
+"en": "Forecast near {at.place}"
 },
 {
 "zh": "下載翻譯語言",

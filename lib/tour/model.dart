@@ -130,6 +130,40 @@ class TourCall {
   TourCall(this.id, this.at, this.tz, this.place, this.lat, this.lng, this.sub, this.mine, {this.here = false, this.late});
 }
 
+/// 投票與調查：每個選項幾票、我選了什麼；團主與共同團主另外有誰選了什麼（who）
+class TourPoll {
+  final String id, q;
+  final List<String> opts;
+  final bool multi, closed;
+  final int? sub;
+  final int at, voters, total;
+  final List<int> counts;
+  final List<int>? mine;
+  final List<List<String>> who;
+  TourPoll.fromJson(Map j)
+      : id = _str(j['id']), q = _str(j['q']),
+        opts = [for (final o in (j['opts'] as List? ?? const [])) '$o'],
+        multi = j['multi'] == true, closed = j['closed'] == true, sub = _int(j['sub']),
+        at = _int(j['at']) ?? 0, voters = _int(j['voters']) ?? 0, total = _int(j['total']) ?? 0,
+        counts = [for (final c in (j['counts'] as List? ?? const [])) _int(c) ?? 0],
+        mine = j['mine'] is List ? [for (final c in j['mine'] as List) _int(c) ?? 0] : null,
+        who = [for (final w in (j['who'] as List? ?? const [])) [for (final u in (w as List)) '$u']];
+  int count(int i) => i < counts.length ? counts[i] : 0;
+}
+
+/// 團內揪伴：「誰要一起去…」，誰也要去（going 不含封鎖的人；count 是全部人數）
+class TourJio {
+  final String id, by, text;
+  final int at, until, count;
+  final List<String> going;
+  final bool mine, joined;
+  TourJio.fromJson(Map j)
+      : id = _str(j['id']), by = _str(j['by']), text = _str(j['text']),
+        at = _int(j['at']) ?? 0, until = _int(j['until']) ?? 0, count = _int(j['count']) ?? 0,
+        going = [for (final u in (j['going'] as List? ?? const [])) '$u'],
+        mine = j['mine'] == true, joined = j['joined'] == true;
+}
+
 class TourAnnouncement {
   final String id, text;
   final int at;
@@ -272,6 +306,8 @@ class TourGroup {
   final List<TourFar> far;
   final List<TourLost> lost;
   final List<TourAnnouncement> announcements;
+  final List<TourPoll> polls;
+  final List<TourJio> jios;
   final List<TourStop> stops;
   final List<TourPerson> people;
   final List<TourMsg> messages;
@@ -329,6 +365,8 @@ class TourGroup {
             TourLost(_str(m['uid']), _int(m['no']) ?? 0, _str(m['name']), _str(m['note']), _dbl(m['lat']) ?? 0, _dbl(m['lng']) ?? 0, _int(m['at']) ?? 0)
         ],
         announcements = [for (final a in (j['announcements'] as List? ?? const [])) TourAnnouncement(_str(a['id']), _str(a['text']), _int(a['at']) ?? 0, _int(a['sub']))],
+        polls = [for (final p in (j['polls'] as List? ?? const [])) TourPoll.fromJson(p as Map)],
+        jios = [for (final x in (j['jios'] as List? ?? const [])) TourJio.fromJson(x as Map)],
         stops = [
           for (final s in (j['stops'] as List? ?? const []))
             TourStop(_str(s['id']), _int(s['at']) ?? 0, _str(s['tz']), _str(s['place']), _dbl(s['lat']), _dbl(s['lng']), _int(s['sub']))
@@ -359,6 +397,9 @@ class TourGroup {
     final base = w.name.isNotEmpty ? w.name : tx('${w.no} 號', 'No. ${w.no}');
     return switch (w.role) { 'host' => tx('團主 · $base', 'Leader · $base'), 'cohost' => tx('共同團主 · $base', 'Co-leader · $base'), _ => base };
   }
+
+  /// 團員還沒投的投票（進行中、而且是給我的）
+  List<TourPoll> get pollsToVote => isStaff ? const [] : polls.where((p) => !p.closed && p.mine == null).toList();
 
   bool get isHost => role == 'host';
   /// 團主或共同團主：可以集合、點名、公告、改行程

@@ -23,9 +23,11 @@ import 'screens/group_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/intro_screen.dart';
 import 'screens/join.dart';
+import 'screens/memory_card.dart';
 import 'screens/qr_screen.dart';
 import 'screens/social.dart';
 import 'screens/thanks.dart';
+import 'screens/together_screen.dart';
 import 'tour/install_link.dart';
 import 'tour/profile.dart';
 import 'tour/service.dart';
@@ -117,10 +119,14 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     TourService.refresh();
     TourService.createAndroidChannel();
+    // 旅程回憶卡：手機上存一份團的摘要（解散後還能做卡片）
+    MemoryStore.load();
+    TourService.current.addListener(_saveMemory);
     TourService.incomingCall.addListener(_onIncomingCall);
     TourService.incomingRoll.addListener(_onIncomingRoll);
     TourService.askThanks.addListener(_onAskThanks);
     TourService.openChat.addListener(_onOpenChat);
+    TourService.openTogether.addListener(_onOpenTogether);
     TourService.arrivedNow.addListener(_onArrived);
     PassStore.notice.addListener(_onPassNotice);
     PassStore.load();
@@ -203,6 +209,8 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
     TourService.arrivedNow.removeListener(_onArrived);
     TourService.askThanks.removeListener(_onAskThanks);
     TourService.openChat.removeListener(_onOpenChat);
+    TourService.openTogether.removeListener(_onOpenTogether);
+    TourService.current.removeListener(_saveMemory);
     PassStore.notice.removeListener(_onPassNotice);
     _linkSub?.cancel();
     super.dispose();
@@ -239,6 +247,8 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
       if ('${m.data['type']}' == 'tgroup_msg' && '${m.data['from'] ?? ''}'.isNotEmpty) TourService.openChat.value = '${m.data['from']}';
       // 最後一天的送花提醒：打開送花面板
       if ('${m.data['type']}' == 'tgroup_thanks') TourService.askThanks.value = true;
+      // 投票、揪伴：打開「投票・揪伴」
+      if ('${m.data['type']}' == 'tgroup_poll' || '${m.data['type']}' == 'tgroup_jio') TourService.openTogether.value = true;
     }
     FirebaseMessaging.onMessageOpenedApp.listen(opened);
     FirebaseMessaging.instance.getInitialMessage().then((m) { if (m != null) opened(m); });
@@ -321,6 +331,22 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
     TourService.openChat.value = null;
     if (!mounted || TourService.current.value == null) return;
     await openChat(context, uid);
+  }
+
+  void _saveMemory() {
+    final g = TourService.current.value;
+    if (g != null && !Demo.on) MemoryStore.save(g);
+  }
+
+  /// 點了投票、揪伴的通知：等團的資料讀進來，打開「投票・揪伴」
+  Future<void> _onOpenTogether() async {
+    if (!TourService.openTogether.value || !mounted) return;
+    TourService.openTogether.value = false;
+    for (var i = 0; i < 20 && TourService.current.value == null; i++) {
+      await Future.delayed(const Duration(milliseconds: 300));
+    }
+    if (!mounted || TourService.current.value == null) return;
+    await Navigator.of(context).push(MaterialPageRoute(builder: (_) => const TogetherScreen()));
   }
 
   /// 點了最後一天的送花提醒：等團的資料讀進來，打開送花面板

@@ -10,6 +10,7 @@ import '../ui/avatar.dart';
 import '../ui/night.dart';
 import 'create_screen.dart';
 import 'join.dart';
+import 'memory_card.dart';
 import 'settings_screen.dart';
 import 'thanks.dart';
 
@@ -71,6 +72,32 @@ class _HomeScreenState extends State<HomeScreen> {
                     builder: (context, e, _) => e == null || e.unsent.isEmpty
                         ? const SizedBox.shrink()
                         : Padding(padding: const EdgeInsets.only(bottom: Night.space3), child: EndedThanksCard(ended: e)),
+                  ),
+                  // 最近結束的團（14 天內）：做一張旅程回憶卡
+                  ValueListenableBuilder<TripMemory?>(
+                    valueListenable: MemoryStore.latest,
+                    builder: (context, m, _) => m == null
+                        ? const SizedBox.shrink()
+                        : Padding(
+                            padding: const EdgeInsets.only(bottom: Night.space3),
+                            child: Material(
+                              color: Night.glassFill,
+                              borderRadius: BorderRadius.circular(Night.radiusMd),
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(Night.radiusMd),
+                                onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => MemoryCardScreen(memory: m))),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                                  child: Row(children: [
+                                    Icon(Icons.auto_awesome_outlined, color: tourColor(m.color), size: 20),
+                                    const SizedBox(width: 10),
+                                    Expanded(child: Text(tx('「${m.name}」的旅程回憶卡', 'Memory card: "${m.name}"'), style: Night.body.copyWith(color: Night.ink), overflow: TextOverflow.ellipsis)),
+                                    const Icon(Icons.chevron_right, color: Night.inkMuted),
+                                  ]),
+                                ),
+                              ),
+                            ),
+                          ),
                   ),
                   Row(children: [
                     Expanded(

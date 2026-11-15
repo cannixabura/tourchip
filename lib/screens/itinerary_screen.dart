@@ -6,6 +6,7 @@ import '../map/tour_map.dart';
 import '../tour/model.dart';
 import '../tour/nav.dart';
 import '../tour/service.dart';
+import '../tour/weather.dart';
 import '../tour/zones.dart';
 import '../ui/night.dart';
 import 'ai_import_screen.dart';
@@ -111,6 +112,7 @@ class _ItineraryScreenState extends State<ItineraryScreen> {
                         TextButton(onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const PassScreen())), child: Text(tx('買天數券', 'Buy'))),
                       ]),
                     ),
+                  if (days.isNotEmpty) WeatherLine(stops: g.stops, day: days[day]),
                   if (days.isNotEmpty) DaySection(g: g, day: days[day]),
                   Container(
                     margin: const EdgeInsets.only(bottom: Night.space3),
