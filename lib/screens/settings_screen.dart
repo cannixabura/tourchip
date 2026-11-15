@@ -407,16 +407,29 @@ class HelpScreen extends StatelessWidget {
         block(Icons.flag_outlined, tx('領隊：開團', 'Leaders: start a group'), [
           tx('首頁按「開一個團」，填團名、選團色、出發日和天數，可以分組（例如 1 號車、2 號車）。出發前就能先開團讓團員入團。', 'Tap "Start a group", set a name, color, start date and length. You can add sub-groups such as Bus 1 and Bus 2, and set it up before departure.'),
           tx('出示 QR code，團員用 App 或手機相機掃一下就入團。', 'Show the QR code. Members scan it with the app or their camera to join.'),
+          tx('還沒裝 App 的人掃碼後會先去下載，裝好打開就自動入團；已經有 App 的人也可以按「輸入邀請碼入團」，輸入 QR code 下面的 8 位數邀請碼。', 'People without the app are taken to download it and join as soon as they open it. Anyone with the app can also tap "Join with invite code" and enter the 8-digit code under the QR code.'),
+          tx('按「換新 QR code」後，舊的 QR code、連結和邀請碼立刻失效，已經入團的人不受影響。', 'After "New QR code", the old QR code, link and invite code stop working. People already in the group stay in.'),
+          tx('按「艾婭匯入」貼上旅行社的行程表或分房表，艾婭會整理出每天的飯店（Wi-Fi、早餐）、集合時間地點和房號，勾選後存進來；每團可以匯入 5 次，不扣艾婭聊天次數。', 'Tap "Import with AIYA" and paste the agency itinerary or rooming list. AIYA picks out each day\'s hotel (Wi-Fi, breakfast), meetup times and places, and room numbers for you to save. 5 imports per group; they don\'t use your AIYA chats.'),
           tx('20 人、3 天以內免費。人數券讓一團最多 100 人；天數券每張多 7 天，最長 30 天；也可以用旅行社的團購券。', 'Free for 20 people and 3 days. A group-size pass allows 100 people; each day pass adds 7 days (up to 30). Agency vouchers work too.'),
+        ]),
+        block(Icons.manage_accounts_outlined, tx('領隊：共同團主、公告、分組', 'Leaders: co-leaders, notices and sub-groups'), [
+          tx('在名單裡可以設最多 2 位共同團主，他們也能發集合、點名、公告和投票；只有團主能升級、交棒和解散。', 'In the member list you can add up to 2 co-leaders. They can also call meetups, take roll call, post notices and run polls. Only the leader can upgrade, hand over or end the group.'),
+          tx('公告會置頂在團員的畫面，也會用推播送達；團員可以點一下翻譯成自己的語言。', 'Notices are pinned on members\' screens and sent as notifications. Members can tap to translate them into their language.'),
+          tx('集合、點名、公告和投票都可以只發給其中一組，例如只叫 2 號車。', 'Meetups, roll calls, notices and polls can go to just one sub-group, such as Bus 2.'),
         ]),
         block(Icons.place_outlined, tx('發集合', 'Call a meetup'), [
           tx('拖曳地圖把旗子放在集合點，選時間後送出，全團手機都會響專屬提示音。', 'Drag the map to place the flag, pick a time and send. Every phone plays the meetup sound.'),
           tx('沒按「收到」的人每分鐘再響一次，最多 3 次；也可以只叫某一組或單獨呼叫一個人。', 'Anyone who has not tapped "Got it" is reminded every minute, up to 3 times. You can call one sub-group or one person.'),
           tx('自由活動可以排到 12 小時後集合；集合前 15 分鐘全團會再響一次。', 'Free time can run up to 12 hours. Everyone is reminded 15 minutes before.'),
           tx('集合卡片上按「用地圖帶我走過去」，可以用 Apple 地圖或 Google 地圖步行導航。', 'Tap "Walk me there with Maps" on the card for walking directions in Apple Maps or Google Maps.'),
+          tx('有集合時，鎖定畫面會顯示集合時間和倒數（iPhone 的即時動態、Android 的通知），不用打開 App 也看得到。', 'During a meetup, the lock screen shows the time and countdown (a Live Activity on iPhone, a notification on Android), so you don\'t need to open the app.'),
+          tx('來不及的話按「我會晚到」，選晚 3、5 或 10 分鐘並寫原因，領隊的名單上馬上看得到。', 'Running late? Tap "I\'ll be late", choose 3, 5 or 10 minutes and add a reason. Your leader sees it right away in the list.'),
         ]),
         block(Icons.how_to_reg_outlined, tx('點名', 'Roll call'), [
           tx('團員可以回「我到了」「還要 5 分鐘」「需要幫忙」，需要幫忙的人排在最上面。', 'Members answer "I\'m here", "5 more minutes" or "I need help". Those who need help are listed first.'),
+          tx('到點自動點名：有分享位置的團員走到集合點附近，會自動算「到了」，領隊只要看還沒到的人。', 'Auto check-in: members who share their location are marked as arrived when they reach the meetup, so leaders only need to look at who is missing.'),
+          tx('看到沒回應的人（例如沒帶手機的長輩、小孩），按名單右邊的勾幫他點到。', 'For someone without a reply (say, a child or an older traveler without a phone), tap the check mark next to their name.'),
+          tx('脫隊預警：大部分人跟著領隊走時，如果有人離領隊超過 250 公尺持續 3 分鐘，團主、共同團主和本人都會收到提醒。', 'Stray alerts: while most of the group is with the leader, anyone more than 250 m away for 3 minutes is flagged to the leaders and gets a reminder too.'),
         ]),
         block(Icons.explore_outlined, tx('團員：找到集合點', 'Members: find the meetup'), [
           tx('3D 地圖會跟著手機轉，團色的旗子就是集合點；卡片上有當地時間、倒數、距離與方向。', 'The 3D map turns with your phone. The flag in your group color is the meetup; the card shows local time, countdown, distance and direction.'),
@@ -434,12 +447,21 @@ class HelpScreen extends StatelessWidget {
           tx('長按地圖上的人就能傳訊息，對方會收到通知；右上角的訊息按鈕可以看所有對話。', 'Long-press someone on the map to message them. They get a notification. The messages button at the top shows all chats.'),
           tx('在對話右上角可以封鎖或檢舉。團解散後訊息全部刪除。', 'Block or report from the top of a chat. Messages are deleted when the group ends.'),
         ]),
+        block(Icons.how_to_vote_outlined, tx('投票・揪伴', 'Polls and meetups'), [
+          tx('團主和共同團主可以發起投票，例如要不要參加自費行程、晚餐吃哪一家：2 到 6 個選項，可以複選，也可以只問某一組。', 'Leaders can run polls, such as who wants an optional tour or where to have dinner: 2 to 6 options, multiple choice if you like, or just for one sub-group.'),
+          tx('團員收到通知後投票，投完還能改；領隊看得到誰選了什麼，團員只看到票數。', 'Members get a notification, vote and can change their vote. Leaders see who chose what; members see only the totals.'),
+          tx('同意分享後可以發揪伴，例如「誰要一起去逛藥妝店？」（最多 40 字），別人按「我也去」你會收到通知。', 'After you agree to share, you can post a meetup like "Who wants to go shopping?" (up to 40 characters). You get a notification when someone taps "I\'m in".'),
+          tx('每人同時最多 3 個揪伴，12 小時後自動消失；封鎖的人互相看不到揪伴，不當內容可以檢舉。', 'You can have up to 3 meetups at a time, and they disappear after 12 hours. People you block can\'t see yours and you can\'t see theirs; report anything inappropriate.'),
+          tx('入口在地圖下方的「投票・揪伴」，有新項目時會顯示數字。', 'Open them from "Polls and meetups" below the map. A number shows when there is something new.'),
+        ]),
         block(Icons.info_outline, tx('車輛、飯店、緊急聯絡', 'Bus, hotel and emergency'), [
           tx('「車輛・飯店・緊急」裡有你坐的車（車牌、司機電話）、今晚的飯店（可以給司機看、導航）、領隊和旅行社電話，以及當地報警和救護電話。', 'The "Bus · Hotel · SOS" page shows your bus, tonight\'s hotel (show the driver or get directions), leader and agency phones, and local emergency numbers.'),
+          tx('你的房號和坐哪一台車也在這裡；飯店有 Wi-Fi 名稱、密碼和早餐時間。', 'Your room number and bus are here too, plus the hotel Wi-Fi name, password and breakfast times.'),
           tx('也可以填「我的資料」（飲食禁忌、健康狀況、緊急聯絡人），只有團主和共同團主看得到，退團或解散就刪除。', 'You can add your details (diet, health, emergency contact). Only leaders see them; they are deleted when you leave or the group ends.'),
         ]),
         block(Icons.sos_outlined, tx('我迷路了', "I'm lost"), [
           tx('按「我迷路了」會把你現在的位置傳給團主與共同團主，地圖上出現紅點與團號，30 分鐘後自動刪除。', 'Tapping "I\'m lost" sends your current location to the leaders as a red dot with your number. It is deleted after 30 minutes.'),
+          tx('「求助卡」可以拿給當地人看：用當地語言寫著你和旅行團走散了、請打給領隊，以及今晚住的飯店。在「車輛・飯店・緊急」裡打開。', 'Show the "Help card" to a local: it says in their language that you got separated from your tour, asks them to call your leader, and shows tonight\'s hotel. Open it from "Bus · Hotel · SOS".'),
         ]),
         block(Icons.auto_awesome_outlined, tx('艾婭 AI 小助理', 'AIYA, AI assistant'), [
           tx('點右上角的艾婭頭像，可以問行程、集合時間、當地交通和注意事項；艾婭會參考領隊公布的行程，不會看到任何人的位置。', 'Tap AIYA\'s portrait at the top to ask about the itinerary, meetup times, getting around and tips. AIYA reads the itinerary your leader posted and never sees anyone\'s location.'),
@@ -454,7 +476,12 @@ class HelpScreen extends StatelessWidget {
         block(Icons.event_note_outlined, tx('行程表與解散', 'Itinerary and ending'), [
           tx('行程表的時間都用集合點的當地時區；每個集合點前 15 分鐘會自動提醒。', 'Itinerary times use the local time zone of each meetup. Everyone is reminded 15 minutes before each one.'),
           tx('領隊可以替每一天寫資訊卡：當天說明、今晚的飯店、攻略連結，團員點那一天就看得到。', 'Leaders can write a card for each day: notes, tonight\'s hotel and guide links. Members see it by tapping that day.'),
+          tx('每一天上方會顯示集合點一帶的天氣、最低和最高溫、降雨機率，並提醒帶傘或外套（預報最多 16 天）。', 'Each day shows the weather near that day\'s meetups: high and low, chance of rain, and reminders like bringing an umbrella or a jacket (up to 16 days ahead).'),
           tx('最後一天 23:59 團自動解散，名單、點名紀錄全部刪除。', 'The group ends at 23:59 on the last day and the list and roll calls are deleted.'),
+        ]),
+        block(Icons.local_florist_outlined, tx('送花與旅程回憶卡', 'Flowers and trip memory card'), [
+          tx('最後一天起可以送花和一句感謝給領隊；領隊在設定的「我的名片與感謝」看得到，也可以開公開名片網頁，自己挑要公開哪些感謝。', 'From the last day you can send your leader flowers and a thank-you note. Leaders see them in Settings under "My card and thanks" and can open a public card page showing the thanks they pick.'),
+          tx('旅程回憶卡把團名、日期、天數和行程表上的集合點做成一張足跡卡，可以存成圖片分享；在選單裡打開，團解散後 14 天內首頁也打得開。', 'The trip memory card turns the group name, dates, days and itinerary meetups into a footprint card you can share as an image. Open it from the menu; for 14 days after the group ends it is also on the home screen.'),
         ]),
       ]),
     );
