@@ -273,6 +273,8 @@
   var X = window.TC_I18N || {};
   for (var L in X) { if (!T[L]) T[L] = {}; for (var k in X[L]) T[L][k] = X[L][k]; }
 
+  var SHOT_DIRS = { 'zh-Hant': 'zh', 'zh-Hans': 'zh-Hans', en: 'en', ja: 'ja', ko: 'ko', ms: 'ms', id: 'id', vi: 'vi', th: 'th', pt: 'pt', es: 'es', hi: 'hi' };
+  function shotDir(lang) { return SHOT_DIRS[lang] || 'en'; }
   var NAMES = { 'zh-Hant': '繁體中文', 'zh-Hans': '简体中文', en: 'English', ja: '日本語', ko: '한국어', ms: 'Bahasa Melayu', id: 'Bahasa Indonesia', vi: 'Tiếng Việt', th: 'ไทย', pt: 'Português', es: 'Español', hi: 'हिन्दी' };
 
   function norm(tag) {
@@ -314,9 +316,9 @@
         if (v != null) an[j].setAttribute(p[0], v.replace(/<[^>]+>/g, ''));
       });
     }
-    // 截圖：中文看中文版，其他語言看英文版
+    // 截圖：每種語言用自己語言的 App 畫面（img/shots/<語言>），沒有的語言用英文
     var shots = document.querySelectorAll('img[data-shot]');
-    for (var m = 0; m < shots.length; m++) shots[m].src = '/img/shots/' + (lang.indexOf('zh') === 0 ? 'zh' : 'en') + '/' + shots[m].getAttribute('data-shot') + '.webp';
+    for (var m = 0; m < shots.length; m++) shots[m].src = '/img/shots/' + shotDir(lang) + '/' + shots[m].getAttribute('data-shot') + '.webp';
     var t = document.querySelector('[data-title]');
     if (window._zhTitle == null) window._zhTitle = document.title;
     if (t) { var tk = t.getAttribute('data-title'); document.title = d[tk] || (lang !== 'zh-Hant' && T.en[tk]) || window._zhTitle; }

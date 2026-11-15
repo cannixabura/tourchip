@@ -85,7 +85,7 @@ h2 { margin: 0 0 10px; font-size: clamp(24px, 4.2vw, 32px); letter-spacing: 1.5p
   padding-bottom: 12px; margin-inline: -16px; padding-inline: 16px; scrollbar-width: none; }
 .gallery::-webkit-scrollbar { display: none; }
 .shot { scroll-snap-align: center; margin: 0; min-width: 0; }
-.shot img { display: block; width: 100%; height: auto; aspect-ratio: 600 / 971; object-fit: cover; object-position: top; border-radius: 22px; border: 1px solid var(--glass-line); background: var(--night-800); }
+.shot img { display: block; width: 100%; height: auto; aspect-ratio: 600 / 1304; object-fit: cover; object-position: top; border-radius: 22px; border: 1px solid var(--glass-line); background: var(--night-800); }
 .shot figcaption { margin-top: 12px; color: var(--ink-muted); font-size: 14px; line-height: 1.7; }
 .shot figcaption b { display: block; color: var(--ink); font-weight: 500; font-size: 16px; margin-bottom: 2px; }
 
