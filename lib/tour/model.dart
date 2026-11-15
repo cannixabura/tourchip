@@ -164,6 +164,17 @@ class TourJio {
         mine = j['mine'] == true, joined = j['joined'] == true;
 }
 
+/// 講解廣播：團主或共同團主在講（mine＝我在講）；同一團同時只有一場，最長 2 小時
+class TourCastInfo {
+  final String id, by, byName;
+  final int? sub;
+  final int at, until;
+  final bool mine;
+  TourCastInfo.fromJson(Map j)
+      : id = _str(j['id']), by = _str(j['by']), byName = _str(j['byName']), sub = _int(j['sub']),
+        at = _int(j['at']) ?? 0, until = _int(j['until']) ?? 0, mine = j['mine'] == true;
+}
+
 class TourAnnouncement {
   final String id, text;
   final int at;
@@ -308,6 +319,8 @@ class TourGroup {
   final List<TourAnnouncement> announcements;
   final List<TourPoll> polls;
   final List<TourJio> jios;
+  /// 講解廣播（沒有就是 null）
+  final TourCastInfo? cast;
   final List<TourStop> stops;
   final List<TourPerson> people;
   final List<TourMsg> messages;
@@ -367,6 +380,7 @@ class TourGroup {
         announcements = [for (final a in (j['announcements'] as List? ?? const [])) TourAnnouncement(_str(a['id']), _str(a['text']), _int(a['at']) ?? 0, _int(a['sub']))],
         polls = [for (final p in (j['polls'] as List? ?? const [])) TourPoll.fromJson(p as Map)],
         jios = [for (final x in (j['jios'] as List? ?? const [])) TourJio.fromJson(x as Map)],
+        cast = j['cast'] is Map ? TourCastInfo.fromJson(j['cast'] as Map) : null,
         stops = [
           for (final s in (j['stops'] as List? ?? const []))
             TourStop(_str(s['id']), _int(s['at']) ?? 0, _str(s['tz']), _str(s['place']), _dbl(s['lat']), _dbl(s['lng']), _int(s['sub']))

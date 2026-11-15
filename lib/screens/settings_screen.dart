@@ -447,6 +447,11 @@ class HelpScreen extends StatelessWidget {
           tx('長按地圖上的人就能傳訊息，對方會收到通知；右上角的訊息按鈕可以看所有對話。', 'Long-press someone on the map to message them. They get a notification. The messages button at the top shows all chats.'),
           tx('在對話右上角可以封鎖或檢舉。團解散後訊息全部刪除。', 'Block or report from the top of a chat. Messages are deleted when the group ends.'),
         ]),
+        block(Icons.headphones_outlined, tx('講解廣播', 'Live talk'), [
+          tx('團主或共同團主按頂部的麥克風開始廣播，對著手機講；可以只講給某一組，最長 2 小時，不錄音。', 'Leaders tap the microphone at the top to go live and talk into their phone. You can talk to one sub-group only; up to 2 hours, nothing is recorded.'),
+          tx('團員會收到通知，頂部出現耳機圖示：按一下開始聽，再按一下關掉。用自己的耳機、藍牙耳機或手機喇叭聽都可以，鎖住螢幕也繼續聽。', 'Members get a notification and a headphone icon appears at the top: tap to listen, tap again to stop. Use your own earphones, Bluetooth or the phone speaker; it keeps playing with the screen locked.'),
+          tx('沒接耳機時，廣播列上的喇叭按鈕可以切換擴音（手機喇叭）或聽筒。', 'Without earphones, the speaker button on the live bar switches between the phone speaker and the earpiece.'),
+        ]),
         block(Icons.how_to_vote_outlined, tx('投票・揪伴', 'Polls and meetups'), [
           tx('團主和共同團主可以發起投票，例如要不要參加自費行程、晚餐吃哪一家：2 到 6 個選項，可以複選，也可以只問某一組。', 'Leaders can run polls, such as who wants an optional tour or where to have dinner: 2 to 6 options, multiple choice if you like, or just for one sub-group.'),
           tx('團員收到通知後投票，投完還能改；領隊看得到誰選了什麼，團員只看到票數。', 'Members get a notification, vote and can change their vote. Leaders see who chose what; members see only the totals.'),

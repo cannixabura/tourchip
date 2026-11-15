@@ -3,4 +3,4 @@
 "NSLocationWhenInUseUsageDescription" = "TourChip dùng vị trí khi bạn mở ứng dụng để hiển thị khoảng cách và hướng đến điểm hẹn. Nếu bạn đồng ý chia sẻ, người trong đoàn (kể cả trưởng đoàn) sẽ thấy vị trí của bạn trên bản đồ. Khi ở trong đoàn, vị trí tiếp tục cập nhật khi chạy nền (hiển thị trên thanh trạng thái) để cảnh báo lạc đoàn và tự điểm danh, và dừng khi bạn rời đoàn hoặc đoàn kết thúc. Bạn có thể tắt trong Cài đặt bất cứ lúc nào.";
 "NSCameraUsageDescription" = "Quét mã QR tham gia của trưởng đoàn hoặc phiếu cho đoàn, hoặc chụp ảnh để hỏi AIYA, trợ lý AI, về địa danh, thực đơn hay biển hiệu.";
 "NSPhotoLibraryUsageDescription" = "Chọn ảnh từ thư viện làm ảnh đại diện hoặc để cho AIYA, trợ lý AI, xem.";
-"NSMicrophoneUsageDescription" = "Nói chuyện bằng giọng nói với AIYA, trợ lý AI. Giọng nói của bạn chỉ được gửi trực tiếp đến OpenAI trong cuộc gọi và không được ghi âm.";
+"NSMicrophoneUsageDescription" = "Nói chuyện bằng giọng nói với AIYA, trợ lý AI. Giọng nói của bạn chỉ được gửi trực tiếp đến OpenAI trong cuộc gọi và không được ghi âm. Trưởng đoàn cũng dùng micrô để phát thuyết minh: giọng nói chỉ đến người nghe trong cùng đoàn và không được ghi âm.";

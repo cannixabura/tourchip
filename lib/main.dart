@@ -28,6 +28,7 @@ import 'screens/qr_screen.dart';
 import 'screens/social.dart';
 import 'screens/thanks.dart';
 import 'screens/together_screen.dart';
+import 'tour/cast.dart';
 import 'tour/install_link.dart';
 import 'tour/profile.dart';
 import 'tour/service.dart';
@@ -249,6 +250,8 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
       if ('${m.data['type']}' == 'tgroup_thanks') TourService.askThanks.value = true;
       // 投票、揪伴：打開「投票・揪伴」
       if ('${m.data['type']}' == 'tgroup_poll' || '${m.data['type']}' == 'tgroup_jio') TourService.openTogether.value = true;
+      // 講解廣播：點了通知就直接開始聽
+      if ('${m.data['type']}' == 'tgroup_cast') TourCast.listenFromPush('${m.data['castId'] ?? ''}');
     }
     FirebaseMessaging.onMessageOpenedApp.listen(opened);
     FirebaseMessaging.instance.getInitialMessage().then((m) { if (m != null) opened(m); });

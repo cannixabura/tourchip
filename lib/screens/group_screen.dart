@@ -13,6 +13,7 @@ import '../tour/zones.dart';
 import '../translate.dart';
 import '../ui/night.dart';
 import 'call_overlay.dart';
+import 'cast_ui.dart';
 import 'gather_screen.dart';
 import 'info_screen.dart';
 import 'itinerary_screen.dart';
@@ -67,7 +68,14 @@ class _GroupScreenState extends State<GroupScreen> {
             Positioned.fill(child: TourMap(key: _map, group: g, onPersonLongPress: (p) => openChat(context, p.uid), onPersonTap: (p) => showPerson(context, p), onFlagTap: () => showCallInfo(context))),
             Positioned(left: Night.space4, right: Night.space4, top: MediaQuery.of(context).padding.top + Night.space2, child: _TopBar(g: g)),
             // 靠近行程表上的景點：艾婭問要不要聽介紹
-            Positioned(left: Night.space4, right: Night.space4, top: MediaQuery.of(context).padding.top + Night.space2 + 52 + Night.space2, child: AiyaSpotPrompt(g: g)),
+            Positioned(
+              left: Night.space4, right: Night.space4, top: MediaQuery.of(context).padding.top + Night.space2 + 52 + Night.space2,
+              child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                // 正在聽或正在講講解廣播
+                CastBar(g: g),
+                AiyaSpotPrompt(g: g),
+              ]),
+            ),
             Positioned(
               left: 0, right: 0, bottom: 0,
               child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
@@ -127,6 +135,8 @@ class _TopBar extends StatelessWidget {
             icon: const Icon(Icons.qr_code_2, color: Night.ink),
             onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const QrScreen())),
           ),
+        // 講解廣播：團員有廣播才出現（耳機，按一下開／關）；團主與共同團主一直在（麥克風）
+        CastButton(g: g),
         const AiyaButton(),
         ValueListenableBuilder<int>(
           valueListenable: unreadMsgs,

@@ -16,6 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../demo.dart';
 import '../l10n.dart';
+import 'cast.dart';
 import 'live_countdown.dart';
 import 'model.dart';
 import 'profile.dart';
@@ -152,6 +153,7 @@ class TourService {
     }
     _syncLoc(after);
     LiveCountdown.sync(after);
+    TourCast.sync(after);
     _schedulePoll();
   }
 
@@ -365,6 +367,9 @@ TourLink? parseTourLink(String raw) {
 
 /// 伺服器錯誤代碼 → 給人看的話
 String tourError(String code) => switch (code) {
+      'cast_busy' => tx('另一位領隊正在廣播，等他結束再開。', 'Another leader is on air. Wait until they finish.'),
+      'cast_unavailable' => tx('講解廣播暫時無法使用，請稍後再試。', 'Live talk is not available right now. Try again later.'),
+      'mic_denied' => tx('沒有麥克風權限：請到手機的設定打開旅行團的麥克風。', 'No microphone access. Turn on the microphone for TourChip in your phone settings.'),
       'in_group' => tx('你已經在另一個團裡了，先退出那一團再加入。', 'You are already in another group. Leave it first.'),
       'full' => tx('這個團已滿 20 人。請領隊買人數券或使用團購券。', 'This group is full (20). Ask your leader to upgrade.'),
       'days' => tx('天數要在 1～30 天之間，而且結束日不能已經過去。', 'Trip length must be 1–30 days and end in the future.'),

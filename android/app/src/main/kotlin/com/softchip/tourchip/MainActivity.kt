@@ -8,5 +8,7 @@ class MainActivity : FlutterActivity() {
         super.configureFlutterEngine(flutterEngine)
         // 訊息、公告、氣泡的翻譯（ML Kit，手機上進行），見 Translator.kt
         ChatTranslatorChannel(flutterEngine.dartExecutor.binaryMessenger)
+        // 講解廣播的前景服務（背景也繼續講、聽），見 CastService.kt
+        CastChannel(applicationContext, flutterEngine.dartExecutor.binaryMessenger)
     }
 }
