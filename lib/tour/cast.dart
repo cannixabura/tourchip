@@ -44,14 +44,21 @@ class TourCast {
   static String? _wantListen;
   /// 點了廣播通知、團的狀態還沒更新到那一場：更新到了就開始聽
   static String? _pendingFromPush;
+  /// 講的人按了「結束廣播」的那一場：伺服器確認結束、團的狀態更新之前，不要再連回去
+  static String? _ended;
   static bool _busy = false;
+
+  /// 這一場還算在進行嗎（自己剛結束的不算）
+  static TourCastInfo? live(TourCastInfo? c) => c == null || c.id == _ended ? null : c;
   static int _retries = 0;
   static Timer? _retry;
 
   /// 每次團的狀態更新時呼叫（TourService._apply）：該連就連、該斷就斷
   static void sync(TourGroup? g) {
     if (Demo.on) return;
-    final c = g?.cast;
+    final raw = g?.cast;
+    if (raw == null || raw.id != _ended) _ended = null;
+    final c = live(raw);
     if (c == null) {
       _wantListen = null;
       if (state.value.on || _room != null) _disconnect();
@@ -95,8 +102,15 @@ class TourCast {
 
   /// 講的人：結束廣播
   static Future<void> stop() async {
+    final id = TourService.current.value?.cast?.id ?? state.value.castId;
+    if (id.isNotEmpty) _ended = id;
     await _disconnect();
-    await TourService.call('cast_stop');
+    final r = await TourService.call('cast_stop');
+    if (r['success'] != true && r['code'] != 'ended') {
+      // 伺服器沒結束：恢復原狀，讓狀態更新照常連回去
+      _ended = null;
+      sync(TourService.current.value);
+    }
   }
 
   /// 講的人：暫時靜音／恢復
@@ -126,6 +140,10 @@ class TourCast {
       if (_room != null) await _closeRoom();
       state.value = CastState(mode: mode, castId: c.id, connecting: true);
       final r = await TourService.call('cast_token', {'castId': c.id});
+      if (_ended == c.id) {
+        state.value = const CastState();
+        return;
+      }
       if (r['success'] != true) {
         state.value = state.value.copy(connecting: false, error: '${r['code'] ?? 'busy'}');
         if (r['code'] == 'ended' || r['code'] == 'not_target') {
@@ -156,6 +174,10 @@ class TourCast {
         });
       await room.connect('${r['url']}', '${r['token']}');
       if (_room != room) return;
+      if (_ended == c.id) {
+        await _disconnect();
+        return;
+      }
       await setSpeaker(speaker.value);
       var micOn = false;
       if (mode == CastMode.speaking && r['canPublish'] == true) {
@@ -185,9 +207,10 @@ class TourCast {
     _retry = Timer(delay, () {
       _retry = null;
       final g = TourService.current.value;
+      final c = live(g?.cast);
       final s = state.value;
-      if (g?.cast == null || !s.on || g!.cast!.id != s.castId) return;
-      _connect(g, g.cast!, s.mode);
+      if (g == null || c == null || !s.on || c.id != s.castId) return;
+      _connect(g, c, s.mode);
     });
   }
 

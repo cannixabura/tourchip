@@ -32,11 +32,12 @@ class _CastButtonState extends State<CastButton> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     final g = widget.g;
-    final c = g.cast;
-    if (c == null && !g.isStaff) return const SizedBox.shrink();
+    if (TourCast.live(g.cast) == null && !g.isStaff) return const SizedBox.shrink();
     return ValueListenableBuilder<CastState>(
       valueListenable: TourCast.state,
       builder: (context, s, _) {
+        // 自己剛按「結束廣播」、團的狀態還沒更新：當作已經沒有廣播
+        final c = TourCast.live(g.cast);
         final speaking = c != null && c.mine;
         final listening = c != null && !c.mine && s.mode == CastMode.listening;
         final active = speaking || listening;
@@ -128,12 +129,11 @@ class _CastBarState extends State<CastBar> {
 
   @override
   Widget build(BuildContext context) {
-    final c = widget.g.cast;
-    if (c == null) return const SizedBox.shrink();
     return ValueListenableBuilder<CastState>(
       valueListenable: TourCast.state,
       builder: (context, s, _) {
-        if (!s.on || s.castId != c.id) return const SizedBox.shrink();
+        final c = TourCast.live(widget.g.cast);
+        if (c == null || !s.on || s.castId != c.id) return const SizedBox.shrink();
         final speaking = s.mode == CastMode.speaking;
         final secs = ((DateTime.now().millisecondsSinceEpoch - c.at) / 1000).floor().clamp(0, 99999);
         final clock = '${(secs ~/ 60).toString().padLeft(2, '0')}:${(secs % 60).toString().padLeft(2, '0')}';
