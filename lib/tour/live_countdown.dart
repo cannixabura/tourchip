@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-import '../demo.dart';
 import '../l10n.dart';
 import 'model.dart';
 import 'zones.dart';
@@ -23,8 +22,6 @@ class LiveCountdown {
   static final _plugin = FlutterLocalNotificationsPlugin();
 
   static Future<void> sync(TourGroup? g) async {
-    // 截圖模式不顯示；demo.json 寫 "live": true 時才顯示（測試鎖定畫面用）
-    if (Demo.on && Demo.cfg?['live'] != true) return;
     final c = g?.call;
     if (g == null || c == null || c.here) return end();
     final key = '${c.id}|${c.at}|${c.place}|$langTag';

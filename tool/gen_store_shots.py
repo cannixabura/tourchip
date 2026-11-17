@@ -1,6 +1,6 @@
 """商店截圖：各語言的 App 畫面（截圖模式拍的原圖）＋各語言標題、副標。
 用法：python3 tool/gen_store_shots.py <原圖資料夾>
-  <原圖資料夾>/<lang>/01.png … 08.png（1320×2868，tool/demo_data.py ＋ debug 版截圖模式拍的）
+  <原圖資料夾>/<lang>/01.png … 08.png（1320×2868，模擬器截圖）
 輸出：store/ios/<dir>/NN.png（6.9 吋）、store/ios/<dir>_6.3/NN.jpg（ASC 用的 6.3 吋）、store/play/<lang>/NN.png
 標題與副標在 store/ios/captions.json（取自官網 shot1–8）
 """

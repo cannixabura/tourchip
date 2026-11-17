@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:livekit_client/livekit_client.dart';
 
-import '../demo.dart';
 import '../l10n.dart';
 import 'model.dart';
 import 'service.dart';
@@ -55,12 +54,6 @@ class TourCast {
 
   /// 每次團的狀態更新時呼叫（TourService._apply）：該連就連、該斷就斷
   static void sync(TourGroup? g) {
-    if (Demo.on) {
-      // 截圖：廣播中的樣子（不連線）
-      final c = g?.cast;
-      state.value = c == null ? const CastState() : CastState(mode: c.mine ? CastMode.speaking : CastMode.listening, castId: c.id, connected: true, micOn: true, listeners: (Demo.cfg?['castListeners'] as num?)?.toInt() ?? 0);
-      return;
-    }
     final raw = g?.cast;
     if (raw == null || raw.id != _ended) _ended = null;
     final c = live(raw);

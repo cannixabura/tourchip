@@ -12,20 +12,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'aiya/aiya_screen.dart';
 import 'aiya/aiya_spots.dart';
 import 'aiya/aiya_store.dart';
-import 'demo.dart';
 import 'firebase_options.dart';
 import 'l10n.dart';
-import 'screens/ai_import_screen.dart';
 import 'screens/call_overlay.dart';
 import 'screens/group_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/intro_screen.dart';
 import 'screens/join.dart';
 import 'screens/memory_card.dart';
-import 'screens/qr_screen.dart';
 import 'screens/social.dart';
 import 'screens/thanks.dart';
 import 'screens/together_screen.dart';
@@ -55,14 +51,9 @@ Future<void> main() async {
   FirebaseMessaging.onBackgroundMessage(_onBackgroundMessage);
   await initZones();
   await initLang();
-  // 商店截圖模式（只在 debug 版）：換成指定語言
-  await Demo.load();
-  if (Demo.on) await setLang('${Demo.cfg!['lang']}');
   await ProfileStore.init();
   // 不需要帳號：和城市低語一樣用匿名登入；這支 App 的身分和城市低語各自獨立，彼此不相認
   try {
-    // 展示影片（debug）：每次換一個新的匿名帳號，艾婭有自己的免費次數
-    if (Demo.on && Demo.cfg!['newUser'] == true) await FirebaseAuth.instance.signOut();
     if (FirebaseAuth.instance.currentUser == null) await FirebaseAuth.instance.signInAnonymously();
   } catch (_) {}
   PassStore.init();
@@ -113,7 +104,7 @@ class RootGate extends StatefulWidget {
 class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
   StreamSubscription<Uri>? _linkSub;
   bool _overlayOpen = false;
-  bool _introDone = Demo.on; // 每次打開 App 都先看導覽（和城市低語一樣），略過或看完才進首頁／團（截圖模式跳過）
+  bool _introDone = false; // 每次打開 App 都先看導覽（和城市低語一樣），略過或看完才進首頁／團
 
   @override
   void initState() {
@@ -135,75 +126,6 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
     AiyaStore.load();
     _initPush();
     _listenLinks();
-    if (Demo.tour) {
-      Future.delayed(const Duration(milliseconds: 6000), _demoTour); // 等地圖圖磚載入
-    } else if (Demo.on) {
-      Future.delayed(const Duration(seconds: 4), _demoShot);
-    }
-  }
-
-  /// 展示影片：導覽 → 團的地圖 → 集合卡 → 私訊 → 艾婭拍菜單 → 景點介紹 → 回到地圖
-  Future<void> _demoTour() async {
-    Future<void> wait(int ms) => Future.delayed(Duration(milliseconds: ms));
-    if (!mounted) return;
-    Demo.mark('map');
-    await wait(5500);
-    final g = TourService.current.value;
-    if (!mounted || g?.call == null) return;
-    Demo.mark('call');
-    _overlayOpen = true;
-    final overlay = showCallOverlay(context, g!.call!).whenComplete(() => _overlayOpen = false);
-    await wait(8500);
-    if (mounted) Navigator.of(context).maybePop();
-    await overlay;
-    await wait(1200);
-    if (!mounted) return;
-    Demo.mark('chat');
-    final chat = openChat(context, '${Demo.cfg!['chatWith']}');
-    await wait(4500);
-    if (mounted) Navigator.of(context).maybePop();
-    await chat;
-    await wait(1000);
-    if (!mounted) return;
-    Demo.mark('aiya');
-    await openAiya(context); // 艾婭畫面在展示模式會自己傳照片、等回覆、然後關掉
-    await wait(800);
-    if (!mounted) return;
-    final s = (Demo.cfg!['spot'] as Map).cast<String, dynamic>();
-    final r = await aiyaCall('spot', s);
-    if (!mounted || r['success'] != true) return;
-    Demo.mark('spot');
-    final intro = showSpotIntro(context, '${r['title']}', '${r['intro']}');
-    await wait(7500);
-    if (mounted) Navigator.of(context).maybePop();
-    await intro;
-    Demo.mark('end');
-  }
-
-  /// 截圖模式：打開要截圖的畫面（1、2、3、6 只要團的資料就會顯示）
-  Future<void> _demoShot() async {
-    if (!mounted) return;
-    switch (Demo.shot) {
-      case 2:
-        final c = TourService.current.value?.call;
-        if (c != null && !_overlayOpen) {
-          _overlayOpen = true;
-          showCallOverlay(context, c).whenComplete(() => _overlayOpen = false);
-        }
-      case 4:
-        TourService.openChat.value = '${Demo.cfg!['chatWith']}';
-      case 5:
-        await Navigator.of(context).push(MaterialPageRoute(builder: (_) => const QrScreen()));
-      case 7:
-        await openAiya(context);
-      case 10:
-        final g = TourService.current.value;
-        if (g != null) await Navigator.of(context).push(MaterialPageRoute(builder: (_) => AiImportScreen(group: g)));
-      case 8:
-        final s = (Demo.cfg!['spot'] as Map).cast<String, dynamic>();
-        final r = await aiyaCall('spot', s);
-        if (mounted && r['success'] == true) await showSpotIntro(context, '${r['title']}', '${r['intro']}');
-    }
   }
 
   @override
@@ -342,7 +264,7 @@ class _RootGateState extends State<RootGate> with WidgetsBindingObserver {
 
   void _saveMemory() {
     final g = TourService.current.value;
-    if (g != null && !Demo.on) MemoryStore.save(g);
+    if (g != null) MemoryStore.save(g);
   }
 
   /// 點了投票、揪伴的通知：等團的資料讀進來，打開「投票・揪伴」

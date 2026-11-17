@@ -53,8 +53,12 @@ Future<void> enterInviteAndJoin(BuildContext context) async {
         return;
       }
       setS(() { busy = true; error = null; });
-      final r = await TourService.call('join', {'invite': inv});
-      if (!ctx.mounted) return;
+      // 先不換畫面：等面板完全關掉再套用，否則首頁會在面板關閉途中被整個換成團的畫面
+      final r = await TourService.call('join', {'invite': inv}, false);
+      if (!ctx.mounted) {
+        if (r['success'] == true) TourService.applyResult(r);
+        return;
+      }
       if (r['success'] == true) {
         Navigator.pop(ctx, r);
       } else {
@@ -82,8 +86,13 @@ Future<void> enterInviteAndJoin(BuildContext context) async {
       NightButton(busy ? tx('加入中…', 'Joining…') : tx('入團', 'Join'), icon: Icons.flag_outlined, onPressed: busy ? null : submit),
     ]);
   });
-  ctl.dispose();
-  if (joined != null && context.mounted) _showJoinResult(context, joined);
+  if (joined != null) {
+    // 等面板的關閉動畫結束，再換成團的畫面
+    await Future.delayed(const Duration(milliseconds: 350));
+    TourService.applyResult(joined.cast<String, dynamic>());
+    if (context.mounted) _showJoinResult(context, joined);
+  }
+  WidgetsBinding.instance.addPostFrameCallback((_) => ctl.dispose());
 }
 
 /// App 內掃 QR code：入團或團購券

@@ -6,6 +6,7 @@ import '../tour/service.dart';
 import '../tour/zones.dart';
 import '../ui/night.dart';
 import 'join.dart';
+import 'qr_screen.dart';
 
 /// 開團設定：團名、團色、出發日、行程天數、分組。共同團主在開團後從名單邀請。設計稿：開團設定
 class CreateScreen extends StatefulWidget {
@@ -51,7 +52,10 @@ class _CreateScreenState extends State<CreateScreen> {
     if (!mounted) return;
     setState(() => _busy = false);
     if (r['success'] == true) {
-      Navigator.of(context).popUntil((route) => route.isFirst);
+      // 回到團的地圖，接著直接打開入團 QR code（按鈕寫的是「開團，產生 QR code」）
+      final nav = Navigator.of(context);
+      nav.popUntil((route) => route.isFirst);
+      nav.push(MaterialPageRoute(builder: (_) => const QrScreen()));
     } else {
       showGlassToast(context, tourError('${r['code']}'), danger: true, icon: Icons.error_outline);
     }

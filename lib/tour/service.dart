@@ -14,7 +14,6 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../demo.dart';
 import '../l10n.dart';
 import 'cast.dart';
 import 'live_countdown.dart';
@@ -92,18 +91,8 @@ class TourService {
     return _build!;
   }
 
-  static Future<Map<String, dynamic>> call(String action, [Map<String, dynamic> body = const {}]) async {
-    // 商店截圖模式（只在 debug 版）：團的狀態用範例資料，其他動作都不送
-    if (Demo.on) {
-      // 截圖：艾婭匯入的範例結果
-      if (action == 'ai_import') return {'success': true, 'import': Demo.cfg?['import'] ?? const {}};
-      if (action != 'status') return {'success': true};
-      final d = Demo.status();
-      _apply(d['group']);
-      ProfileStore.apply(d['profile']);
-      loaded.value = true;
-      return d;
-    }
+  /// [apply] = false：先不換團的資料（例如入團面板還開著，要等面板關掉再用 [applyResult] 換，避免畫面在面板關閉途中整個換掉）
+  static Future<Map<String, dynamic>> call(String action, [Map<String, dynamic> body = const {}, bool apply = true]) async {
     try {
       final token = await FirebaseAuth.instance.currentUser?.getIdToken();
       final build = await _appBuild();
@@ -114,16 +103,20 @@ class TourService {
           .timeout(const Duration(seconds: 20));
       final data = jsonDecode(r.body);
       if (data is! Map<String, dynamic>) return _failed(action);
-      if (data.containsKey('group')) {
-        _apply(data['group']);
-        ended.value = data['group'] == null && data['ended'] is Map ? EndedGroup.fromJson(data['ended']) : null;
-      }
+      if (apply) applyResult(data);
       if (action == 'status' && data.containsKey('profile')) ProfileStore.apply(data['profile']);
       if (action == 'status') loaded.value = true;
       return data;
     } catch (_) {
       return _failed(action);
     }
+  }
+
+  /// 把伺服器回傳的團資料套用到 App
+  static void applyResult(Map<String, dynamic> data) {
+    if (!data.containsKey('group')) return;
+    _apply(data['group']);
+    ended.value = data['group'] == null && data['ended'] is Map ? EndedGroup.fromJson(data['ended']) : null;
   }
 
   /// 連不上：第一次讀取也要結束等待（顯示首頁或上次的狀態），稍後再試
@@ -251,7 +244,7 @@ class TourService {
   static bool _needArrive(TourGroup? g) {
     final c = g?.call;
     return g != null && !g.isStaff && c != null && !c.here && _arriveSent != c.id &&
-        DateTime.now().millisecondsSinceEpoch >= c.at - 30 * 60000 && !Demo.on;
+        DateTime.now().millisecondsSinceEpoch >= c.at - 30 * 60000;
   }
 
   static Future<void> _checkArrive(Position p) async {
