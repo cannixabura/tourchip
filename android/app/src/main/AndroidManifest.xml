@@ -73,6 +73,10 @@
         <intent>
             <action android:name="android.intent.action.TTS_SERVICE"/>
         </intent>
+        <!-- 口譯（免費）：手機內建的語音辨識 -->
+        <intent>
+            <action android:name="android.speech.RecognitionService"/>
+        </intent>
         <!-- 導航、攻略連結、撥電話 -->
         <intent>
             <action android:name="android.intent.action.VIEW"/>

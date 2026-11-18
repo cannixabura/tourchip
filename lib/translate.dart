@@ -30,6 +30,9 @@ class ChatTranslator {
 
   static String _base(String code) => code.split('-').first;
 
+  /// 同一種語言（不分地區；中文的繁簡也算同一種）
+  static bool sameBase(String a, String b) => _base(a) == _base(b);
+
   static final _kana = RegExp(r'[\u3040-\u30ff\u31f0-\u31ff\uff66-\uff9f]');
   static final _hangul = RegExp(r'[\uac00-\ud7af\u1100-\u11ff\u3130-\u318f]');
   static final _thai = RegExp(r'[\u0e00-\u0e7f]');
@@ -171,6 +174,38 @@ class ChatTranslator {
     }
     if (out == null || out == text) return null;
     return _done[key] = out;
+  }
+
+  /// 平台的翻譯語言代碼：iPhone 用完整代碼（zh-Hant），ML Kit 的中文只有 zh
+  static String _platformCode(String l) => Platform.isIOS ? l : (_base(l) == 'zh' ? 'zh' : _base(l));
+
+  /// 口譯用：明確指定來源和目標語言（不偵測）。Android 需要下載模型時先問使用者。
+  /// 回傳 null＝這組語言手機上翻不了、取消或失敗
+  static Future<String?> translatePair(BuildContext context, String text, String from, String to) async {
+    if (text.trim().isEmpty) return null;
+    await ChineseConverter.load();
+    String fix(String s) => to == 'zh-Hant' ? ChineseConverter.toTraditional(s) : to == 'zh-Hans' ? ChineseConverter.toSimplified(s) : s;
+    if (_base(from) == _base(to)) return fix(text);
+    final s = _platformCode(from), t = _platformCode(to);
+    try {
+      if (Platform.isIOS) {
+        if (!await _supported(s, t)) return null;
+      } else {
+        if (!await _supported(s, t) || !await _supported(t, s)) return null;
+        final missing = [for (final l in {s, t}) if (!await _hasModel(l)) l];
+        if (missing.isNotEmpty) {
+          if (!context.mounted || !await _confirmDownload(context)) return null;
+          for (final l in missing) {
+            if (await _channel.invokeMethod<bool>('download', {'lang': l}) != true) return null;
+          }
+        }
+      }
+      final pair = Platform.isIOS ? _applePair['$s>$t'] ?? (s, t) : (s, t);
+      final out = await _channel.invokeMethod<String>('translate', {'text': text, 'source': pair.$1, 'target': pair.$2});
+      return out == null || out.trim().isEmpty ? null : fix(out);
+    } catch (_) {
+      return null;
+    }
   }
 
   static Future<bool> _confirmDownload(BuildContext context) async {

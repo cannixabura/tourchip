@@ -248,6 +248,10 @@
 "en": "{s ~/ 60}:{(s % 60).toString().padLeft(2, '0')} left"
 },
 {
+"zh": "口譯",
+"en": "Interpret"
+},
+{
 "zh": "艾婭",
 "en": "AIYA"
 },
@@ -332,6 +336,14 @@
 "en": "Agree and call"
 },
 {
+"zh": "高品質 AI 口譯",
+"en": "Premium AI interpreter"
+},
+{
+"zh": "口譯時，你和對方的聲音會即時送到 OpenAI（美國）由 AI 翻譯並念出來，不會附上你的身分或暱稱；我們不錄音，也不保存內容。開始前請先讓對方知道你在用 AI 口譯。依實際秒數扣通話時間。翻譯可能出錯，重要的事（金額、藥物、過敏）請再確認。",
+"en": "While interpreting, your voice and the other person's are sent live to OpenAI (USA), whose AI translates and speaks them, without your identity or nickname. We don't record or keep anything. Let the other person know you're using an AI interpreter. Call time is used by the second. Translations can be wrong: double-check important things like prices, medicine or allergies."
+},
+{
 "zh": "今天的景點介紹已經聽滿了，明天再來。",
 "en": "That's all the sight intros for today. More tomorrow."
 },
@@ -402,6 +414,134 @@
 {
 "zh": "多了 {added} 次聊天。",
 "en": "Added {added} chats."
+},
+{
+"zh": "要允許麥克風和語音辨識才能口譯，可以到手機的「設定」打開",
+"en": "Allow the microphone and speech recognition to interpret. You can turn them on in Settings"
+},
+{
+"zh": "這支手機不能聽寫{interpLangNames[l]}，可以改用「高品質 AI」",
+"en": "This phone can't recognize {interpLangNames[l]}. Try Premium AI"
+},
+{
+"zh": "麥克風沒有反應，請再試一次",
+"en": "The microphone didn't start. Please try again"
+},
+{
+"zh": "手機上沒辦法翻譯{interpLangNames[from]} → {interpLangNames[to]}，可以改用「高品質 AI」",
+"en": "Your phone can't translate {interpLangNames[from]} → {interpLangNames[to]}. Try Premium AI"
+},
+{
+"zh": "要允許使用麥克風才能口譯，可以到手機的「設定」打開",
+"en": "Allow the microphone to interpret. You can turn it on in Settings"
+},
+{
+"zh": "通話時間用完了，口譯已結束",
+"en": "Out of call time. Interpreting ended"
+},
+{
+"zh": "一段時間沒有人說話，口譯已結束",
+"en": "No one spoke for a while, so interpreting ended"
+},
+{
+"zh": "口譯已結束",
+"en": "Interpreting ended"
+},
+{
+"zh": "連線中斷，口譯已結束",
+"en": "Connection lost. Interpreting ended"
+},
+{
+"zh": "我說的語言",
+"en": "My language"
+},
+{
+"zh": "對方說的語言",
+"en": "Their language"
+},
+{
+"zh": "語言改了，請再按一次開始",
+"en": "Language changed. Tap start again"
+},
+{
+"zh": "結束口譯",
+"en": "Close interpreter"
+},
+{
+"zh": "免費",
+"en": "Free"
+},
+{
+"zh": "高品質 AI",
+"en": "Premium AI"
+},
+{
+"zh": "說明",
+"en": "About"
+},
+{
+"zh": "艾婭口譯",
+"en": "AIYA interpreter"
+},
+{
+"zh": "手機平放在桌上，你看下半、對方看上半（已經倒過來）。",
+"en": "Lay the phone flat between you: you read the bottom half, the other person reads the top half (it's upside down for them)."
+},
+{
+"zh": "免費：按自己那半邊的麥克風說話，說完停一下就會翻譯並念出來。語音辨識與翻譯由手機系統（Apple／Google）處理，旅行團收不到也不存你的聲音。",
+"en": "Free: tap the mic on your half, speak, then pause. It translates and reads it aloud. Speech recognition and translation are done by your phone's system (Apple/Google); TourChip never receives or keeps your voice."
+},
+{
+"zh": "高品質 AI：雙方直接說，不用按。聲音即時送到 OpenAI 翻譯，依秒數扣艾婭的通話時間，我們不錄音。",
+"en": "Premium AI: both of you just talk, no buttons. Voices are sent live to OpenAI for translation and call time is used by the second. We don't record anything."
+},
+{
+"zh": "翻譯可能出錯，金額、藥物、過敏等重要的事請再確認。",
+"en": "Translations can be wrong: double-check prices, medicine, allergies and other important things."
+},
+{
+"zh": "直接說話，艾婭會翻譯・按 ■ 結束",
+"en": "Just speak. AIYA will translate · Tap ■ to end"
+},
+{
+"zh": "直接說話，艾婭會翻譯",
+"en": "Just speak. AIYA will translate"
+},
+{
+"zh": "連線中…",
+"en": "Connecting…"
+},
+{
+"zh": "按麥克風開始高品質 AI 口譯",
+"en": "Tap the mic to start Premium AI"
+},
+{
+"zh": "請稍候",
+"en": "One moment, please"
+},
+{
+"zh": "請說…說完停一下",
+"en": "Speak… then pause"
+},
+{
+"zh": "按麥克風說話",
+"en": "Tap the mic and speak"
+},
+{
+"zh": "AI 口譯",
+"en": "AI interpreter"
+},
+{
+"zh": "說一句話，對方會聽到翻譯",
+"en": "Say something and they'll hear the translation"
+},
+{
+"zh": "你好！我用手機翻譯，請對著手機說話",
+"en": "Hello! I'm using a translator app. Please speak to the phone"
+},
+{
+"zh": "說話",
+"en": "Speak"
 },
 {
 "zh": "跟隨手機設定",
@@ -714,10 +854,6 @@
 {
 "zh": "聽講解廣播",
 "en": "Listen to the live talk"
-},
-{
-"zh": "連線中…",
-"en": "Connecting…"
 },
 {
 "zh": "連不上，正在重試…",

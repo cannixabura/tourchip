@@ -3,4 +3,5 @@
 "NSLocationWhenInUseUsageDescription" = "旅行團會在你使用 App 時取得位置，算出到集合點的距離與方向；你同意分享後，同一團的人（含領隊）會在地圖上看到你的位置。在團裡時，App 切到背景也會繼續更新（狀態列會顯示），用來提醒脫隊、到集合點自動點名；退團或團解散就停止，可以隨時在設定關閉。";
 "NSCameraUsageDescription" = "掃描領隊的入團 QR code 或團購券，或拍照問 AI 小助理艾婭（景點、菜單、招牌）。";
 "NSPhotoLibraryUsageDescription" = "從相簿選照片當你的頭像，或拿給 AI 小助理艾婭看。";
-"NSMicrophoneUsageDescription" = "用語音和 AI 小助理艾婭通話。只有通話時你的聲音會即時送到 OpenAI 處理，我們不錄音。領隊講解廣播時也會用麥克風：聲音只傳給同一團正在收聽的人，不錄音。";
+"NSMicrophoneUsageDescription" = "用語音和 AI 小助理艾婭通話。只有通話時你的聲音會即時送到 OpenAI 處理，我們不錄音。領隊講解廣播時也會用麥克風：聲音只傳給同一團正在收聽的人，不錄音。口譯時也用麥克風聽你和對方說話，不錄音。";
+"NSSpeechRecognitionUsageDescription" = "免費口譯時，用手機內建的語音辨識把你和對方說的話轉成文字再翻譯（由 Apple 處理），旅行團收不到也不存你的聲音。";

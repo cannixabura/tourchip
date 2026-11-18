@@ -16,6 +16,7 @@ import '../l10n.dart';
 import '../map/tour_map.dart';
 import '../ui/night.dart';
 import 'aiya_store.dart';
+import 'interpreter_screen.dart';
 
 const _site = 'https://tourchip.web.app';
 
@@ -310,7 +311,8 @@ class _AiyaScreenState extends State<AiyaScreen> with SingleTickerProviderStateM
       if (!mounted) return;
       _applyStatus(st);
       Navigator.of(context).popUntil((r) => r.settings.name != 'aiyaCallPacks');
-      if (_callSecondsLeft >= 30 && aiyaPhone.state.value == AiyaCallState.idle) await _startCall();
+      // 在口譯畫面裡買的：留在口譯，不要接通艾婭
+      if (_callSecondsLeft >= 30 && aiyaPhone.state.value == AiyaCallState.idle && !_interpreting) await _startCall();
     });
   }
 
@@ -735,6 +737,35 @@ class _AiyaScreenState extends State<AiyaScreen> with SingleTickerProviderStateM
     return tx('剩 ${s ~/ 60}:${(s % 60).toString().padLeft(2, '0')}', '${s ~/ 60}:${(s % 60).toString().padLeft(2, '0')} left');
   }
 
+  /// 口譯：面對面雙向翻譯（不扣聊天次數；免費用手機內建，高品質 AI 扣通話時間）
+  Widget _interpretChip() => GestureDetector(
+        onTap: _openInterpreter,
+        behavior: HitTestBehavior.opaque,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(999), border: Border.all(color: const Color(0x994FC3F7))),
+          child: Row(mainAxisSize: MainAxisSize.min, children: [
+            const Icon(Icons.translate_rounded, size: 14, color: Night.auroraBlue),
+            const SizedBox(width: 4),
+            Text(tx('口譯', 'Interpret'), style: const TextStyle(color: Night.auroraBlue, fontSize: 12, fontWeight: FontWeight.w600)),
+          ]),
+        ),
+      );
+
+  bool _interpreting = false;
+
+  Future<void> _openInterpreter() async {
+    FocusScope.of(context).unfocus();
+    _interpreting = true;
+    try {
+      await openInterpreter(context, buyCallTime: () => _showCallPacks());
+    } finally {
+      _interpreting = false;
+    }
+    if (!mounted) return;
+    _applyStatus(await aiyaCall('status'));
+  }
+
   Widget _chip(String text, VoidCallback onTap) => GestureDetector(
         onTap: onTap,
         behavior: HitTestBehavior.opaque,
@@ -843,6 +874,7 @@ class _AiyaScreenState extends State<AiyaScreen> with SingleTickerProviderStateM
                     ].join('  ·  '),
                     style: Night.caption, textAlign: TextAlign.center,
                   ),
+                  _interpretChip(),
                   _chip(tx('＋ 時光包', '+ Time packs'), () => _showPacks(browse: true)),
                   _chip(tx('＋ 通話時間', '+ Call time'), _showCallPacks),
                 ]),
@@ -1007,6 +1039,20 @@ Future<bool> askAiyaVoiceConsent(BuildContext context) async {
         body: tx('語音通話時，你的聲音會即時送到 OpenAI（美國）由 AI 處理並回應，團主公布的行程與集合資訊也會一起送去（不含任何人的位置），不會附上你的身分或暱稱；我們不錄音，也不保存通話內容。艾婭是 AI，回覆可能出錯，不構成專業建議。',
             'During a voice call, your voice is sent live to OpenAI (USA), whose AI processes it and replies, along with the itinerary and meeting info your leader shared (never anyone\'s location). It doesn\'t include your identity or nickname, and we don\'t record or keep the call. AIYA is an AI; replies may be wrong and are not professional advice.'),
         agree: tx('同意並通話', 'Agree and call')),
+  );
+  return ok == true;
+}
+
+/// 口譯「高品質 AI」的同意：第一次用之前（雙方的聲音即時送到 OpenAI）
+Future<bool> askInterpretConsent(BuildContext context) async {
+  final ok = await showModalBottomSheet<bool>(
+    context: context, isScrollControlled: true, backgroundColor: Colors.transparent,
+    builder: (ctx) => _consentSheet(ctx,
+        icon: Icons.translate_rounded,
+        title: tx('高品質 AI 口譯', 'Premium AI interpreter'),
+        body: tx('口譯時，你和對方的聲音會即時送到 OpenAI（美國）由 AI 翻譯並念出來，不會附上你的身分或暱稱；我們不錄音，也不保存內容。開始前請先讓對方知道你在用 AI 口譯。依實際秒數扣通話時間。翻譯可能出錯，重要的事（金額、藥物、過敏）請再確認。',
+            'While interpreting, your voice and the other person\'s are sent live to OpenAI (USA), whose AI translates and speaks them, without your identity or nickname. We don\'t record or keep anything. Let the other person know you\'re using an AI interpreter. Call time is used by the second. Translations can be wrong: double-check important things like prices, medicine or allergies.'),
+        agree: tx('同意並開始', 'Agree and start')),
   );
   return ok == true;
 }

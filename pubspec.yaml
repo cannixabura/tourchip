@@ -46,6 +46,7 @@ dependencies:
   package_info_plus: ^10.2.2
   flutter_tts: ^4.2.5
   livekit_client: ^2.13.2
+  speech_to_text: ^7.5.0
 
 dev_dependencies:
   flutter_test:
