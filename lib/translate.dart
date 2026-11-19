@@ -177,7 +177,11 @@ class ChatTranslator {
   }
 
   /// 平台的翻譯語言代碼：iPhone 用完整代碼（zh-Hant），ML Kit 的中文只有 zh
-  static String _platformCode(String l) => Platform.isIOS ? l : (_base(l) == 'zh' ? 'zh' : _base(l));
+  static String _platformCode(String l) {
+    if (Platform.isIOS) return l;
+    final b = _base(l);
+    return const {'zh': 'zh', 'fil': 'tl', 'nb': 'no', 'iw': 'he'}[b] ?? b; // ML Kit 的代碼
+  }
 
   /// 口譯用：明確指定來源和目標語言（不偵測）。Android 需要下載模型時先問使用者。
   /// 回傳 null＝這組語言手機上翻不了、取消或失敗

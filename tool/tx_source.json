@@ -420,16 +420,20 @@
 "en": "Allow the microphone and speech recognition to interpret. You can turn them on in Settings"
 },
 {
-"zh": "這支手機不能聽寫{interpLangNames[l]}，可以改用「高品質 AI」",
-"en": "This phone can't recognize {interpLangNames[l]}. Try Premium AI"
+"zh": "這支手機的免費模式聽不懂{name}。",
+"en": "Free mode on this phone can't recognize {name}."
 },
 {
 "zh": "麥克風沒有反應，請再試一次",
 "en": "The microphone didn't start. Please try again"
 },
 {
-"zh": "手機上沒辦法翻譯{interpLangNames[from]} → {interpLangNames[to]}，可以改用「高品質 AI」",
-"en": "Your phone can't translate {interpLangNames[from]} → {interpLangNames[to]}. Try Premium AI"
+"zh": "這支手機的免費模式沒辦法翻譯{a} → {b}。",
+"en": "Free mode on this phone can't translate {a} → {b}."
+},
+{
+"zh": "這支手機沒有{name}的語音，免費模式只會顯示文字。",
+"en": "This phone has no {name} voice, so free mode shows text only."
 },
 {
 "zh": "要允許使用麥克風才能口譯，可以到手機的「設定」打開",
@@ -452,12 +456,28 @@
 "en": "Connection lost. Interpreting ended"
 },
 {
+"zh": "高品質 AI 支援約 60 種語言，雙方直接說、不用按，依秒數扣艾婭的通話時間。",
+"en": "Premium AI supports about 60 languages. You both just talk, and AIYA call time is used by the second."
+},
+{
+"zh": "改用高品質 AI",
+"en": "Switch to Premium AI"
+},
+{
 "zh": "我說的語言",
 "en": "My language"
 },
 {
 "zh": "對方說的語言",
 "en": "Their language"
+},
+{
+"zh": "搜尋語言",
+"en": "Search languages"
+},
+{
+"zh": "找不到這個語言",
+"en": "No matching language"
 },
 {
 "zh": "語言改了，請再按一次開始",
@@ -2682,6 +2702,10 @@
 {
 "zh": "按輸入框左邊的相機可以拍照問艾婭：拍景點聽故事、拍菜單幫你翻譯並標出豬肉、牛肉、酒和常見過敏原，招牌、告示也看得懂；一次聊天最多 5 張，照片不會存下來。",
 "en": "Tap the camera next to the text box to ask about a photo: a sight for its story, a menu translated with pork, beef, alcohol and common allergens marked, or a sign. Up to 5 photos per chat; photos are not kept."
+},
+{
+"zh": "在艾婭畫面按「口譯」，可以和店員、司機面對面對話：手機平放，對方那半邊會倒過來。免費模式按自己那半邊的麥克風說話，翻好就念出來；高品質 AI 雙方直接說，依秒數扣通話時間。約 60 種語言，對方的語言預設為集合點所在地的語言。",
+"en": "Tap \"Interpret\" in AIYA to talk face to face with shop staff or drivers: lay the phone flat and the other half flips for them. In free mode, tap the mic on your half and speak; the translation is read aloud. With Premium AI you both just talk, and call time is used by the second. About 60 languages; their language starts as the meeting point's local language."
 },
 {
 "zh": "走到行程上的景點附近，地圖上方會問你要不要聽艾婭的一分鐘介紹，可以念給你聽，不扣聊天次數；設定裡可以關掉。",

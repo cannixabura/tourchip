@@ -12,7 +12,6 @@ import 'package:speech_to_text/speech_to_text.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../l10n.dart';
-import '../screens/help_card.dart' show localLangFor;
 import '../screens/info_screen.dart';
 import '../tour/service.dart';
 import '../tour/zones.dart' show deviceTz;
@@ -20,6 +19,7 @@ import '../translate.dart';
 import '../ui/night.dart';
 import 'aiya_screen.dart' show askInterpretConsent;
 import 'aiya_store.dart';
+import 'interp_langs.dart';
 
 /// 口譯：團員和當地人（店員、司機）面對面，各說各的語言。
 /// 手機平放在桌上：下半是自己、上半倒過來給對方看。
@@ -32,35 +32,6 @@ import 'aiya_store.dart';
 ///   誰說的：看原文是哪一種語言。我們不錄音、不存內容。
 Future<void> openInterpreter(BuildContext context, {required Future<void> Function() buyCallTime}) =>
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => InterpreterScreen(buyCallTime: buyCallTime)));
-
-/// 口譯可以選的語言：App 的 12 種＋常見旅遊地（伺服器 aiya.js 的 INTERPRET_LANGS 要一致）
-const interpLangs = [...supportedLangs, 'fr', 'de', 'it', 'ru', 'tr', 'ar', 'nl'];
-
-const interpLangNames = {
-  ...langNames,
-  'fr': 'Français', 'de': 'Deutsch', 'it': 'Italiano', 'ru': 'Русский', 'tr': 'Türkçe', 'ar': 'العربية', 'nl': 'Nederlands',
-};
-
-/// 語音辨識、朗讀用的地區代碼（依序試）
-const _locales = {
-  'zh-Hant': ['zh-TW', 'zh-HK', 'yue-HK'], 'zh-Hans': ['zh-CN', 'zh-SG'], 'en': ['en-US', 'en-GB', 'en-AU'],
-  'ja': ['ja-JP'], 'ko': ['ko-KR'], 'ms': ['ms-MY'], 'id': ['id-ID'], 'vi': ['vi-VN'], 'th': ['th-TH'],
-  'pt': ['pt-BR', 'pt-PT'], 'es': ['es-ES', 'es-MX', 'es-US'], 'hi': ['hi-IN'],
-  'fr': ['fr-FR', 'fr-CA'], 'de': ['de-DE', 'de-AT', 'de-CH'], 'it': ['it-IT'], 'ru': ['ru-RU'], 'tr': ['tr-TR'],
-  'ar': ['ar-SA', 'ar-AE', 'ar-EG'], 'nl': ['nl-NL', 'nl-BE'],
-};
-
-/// 對方預設說什麼：依現在所在地（集合點、行程表的時區；沒入團就看手機的時區）
-String interpLangFor(String tz) {
-  if (const ['Europe/Paris', 'Europe/Monaco', 'Europe/Brussels', 'Europe/Luxembourg'].contains(tz)) return 'fr';
-  if (const ['Europe/Berlin', 'Europe/Vienna', 'Europe/Zurich'].contains(tz)) return 'de';
-  if (const ['Europe/Rome', 'Europe/Vatican', 'Europe/San_Marino', 'Europe/Malta'].contains(tz)) return 'it';
-  if (const ['Europe/Moscow', 'Europe/Minsk'].contains(tz)) return 'ru';
-  if (tz == 'Europe/Istanbul' || tz == 'Asia/Istanbul') return 'tr';
-  if (tz == 'Europe/Amsterdam') return 'nl';
-  if (const ['Asia/Dubai', 'Asia/Riyadh', 'Asia/Qatar', 'Asia/Kuwait', 'Asia/Bahrain', 'Asia/Muscat', 'Asia/Amman', 'Africa/Cairo', 'Africa/Casablanca'].contains(tz)) return 'ar';
-  return localLangFor(tz);
-}
 
 class _Turn {
   /// true＝自己說的、false＝對方說的、null＝還不知道（高品質 AI 剛開始翻）
@@ -98,6 +69,7 @@ class _InterpreterScreenState extends State<InterpreterScreen> {
   bool _finalized = false;
   bool _working = false; // 翻譯中
   double _level = 0;
+  final _warnedVoice = <String>{}; // 沒有語音的語言只提醒一次
 
   // 高品質 AI：艾婭的通話線路
   final _call = AiyaCall(aiyaApi);
@@ -124,11 +96,11 @@ class _InterpreterScreenState extends State<InterpreterScreen> {
     _tz = g != null ? InfoScreen.hereTz(g) : deviceTz;
     final p = await SharedPreferences.getInstance();
     final me = p.getString(_kMe);
-    _me = me != null && interpLangs.contains(me) ? me : lang;
+    _me = me != null && interpLangByCode.containsKey(me) ? me : lang;
     final other = p.getString(_kOther(_tz));
     var def = interpLangFor(_tz);
-    if (def == _me || ChatTranslator.sameBase(def, _me)) def = _me == 'en' ? 'zh-Hant' : 'en';
-    _other = other != null && interpLangs.contains(other) && other != _me ? other : def;
+    if (def == _me || interpSameBase(def, _me)) def = _me == 'en' ? 'zh-Hant' : 'en';
+    _other = other != null && interpLangByCode.containsKey(other) && other != _me ? other : def;
     _mode = p.getString(_kMode) == 'premium' ? _Mode.premium : _Mode.free;
     if (mounted) setState(() {});
   }
@@ -159,16 +131,18 @@ class _InterpreterScreenState extends State<InterpreterScreen> {
     _sttLocales ??= [for (final x in await _stt.locales()) x.localeId.replaceAll('_', '-')];
     final have = _sttLocales!;
     String? find(bool Function(String) ok) => have.where(ok).firstOrNull;
-    for (final want in _locales[l] ?? [l]) {
+    for (final want in interpLang(l).locales) {
       final hit = find((x) => x.toLowerCase() == want.toLowerCase());
       if (hit != null) return hit;
     }
+    if (l == 'yue') return find((x) => x.startsWith('yue') || x == 'zh-HK');
     final base = l.split('-').first;
     if (base == 'zh') {
       final hant = l == 'zh-Hant';
       return find((x) => x.startsWith('zh') && (hant ? RegExp('TW|HK|Hant').hasMatch(x) : RegExp('CN|SG|Hans').hasMatch(x)));
     }
-    return find((x) => x.split('-').first == base);
+    final alt = const {'fil': 'tl', 'no': 'nb', 'he': 'iw'}[base];
+    return find((x) => x.split('-').first == base || x.split('-').first == alt);
   }
 
   Future<void> _tapMic(bool mine) async {
@@ -203,7 +177,8 @@ class _InterpreterScreenState extends State<InterpreterScreen> {
     final l = mine ? _me : _other;
     final locale = await _sttLocale(l);
     if (locale == null) {
-      _toast(tx('這支手機不能聽寫${interpLangNames[l]}，可以改用「高品質 AI」', 'This phone can\'t recognize ${interpLangNames[l]}. Try Premium AI'), danger: true);
+      final name = interpLang(l).localName;
+      await _offerPremium(tx('這支手機的免費模式聽不懂$name。', 'Free mode on this phone can\'t recognize $name.'));
       return;
     }
     setState(() { _listeningMine = mine; _partial = ''; _finalized = false; _level = 0; });
@@ -247,7 +222,7 @@ class _InterpreterScreenState extends State<InterpreterScreen> {
     final from = mine ? _me : _other, to = mine ? _other : _me;
     final turn = _Turn(mine: mine, original: text);
     setState(() { _turns.add(turn); _working = true; });
-    final out = await ChatTranslator.translatePair(context, text, from, to);
+    final out = await ChatTranslator.translatePair(context, text, interpLang(from).translateCode, interpLang(to).translateCode);
     if (!mounted) return;
     setState(() {
       _working = false;
@@ -258,7 +233,8 @@ class _InterpreterScreenState extends State<InterpreterScreen> {
       }
     });
     if (out == null) {
-      _toast(tx('手機上沒辦法翻譯${interpLangNames[from]} → ${interpLangNames[to]}，可以改用「高品質 AI」', 'Your phone can\'t translate ${interpLangNames[from]} → ${interpLangNames[to]}. Try Premium AI'), danger: true);
+      final a = interpLang(from).localName, b = interpLang(to).localName;
+      await _offerPremium(tx('這支手機的免費模式沒辦法翻譯$a → $b。', 'Free mode on this phone can\'t translate $a → $b.'));
       return;
     }
     await _say(out, to);
@@ -272,10 +248,18 @@ class _InterpreterScreenState extends State<InterpreterScreen> {
         IosTextToSpeechAudioCategoryOptions.allowBluetoothA2DP,
       ], IosTextToSpeechAudioMode.voicePrompt);
       String? locale;
-      for (final x in _locales[l] ?? [l]) {
+      for (final x in interpLang(l).locales) {
         if (await _tts.isLanguageAvailable(x) == true) { locale = x; break; }
       }
-      await _tts.setLanguage(locale ?? (_locales[l]?.first ?? l));
+      if (locale == null) {
+        if (!_warnedVoice.add(l)) return;
+        final name = interpLang(l).localName;
+        // 大括號給 tool/extract_tx.py 認變數用（「的」緊接在變數後面）
+        // ignore: unnecessary_brace_in_string_interps
+        await _offerPremium(tx('這支手機沒有${name}的語音，免費模式只會顯示文字。', 'This phone has no $name voice, so free mode shows text only.'));
+        return;
+      }
+      await _tts.setLanguage(locale);
       await _tts.setSpeechRate(Platform.isIOS ? 0.5 : 0.9);
       await _tts.speak(text);
     } catch (_) {}
@@ -384,15 +368,15 @@ class _InterpreterScreenState extends State<InterpreterScreen> {
       if (t.original.trim().length >= 2) {
         final d = await ChatTranslator.detect(t.original);
         if (d != null) {
-          if (ChatTranslator.sameBase(d, _me) && !ChatTranslator.sameBase(d, _other)) side = true;
-          if (ChatTranslator.sameBase(d, _other) && !ChatTranslator.sameBase(d, _me)) side = false;
+          if (interpMatches(d, _me) && !interpMatches(d, _other)) side = true;
+          if (interpMatches(d, _other) && !interpMatches(d, _me)) side = false;
         }
       }
       if (side == null && t.translated.trim().length >= 6) {
         final d = await ChatTranslator.detect(t.translated);
         if (d != null) {
-          if (ChatTranslator.sameBase(d, _other) && !ChatTranslator.sameBase(d, _me)) side = true;
-          if (ChatTranslator.sameBase(d, _me) && !ChatTranslator.sameBase(d, _other)) side = false;
+          if (interpMatches(d, _other) && !interpMatches(d, _me)) side = true;
+          if (interpMatches(d, _me) && !interpMatches(d, _other)) side = false;
         }
       }
       if (side == null && t.translated.trim().length >= 24) {
@@ -413,6 +397,34 @@ class _InterpreterScreenState extends State<InterpreterScreen> {
     return '${s ~/ 60}:${(s % 60).toString().padLeft(2, '0')}';
   }
 
+  /// 免費模式做不到時：說明原因，可以一鍵改用高品質 AI
+  Future<void> _offerPremium(String reason) async {
+    if (!mounted) return;
+    final go = await showModalBottomSheet<bool>(
+      context: context, backgroundColor: Colors.transparent,
+      builder: (ctx) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(Night.space4),
+          child: GlassCard(
+            child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+              const Icon(Icons.auto_awesome, color: Color(0xFFFFC861), size: 30),
+              const SizedBox(height: Night.space3),
+              Text(reason, style: Night.title, textAlign: TextAlign.center),
+              const SizedBox(height: Night.space2),
+              Text(tx('高品質 AI 支援約 60 種語言，雙方直接說、不用按，依秒數扣艾婭的通話時間。', 'Premium AI supports about 60 languages. You both just talk, and AIYA call time is used by the second.'),
+                  style: Night.body, textAlign: TextAlign.center),
+              const SizedBox(height: Night.space4),
+              NightButton(tx('改用高品質 AI', 'Switch to Premium AI'), icon: Icons.auto_awesome, onPressed: () => Navigator.pop(ctx, true)),
+              const SizedBox(height: Night.space2),
+              NightButton(tx('知道了', 'Got it'), kind: NightButtonKind.text, onPressed: () => Navigator.pop(ctx, false)),
+            ]),
+          ),
+        ),
+      ),
+    );
+    if (go == true && mounted) await _setMode(_Mode.premium);
+  }
+
   // ───────────────────────── 設定 ─────────────────────────
 
   Future<void> _setMode(_Mode m) async {
@@ -426,34 +438,67 @@ class _InterpreterScreenState extends State<InterpreterScreen> {
 
   Future<void> _pickLang(bool mine) async {
     final current = mine ? _me : _other;
+    final suggested = <String>{current, interpLangFor(_tz), lang, mine ? _other : _me, 'en'}.where(interpLangByCode.containsKey).toList();
+    final query = TextEditingController();
     final picked = await showModalBottomSheet<String>(
       context: context, backgroundColor: Colors.transparent, isScrollControlled: true,
-      builder: (ctx) => SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(Night.space4),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: MediaQuery.of(ctx).size.height * 0.7),
-            child: GlassCard(
-              child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-                Text(mine ? tx('我說的語言', 'My language') : tx('對方說的語言', 'Their language'), style: Night.title, textAlign: TextAlign.center),
-                const SizedBox(height: Night.space3),
-                Flexible(
-                  child: ListView(shrinkWrap: true, children: [
-                    for (final l in interpLangs)
-                      ListTile(
-                        dense: true,
-                        title: Text(interpLangNames[l]!, style: TextStyle(color: l == current ? Night.auroraBlue : Night.ink, fontSize: 16)),
-                        trailing: l == current ? const Icon(Icons.check, color: Night.auroraBlue) : null,
-                        onTap: () => Navigator.pop(ctx, l),
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setSheet) {
+          final q = query.text.trim().toLowerCase();
+          bool hit(InterpLang l) => q.isEmpty || [l.native, l.zh, l.en, l.code, l.localName].any((x) => x.toLowerCase().contains(q));
+          final list = q.isEmpty
+              ? [for (final c in suggested) interpLang(c), ...interpLangList.where((l) => !suggested.contains(l.code))]
+              : interpLangList.where(hit).toList();
+          Widget tile(InterpLang l) => ListTile(
+                dense: true,
+                title: Text(l.native, style: TextStyle(color: l.code == current ? Night.auroraBlue : Night.ink, fontSize: 16)),
+                subtitle: l.localName == l.native ? null : Text(l.localName, style: Night.caption),
+                trailing: l.code == current ? const Icon(Icons.check, color: Night.auroraBlue) : null,
+                onTap: () => Navigator.pop(ctx, l.code),
+              );
+          return Padding(
+            padding: EdgeInsets.only(bottom: MediaQuery.of(ctx).viewInsets.bottom),
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(Night.space4),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxHeight: MediaQuery.of(ctx).size.height * 0.75),
+                  child: GlassCard(
+                    child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                      Text(mine ? tx('我說的語言', 'My language') : tx('對方說的語言', 'Their language'), style: Night.title, textAlign: TextAlign.center),
+                      const SizedBox(height: Night.space3),
+                      TextField(
+                        controller: query,
+                        onChanged: (_) => setSheet(() {}),
+                        style: const TextStyle(color: Night.ink),
+                        decoration: InputDecoration(
+                          hintText: tx('搜尋語言', 'Search languages'), hintStyle: const TextStyle(color: Night.inkFaint),
+                          prefixIcon: const Icon(Icons.search, color: Night.inkFaint), isDense: true,
+                          filled: true, fillColor: Night.night700,
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(Night.radiusMd), borderSide: BorderSide.none),
+                        ),
                       ),
-                  ]),
+                      const SizedBox(height: Night.space2),
+                      Flexible(
+                        child: list.isEmpty
+                            ? Padding(padding: const EdgeInsets.all(Night.space4), child: Text(tx('找不到這個語言', 'No matching language'), style: Night.caption, textAlign: TextAlign.center))
+                            : ListView(shrinkWrap: true, children: [
+                                for (var i = 0; i < list.length; i++) ...[
+                                  if (q.isEmpty && i == suggested.length) const Divider(color: Night.glassLine, height: 12),
+                                  tile(list[i]),
+                                ],
+                              ]),
+                      ),
+                    ]),
+                  ),
                 ),
-              ]),
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
+    query.dispose();
     if (picked == null || picked == current || !mounted) return;
     await _stt.cancel();
     final wasLive = _callBusy;
@@ -580,18 +625,19 @@ class _InterpreterScreenState extends State<InterpreterScreen> {
   /// 半邊畫面：mine＝自己（下半），否則是對方（上半，倒過來）
   Widget _half(bool mine) {
     final l = mine ? _me : _other, otherL = mine ? _other : _me;
+    final ul = interpLang(l).translateCode; // 給這一半的人看的提示語言（粵語用繁中）
     final listening = _listeningMine == mine;
     final premium = _mode == _Mode.premium;
 
     String hint;
     if (premium) {
       hint = _live
-          ? mine ? tx('直接說話，艾婭會翻譯・按 ■ 結束', 'Just speak. AIYA will translate · Tap ■ to end') : txIn(l, '直接說話，艾婭會翻譯', 'Just speak. AIYA will translate')
+          ? mine ? tx('直接說話，艾婭會翻譯・按 ■ 結束', 'Just speak. AIYA will translate · Tap ■ to end') : txIn(ul, '直接說話，艾婭會翻譯', 'Just speak. AIYA will translate')
           : _call.state.value == AiyaCallState.connecting || _starting
-              ? txIn(l, '連線中…', 'Connecting…')
-              : mine ? tx('按麥克風開始高品質 AI 口譯', 'Tap the mic to start Premium AI') : txIn(l, '請稍候', 'One moment, please');
+              ? txIn(ul, '連線中…', 'Connecting…')
+              : mine ? tx('按麥克風開始高品質 AI 口譯', 'Tap the mic to start Premium AI') : txIn(ul, '請稍候', 'One moment, please');
     } else {
-      hint = listening ? txIn(l, '請說…說完停一下', 'Speak… then pause') : txIn(l, '按麥克風說話', 'Tap the mic and speak');
+      hint = listening ? txIn(ul, '請說…說完停一下', 'Speak… then pause') : txIn(ul, '按麥克風說話', 'Tap the mic and speak');
     }
 
     // 最新的一句在最靠近麥克風的地方（清單倒過來排）
@@ -608,18 +654,18 @@ class _InterpreterScreenState extends State<InterpreterScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(999), border: Border.all(color: Night.glassLine)),
               child: Row(mainAxisSize: MainAxisSize.min, children: [
-                Text(interpLangNames[l]!, style: const TextStyle(color: Night.ink, fontSize: 14)),
+                Text(interpLang(l).native, style: const TextStyle(color: Night.ink, fontSize: 14)),
                 const SizedBox(width: 4),
                 const Icon(Icons.expand_more_rounded, color: Night.inkMuted, size: 18),
               ]),
             ),
           ),
           const Spacer(),
-          if (!mine) Text(txIn(l, 'AI 口譯', 'AI interpreter'), style: Night.caption),
+          if (!mine) Text(txIn(ul, 'AI 口譯', 'AI interpreter'), style: Night.caption),
         ]),
         Expanded(
           child: items.isEmpty && !listening
-              ? Center(child: Text(mine ? tx('說一句話，對方會聽到翻譯', 'Say something and they\'ll hear the translation') : txIn(l, '你好！我用手機翻譯，請對著手機說話', 'Hello! I\'m using a translator app. Please speak to the phone'),
+              ? Center(child: Text(mine ? tx('說一句話，對方會聽到翻譯', 'Say something and they\'ll hear the translation') : txIn(ul, '你好！我用手機翻譯，請對著手機說話', 'Hello! I\'m using a translator app. Please speak to the phone'),
                   style: TextStyle(color: mine ? Night.inkFaint : Night.inkMuted, fontSize: mine ? 15 : 19, height: 1.5), textAlign: TextAlign.center))
               : ListView(reverse: true, padding: const EdgeInsets.symmetric(vertical: Night.space3), children: [
                   if (listening && _partial.isNotEmpty) _bubble(_partial, '', fromHere: true, faint: true),
@@ -672,7 +718,7 @@ class _InterpreterScreenState extends State<InterpreterScreen> {
     final active = listening || (premium && _live);
     final pulse = listening ? (1 + (_level.clamp(-2, 10) + 2) / 12 * 0.25) : 1.0;
     final enabled = premium ? (mine && !_callBusy && !_starting) || _live : !_working;
-    final ml = mine ? _me : _other;
+    final ml = interpLang(mine ? _me : _other).translateCode;
     return Semantics(
       button: true,
       label: listening ? txIn(ml, '停止', 'Stop') : txIn(ml, '說話', 'Speak'),
