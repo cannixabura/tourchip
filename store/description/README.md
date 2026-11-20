@@ -6,9 +6,9 @@
 - pt、es、hi：1.0.2 的描述沒有艾婭段落，這裡補上艾婭段落，收費段改成人數券、天數券與艾婭之友自動續訂說明。
 - **還沒貼到 App Store Connect**：已上架版本的描述不能改，要在建立下一個版本（build 11）時貼上。
 - 檔名對應 ASC 語系：zh-Hant＝繁體中文、zh-Hans＝簡體中文、en＝英文（美國、加拿大）、ja、ko、vi、th、id、ms、pt＝葡萄牙文（巴西）、es＝西班牙文（墨西哥、西班牙）、hi＝北印度文。
-- Play 版在 `play/<Play 語系>.txt`（收費段的取消方式改成 Google Play →「付款和訂閱」）；2026-11-13 已貼到 Play Console 14 個語系並儲存草稿，尚未在「發布總覽」送審。
+- Play 版在 `play/<Play 語系>.txt`（收費段的取消方式改成 Google Play →「付款和訂閱」）；2026-11-13 已貼到 Play Console 14 個語系並儲存草稿，2026-11-20 隨 1.0.9 一起送審。
 
-## 2026-11-20：新增 6 個語系（還沒貼到 ASC／Play）
+## 2026-11-20：新增 6 個語系（已貼到 ASC 1.0.9 與 Play 預設商店資訊，隨 1.0.9 送審）
 
 - `fr.txt`、`de.txt`、`it.txt`、`cs.txt`、`pl.txt`、`uk.txt`：App Store 用（ASC 語系 fr-FR、de-DE、it、cs、pl、uk）
 - `play/fr-FR.txt`、`play/de-DE.txt`、`play/it-IT.txt`、`play/cs-CZ.txt`、`play/pl-PL.txt`、`play/uk.txt`：Play 用
