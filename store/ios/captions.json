@@ -406,5 +406,209 @@
    "走到景點，艾婭說故事",
    "行程上的景點一分鐘介紹，還能念給你聽。"
   ]
+ },
+ "fr": {
+  "1": [
+   "Le rassemblement, c'est un drapeau",
+   "La carte 3D tourne avec votre téléphone."
+  ],
+  "2": [
+   "Tous les téléphones sonnent",
+   "Même en mode Concentration ; rappel chaque minute jusqu'à « Bien reçu »."
+  ],
+  "3": [
+   "Votre groupe d'un coup d'œil",
+   "Seul votre groupe vous voit. Publiez une bulle."
+  ],
+  "4": [
+   "Appui long pour écrire",
+   "Notification immédiate. Bloquez et signalez à tout moment."
+  ],
+  "5": [
+   "Scannez pour rejoindre",
+   "Pas de demande d'ami, pas de numéro de téléphone."
+  ],
+  "6": [
+   "Sachez qui a reçu l'appel",
+   "Rassemblements, appel, annonces et programme au même endroit."
+  ],
+  "7": [
+   "Photographiez un menu, AIYA traduit",
+   "Porc, bœuf, alcool et allergènes signalés. Monuments et panneaux aussi."
+  ],
+  "8": [
+   "Près d'un site, AIYA raconte",
+   "Une présentation d'une minute par étape, lue à voix haute si vous voulez."
+  ]
+ },
+ "de": {
+  "1": [
+   "Der Treffpunkt ist eine Fahne",
+   "Die 3D-Karte dreht sich mit deinem Handy."
+  ],
+  "2": [
+   "Jedes Handy klingelt",
+   "Auch im Fokus-Modus; Erinnerung jede Minute bis „Verstanden“."
+  ],
+  "3": [
+   "Deine Gruppe auf einen Blick",
+   "Nur deine Gruppe sieht dich. Poste eine Sprechblase."
+  ],
+  "4": [
+   "Gedrückt halten zum Schreiben",
+   "Sofort benachrichtigt. Blockieren und Melden jederzeit."
+  ],
+  "5": [
+   "Scannen und beitreten",
+   "Keine Freundschaftsanfragen, keine Telefonnummern."
+  ],
+  "6": [
+   "Sehen, wer den Ruf hat",
+   "Sammeln, Durchzählen, Mitteilungen und Reiseplan an einem Ort."
+  ],
+  "7": [
+   "Speisekarte knipsen, AIYA übersetzt",
+   "Schwein, Rind, Alkohol und Allergene markiert. Auch Orte und Schilder."
+  ],
+  "8": [
+   "AIYA erzählt an Sehenswürdigkeiten",
+   "Ein einminütiges Intro je Stopp, auf Wunsch vorgelesen."
+  ]
+ },
+ "it": {
+  "1": [
+   "Il ritrovo è una bandierina",
+   "La mappa 3D ruota con il telefono."
+  ],
+  "2": [
+   "Suonano tutti i telefoni",
+   "Arriva anche in Full immersion; promemoria ogni minuto fino a \"Ricevuto\"."
+  ],
+  "3": [
+   "Il gruppo a colpo d'occhio",
+   "Ti vede solo il tuo gruppo. Pubblica un fumetto."
+  ],
+  "4": [
+   "Tieni premuto per scrivere",
+   "Notifica immediata. Blocca e segnala quando vuoi."
+  ],
+  "5": [
+   "Scansiona per entrare",
+   "Niente richieste di amicizia, niente numeri di telefono."
+  ],
+  "6": [
+   "Sai chi ha ricevuto la chiamata",
+   "Ritrovi, appello, avvisi e programma in un unico posto."
+  ],
+  "7": [
+   "Fotografa un menu, AIYA traduce",
+   "Maiale, manzo, alcol e allergeni segnalati. Anche monumenti e cartelli."
+  ],
+  "8": [
+   "Vicino a un luogo, AIYA racconta",
+   "Una presentazione di un minuto per ogni tappa, letta ad alta voce se vuoi."
+  ]
+ },
+ "cs": {
+  "1": [
+   "Sraz je vlajka",
+   "3D mapa se otáčí s telefonem."
+  ],
+  "2": [
+   "Zazvoní každý telefon",
+   "Projde i režimem Soustředění; připomínka každou minutu až do „Rozumím“."
+  ],
+  "3": [
+   "Skupina na první pohled",
+   "Vidí vás jen vaše skupina. Přidejte bublinu."
+  ],
+  "4": [
+   "Dlouhým stiskem napíšete",
+   "Okamžitá notifikace. Blokovat a nahlásit lze kdykoli."
+  ],
+  "5": [
+   "Naskenujte a připojte se",
+   "Bez žádostí o přátelství, bez telefonních čísel."
+  ],
+  "6": [
+   "Víte, komu svolání přišlo",
+   "Srazy, prezence, oznámení a program na jednom místě."
+  ],
+  "7": [
+   "Vyfoťte menu, AIYA přeloží",
+   "Označí vepřové, hovězí, alkohol a alergeny. I památky a nápisy."
+  ],
+  "8": [
+   "U památky AIYA vypráví",
+   "Minutové představení každé zastávky, na přání nahlas."
+  ]
+ },
+ "pl": {
+  "1": [
+   "Zbiórka to flaga",
+   "Mapa 3D obraca się razem z telefonem."
+  ],
+  "2": [
+   "Dzwoni każdy telefon",
+   "Nawet w trybie skupienia; przypomnienie co minutę aż do „Jasne”."
+  ],
+  "3": [
+   "Cała grupa na jednym ekranie",
+   "Widzi cię tylko twoja grupa. Dodaj dymek."
+  ],
+  "4": [
+   "Przytrzymaj, żeby napisać",
+   "Natychmiastowe powiadomienie. Blokuj i zgłaszaj w każdej chwili."
+  ],
+  "5": [
+   "Zeskanuj i dołącz",
+   "Bez zaproszeń do znajomych, bez numerów telefonów."
+  ],
+  "6": [
+   "Wiesz, kto dostał wezwanie",
+   "Zbiórki, obecność, ogłoszenia i plan w jednym miejscu."
+  ],
+  "7": [
+   "Zdjęcie menu, AIYA tłumaczy",
+   "Wieprzowina, wołowina, alkohol i alergeny oznaczone. Zabytki i napisy też."
+  ],
+  "8": [
+   "Przy zabytku AIYA opowiada",
+   "Minutowe wprowadzenie przy każdym przystanku, także na głos."
+  ]
+ },
+ "uk": {
+  "1": [
+   "Місце збору — це прапорець",
+   "3D-карта повертається разом із телефоном."
+  ],
+  "2": [
+   "Дзвонить кожен телефон",
+   "Навіть у режимі зосередження; нагадування щохвилини до «Зрозуміло»."
+  ],
+  "3": [
+   "Уся група з одного погляду",
+   "Вас бачить лише ваша група. Додайте бульбашку."
+  ],
+  "4": [
+   "Утримуйте, щоб написати",
+   "Миттєве сповіщення. Блокування й скарги будь-коли."
+  ],
+  "5": [
+   "Скануйте, щоб приєднатися",
+   "Без запитів у друзі, без номерів телефонів."
+  ],
+  "6": [
+   "Знайте, хто отримав сигнал",
+   "Збори, перекличка, оголошення й програма в одному місці."
+  ],
+  "7": [
+   "Меню на фото — AIYA перекладе",
+   "Позначки свинини, яловичини, алкоголю й алергенів. А ще пам'ятки й вивіски."
+  ],
+  "8": [
+   "Біля пам'ятки — розповідь AIYA",
+   "Хвилинна розповідь про кожну зупинку, за бажанням уголос."
+  ]
  }
 }

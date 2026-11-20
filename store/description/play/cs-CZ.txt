@@ -1,0 +1,35 @@
+Na skupinovém výletě už nikoho neztratíte. TourChip je nástroj pro vedoucí zájezdů, průvodce, učitele a organizátory oddílů: založíte skupinu a účastníci se připojí naskenováním QR kódu. Bez žádostí o přátelství, bez telefonních čísel.
+
+SRAZ, KTERÝ USLYŠÍ KAŽDÝ TELEFON
+Přetáhněte vlajku na místo srazu a vyberte čas. Každý telefon ve skupině přehraje vlastní zvuk, i v režimu Soustředění. Kdo neklepne na „Rozumím“, dostane připomínku každou minutu, nejvýš 3krát. Svolat můžete jednu podskupinu nebo jediného člověka.
+
+MÍSTO SRAZU JE VLAJKA NA MAPĚ
+Účastníci vidí zářící noční 3D mapu, která se otáčí s telefonem. Vlajka srazu stojí mezi budovami v barvě vaší skupiny; klepnutím zobrazíte místní čas, odpočet, vzdálenost, směr a pěší navigaci.
+
+PREZENCE
+Účastníci odpoví „Jsem tady“, „Ještě 5 minut“ nebo „Potřebuji pomoc“. Kdo potřebuje pomoc, je v seznamu nahoře a vedoucí dostanou upozornění.
+
+SKUPINA NA MAPĚ
+Po souhlasu se sdílením se lidé ze stejné skupiny vidí na 3D mapě podle fotek a mohou přidávat bubliny. Dlouhým stiskem fotky pošlete zprávu s okamžitou notifikací. Vidí vás jen vaše skupina; sdílení můžete kdykoli vypnout v Nastavení. Polohy se smažou, když odejdete nebo skupina skončí.
+
+NEVÍM, KDE JSEM
+Jedním klepnutím pošlete vedoucím svou aktuální polohu jako červenou tečku s vaším číslem. Po 30 minutách se smaže.
+
+OZNÁMENÍ A PROGRAM
+Zveřejňujte oznámení pro všechny nebo pro podskupinu. Časy v programu jsou vždy v místním časovém pásmu každého místa srazu.
+
+AIYA, VAŠE AI POMOCNICE NA CESTY
+Klepnutím na portrét AIYA se zeptáte na program, časy srazů nebo dopravu, textem i hlasovým hovorem. AIYA čte jen program, který zveřejnil vedoucí, a nikdy nevidí ničí polohu. 30 chatů zdarma během prvních 24 hodin od prvního připojení ke skupině nebo jejího založení, pak 3 textové chaty denně zdarma; časové balíčky a balíčky času na hovory jsou volitelné a Přítel AIYA je automaticky obnovované měsíční předplatné s 20 chaty denně a 60 minutami hovorů měsíčně.
+
+BEZPEČNOST
+- Bez účtu, bez telefonního čísla, e-mailu či skutečného jména
+- Zprávy se filtrují a můžete blokovat i nahlašovat
+- Účastníci mladší 18 let potřebují ke sdílení polohy nebo psaní zpráv souhlas rodiče či zákonného zástupce
+- Skupina končí ve 23:59 posledního dne a vše se smaže
+
+CENY
+Zdarma až pro 20 lidí a 3 dny a pro účastníky vždy zdarma. Vedoucí si mohou koupit rozšíření skupiny (až 100 lidí) nebo denní pasy (každý +7 dní, až 30), obojí jako jednorázový nákup. Cestovní kanceláře je mohou koupit předem a předat vedoucím jako QR kódy. Přítel AIYA se obnovuje každý měsíc, dokud ho nezrušíte v Google Play → Platby a předplatná → Předplatná.
+
+Ochrana soukromí: https://tourchip.web.app/privacy
+Podmínky: https://tourchip.web.app/terms
+Kontakt: service.softchip@gmail.com

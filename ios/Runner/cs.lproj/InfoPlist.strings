@@ -1,0 +1,7 @@
+/* App name and permission descriptions (Info.plist translations) */
+"CFBundleDisplayName" = "Zájezd";
+"NSLocationWhenInUseUsageDescription" = "TourChip používá vaši polohu, když aplikaci používáte, aby ukázal vzdálenost a směr k místu srazu. Pokud souhlasíte se sdílením, lidé ve vaší skupině (včetně vedoucích) uvidí vaši polohu na mapě. Dokud jste ve skupině, poloha se aktualizuje i na pozadí (zobrazeno ve stavovém řádku) kvůli upozornění na odpojení od skupiny a automatické prezenci na místě srazu; přestane, když skupinu opustíte nebo skončí. V Nastavení to můžete kdykoli vypnout.";
+"NSCameraUsageDescription" = "Naskenujte QR kód vedoucího pro připojení ke skupině nebo voucher, případně vyfoťte památku, jídelní lístek či nápis a zeptejte se na ně AI asistentky AIYA.";
+"NSPhotoLibraryUsageDescription" = "Vyberte fotku z galerie jako svůj profilový obrázek nebo ji ukažte AI asistentce AIYA.";
+"NSMicrophoneUsageDescription" = "Mluvte s AI asistentkou AIYA hlasem. Váš hlas se posílá živě do OpenAI jen během hovoru a nenahrává se. Mikrofon používají i vedoucí pro živý výklad: jejich hlas jde jen posluchačům z jejich skupiny a nenahrává se. Tlumočník také používá mikrofon, aby slyšel vás i druhou osobu; nic se nenahrává.";
+"NSSpeechRecognitionUsageDescription" = "Bezplatný tlumočník používá vestavěné rozpoznávání řeči iPhonu (zajišťuje Apple), aby převedl, co říkáte vy a druhá osoba, na text k překladu. TourChip váš hlas nikdy nedostává ani neukládá.";

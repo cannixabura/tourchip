@@ -1,0 +1,35 @@
+Nikogo nie zgubisz na wycieczce grupowej. TourChip to narzędzie dla pilotów wycieczek, przewodników, nauczycieli i organizatorów klubowych wyjazdów: tworzysz grupę, a uczestnicy dołączają, skanując kod QR. Bez zaproszeń do znajomych, bez numerów telefonów.
+
+ZBIÓRKI, KTÓRE SŁYSZY KAŻDY TELEFON
+Przeciągnij flagę na miejsce zbiórki i wybierz godzinę. Każdy telefon w grupie odtwarza specjalny dźwięk, nawet w trybie skupienia. Kto nie dotknął „Jasne”, dostaje przypomnienie co minutę, maks. 3 razy. Wezwij jedną podgrupę albo jedną osobę.
+
+MIEJSCE ZBIÓRKI TO FLAGA NA MAPIE
+Uczestnicy widzą świecącą nocną mapę 3D, która obraca się razem z telefonem. Flaga zbiórki stoi między budynkami w kolorze twojej grupy; dotknij jej, żeby zobaczyć czas lokalny, odliczanie, odległość, kierunek i trasę pieszą.
+
+SPRAWDZANIE OBECNOŚCI
+Uczestnicy odpowiadają „Jestem”, „Jeszcze 5 minut” lub „Potrzebuję pomocy”. Osoby potrzebujące pomocy są na górze listy, a piloci dostają alert.
+
+GRUPA NA MAPIE
+Po wyrażeniu zgody na udostępnianie osoby z tej samej grupy widzą nawzajem swoje zdjęcia na mapie 3D i mogą dodawać dymki. Przytrzymaj zdjęcie, żeby wysłać wiadomość z natychmiastowym powiadomieniem. Widzi cię tylko twoja grupa; udostępnianie wyłączysz w każdej chwili w Ustawieniach. Lokalizacje są usuwane po opuszczeniu lub zakończeniu grupy.
+
+ZGUBIŁEM(-AM) SIĘ
+Jedno dotknięcie wysyła pilotom twoją aktualną lokalizację jako czerwoną kropkę z twoim numerem. Jest usuwana po 30 minutach.
+
+OGŁOSZENIA I PLAN WYCIECZKI
+Publikuj ogłoszenia dla wszystkich lub jednej podgrupy. Godziny w planie są zawsze w lokalnej strefie czasowej każdej zbiórki.
+
+AIYA, TWOJA POMOCNICZKA W PODRÓŻY Z AI
+Dotknij portretu AIYA, żeby zapytać o plan, godziny zbiórek czy dojazdy – na czacie lub w rozmowie głosowej. AIYA czyta tylko plan opublikowany przez pilota i nigdy nie widzi niczyjej lokalizacji. 30 darmowych czatów przez pierwsze 24 godziny od pierwszego dołączenia do grupy lub jej utworzenia, potem 3 darmowe czaty tekstowe dziennie; pakiety czasu i pakiety czasu rozmów są opcjonalne, a AIYA Friend to miesięczna subskrypcja odnawiana automatycznie: 20 czatów dziennie i 60 minut rozmów miesięcznie.
+
+BEZPIECZEŃSTWO
+- Bez konta, bez numeru telefonu, e-maila i prawdziwego imienia
+- Wiadomości są filtrowane, a ty możesz blokować i zgłaszać
+- Uczestnicy poniżej 18 lat potrzebują zgody rodzica lub opiekuna, żeby udostępniać lokalizację lub pisać wiadomości
+- Grupa kończy się o 23:59 ostatniego dnia i wszystko jest usuwane
+
+CENNIK
+Za darmo do 20 osób i 3 dni, a dla uczestników zawsze za darmo. Piloci mogą kupić pakiet osób (do 100 osób) lub pakiety dni (każdy dodaje 7 dni, łącznie do 30) – oba to zakupy jednorazowe. Biura podróży mogą kupić je z wyprzedzeniem i przekazać pilotom jako kody QR. AIYA Friend odnawia się co miesiąc, dopóki nie anulujesz subskrypcji w ustawieniach konta Apple co najmniej 24 godziny przed odnowieniem.
+
+Prywatność: https://tourchip.web.app/privacy
+Warunki: https://tourchip.web.app/terms
+Kontakt: service.softchip@gmail.com

@@ -6,14 +6,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'l10n_table.dart';
 import 'translate.dart' show ChineseConverter;
 
-/// 介面文字：12 種語言（繁中、簡中、英、日、韓、馬來、印尼、越南、泰、葡萄牙、西班牙、印地）。
+/// 介面文字：18 種語言（繁中、簡中、英、日、韓、馬來、印尼、越南、泰、葡萄牙、西班牙、印地、法、德、義大利、捷克、波蘭、烏克蘭）。
 /// 程式裡一律寫 tx(中文, English)：
 /// - 繁中用第一個參數、英文用第二個
 /// - 簡中由繁中用 OpenCC 對照表轉換
 /// - 其他語言查 l10n_table.dart（tool/i18n/ui.tsv 產生）；帶變數的句子用英文句比對出變數再填進譯文
 /// - 查不到的一律用英文
 
-const supportedLangs = ['zh-Hant', 'zh-Hans', 'en', 'ja', 'ko', 'ms', 'id', 'vi', 'th', 'pt', 'es', 'hi'];
+const supportedLangs = ['zh-Hant', 'zh-Hans', 'en', 'ja', 'ko', 'ms', 'id', 'vi', 'th', 'pt', 'es', 'hi', 'fr', 'de', 'it', 'cs', 'pl', 'uk'];
 
 const langNames = {
   'zh-Hant': '繁體中文',
@@ -28,6 +28,12 @@ const langNames = {
   'pt': 'Português',
   'es': 'Español',
   'hi': 'हिन्दी',
+  'fr': 'Français',
+  'de': 'Deutsch',
+  'it': 'Italiano',
+  'cs': 'Čeština',
+  'pl': 'Polski',
+  'uk': 'Українська',
 };
 
 /// 'system'（跟隨手機）或 supportedLangs 其中之一
@@ -87,7 +93,8 @@ const appLocales = [
   Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant', countryCode: 'TW'),
   Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'),
   Locale('en'), Locale('ja'), Locale('ko'), Locale('ms'), Locale('id'), Locale('vi'), Locale('th'),
-  Locale('pt'), Locale('es'), Locale('hi'),
+  Locale('pt'), Locale('es'), Locale('hi'), Locale('fr'), Locale('de'), Locale('it'), Locale('cs'),
+  Locale('pl'), Locale('uk'),
 ];
 
 String tx(String zh, String en) => switch (lang) {
@@ -125,13 +132,20 @@ String weekdayShort(int weekday) {
     'pt': ['seg', 'ter', 'qua', 'qui', 'sex', 'sáb', 'dom'],
     'es': ['lun', 'mar', 'mié', 'jue', 'vie', 'sáb', 'dom'],
     'hi': ['सोम', 'मंगल', 'बुध', 'गुरु', 'शुक्र', 'शनि', 'रवि'],
+    'fr': ['lun', 'mar', 'mer', 'jeu', 'ven', 'sam', 'dim'],
+    'de': ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'],
+    'it': ['lun', 'mar', 'mer', 'gio', 'ven', 'sab', 'dom'],
+    'cs': ['po', 'út', 'st', 'čt', 'pá', 'so', 'ne'],
+    'pl': ['pon', 'wt', 'śr', 'czw', 'pt', 'sob', 'niedz'],
+    'uk': ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'нд'],
   };
   return (w[isZh ? 'zh' : lang] ?? w['en']!)[weekday - 1];
 }
 
 // ───────── 翻譯表查詢 ─────────
 
-const _col = {'ja': 2, 'ko': 3, 'ms': 4, 'id': 5, 'vi': 6, 'th': 7, 'pt': 8, 'es': 9, 'hi': 10};
+const _col = {'ja': 2, 'ko': 3, 'ms': 4, 'id': 5, 'vi': 6, 'th': 7, 'pt': 8, 'es': 9, 'hi': 10,
+    'fr': 11, 'de': 12, 'it': 13, 'cs': 14, 'pl': 15, 'uk': 16};
 Map<String, List<String>>? _literal;
 List<(RegExp, RegExp, List<String>)>? _templates;
 final Map<String, String> _cache = {};

@@ -18,6 +18,12 @@ String localLangFor(String tz) {
   if (tz == 'Asia/Kuala_Lumpur' || tz == 'Asia/Kuching') return 'ms';
   if (const ['Asia/Jakarta', 'Asia/Pontianak', 'Asia/Makassar', 'Asia/Jayapura'].contains(tz)) return 'id';
   if (const ['Asia/Kolkata', 'Asia/Calcutta'].contains(tz)) return 'hi';
+  if (const ['Europe/Paris', 'Europe/Monaco', 'Europe/Brussels', 'Europe/Luxembourg'].contains(tz)) return 'fr';
+  if (const ['Europe/Berlin', 'Europe/Busingen', 'Europe/Vienna', 'Europe/Zurich', 'Europe/Vaduz'].contains(tz)) return 'de';
+  if (const ['Europe/Rome', 'Europe/Vatican', 'Europe/San_Marino'].contains(tz)) return 'it';
+  if (tz == 'Europe/Prague') return 'cs';
+  if (tz == 'Europe/Warsaw') return 'pl';
+  if (const ['Europe/Kyiv', 'Europe/Kiev', 'Europe/Uzhgorod', 'Europe/Zaporozhye'].contains(tz)) return 'uk';
   if (tz.startsWith('America/Sao_Paulo') || const ['Europe/Lisbon', 'America/Bahia', 'America/Fortaleza', 'America/Recife', 'America/Manaus', 'America/Belem'].contains(tz)) return 'pt';
   if (const ['Europe/Madrid', 'Atlantic/Canary', 'America/Mexico_City', 'America/Cancun', 'America/Monterrey', 'America/Tijuana', 'America/Bogota', 'America/Lima', 'America/Santiago', 'America/Caracas', 'America/Guayaquil', 'America/La_Paz', 'America/Montevideo', 'America/Asuncion', 'America/Panama', 'America/Costa_Rica', 'America/Guatemala', 'America/Havana', 'America/Santo_Domingo', 'America/Puerto_Rico'].contains(tz) || tz.startsWith('America/Argentina/')) return 'es';
   return 'en';

@@ -64,6 +64,7 @@ class AiyaSpots {
 const _ttsLocales = {
   'zh-Hant': 'zh-TW', 'zh-Hans': 'zh-CN', 'en': 'en-US', 'ja': 'ja-JP', 'ko': 'ko-KR', 'ms': 'ms-MY',
   'id': 'id-ID', 'vi': 'vi-VN', 'th': 'th-TH', 'pt': 'pt-BR', 'es': 'es-MX', 'hi': 'hi-IN',
+  'fr': 'fr-FR', 'de': 'de-DE', 'it': 'it-IT', 'cs': 'cs-CZ', 'pl': 'pl-PL', 'uk': 'uk-UA',
 };
 
 /// 團的地圖上方：靠近景點時的艾婭小卡片

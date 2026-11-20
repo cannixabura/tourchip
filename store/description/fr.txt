@@ -1,0 +1,35 @@
+Ne perdez plus personne en voyage de groupe. TourChip est l'outil de groupe des accompagnateurs, guides, enseignants et organisateurs de clubs : créez un groupe, les membres le rejoignent en scannant un QR code. Pas de demande d'ami, pas de numéro de téléphone.
+
+DES RASSEMBLEMENTS QUE TOUS LES TÉLÉPHONES ENTENDENT
+Faites glisser le drapeau jusqu'au point de rassemblement et choisissez une heure. Tous les téléphones du groupe jouent un son dédié, même en mode Concentration. Ceux qui n'ont pas touché « Bien reçu » sont relancés chaque minute, 3 fois max. Appelez un seul sous-groupe ou une seule personne.
+
+LE POINT DE RASSEMBLEMENT EST UN DRAPEAU SUR LA CARTE
+Les membres voient une carte 3D nocturne lumineuse qui tourne avec leur téléphone. Le drapeau de rassemblement se dresse entre les bâtiments à la couleur du groupe ; touchez-le pour l'heure locale, le compte à rebours, la distance, la direction et l'itinéraire à pied.
+
+APPEL
+Les membres répondent « Je suis là », « Encore 5 minutes » ou « J'ai besoin d'aide ». Ceux qui ont besoin d'aide apparaissent en premier, et les accompagnateurs sont alertés.
+
+VOTRE GROUPE SUR LA CARTE
+Après avoir accepté le partage, les membres d'un même groupe voient leurs photos sur la carte 3D et peuvent publier des bulles. Appuyez longuement sur une photo pour envoyer un message avec notification immédiate. Seul votre groupe peut vous voir ; désactivez le partage à tout moment dans les Réglages. Les positions sont supprimées quand vous quittez le groupe ou à sa clôture.
+
+JE SUIS PERDU
+Une touche envoie votre position actuelle aux accompagnateurs sous forme de point rouge avec votre numéro. Elle est supprimée après 30 minutes.
+
+ANNONCES ET PROGRAMME
+Publiez des annonces pour tous ou pour un sous-groupe. Les heures du programme suivent toujours le fuseau horaire local de chaque rassemblement.
+
+AIYA, VOTRE ASSISTANTE DE VOYAGE IA
+Touchez le portrait d'AIYA pour poser vos questions sur le programme, les heures de rassemblement ou les déplacements, par écrit ou en appel vocal. AIYA lit uniquement le programme publié par votre accompagnateur et ne voit jamais la position de personne. 30 discussions gratuites pendant les 24 premières heures après avoir rejoint ou créé votre premier groupe, puis 3 discussions écrites gratuites par jour ; les packs de temps et de temps d'appel sont facultatifs, et Ami AIYA est un abonnement mensuel à renouvellement automatique avec 20 discussions par jour et 60 minutes d'appel par mois.
+
+SÉCURITÉ
+- Pas de compte, ni numéro de téléphone, ni e-mail, ni vrai nom
+- Les messages sont filtrés, et vous pouvez bloquer et signaler
+- Les membres de moins de 18 ans doivent avoir l'accord d'un parent ou tuteur pour partager leur position ou envoyer des messages
+- Le groupe se clôture à 23:59 le dernier jour et tout est supprimé
+
+TARIFS
+Gratuit jusqu'à 20 personnes et 3 jours, et toujours gratuit pour les membres. Les accompagnateurs peuvent acheter un pass grand groupe (jusqu'à 100 personnes) ou des pass 7 jours (7 jours de plus chacun, jusqu'à 30), tous deux en achat unique. Les agences peuvent les acheter à l'avance et les remettre aux accompagnateurs sous forme de QR codes. Ami AIYA se renouvelle chaque mois jusqu'à résiliation dans les réglages de votre compte Apple au moins 24 heures avant le renouvellement.
+
+Confidentialité : https://tourchip.web.app/privacy
+Conditions : https://tourchip.web.app/terms
+Contact : service.softchip@gmail.com

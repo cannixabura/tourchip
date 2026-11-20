@@ -8,7 +8,7 @@ import html, json, os, re, subprocess
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 H = f'{ROOT}/hosting'
 SITE = 'https://tourchip.web.app'
-LANGS = ['zh-Hans', 'en', 'ja', 'ko', 'ms', 'id', 'vi', 'th', 'pt', 'es', 'hi']
+LANGS = ['zh-Hans', 'en', 'ja', 'ko', 'ms', 'id', 'vi', 'th', 'pt', 'es', 'hi', 'fr', 'de', 'it', 'cs', 'pl', 'uk']
 
 # 讀 home-i18n.js 的 window.TC_I18N
 I18N = json.loads(subprocess.run(['node', '-e', '''

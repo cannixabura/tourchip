@@ -19,5 +19,53 @@
     "photo": "लाइब्रेरी से फ़ोटो चुनकर प्रोफ़ाइल फ़ोटो बनाएँ या AI असिस्टेंट AIYA को दिखाएँ।",
     "name": "टूर ग्रुप",
     "mic": "AI असिस्टेंट AIYA से आवाज़ में बात करें। आपकी आवाज़ सिर्फ़ कॉल के दौरान रियल-टाइम में OpenAI को भेजी जाती है और रिकॉर्ड नहीं होती।"
+  },
+  "fr": {
+    "loc": "TourChip utilise votre position pendant que vous utilisez l'app pour afficher la distance et la direction du point de rassemblement. Si vous acceptez le partage, les personnes de votre groupe (accompagnateurs compris) voient votre position sur la carte. Tant que vous êtes dans un groupe, elle continue de se mettre à jour en arrière-plan (indiqué dans la barre d'état) pour les alertes d'éloignement et le pointage automatique au point de rassemblement, et s'arrête quand vous quittez le groupe ou à sa clôture. Vous pouvez désactiver cette option à tout moment dans les Réglages.",
+    "cam": "Scannez le QR code d'invitation de votre accompagnateur ou un bon, ou prenez une photo pour interroger AIYA, l'assistante IA, sur un monument, un menu ou un panneau.",
+    "photo": "Choisissez une photo de votre photothèque comme avatar ou pour la montrer à AIYA, l'assistante IA.",
+    "name": "En groupe",
+    "mic": "Parlez à AIYA, l'assistante IA, de vive voix. Votre voix est envoyée en direct à OpenAI uniquement pendant un appel et n'est pas enregistrée. Les accompagnateurs utilisent aussi le micro pour les diffusions vocales : leur voix va uniquement aux auditeurs de leur groupe et n'est pas enregistrée. L'interprète utilise également le micro pour entendre vous et votre interlocuteur ; rien n'est enregistré.",
+    "speech": "L'interprète gratuit utilise la reconnaissance vocale intégrée de votre iPhone (gérée par Apple) pour transformer ce que vous et votre interlocuteur dites en texte à traduire. TourChip ne reçoit ni ne conserve jamais votre voix."
+  },
+  "de": {
+    "loc": "TourChip nutzt deinen Standort, während du die App verwendest, um Entfernung und Richtung zum Treffpunkt anzuzeigen. Wenn du dem Teilen zustimmst, sehen Personen in deiner Gruppe (auch die Reiseleitung) deinen Standort auf der Karte. Solange du in einer Gruppe bist, wird er im Hintergrund weiter aktualisiert (in der Statusleiste angezeigt) – für Abstandswarnungen und den automatischen Check-in am Treffpunkt – und stoppt, wenn du austrittst oder die Gruppe endet. Du kannst das jederzeit in den Einstellungen ausschalten.",
+    "cam": "Scanne den Beitritts-QR-Code deiner Reiseleitung oder einen Gruppenpass, oder mach ein Foto, um AIYA, die KI-Assistentin, zu einer Sehenswürdigkeit, Speisekarte oder einem Schild zu fragen.",
+    "photo": "Wähle ein Foto aus deiner Mediathek als Profilbild oder um es AIYA, der KI-Assistentin, zu zeigen.",
+    "name": "Gruppenreise",
+    "mic": "Sprich per Sprachanruf mit AIYA, der KI-Assistentin. Deine Stimme wird nur während eines Anrufs live an OpenAI gesendet und nicht aufgenommen. Die Reiseleitung nutzt das Mikrofon auch für Live-Durchsagen: Ihre Stimme geht nur an Zuhörende der eigenen Gruppe und wird nicht aufgenommen. Der Dolmetscher nutzt das Mikrofon ebenfalls, um dich und dein Gegenüber zu hören; nichts wird aufgenommen.",
+    "speech": "Der Gratis-Dolmetscher nutzt die integrierte Spracherkennung deines iPhones (von Apple verarbeitet), um das Gesagte von dir und deinem Gegenüber für die Übersetzung in Text umzuwandeln. TourChip erhält oder speichert deine Stimme nie."
+  },
+  "it": {
+    "loc": "TourChip usa la tua posizione mentre usi l'app per mostrare distanza e direzione del punto di ritrovo. Se accetti di condividerla, le persone del tuo gruppo (capigruppo compresi) vedono la tua posizione sulla mappa. Mentre sei in un gruppo, continua ad aggiornarsi in background (indicato nella barra di stato) per gli avvisi di allontanamento e la presenza automatica al punto di ritrovo, e si ferma quando esci o il gruppo termina. Puoi disattivarla quando vuoi nelle Impostazioni.",
+    "cam": "Scansiona il QR code del capogruppo per entrare o un pass di gruppo, oppure scatta una foto per chiedere ad AIYA, l'assistente IA, di un monumento, un menu o un cartello.",
+    "photo": "Scegli una foto dalla libreria come immagine del profilo o da mostrare ad AIYA, l'assistente IA.",
+    "name": "Comitiva",
+    "mic": "Parla a voce con AIYA, l'assistente IA. La tua voce viene inviata in tempo reale a OpenAI solo durante una chiamata e non viene registrata. I capigruppo usano il microfono anche per le dirette: la loro voce arriva solo agli ascoltatori del proprio gruppo e non viene registrata. Anche l'interprete usa il microfono per sentire te e l'altra persona; non viene registrato nulla.",
+    "speech": "L'interprete gratuito usa il riconoscimento vocale integrato dell'iPhone (gestito da Apple) per trasformare in testo ciò che dite tu e l'altra persona e tradurlo. TourChip non riceve né conserva mai la tua voce."
+  },
+  "cs": {
+    "loc": "TourChip používá vaši polohu, když aplikaci používáte, aby ukázal vzdálenost a směr k místu srazu. Pokud souhlasíte se sdílením, lidé ve vaší skupině (včetně vedoucích) uvidí vaši polohu na mapě. Dokud jste ve skupině, poloha se aktualizuje i na pozadí (zobrazeno ve stavovém řádku) kvůli upozornění na odpojení od skupiny a automatické prezenci na místě srazu; přestane, když skupinu opustíte nebo skončí. V Nastavení to můžete kdykoli vypnout.",
+    "cam": "Naskenujte QR kód vedoucího pro připojení ke skupině nebo voucher, případně vyfoťte památku, jídelní lístek či nápis a zeptejte se na ně AI asistentky AIYA.",
+    "photo": "Vyberte fotku z galerie jako svůj profilový obrázek nebo ji ukažte AI asistentce AIYA.",
+    "name": "Zájezd",
+    "mic": "Mluvte s AI asistentkou AIYA hlasem. Váš hlas se posílá živě do OpenAI jen během hovoru a nenahrává se. Mikrofon používají i vedoucí pro živý výklad: jejich hlas jde jen posluchačům z jejich skupiny a nenahrává se. Tlumočník také používá mikrofon, aby slyšel vás i druhou osobu; nic se nenahrává.",
+    "speech": "Bezplatný tlumočník používá vestavěné rozpoznávání řeči iPhonu (zajišťuje Apple), aby převedl, co říkáte vy a druhá osoba, na text k překladu. TourChip váš hlas nikdy nedostává ani neukládá."
+  },
+  "pl": {
+    "loc": "TourChip korzysta z lokalizacji, gdy używasz aplikacji, żeby pokazać odległość i kierunek do miejsca zbiórki. Jeśli zgodzisz się na udostępnianie, osoby z twojej grupy (łącznie z pilotami) widzą twoją lokalizację na mapie. Gdy jesteś w grupie, lokalizacja aktualizuje się też w tle (widać to na pasku stanu) na potrzeby alertów o odłączeniu i automatycznej obecności w miejscu zbiórki, a przestaje po opuszczeniu lub zakończeniu grupy. Możesz to wyłączyć w Ustawieniach w każdej chwili.",
+    "cam": "Zeskanuj kod QR pilota do dołączenia lub voucher grupowy albo zrób zdjęcie, żeby zapytać asystentkę AI AIYA o zabytek, menu czy napis.",
+    "photo": "Wybierz zdjęcie z galerii jako awatar lub żeby pokazać je asystentce AI AIYA.",
+    "name": "Wycieczka",
+    "mic": "Rozmawiaj głosowo z asystentką AI AIYA. Twój głos jest przesyłany na żywo do OpenAI tylko podczas rozmowy i nie jest nagrywany. Piloci używają też mikrofonu do transmisji na żywo: ich głos trafia tylko do słuchaczy z ich grupy i nie jest nagrywany. Tłumacz również używa mikrofonu, żeby słyszeć ciebie i rozmówcę; nic nie jest nagrywane.",
+    "speech": "Darmowy tłumacz korzysta z wbudowanego rozpoznawania mowy w iPhonie (obsługiwanego przez Apple), żeby zamienić to, co mówisz ty i rozmówca, na tekst do tłumaczenia. TourChip nigdy nie otrzymuje ani nie przechowuje twojego głosu."
+  },
+  "uk": {
+    "loc": "TourChip використовує ваше місцезнаходження, поки ви користуєтеся застосунком, щоб показувати відстань і напрямок до місця збору. Якщо ви погодитеся ділитися, люди з вашої групи (включно з керівниками) бачитимуть вас на карті. Поки ви в групі, місцезнаходження оновлюється у фоні (це видно в рядку стану) для попереджень про відставання й автовідмітки на місці збору; оновлення зупиняється, коли ви виходите або група завершується. Вимкнути це можна будь-коли в Параметрах.",
+    "cam": "Скануйте QR-код для вступу від керівника групи чи ваучер або сфотографуйте пам'ятку, меню чи вивіску, щоб запитати про них AIYA — помічницю на основі ШІ.",
+    "photo": "Виберіть фото з галереї для аватара або щоб показати його AIYA — помічниці на основі ШІ.",
+    "name": "Тургрупа",
+    "mic": "Говоріть з AIYA, помічницею на основі ШІ, голосом. Ваш голос надсилається в OpenAI в реальному часі лише під час дзвінка й не записується. Керівники також використовують мікрофон для живого ефіру: їхній голос чують лише слухачі з їхньої групи, і він не записується. Перекладач теж використовує мікрофон, щоб чути вас і співрозмовника; нічого не записується.",
+    "speech": "Безкоштовний перекладач використовує вбудоване розпізнавання мовлення iPhone (обробляє Apple), щоб перетворити сказане вами й співрозмовником на текст для перекладу. TourChip ніколи не отримує й не зберігає ваш голос."
   }
 }

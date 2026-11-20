@@ -1,4 +1,4 @@
-"""官網分享預覽圖（OG 圖，1200×630）：12 種語言各一張。
+"""官網分享預覽圖（OG 圖，1200×630）：18 種語言各一張；用法 python3 tool/gen_og.py [語言…]（不給就全部重畫）。
 用法：python3 tool/gen_og.py
 輸出：hosting/img/og/<lang>.jpg（繁中另外沿用 hosting/img/og.jpg 給首頁 /）
 畫法和原本的繁中圖一樣：左邊 App 圖示，右邊「App 名稱」＋一句副標，夜光紫背景。
@@ -26,6 +26,12 @@ TEXT = {
     'pt': ('', 'Encontros, chamada e avisos. Ninguém fica para trás.'),
     'es': ('', 'Encuentros, lista y avisos. Nadie se queda atrás.'),
     'hi': ('', 'इकट्ठा होना, हाज़िरी, सूचनाएँ। कोई पीछे नहीं छूटेगा।'),
+    'fr': ('', 'Rassemblements, appel et annonces. Personne n’est oublié.'),
+    'de': ('', 'Sammeln, Durchzählen, Mitteilungen. Niemand bleibt zurück.'),
+    'it': ('', 'Ritrovi, appello e avvisi. Nessuno resta indietro.'),
+    'cs': ('', 'Srazy, prezence a oznámení. Nikdo nezůstane pozadu.'),
+    'pl': ('', 'Zbiórki, obecność i ogłoszenia. Nikt nie zostanie w tyle.'),
+    'uk': ('', 'Збори, перекличка й оголошення. Ніхто не відстане.'),
 }
 FONT = {'zh-Hant': 'PingFang TC', 'zh-Hans': 'PingFang SC', 'ja': 'Hiragino Sans', 'ko': 'Apple SD Gothic Neo',
         'th': 'Thonburi', 'hi': 'Kohinoor Devanagari'}
@@ -52,7 +58,8 @@ p{{margin:26px 0 0;font-size:{34 if long_sub else 40}px;line-height:1.4;color:#c
 
 def main():
     os.makedirs(OUT, exist_ok=True)
-    for lang in TEXT:
+    import sys
+    for lang in (sys.argv[1:] or TEXT):
         with tempfile.NamedTemporaryFile('w', suffix='.html', delete=False, encoding='utf-8') as f:
             f.write(page(lang))
             tmp = f.name

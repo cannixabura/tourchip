@@ -1,0 +1,7 @@
+/* App name and permission descriptions (Info.plist translations) */
+"CFBundleDisplayName" = "Wycieczka";
+"NSLocationWhenInUseUsageDescription" = "TourChip korzysta z lokalizacji, gdy używasz aplikacji, żeby pokazać odległość i kierunek do miejsca zbiórki. Jeśli zgodzisz się na udostępnianie, osoby z twojej grupy (łącznie z pilotami) widzą twoją lokalizację na mapie. Gdy jesteś w grupie, lokalizacja aktualizuje się też w tle (widać to na pasku stanu) na potrzeby alertów o odłączeniu i automatycznej obecności w miejscu zbiórki, a przestaje po opuszczeniu lub zakończeniu grupy. Możesz to wyłączyć w Ustawieniach w każdej chwili.";
+"NSCameraUsageDescription" = "Zeskanuj kod QR pilota do dołączenia lub voucher grupowy albo zrób zdjęcie, żeby zapytać asystentkę AI AIYA o zabytek, menu czy napis.";
+"NSPhotoLibraryUsageDescription" = "Wybierz zdjęcie z galerii jako awatar lub żeby pokazać je asystentce AI AIYA.";
+"NSMicrophoneUsageDescription" = "Rozmawiaj głosowo z asystentką AI AIYA. Twój głos jest przesyłany na żywo do OpenAI tylko podczas rozmowy i nie jest nagrywany. Piloci używają też mikrofonu do transmisji na żywo: ich głos trafia tylko do słuchaczy z ich grupy i nie jest nagrywany. Tłumacz również używa mikrofonu, żeby słyszeć ciebie i rozmówcę; nic nie jest nagrywane.";
+"NSSpeechRecognitionUsageDescription" = "Darmowy tłumacz korzysta z wbudowanego rozpoznawania mowy w iPhonie (obsługiwanego przez Apple), żeby zamienić to, co mówisz ty i rozmówca, na tekst do tłumaczenia. TourChip nigdy nie otrzymuje ani nie przechowuje twojego głosu.";

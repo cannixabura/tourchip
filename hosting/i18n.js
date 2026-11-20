@@ -1,4 +1,4 @@
-// 官網頁面的多語言：依瀏覽器語言顯示（繁中、簡中、英、日、韓、馬來、印尼、越南、泰、葡萄牙、西班牙、印地），其他語言用英文。
+// 官網頁面的多語言：依瀏覽器語言顯示（繁中、簡中、英、日、韓、馬來、印尼、越南、泰、葡萄牙、西班牙、印地、法、德、義大利、捷克、波蘭、烏克蘭），其他語言用英文。
 // 頁面上 data-t="key" 的元素會換成對應文字；data-t-html 允許 HTML 標記；data-ta 翻譯屬性；
 // select[data-lang] 是手動切換語言的選單（記在 localStorage）；網址 ?lang=xx 也可以指定語言。
 (function () {
@@ -266,6 +266,174 @@
       v_h: '<b>Tour</b>Chip वाउचर',
       v_1: 'आपकी एजेंसी का वाउचर (ग्रुप-साइज़ पास या डे पास)। ग्रुप शुरू करने के बाद लीडर इसे "पास → वाउचर स्कैन करें" में स्कैन करते हैं।',
       v_open: 'इस्तेमाल करने के लिए TourChip खोलें'
+    },
+    fr: {
+      home_title: 'TourChip · Rassemblements et appels pour les voyages de groupe',
+      home_h: '<b>Tour</b>Chip',
+      home_1: 'Scannez pour rejoindre. Tout le monde entend l\'appel au rassemblement.',
+      home_2: 'L\'outil de groupe des accompagnateurs et guides : appels au rassemblement, appel nominal, faisceau lumineux 3D au point de rassemblement, votre groupe sur la carte et « Je suis perdu ».',
+      home_3: 'Gratuit jusqu\'à 20 personnes · Toujours gratuit pour les membres',
+      privacy: 'Confidentialité',
+      terms: 'Conditions',
+      ios: 'Télécharger dans l\'App Store',
+      android: 'Disponible sur Google Play',
+      g_title: 'Rejoindre un groupe · TourChip',
+      g_h: 'Rejoindre un groupe <b>Tour</b>Chip',
+      g_1: 'Ce groupe est privé. Seules les personnes ayant le lien de l\'accompagnateur peuvent le rejoindre.',
+      g_open: 'Ouvrir TourChip pour rejoindre',
+      g_2: 'App déjà installée ? Scanner le QR code avec l\'appareil photo ouvre l\'app. Vous pouvez aussi toucher « Scanner » ou « Rejoindre avec un code » dans l\'app.',
+      g_inv: 'Code d\'invitation',
+      g_3: 'Pas encore l\'app ? Touchez un bouton de téléchargement ci-dessus. Ouvrez l\'app après l\'installation et vous rejoindrez le groupe automatiquement (sur iPhone, touchez « Autoriser le collage »). Sinon, scannez à nouveau ce QR code, ou touchez « Rejoindre avec un code » et saisissez le numéro ci-dessus.',
+      l_title: 'Accompagnateur · TourChip',
+      l_kicker: 'TourChip · Carte d\'accompagnateur',
+      l_flowers: 'fleurs des membres',
+      l_empty: 'Pas encore de remerciements publics.',
+      l_missing: 'Cette carte est introuvable, ou l\'accompagnateur l\'a rendue privée.',
+      l_more: 'À propos de l\'app TourChip',
+      v_title: 'Bon TourChip',
+      v_h: 'Bon <b>Tour</b>Chip',
+      v_1: 'Un bon de votre agence (pass grand groupe ou pass 7 jours). Après avoir créé le groupe, l\'accompagnateur le scanne dans « Pass → Scanner un bon ».',
+      v_open: 'Ouvrir TourChip pour l\'utiliser'
+    },
+    de: {
+      home_title: 'TourChip · Sammeln und Durchzählen für Gruppenreisen',
+      home_h: '<b>Tour</b>Chip',
+      home_1: 'Scannen und beitreten. Alle hören den Sammelruf.',
+      home_2: 'Ein Gruppen-Tool für Reiseleitungen und Guides: Sammelrufe, Durchzählen, eine 3D-Lichtsäule am Treffpunkt, die Gruppe auf der Karte sehen und „Ich hab mich verlaufen“.',
+      home_3: 'Gratis bis 20 Personen · Für Mitglieder immer gratis',
+      privacy: 'Datenschutz',
+      terms: 'Nutzungsbedingungen',
+      ios: 'Laden im App Store',
+      android: 'Jetzt bei Google Play',
+      g_title: 'Gruppe beitreten · TourChip',
+      g_h: 'Einer <b>Tour</b>Chip-Gruppe beitreten',
+      g_1: 'Das ist eine private Gruppe. Nur wer den Link der Reiseleitung hat, kann beitreten.',
+      g_open: 'TourChip öffnen und beitreten',
+      g_2: 'Schon installiert? Wenn du den QR-Code mit der Kamera scannst, öffnet sich die App. Du kannst in der App auch auf „Scannen“ oder „Mit Einladungscode beitreten“ tippen.',
+      g_inv: 'Einladungscode',
+      g_3: 'Noch keine App? Tippe oben auf einen Download-Button. Öffne die App nach der Installation, dann trittst du automatisch bei (auf dem iPhone „Einsetzen erlauben“ tippen). Falls nicht, scanne diesen QR-Code noch einmal oder tippe auf „Mit Einladungscode beitreten“ und gib die Nummer oben ein.',
+      l_title: 'Reiseleitung · TourChip',
+      l_kicker: 'TourChip · Karte der Reiseleitung',
+      l_flowers: 'Blumen von Mitgliedern',
+      l_empty: 'Noch keine öffentlichen Dankesworte.',
+      l_missing: 'Diese Karte wurde nicht gefunden oder die Reiseleitung hat sie auf privat gestellt.',
+      l_more: 'Über die TourChip-App',
+      v_title: 'TourChip-Gutschein',
+      v_h: '<b>Tour</b>Chip-Gutschein',
+      v_1: 'Ein Gutschein deiner Agentur (Gruppenpass oder Tagespass). Nach dem Start einer Gruppe scannt die Reiseleitung ihn unter „Pässe → Gutschein scannen“.',
+      v_open: 'TourChip öffnen und einlösen'
+    },
+    it: {
+      home_title: 'TourChip · Ritrovi e appelli per i viaggi di gruppo',
+      home_h: '<b>Tour</b>Chip',
+      home_1: 'Scansiona per entrare. Tutti sentono la chiamata di ritrovo.',
+      home_2: 'Uno strumento per capigruppo e guide: chiamate di ritrovo, appello, un raggio di luce 3D sul punto di ritrovo, il gruppo sulla mappa e "Mi sono perso".',
+      home_3: 'Gratis fino a 20 persone · Sempre gratis per i partecipanti',
+      privacy: 'Privacy',
+      terms: 'Termini',
+      ios: 'Scarica su App Store',
+      android: 'Disponibile su Google Play',
+      g_title: 'Entra in un gruppo · TourChip',
+      g_h: 'Entra in un gruppo <b>Tour</b>Chip',
+      g_1: 'Questo è un gruppo privato. Può entrare solo chi ha il link del capogruppo.',
+      g_open: 'Apri TourChip per entrare',
+      g_2: 'Hai già l\'app? Scansionando il QR code con la fotocamera si apre l\'app. Puoi anche toccare "Scansiona" o "Entra con codice invito" nell\'app.',
+      g_inv: 'Codice invito',
+      g_3: 'Non hai ancora l\'app? Tocca uno dei pulsanti di download qui sopra. Apri l\'app dopo l\'installazione ed entrerai in automatico (su iPhone tocca "Consenti incolla"). Se non succede, scansiona di nuovo questo QR code oppure tocca "Entra con codice invito" e inserisci il numero qui sopra.',
+      l_title: 'Capogruppo · TourChip',
+      l_kicker: 'TourChip · Scheda del capogruppo',
+      l_flowers: 'fiori dai partecipanti',
+      l_empty: 'Ancora nessun ringraziamento pubblico.',
+      l_missing: 'Scheda non trovata, oppure il capogruppo l\'ha resa privata.',
+      l_more: 'Scopri l\'app TourChip',
+      v_title: 'Voucher TourChip',
+      v_h: 'Voucher <b>Tour</b>Chip',
+      v_1: 'Un voucher della tua agenzia (pass gruppo o pass giorni). Dopo aver creato il gruppo, il capogruppo lo scansiona in "Pass → Scansiona voucher".',
+      v_open: 'Apri TourChip per usarlo'
+    },
+    cs: {
+      home_title: 'TourChip · Srazy a prezence pro skupinové zájezdy',
+      home_h: '<b>Tour</b>Chip',
+      home_1: 'Naskenujte a připojte se. Svolání na sraz uslyší každý.',
+      home_2: 'Nástroj pro vedoucí zájezdů a průvodce: svolání na sraz, prezence, 3D světelný sloup na místě srazu, skupina na mapě a „Nevím, kde jsem“.',
+      home_3: 'Zdarma až pro 20 lidí · Pro účastníky vždy zdarma',
+      privacy: 'Ochrana soukromí',
+      terms: 'Podmínky',
+      ios: 'Stáhnout v App Store',
+      android: 'Získat na Google Play',
+      g_title: 'Připojit se ke skupině · TourChip',
+      g_h: 'Připojte se ke skupině <b>Tour</b>Chip',
+      g_1: 'Toto je soukromá skupina. Připojit se mohou jen lidé s odkazem od vedoucího.',
+      g_open: 'Otevřít TourChip a připojit se',
+      g_2: 'Už aplikaci máte? Naskenováním QR kódu fotoaparátem se aplikace otevře. V aplikaci můžete také klepnout na „Naskenovat“ nebo „Připojit se kódem pozvánky“.',
+      g_inv: 'Kód pozvánky',
+      g_3: 'Ještě nemáte aplikaci? Klepněte na tlačítko ke stažení výše. Po instalaci aplikaci otevřete a připojíte se automaticky (na iPhonu klepněte na „Povolit vložení“). Pokud se to nestane, naskenujte tento QR kód znovu nebo klepněte na „Připojit se kódem pozvánky“ a zadejte číslo výše.',
+      l_title: 'Vedoucí zájezdu · TourChip',
+      l_kicker: 'TourChip · Karta vedoucího',
+      l_flowers: 'květin od účastníků',
+      l_empty: 'Zatím žádná veřejná poděkování.',
+      l_missing: 'Tato karta nebyla nalezena, nebo ji vedoucí skryl.',
+      l_more: 'O aplikaci TourChip',
+      v_title: 'Voucher TourChip',
+      v_h: 'Voucher <b>Tour</b>Chip',
+      v_1: 'Voucher od vaší cestovní kanceláře (rozšíření skupiny nebo denní pas). Po založení skupiny ho vedoucí naskenuje v „Pasy → Naskenovat voucher“.',
+      v_open: 'Otevřít TourChip a použít'
+    },
+    pl: {
+      home_title: 'TourChip · Zbiórki i sprawdzanie obecności na wycieczkach grupowych',
+      home_h: '<b>Tour</b>Chip',
+      home_1: 'Zeskanuj i dołącz. Każdy usłyszy zbiórkę.',
+      home_2: 'Narzędzie dla pilotów i przewodników: wezwania na zbiórkę, sprawdzanie obecności, świetlny słup 3D w miejscu zbiórki, grupa na mapie i przycisk „Zgubiłem(-am) się”.',
+      home_3: 'Za darmo do 20 osób · Uczestnicy zawsze za darmo',
+      privacy: 'Prywatność',
+      terms: 'Warunki',
+      ios: 'Pobierz z App Store',
+      android: 'Pobierz z Google Play',
+      g_title: 'Dołącz do grupy · TourChip',
+      g_h: 'Dołącz do grupy <b>Tour</b>Chip',
+      g_1: 'To prywatna grupa. Dołączyć mogą tylko osoby z linkiem od pilota.',
+      g_open: 'Otwórz TourChip, żeby dołączyć',
+      g_2: 'Masz już aplikację? Zeskanowanie kodu QR aparatem ją otworzy. Możesz też dotknąć w aplikacji „Skanuj” lub „Dołącz kodem zaproszenia”.',
+      g_inv: 'Kod zaproszenia',
+      g_3: 'Nie masz aplikacji? Dotknij przycisku pobierania powyżej. Po instalacji otwórz aplikację, a dołączysz automatycznie (na iPhonie dotknij „Zezwól na wklejanie”). Jeśli to nie zadziała, zeskanuj ten kod QR ponownie albo dotknij „Dołącz kodem zaproszenia” i wpisz numer powyżej.',
+      l_title: 'Pilot wycieczki · TourChip',
+      l_kicker: 'TourChip · Karta pilota',
+      l_flowers: 'kwiatów od uczestników',
+      l_empty: 'Brak publicznych podziękowań.',
+      l_missing: 'Nie znaleziono tej karty albo pilot ustawił ją jako prywatną.',
+      l_more: 'O aplikacji TourChip',
+      v_title: 'Voucher TourChip',
+      v_h: 'Voucher <b>Tour</b>Chip',
+      v_1: 'Voucher od biura podróży (pakiet osób lub pakiet dni). Po utworzeniu grupy pilot skanuje go w „Pakiety → Zeskanuj voucher”.',
+      v_open: 'Otwórz TourChip, żeby go użyć'
+    },
+    uk: {
+      home_title: 'TourChip · Збори й переклички для групових подорожей',
+      home_h: '<b>Tour</b>Chip',
+      home_1: 'Скануйте, щоб приєднатися. Сигнал збору почують усі.',
+      home_2: 'Інструмент для керівників груп і гідів: сигнали збору, перекличка, 3D-промінь світла на місці збору, група на карті та кнопка «Не знаходжу групу».',
+      home_3: 'Безкоштовно до 20 осіб · Для учасників завжди безкоштовно',
+      privacy: 'Конфіденційність',
+      terms: 'Умови',
+      ios: 'Завантажити в App Store',
+      android: 'Завантажити з Google Play',
+      g_title: 'Приєднатися до групи · TourChip',
+      g_h: 'Приєднайтеся до групи в <b>Tour</b>Chip',
+      g_1: 'Це закрита група. Приєднатися можуть лише ті, хто має посилання від керівника.',
+      g_open: 'Відкрити TourChip і приєднатися',
+      g_2: 'Застосунок уже встановлено? Скануйте QR-код камерою — і він відкриється. Також можна натиснути в застосунку «Сканувати» або «Приєднатися за кодом».',
+      g_inv: 'Код запрошення',
+      g_3: 'Ще немає застосунку? Натисніть кнопку завантаження вище. Після встановлення відкрийте застосунок — і ви приєднаєтеся автоматично (на iPhone натисніть «Дозволити вставлення»). Якщо не вийшло, скануйте цей QR-код ще раз або натисніть «Приєднатися за кодом» і введіть номер вище.',
+      l_title: 'Керівник групи · TourChip',
+      l_kicker: 'TourChip · Картка керівника групи',
+      l_flowers: 'квітів від учасників',
+      l_empty: 'Публічних подяк поки немає.',
+      l_missing: 'Картку не знайдено, або керівник зробив її приватною.',
+      l_more: 'Про застосунок TourChip',
+      v_title: 'Ваучер TourChip',
+      v_h: 'Ваучер <b>Tour</b>Chip',
+      v_1: 'Ваучер від вашої агенції (пакет учасників або пакет днів). Після створення групи керівник сканує його в розділі «Пакети → Сканувати ваучер».',
+      v_open: 'Відкрити TourChip і використати'
     }
   };
 
@@ -275,7 +443,7 @@
 
   var SHOT_DIRS = { 'zh-Hant': 'zh', 'zh-Hans': 'zh-Hans', en: 'en', ja: 'ja', ko: 'ko', ms: 'ms', id: 'id', vi: 'vi', th: 'th', pt: 'pt', es: 'es', hi: 'hi' };
   function shotDir(lang) { return SHOT_DIRS[lang] || 'en'; }
-  var NAMES = { 'zh-Hant': '繁體中文', 'zh-Hans': '简体中文', en: 'English', ja: '日本語', ko: '한국어', ms: 'Bahasa Melayu', id: 'Bahasa Indonesia', vi: 'Tiếng Việt', th: 'ไทย', pt: 'Português', es: 'Español', hi: 'हिन्दी' };
+  var NAMES = { 'zh-Hant': '繁體中文', 'zh-Hans': '简体中文', en: 'English', ja: '日本語', ko: '한국어', ms: 'Bahasa Melayu', id: 'Bahasa Indonesia', vi: 'Tiếng Việt', th: 'ไทย', pt: 'Português', es: 'Español', hi: 'हिन्दी', fr: 'Français', de: 'Deutsch', it: 'Italiano', cs: 'Čeština', pl: 'Polski', uk: 'Українська' };
 
   function norm(tag) {
     tag = String(tag || '').toLowerCase().replace(/_/g, '-');
@@ -287,7 +455,7 @@
 
   // 首頁的各語言網址 /en/、/ja/ …（tool/gen_lang_pages.py 產生，分享預覽才會是該語言）；繁中是 /
   function pathLang() {
-    var m = location.pathname.match(/^\/(zh-Hans|en|ja|ko|ms|id|vi|th|pt|es|hi)\/?$/);
+    var m = location.pathname.match(/^\/(zh-Hans|en|ja|ko|ms|id|vi|th|pt|es|hi|fr|de|it|cs|pl|uk)\/?$/);
     return m ? m[1] : null;
   }
   function isHome() { return location.pathname === '/' || location.pathname === '/index.html' || !!pathLang(); }

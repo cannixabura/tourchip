@@ -33,10 +33,12 @@ T = {
            'เลือกรูปจากคลังภาพเป็นรูปโปรไฟล์'),
 }
 
-# 葡萄牙、西班牙、印地：譯文在 tool/i18n/infoplist_extra.json
+# 葡萄牙、西班牙、印地、法、德、義大利、捷克、波蘭、烏克蘭：譯文在 tool/i18n/infoplist_extra.json
+# （有 name、mic、speech 的也一起寫進新檔案）
 import json as _json
-for _l, _v in _json.load(open('tool/i18n/infoplist_extra.json', encoding='utf-8')).items():
-    T[_l] = ('TourChip', _v['loc'], _v['cam'], _v['photo'])
+EXTRA = _json.load(open('tool/i18n/infoplist_extra.json', encoding='utf-8'))
+for _l, _v in EXTRA.items():
+    T[_l] = (_v.get('name', 'TourChip'), _v['loc'], _v['cam'], _v['photo'])
 
 def esc(s): return s.replace('\\', '\\\\').replace('"', '\\"')
 
@@ -51,7 +53,9 @@ for lang, (name, loc, cam, photo) in T.items():
         f'"CFBundleDisplayName" = "{esc(name)}";\n'
         f'"NSLocationWhenInUseUsageDescription" = "{esc(loc)}";\n'
         f'"NSCameraUsageDescription" = "{esc(cam)}";\n'
-        f'"NSPhotoLibraryUsageDescription" = "{esc(photo)}";\n', encoding='utf-8')
+        f'"NSPhotoLibraryUsageDescription" = "{esc(photo)}";\n'
+        + (f'"NSMicrophoneUsageDescription" = "{esc(EXTRA[lang]["mic"])}";\n' if 'mic' in EXTRA.get(lang, {}) else '')
+        + (f'"NSSpeechRecognitionUsageDescription" = "{esc(EXTRA[lang]["speech"])}";\n' if 'speech' in EXTRA.get(lang, {}) else ''), encoding='utf-8')
 
 # Xcode 專案：variant group 加入新的語言、knownRegions 加入語言
 p = pathlib.Path('ios/Runner.xcodeproj/project.pbxproj')
@@ -70,7 +74,7 @@ p.write_text(s, encoding='utf-8')
 # Info.plist：CFBundleLocalizations 列出全部語言（App Store 顯示支援的語言）
 ip = root / 'Info.plist'
 x = ip.read_text(encoding='utf-8')
-langs = ['en', 'zh-Hant', 'zh-Hans', 'ja', 'ko', 'ms', 'id', 'vi', 'th', 'pt', 'es', 'hi']
+langs = ['en', 'zh-Hant', 'zh-Hans', 'ja', 'ko', 'ms', 'id', 'vi', 'th', 'pt', 'es', 'hi', 'fr', 'de', 'it', 'cs', 'pl', 'uk']
 arr = '<key>CFBundleLocalizations</key>\n\t<array>\n' + ''.join(f'\t\t<string>{l}</string>\n' for l in langs) + '\t</array>'
 x = re.sub(r'<key>CFBundleLocalizations</key>\s*<array>.*?</array>', arr, x, count=1, flags=re.S)
 ip.write_text(x, encoding='utf-8')

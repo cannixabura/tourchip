@@ -91,5 +91,47 @@
     "keywords": "गाइड,यात्रा,हाज़िरी,guide,meetup,headcount,school trip,itinerary",
     "desc": "ग्रुप यात्रा में सबसे बड़ा डर है किसी का पीछे छूट जाना। TourChip टूर लीडर, गाइड, टीचर और क्लब आयोजकों के लिए ग्रुप टूल है: एक ग्रुप शुरू करें, और सदस्य QR कोड स्कैन करके जुड़ जाते हैं। न फ़्रेंड रिक्वेस्ट, न फ़ोन नंबर।\n\nइकट्ठा होने की कॉल, हर फ़ोन पर\nरोशनी के खंभे को मिलने की जगह पर खींचें और समय चुनें। ग्रुप के हर फ़ोन पर ख़ास आवाज़ बजती है, फ़ोकस मोड में भी। जिसने \"मिल गया\" नहीं दबाया, उसे हर मिनट याद दिलाया जाता है, 3 बार तक। किसी एक सब-ग्रुप या सिर्फ़ एक व्यक्ति को भी बुला सकते हैं।\n\nमिलने की जगह, रोशनी का खंभा\nसदस्य एक चमकता 3D रात का मैप देखते हैं जो उनके फ़ोन के साथ घूमता है। मिलने की जगह इमारतों के बीच रोशनी के खंभे की तरह खड़ी दिखती है, साथ में स्थानीय समय, काउंटडाउन, दूरी और दिशा।\n\nहाज़िरी\nसदस्य \"मैं यहाँ हूँ\", \"5 मिनट और\" या \"मदद चाहिए\" से जवाब देते हैं। जिन्हें मदद चाहिए वे सबसे ऊपर दिखते हैं, और लीडरों को अलर्ट मिलता है।\n\nमैप पर अपना ग्रुप देखें\nशेयर करने की सहमति के बाद, एक ही ग्रुप के लोग 3D मैप पर एक-दूसरे की फ़ोटो देखते हैं और बबल पोस्ट कर सकते हैं। फ़ोटो को देर तक दबाकर मैसेज भेजें, सामने वाले को तुरंत नोटिफ़िकेशन मिलता है। सिर्फ़ आपका ग्रुप आपको देख सकता है; सेटिंग्स में कभी भी शेयरिंग बंद करें। ग्रुप छोड़ने या ख़त्म होने पर लोकेशन डिलीट हो जाती है।\n\nमुझे रास्ता नहीं मिल रहा\nएक टैप से आपकी अभी की लोकेशन लीडरों को आपके नंबर के साथ लाल बिंदु के रूप में पहुँचती है। 30 मिनट बाद यह डिलीट हो जाती है।\n\nसूचनाएँ और यात्रा कार्यक्रम\nसूचनाएँ सबको या किसी सब-ग्रुप को भेजें। यात्रा कार्यक्रम का समय हमेशा हर मिलने की जगह के स्थानीय टाइम ज़ोन में होता है।\n\nसुरक्षा\n- अकाउंट नहीं; न फ़ोन नंबर, न ईमेल, न असली नाम\n- मैसेज फ़िल्टर होते हैं, और आप ब्लॉक और रिपोर्ट कर सकते हैं\n- 18 साल से कम उम्र के सदस्यों को लोकेशन शेयर करने या मैसेज भेजने के लिए माता-पिता या अभिभावक की सहमति चाहिए\n- आख़िरी दिन 23:59 पर ग्रुप अपने आप ख़त्म हो जाता है और सब कुछ डिलीट हो जाता है\n\nक़ीमत\n20 लोगों तक मुफ़्त, सदस्यों के लिए हमेशा मुफ़्त। 21वें सदस्य से, लीडर एक बार का 7 दिन का पास ख़रीद सकते हैं (कोई सब्सक्रिप्शन या ऑटो-रिन्यू नहीं), जिससे सीमा 100 लोगों तक बढ़ जाती है। ट्रैवल एजेंसियाँ पहले से ग्रुप पास ख़रीदकर लीडरों को QR कोड के रूप में दे सकती हैं।\n\nप्राइवेसी पॉलिसी: https://tourchip.web.app/privacy\nइस्तेमाल की शर्तें: https://tourchip.web.app/terms\nसंपर्क: service.softchip@gmail.com",
     "whatsnew": "अब पुर्तगाली, स्पेनिश और हिंदी में भी उपलब्ध।\n\nइस वर्ज़न में और भी:\n- 8 अंकों के इनवाइट कोड से जुड़ें\n- नए यूज़र ऐप इंस्टॉल करने के बाद अपने आप ग्रुप से जुड़ जाते हैं\n- लीडर टूल: ख़ुद हाज़िरी लगाएँ, कमरा और बस नंबर, होटल Wi-Fi और नाश्ते का समय, AIYA से यात्रा कार्यक्रम इंपोर्ट\n- रास्ता भटकने पर मदद कार्ड\n- आख़िरी दिन अपने लीडर को फूल भेजें"
+  },
+  "fr": {
+    "name": "TourChip : guidez votre groupe",
+    "subtitle": "Rassembler et faire l'appel",
+    "short": "Voyages de groupe : tous les téléphones sonnent, un drapeau 3D montre la voie.",
+    "promo": "Tous les téléphones sonnent au rassemblement, un drapeau 3D montre la voie et vous voyez qui manque. AIYA traduit les menus et raconte les sites. Gratuit jusqu'à 20.",
+    "keywords": "accompagnateur,guide,rassemblement,appel,voyage scolaire,circuit,itinéraire,perdu,carte,excursion"
+  },
+  "de": {
+    "name": "TourChip: Gruppen leiten",
+    "subtitle": "Sammeln, Durchzählen, Infos",
+    "short": "Gruppenreisen leiten: Beim Sammeln klingelt jedes Handy, 3D-Fahne zeigt den Weg.",
+    "promo": "Beim Sammeln klingelt jedes Handy, eine Fahne auf der 3D-Karte zeigt den Weg, du siehst, wer fehlt. AIYA übersetzt Speisekarten und erklärt Sehenswertes. Gratis bis 20.",
+    "keywords": "reiseleiter,reiseleitung,guide,treffpunkt,durchzählen,klassenfahrt,reise,reiseplan,verlaufen,karte"
+  },
+  "it": {
+    "name": "TourChip: guida il tuo gruppo",
+    "subtitle": "Ritrovi, appelli e avvisi",
+    "short": "Viaggi di gruppo: al ritrovo suonano tutti i telefoni, una bandierina 3D guida.",
+    "promo": "Al ritrovo suonano tutti i telefoni, una bandierina su una mappa 3D indica la strada e vedi chi manca. AIYA traduce i menu e racconta i luoghi. Gratis fino a 20 persone.",
+    "keywords": "tour,capogruppo,accompagnatore,ritrovo,appello,gita,scolastica,viaggio,programma,perso,mappa,guide"
+  },
+  "cs": {
+    "name": "TourChip: Vedení skupin",
+    "subtitle": "Srazy, prezence a oznámení",
+    "short": "Vedení zájezdů: na sraz zazvoní každý telefon, 3D vlajka ukáže cestu.",
+    "promo": "Na sraz zazvoní každý telefon, vlajka na 3D mapě ukáže cestu a vedoucí vidí, kdo chybí. AIYA přeloží jídelní lístek a vypráví o památkách. Zdarma až pro 20 lidí.",
+    "keywords": "zájezd,vedoucí,průvodce,sraz,prezence,školní výlet,cestování,program,ztracený,mapa,delegát"
+  },
+  "pl": {
+    "name": "TourChip: Prowadź grupę",
+    "subtitle": "Zbiórki, obecność, ogłoszenia",
+    "short": "Wycieczki grupowe: na zbiórkę dzwoni każdy telefon, flaga 3D wskazuje drogę.",
+    "promo": "Na zbiórkę dzwoni każdy telefon, flaga na mapie 3D wskazuje drogę, a pilot widzi, kogo brakuje. AIYA tłumaczy menu i opowiada o zabytkach. Za darmo do 20 osób.",
+    "keywords": "wycieczka,pilot,przewodnik,zbiórka,obecność,szkolna,podróż,plan,zgubiony,mapa,biuro podróży,kolonie"
+  },
+  "uk": {
+    "name": "TourChip: керуйте групою",
+    "subtitle": "Збори, переклички, оголошення",
+    "short": "Групові поїздки: на збір дзвонять усі телефони, 3D-прапорець веде до місця.",
+    "promo": "На збір дзвонять усі телефони, прапорець на 3D-карті веде до місця, а керівник бачить, кого бракує. AIYA перекладає меню й розповідає про місця. До 20 осіб безкоштовно.",
+    "keywords": "тур,екскурсія,гід,збір,перекличка,шкільна поїздка,подорож,програма,заблукав,карта,туристи,керівник"
   }
 }

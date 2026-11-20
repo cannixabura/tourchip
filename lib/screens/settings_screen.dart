@@ -343,7 +343,7 @@ Future<void> editProfile(BuildContext context) {
   });
 }
 
-/// 語言：跟隨手機或 9 種語言其中之一
+/// 語言：跟隨手機或 18 種語言其中之一
 Future<void> pickLanguage(BuildContext context) {
   return showPanel<void>(context, (ctx, setS) {
     Widget option(String value, String label) {
@@ -367,8 +367,13 @@ Future<void> pickLanguage(BuildContext context) {
     return Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Text(tx('語言', 'Language'), style: Night.title, textAlign: TextAlign.center),
       const SizedBox(height: Night.space3),
-      option('system', tx('跟隨手機設定', 'Same as phone')),
-      for (final l in supportedLangs) option(l, langNames[l]!),
+      // 18 種語言超過一個畫面高，可以捲動
+      Flexible(
+        child: ListView(shrinkWrap: true, padding: EdgeInsets.zero, children: [
+          option('system', tx('跟隨手機設定', 'Same as phone')),
+          for (final l in supportedLangs) option(l, langNames[l]!),
+        ]),
+      ),
     ]);
   });
 }
